@@ -1,0 +1,10 @@
+{
+    "Debug Mode": {
+        "Show GUI": true,
+        "Show FPS": true
+    },
+    "Release Mode": {
+        "Show GUI": false,
+        "Show FPS": false
+    }
+}

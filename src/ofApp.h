@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "PMAudioAnalyzer.hpp"
 
 class ofApp : public ofBaseApp
 {
@@ -23,6 +24,8 @@ public:
 //    void gotMessage(ofMessage msg);
 
 private:
+
+    PMAudioAnalyzer *audioAnalyzer;
 
     bool                showFPS;
     bool                isFullScreen;

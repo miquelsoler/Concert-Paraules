@@ -11,17 +11,30 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "ofxAudioAnalyzer.h"
 
-class PMAudioAnalyzer
+class PMAudioAnalyzer : public ofBaseSoundInput
 {
 public:
 
-    PMAudioAnalyzer();
+    PMAudioAnalyzer(ofBaseApp *app, int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize, int numBuffers);
     ~PMAudioAnalyzer();
 
-protected:
+    void audioIn(float *input, int bufferSize, int nChannels);
 
 private:
+
+    int deviceID;
+    int inChannels;
+    int outChannels;
+    int sampleRate;
+    int bufferSize;
+    int numBuffers;
+
+    ofSoundStream soundStream;
+    ofxAudioAnalyzer audioAnalyzer;
+
+    vector<vector<float>> buffers;
 
 };
 
