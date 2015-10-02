@@ -17,7 +17,7 @@ class PMAudioAnalyzer : public ofBaseSoundInput
 {
 public:
 
-    PMAudioAnalyzer(ofBaseApp *app, int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize, int numBuffers);
+    PMAudioAnalyzer(ofBaseApp *app, int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize);
     ~PMAudioAnalyzer();
 
     void audioIn(float *input, int bufferSize, int nChannels);
@@ -34,8 +34,7 @@ private:
     ofSoundStream soundStream;
     ofxAudioAnalyzer audioAnalyzer;
 
-    vector<vector<float>> buffers;
-
+    float **buffers;
 };
 
 #endif /* PMSoundAnalyzer_h */

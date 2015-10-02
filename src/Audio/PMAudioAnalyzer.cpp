@@ -9,7 +9,7 @@
 #include "PMAudioAnalyzer.hpp"
 
 ///--------------------------------------------------------------
-PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize, int _numBuffers)
+PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize)
 {
     deviceID = _deviceID;
     inChannels = _inChannels;
@@ -22,7 +22,13 @@ PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels,
     // Buffer matrix:
     // - Rows: channels
     // - Cols: channel buffer
-    buffers.resize(inChannels, vector<float>(bufferSize, 0.0));
+    buffers = new float *[inChannels];
+    for (int i=0; i<inChannels; i++)
+    {
+        buffers[i] = new float[bufferSize];
+    }
+
+    audioAnalyzer.setup(bufferSize, sampleRate);
 
     soundStream.printDeviceList();
 
@@ -41,5 +47,19 @@ PMAudioAnalyzer::~PMAudioAnalyzer()
 ///--------------------------------------------------------------
 void PMAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
-    cout << "xxxSomeone called audioIn(" << input << ", " << bufferSize << ", " << nChannels << ")" << endl;
+//    cout << "xxxSomeone called audioIn(" << input << ", " << bufferSize << ", " << nChannels << ")" << endl;
+
+    for (int i=0; i<nChannels; ++i)
+    {
+        for (int j=0; j<bufferSize; j++)
+        {
+            buffers[i][j] = input[i + (nChannels * j)];
+        }
+    }
+
+    // For testing purposes
+    {
+        audioAnalyzer.analyze(buffers[0], bufferSize);
+        cout << "RMS: " << audioAnalyzer.getPitchFreq() << endl;
+    }
 }

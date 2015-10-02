@@ -12,23 +12,7 @@ void ofApp::setup()
     isFullScreen = (DEFAULT_WINDOW_MODE == OF_FULLSCREEN);
 
     // For testing purposes
-    audioAnalyzer = new PMAudioAnalyzer(this, 0, 2, 0, 44100, 512, 4);
-
-
-
-//    int sampleRate = 44100;
-//    int bufferSize = 512;
-//    int outChannels = 0;
-//    int inChannels = 2;
-//    int ticksPerBuffer = bufferSize/64;
-//
-//    float *buffer_1 =  new float[bufferSize]; // potser per la definicio vector<vector<float>> enlloc del que s'espera???
-//    float *buffer_2 =  new float[bufferSize];
-//    for(int i = 0; i < bufferSize; i++) { buffer_1[i]=buffer_2[i]= 0;}
-//    soundStream.printDeviceList();
-//    soundStream.setDeviceID(0);
-//    soundStream.setup(this, outChannels, inChannels, sampleRate, bufferSize, ticksPerBuffer);
-
+    audioAnalyzer = new PMAudioAnalyzer(this, 0, 2, 0, 44100, 512);
 
 #ifdef OF_DEBUG
     showFPS = PMSettingsManager::getInstance().debugShowFPS;
