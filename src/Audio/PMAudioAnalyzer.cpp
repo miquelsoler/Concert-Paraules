@@ -19,36 +19,79 @@ PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels,
 //    numBuffers = _numBuffers;
     numBuffers = bufferSize/64;
 
+    soundStream.printDeviceList();
+
+    soundStream.setDeviceID(deviceID);
+    cout << "Device Id: " << deviceID << endl;
+    cout << "Setup: " << app << ", " << outChannels << ", " << inChannels << ", " << sampleRate << ", " << bufferSize << ", " << numBuffers << endl;
+
+    isSetup = false;
+}
+
+///--------------------------------------------------------------
+PMAudioAnalyzer::~PMAudioAnalyzer()
+{
+    for (int i=0; i<inChannels; i++)
+        delete buffers[i];
+
+    delete []buffers;
+
+    for (unsigned int i=0; i<audioAnalyzers.size(); i++)
+        delete audioAnalyzers[i];
+
+    audioAnalyzers.clear();
+}
+
+///--------------------------------------------------------------
+void PMAudioAnalyzer::setup(PMAA_ChannelMode _channelMode, int _channelNumber)
+{
+    if (isSetup) return;
+
     // Buffer matrix:
     // - Rows: channels
     // - Cols: channel buffer
+
     buffers = new float *[inChannels];
     for (int i=0; i<inChannels; i++)
     {
         buffers[i] = new float[bufferSize];
     }
 
-    audioAnalyzer.setup(bufferSize, sampleRate);
+    channelMode = _channelMode;
+    channelNumber = (channelMode == PMAA_CHANNEL_MONO) ? _channelNumber : -1;
 
-    soundStream.printDeviceList();
+    // ofxAudioAnalyzer setup
 
-    soundStream.setDeviceID(deviceID);
-    cout << "Device Id: " << deviceID << endl;
-    cout << "Setup: " << app << ", " << outChannels << ", " << inChannels << ", " << sampleRate << ", " << bufferSize << ", " << numBuffers << endl;
-    soundStream.setup(outChannels, inChannels, sampleRate, bufferSize, numBuffers);
-    soundStream.setInput(this);
-}
+    for (int i=0; i<inChannels; i++)
+    {
+        ofxAudioAnalyzer *analyzer = new ofxAudioAnalyzer();
+        analyzer->setup(bufferSize, sampleRate);
 
-PMAudioAnalyzer::~PMAudioAnalyzer()
-{
+        audioAnalyzers.push_back(analyzer);
+    }
+
+    isSetup = true;
 }
 
 
 ///--------------------------------------------------------------
+void PMAudioAnalyzer::start()
+{
+    soundStream.stop();
+
+    soundStream.setup(outChannels, inChannels, sampleRate, bufferSize, numBuffers);
+    soundStream.setInput(this);
+}
+
+///--------------------------------------------------------------
+void PMAudioAnalyzer::stop()
+{
+    soundStream.stop();
+}
+
+///--------------------------------------------------------------
 void PMAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
-//    cout << "xxxSomeone called audioIn(" << input << ", " << bufferSize << ", " << nChannels << ")" << endl;
-
     for (int i=0; i<nChannels; ++i)
     {
         for (int j=0; j<bufferSize; j++)
@@ -59,7 +102,9 @@ void PMAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
     // For testing purposes
     {
-        audioAnalyzer.analyze(buffers[0], bufferSize);
-        cout << "RMS: " << audioAnalyzer.getPitchFreq() << endl;
+        audioAnalyzers[0]->analyze(buffers[0], bufferSize);
+        cout << "RMS 0: " << audioAnalyzers[0]->getPitchFreq() << endl;
+        audioAnalyzers[1]->analyze(buffers[1], bufferSize);
+        cout << "RMS 1: " << audioAnalyzers[1]->getPitchFreq() << endl;
     }
 }

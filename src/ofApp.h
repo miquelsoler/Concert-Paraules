@@ -25,7 +25,7 @@ public:
 
 private:
 
-    PMAudioAnalyzer *audioAnalyzer;
+    PMAudioAnalyzer     *audioAnalyzer;
 
     bool                showFPS;
     bool                isFullScreen;

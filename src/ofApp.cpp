@@ -13,6 +13,8 @@ void ofApp::setup()
 
     // For testing purposes
     audioAnalyzer = new PMAudioAnalyzer(this, 0, 2, 0, 44100, 512);
+    audioAnalyzer->setup();
+
 
 #ifdef OF_DEBUG
     showFPS = PMSettingsManager::getInstance().debugShowFPS;
@@ -56,6 +58,18 @@ void ofApp::keyReleased(int key)
         case 'P':
         {
             showFPS = !showFPS;
+            break;
+        }
+        case 'k':
+        case 'K':
+        {
+            audioAnalyzer->start();
+            break;
+        }
+        case 'l':
+        case 'L':
+        {
+            audioAnalyzer->stop();
             break;
         }
         default:
