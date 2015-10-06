@@ -39,8 +39,6 @@
 		2A498D9B1BBEE6D100D143F6 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A498D9A1BBEE6D100D143F6 /* libyaml.a */; settings = {ASSET_TAGS = (); }; };
 		2A4BBCFF1BBD93DD00142482 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A4BBCF81BBD925D00142482 /* PMAudioAnalyzer.cpp */; };
 		2A4BBD001BBD93E600142482 /* PMSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A4BBCFB1BBD925D00142482 /* PMSettingsManager.cpp */; };
-		2A7629AC1BC48004004DFD03 /* PMSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A7629AA1BC48004004DFD03 /* PMSceneManager.cpp */; settings = {ASSET_TAGS = (); }; };
-		2A7629AF1BC48013004DFD03 /* PMScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A7629AD1BC48013004DFD03 /* PMScene.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED1E1BC4813A00F7F86A /* ofxSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED231BC4834300F7F86A /* ofxEasing.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3E1BC4834300F7F86A /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED251BC4834300F7F86A /* ofxEasingBack.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -165,10 +163,6 @@
 		2A4BBCFC1BBD925D00142482 /* PMSettingsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSettingsManager.h; sourceTree = "<group>"; };
 		2A4BBCFD1BBD926500142482 /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		2A6A74E01BBDA34F00D8F661 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
-		2A7629AA1BC48004004DFD03 /* PMSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PMSceneManager.cpp; path = Scenes/PMSceneManager.cpp; sourceTree = "<group>"; };
-		2A7629AB1BC48004004DFD03 /* PMSceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PMSceneManager.hpp; path = Scenes/PMSceneManager.hpp; sourceTree = "<group>"; };
-		2A7629AD1BC48013004DFD03 /* PMScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PMScene.cpp; path = Scenes/PMScene.cpp; sourceTree = "<group>"; };
-		2A7629AE1BC48013004DFD03 /* PMScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PMScene.hpp; path = Scenes/PMScene.hpp; sourceTree = "<group>"; };
 		2ADCED1B1BC4813A00F7F86A /* ofxScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxScene.h; sourceTree = "<group>"; };
 		2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSceneManager.cpp; sourceTree = "<group>"; };
 		2ADCED1D1BC4813A00F7F86A /* ofxSceneManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSceneManager.h; sourceTree = "<group>"; };
@@ -464,17 +458,6 @@
 				2A4BBCFC1BBD925D00142482 /* PMSettingsManager.h */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		2A7629A91BC47FE6004DFD03 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-				2A7629AA1BC48004004DFD03 /* PMSceneManager.cpp */,
-				2A7629AB1BC48004004DFD03 /* PMSceneManager.hpp */,
-				2A7629AD1BC48013004DFD03 /* PMScene.cpp */,
-				2A7629AE1BC48013004DFD03 /* PMScene.hpp */,
-			);
-			name = Scenes;
 			sourceTree = "<group>";
 		};
 		2ADCED191BC4813A00F7F86A /* ofxSceneManager */ = {
@@ -878,7 +861,6 @@
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				2A4BBCFD1BBD926500142482 /* Defaults.h */,
-				2A7629A91BC47FE6004DFD03 /* Scenes */,
 				2A4BBCF71BBD925D00142482 /* Audio */,
 				2A4BBCFA1BBD925D00142482 /* Utils */,
 			);
@@ -1034,7 +1016,6 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				2A7629AC1BC48004004DFD03 /* PMSceneManager.cpp in Sources */,
 				2A4BBCFF1BBD93DD00142482 /* PMAudioAnalyzer.cpp in Sources */,
 				2ADCED3F1BC4834300F7F86A /* ofxEasingBounce.cpp in Sources */,
 				2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */,
@@ -1068,7 +1049,6 @@
 				FCC16AB16073FF0581F50ED7 /* loader.c in Sources */,
 				D31F5C1B140C59B2AF1533A8 /* registration.c in Sources */,
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,
-				2A7629AF1BC48013004DFD03 /* PMScene.cpp in Sources */,
 				2ADCED491BC4834300F7F86A /* ofxTween.cpp in Sources */,
 				255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */,
 				1D397CC89DDD782F892B7483 /* ofxAudioAnalyzer.cpp in Sources */,

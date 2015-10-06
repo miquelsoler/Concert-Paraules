@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "PMAudioAnalyzer.hpp"
+#include "ofxSceneManager.h"
 
 class ofApp : public ofBaseApp
 {
@@ -29,4 +30,6 @@ private:
 
     bool                showFPS;
     bool                isFullScreen;
+
+    ofxSceneManager     sceneManager;
 };
