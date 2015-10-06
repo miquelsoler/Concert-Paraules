@@ -8,7 +8,7 @@
 
 # OF add-on dependencies
 
-Before building, make sure you've already have these add-ons:
+Before building, make sure you've already downloaded these add-ons:
 
 * [ofxAudioAnalyzer] (https://github.com/leozimmerman/ofxAudioAnalyzer)
 * [ofxGUI](http://openframeworks.cc/documentation/ofxGui/ofxGui.html)
