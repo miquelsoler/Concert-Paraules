@@ -33,12 +33,10 @@ PMAudioAnalyzer::~PMAudioAnalyzer()
 {
     for (int i=0; i<inChannels; i++)
         delete buffers[i];
-
     delete []buffers;
 
     for (unsigned int i=0; i<audioAnalyzers.size(); i++)
         delete audioAnalyzers[i];
-
     audioAnalyzers.clear();
 }
 
@@ -72,7 +70,6 @@ void PMAudioAnalyzer::setup(PMAA_ChannelMode _channelMode, int _channelNumber)
 
     isSetup = true;
 }
-
 
 ///--------------------------------------------------------------
 void PMAudioAnalyzer::start()
