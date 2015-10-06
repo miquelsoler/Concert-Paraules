@@ -32,4 +32,5 @@ private:
     bool                isFullScreen;
 
     ofxSceneManager     sceneManager;
+    unsigned int        currentScene;
 };

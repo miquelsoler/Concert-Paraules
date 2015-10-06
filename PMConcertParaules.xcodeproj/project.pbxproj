@@ -53,6 +53,8 @@
 		2ADCED471BC4834300F7F86A /* ofxEasingQuint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED371BC4834300F7F86A /* ofxEasingQuint.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED481BC4834300F7F86A /* ofxEasingSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED391BC4834300F7F86A /* ofxEasingSine.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED491BC4834300F7F86A /* ofxTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED3B1BC4834300F7F86A /* ofxTween.cpp */; settings = {ASSET_TAGS = (); }; };
+		2ADCED501BC4885700F7F86A /* PMSc1Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */; settings = {ASSET_TAGS = (); }; };
+		2ADCED561BC48E7900F7F86A /* PMSc2Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
 		49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = BF2F2AA872288D30F53983EF /* tilt.c */; };
 		5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C88333E71C9457E441C33474 /* ofxButton.cpp */; };
@@ -193,6 +195,10 @@
 		2ADCED3A1BC4834300F7F86A /* ofxEasingSine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasingSine.h; sourceTree = "<group>"; };
 		2ADCED3B1BC4834300F7F86A /* ofxTween.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTween.cpp; sourceTree = "<group>"; };
 		2ADCED3C1BC4834300F7F86A /* ofxTween.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTween.h; sourceTree = "<group>"; };
+		2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMSc1Settings.cpp; sourceTree = "<group>"; };
+		2ADCED4F1BC4885700F7F86A /* PMSc1Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMSc1Settings.hpp; sourceTree = "<group>"; };
+		2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMSc2Main.cpp; sourceTree = "<group>"; };
+		2ADCED521BC4887000F7F86A /* PMSc2Main.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMSc2Main.hpp; sourceTree = "<group>"; };
 		2AF09C1F849BA09B4CFD498C /* tnt_array2d_utils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tnt_array2d_utils.h; path = ../../../addons/ofxAudioAnalyzer/libs/essentia/include/essentia/utils/tnt/tnt_array2d_utils.h; sourceTree = SOURCE_ROOT; };
 		2C7CF000B7B4F782C187C353 /* json.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = json.h; path = ../../../addons/ofxJSON/libs/jsoncpp/include/json/json.h; sourceTree = SOURCE_ROOT; };
 		2CAA5E65B0D72FE7B3C7EF11 /* tnt2vector.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tnt2vector.h; path = ../../../addons/ofxAudioAnalyzer/libs/essentia/include/essentia/utils/tnt/tnt2vector.h; sourceTree = SOURCE_ROOT; };
@@ -530,6 +536,17 @@
 			path = Easings;
 			sourceTree = "<group>";
 		};
+		2ADCED4D1BC4883100F7F86A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */,
+				2ADCED4F1BC4885700F7F86A /* PMSc1Settings.hpp */,
+				2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */,
+				2ADCED521BC4887000F7F86A /* PMSc2Main.hpp */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		2C171637C399A50881F147E9 /* libusb-1.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,6 +879,7 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				2A4BBCFD1BBD926500142482 /* Defaults.h */,
 				2A4BBCF71BBD925D00142482 /* Audio */,
+				2ADCED4D1BC4883100F7F86A /* Scenes */,
 				2A4BBCFA1BBD925D00142482 /* Utils */,
 			);
 			path = src;
@@ -1017,6 +1035,8 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				2A4BBCFF1BBD93DD00142482 /* PMAudioAnalyzer.cpp in Sources */,
+				2ADCED501BC4885700F7F86A /* PMSc1Settings.cpp in Sources */,
+				2ADCED561BC48E7900F7F86A /* PMSc2Main.cpp in Sources */,
 				2ADCED3F1BC4834300F7F86A /* ofxEasingBounce.cpp in Sources */,
 				2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */,
 				2ADCED481BC4834300F7F86A /* ofxEasingSine.cpp in Sources */,
