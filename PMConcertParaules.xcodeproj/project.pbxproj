@@ -37,8 +37,8 @@
 		2A498D971BBEE6A600D143F6 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A498D961BBEE6A600D143F6 /* libswresample.a */; settings = {ASSET_TAGS = (); }; };
 		2A498D991BBEE6C300D143F6 /* libtag.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A498D981BBEE6C300D143F6 /* libtag.dylib */; settings = {ASSET_TAGS = (); }; };
 		2A498D9B1BBEE6D100D143F6 /* libyaml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A498D9A1BBEE6D100D143F6 /* libyaml.a */; settings = {ASSET_TAGS = (); }; };
-		2A4BBCFF1BBD93DD00142482 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A4BBCF81BBD925D00142482 /* PMAudioAnalyzer.cpp */; };
 		2A4BBD001BBD93E600142482 /* PMSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A4BBCFB1BBD925D00142482 /* PMSettingsManager.cpp */; };
+		2A638B451BCC16BC005D0A7F /* PMDeviceAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A638B441BCC16BC005D0A7F /* PMDeviceAudioAnalyzer.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED1E1BC4813A00F7F86A /* ofxSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED231BC4834300F7F86A /* ofxEasing.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3E1BC4834300F7F86A /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED251BC4834300F7F86A /* ofxEasingBack.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -159,11 +159,11 @@
 		2A498D961BBEE6A600D143F6 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../../../../../usr/local/lib/libswresample.a; sourceTree = "<group>"; };
 		2A498D981BBEE6C300D143F6 /* libtag.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtag.dylib; path = ../../../../../../../usr/local/lib/libtag.dylib; sourceTree = "<group>"; };
 		2A498D9A1BBEE6D100D143F6 /* libyaml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyaml.a; path = ../../../../../../../usr/local/lib/libyaml.a; sourceTree = "<group>"; };
-		2A4BBCF81BBD925D00142482 /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
-		2A4BBCF91BBD925D00142482 /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
 		2A4BBCFB1BBD925D00142482 /* PMSettingsManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMSettingsManager.cpp; sourceTree = "<group>"; };
 		2A4BBCFC1BBD925D00142482 /* PMSettingsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSettingsManager.h; sourceTree = "<group>"; };
 		2A4BBCFD1BBD926500142482 /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
+		2A638B441BCC16BC005D0A7F /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
+		2A638B461BCC16DA005D0A7F /* PMDeviceAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMDeviceAudioAnalyzer.hpp; sourceTree = "<group>"; };
 		2A6A74E01BBDA34F00D8F661 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
 		2ADCED1B1BC4813A00F7F86A /* ofxScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxScene.h; sourceTree = "<group>"; };
 		2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSceneManager.cpp; sourceTree = "<group>"; };
@@ -451,8 +451,8 @@
 		2A4BBCF71BBD925D00142482 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				2A4BBCF81BBD925D00142482 /* PMAudioAnalyzer.cpp */,
-				2A4BBCF91BBD925D00142482 /* PMAudioAnalyzer.hpp */,
+				2A638B441BCC16BC005D0A7F /* PMDeviceAudioAnalyzer.cpp */,
+				2A638B461BCC16DA005D0A7F /* PMDeviceAudioAnalyzer.hpp */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1034,11 +1034,11 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				2A4BBCFF1BBD93DD00142482 /* PMAudioAnalyzer.cpp in Sources */,
 				2ADCED501BC4885700F7F86A /* PMSc1Settings.cpp in Sources */,
 				2ADCED561BC48E7900F7F86A /* PMSc2Main.cpp in Sources */,
 				2ADCED3F1BC4834300F7F86A /* ofxEasingBounce.cpp in Sources */,
 				2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */,
+				2A638B451BCC16BC005D0A7F /* PMDeviceAudioAnalyzer.cpp in Sources */,
 				2ADCED481BC4834300F7F86A /* ofxEasingSine.cpp in Sources */,
 				2ADCED431BC4834300F7F86A /* ofxEasingExpo.cpp in Sources */,
 				2A4BBD001BBD93E600142482 /* PMSettingsManager.cpp in Sources */,

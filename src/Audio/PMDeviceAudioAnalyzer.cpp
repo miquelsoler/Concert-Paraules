@@ -1,15 +1,15 @@
 //
-//  PMAudioAnalyzer.cpp
+//  PMDeviceAudioAnalyzer.cpp
 //  ConcertParaules
 //
 //  Created by Miquel Àngel Soler on 25/9/15.
 //
 //
 
-#include "PMAudioAnalyzer.hpp"
+#include "PMDeviceAudioAnalyzer.hpp"
 
 ///--------------------------------------------------------------
-PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize)
+PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize)
 {
     deviceID = _deviceID;
     inChannels = _inChannels;
@@ -29,7 +29,7 @@ PMAudioAnalyzer::PMAudioAnalyzer(ofBaseApp *app, int _deviceID, int _inChannels,
 }
 
 ///--------------------------------------------------------------
-PMAudioAnalyzer::~PMAudioAnalyzer()
+PMDeviceAudioAnalyzer::~PMDeviceAudioAnalyzer()
 {
     for (int i=0; i<inChannels; i++)
         delete buffers[i];
@@ -41,7 +41,7 @@ PMAudioAnalyzer::~PMAudioAnalyzer()
 }
 
 ///--------------------------------------------------------------
-void PMAudioAnalyzer::setup(PMAA_ChannelMode _channelMode, int _channelNumber)
+void PMDeviceAudioAnalyzer::setup(PMDAA_ChannelMode _channelMode, int _channelNumber)
 {
     if (isSetup) return;
 
@@ -56,7 +56,7 @@ void PMAudioAnalyzer::setup(PMAA_ChannelMode _channelMode, int _channelNumber)
     }
 
     channelMode = _channelMode;
-    channelNumber = (channelMode == PMAA_CHANNEL_MONO) ? _channelNumber : -1;
+    channelNumber = (channelMode == PMDAA_CHANNEL_MONO) ? _channelNumber : -1;
 
     // ofxAudioAnalyzer setup
 
@@ -72,7 +72,7 @@ void PMAudioAnalyzer::setup(PMAA_ChannelMode _channelMode, int _channelNumber)
 }
 
 ///--------------------------------------------------------------
-void PMAudioAnalyzer::start()
+void PMDeviceAudioAnalyzer::start()
 {
     soundStream.stop();
 
@@ -81,13 +81,13 @@ void PMAudioAnalyzer::start()
 }
 
 ///--------------------------------------------------------------
-void PMAudioAnalyzer::stop()
+void PMDeviceAudioAnalyzer::stop()
 {
     soundStream.stop();
 }
 
 ///--------------------------------------------------------------
-void PMAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
+void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
     for (int i=0; i<nChannels; ++i)
     {

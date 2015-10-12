@@ -31,7 +31,7 @@ void ofApp::setup()
 
     // For testing purposes
 
-    audioAnalyzer = new PMAudioAnalyzer(this, 0, 2, 0, 44100, 512);
+    audioAnalyzer = new PMDeviceAudioAnalyzer(this, 0, 2, 0, 44100, 512);
     audioAnalyzer->setup();
 }
 
