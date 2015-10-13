@@ -165,6 +165,7 @@
 		2A6A74E01BBDA34F00D8F661 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
 		2A7BCDAE1BCD1028004840A4 /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
 		2A7BCDAF1BCD1028004840A4 /* PMDeviceAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMDeviceAudioAnalyzer.hpp; sourceTree = "<group>"; };
+		2A7BCDB21BCD1C60004840A4 /* PMAudioOutParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAudioOutParams.h; sourceTree = "<group>"; };
 		2ADCED1B1BC4813A00F7F86A /* ofxScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxScene.h; sourceTree = "<group>"; };
 		2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSceneManager.cpp; sourceTree = "<group>"; };
 		2ADCED1D1BC4813A00F7F86A /* ofxSceneManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSceneManager.h; sourceTree = "<group>"; };
@@ -448,13 +449,6 @@
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		2A4BBCF71BBD925D00142482 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Audio;
-			sourceTree = "<group>";
-		};
 		2A4BBCFA1BBD925D00142482 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +471,7 @@
 			children = (
 				2A7BCDAE1BCD1028004840A4 /* PMDeviceAudioAnalyzer.cpp */,
 				2A7BCDAF1BCD1028004840A4 /* PMDeviceAudioAnalyzer.hpp */,
+				2A7BCDB21BCD1C60004840A4 /* PMAudioOutParams.h */,
 			);
 			path = PMAudioAnalysis;
 			sourceTree = "<group>";
@@ -894,7 +889,6 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				2A4BBCFD1BBD926500142482 /* Defaults.h */,
 				2A7BCDAC1BCD1028004840A4 /* External */,
-				2A4BBCF71BBD925D00142482 /* Audio */,
 				2ADCED4D1BC4883100F7F86A /* Scenes */,
 				2A4BBCFA1BBD925D00142482 /* Utils */,
 			);

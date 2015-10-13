@@ -10,5 +10,5 @@
 
 void PMSc2Main::draw()
 {
-    cout << "PMSc2Main::draw()" << endl;
+//    cout << "PMSc2Main::draw()" << endl;
 }
