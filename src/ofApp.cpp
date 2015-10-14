@@ -13,7 +13,7 @@ void ofApp::setup()
 
     isFullScreen = (DEFAULT_WINDOW_MODE == OF_FULLSCREEN);
 
-    currentScene = 0;
+    currentScene = 1;
 
     // Settings
 
