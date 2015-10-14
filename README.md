@@ -11,10 +11,12 @@
 Before building, make sure you've already downloaded these add-ons:
 
 * [ofxAudioAnalyzer] (https://github.com/leozimmerman/ofxAudioAnalyzer)
-* [ofxGUI](http://openframeworks.cc/documentation/ofxGui/ofxGui.html) — ALREADY INTEGRATED IN OF 
 * [ofxJSON] (https://github.com/jefftimesten/ofxJSON)
-* [ofxKinect] (https://github.com/ofTheo/ofxKinect) — ALREADY INTEGRATED IN OF
 * [ofxSceneManager] (https://github.com/kokinomura/ofxSceneManager)
 * [ofxTween] (https://github.com/arturoc/ofxTween)
 * [ofxUI] (https://github.com/rezaali/ofxUI)
-* [ofxXmlSettings] (http://openframeworks.cc/documentation/ofxXmlSettings/ofxXmlSettings.html) — ALREADY INTEGRATED IN OF 
+
+These add-ons are also needed, but they are already part of openframeworks:
+* [ofxGUI](http://openframeworks.cc/documentation/ofxGui/ofxGui.html)
+* [ofxKinect] (https://github.com/ofTheo/ofxKinect)
+* [ofxXmlSettings] (http://openframeworks.cc/documentation/ofxXmlSettings/ofxXmlSettings.html)
