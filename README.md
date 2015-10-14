@@ -17,3 +17,4 @@ Before building, make sure you've already downloaded these add-ons:
 * [ofxSceneManager] (https://github.com/kokinomura/ofxSceneManager)
 * [ofxTween] (https://github.com/arturoc/ofxTween)
 * [ofxUI] (https://github.com/rezaali/ofxUI)
+* [ofxXmlSettings] (http://openframeworks.cc/documentation/ofxXmlSettings/ofxXmlSettings.html)
