@@ -1164,10 +1164,10 @@
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				2A6A74E01BBDA34F00D8F661 /* data */,
+				BB4B014C10F69532006C3DED /* addons */,
 				2A498D891BBEE57000D143F6 /* Dependencies */,
 				2A1A4FA31BC41C9500D6E2E2 /* frameworks */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
-				BB4B014C10F69532006C3DED /* addons */,
 				E4B69B5B0A3A1756003C02F2 /* PMConcertParaulesDebug.app */,
 			);
 			sourceTree = "<group>";

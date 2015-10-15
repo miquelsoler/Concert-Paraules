@@ -32,7 +32,8 @@ void ofApp::setup()
     // For testing purposes
 
     audioAnalyzer = new PMDeviceAudioAnalyzer(this, 0, 2, 0, 44100, 512);
-    audioAnalyzer->setup();
+//    audioAnalyzer->setup(); // Defaults to multi channel
+    audioAnalyzer->setup(PMDAA_CHANNEL_MONO, 0);
 }
 
 ///--------------------------------------------------------------
