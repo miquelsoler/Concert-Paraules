@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PMConcertParaules Release" type="AppleRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="PMConcertParaules" TARGET_NAME="PMConcertParaules" CONFIG_NAME="Release" SCHEME_NAME="PMConcertParaules Release" RUN_TARGET_PROJECT_NAME="PMConcertParaules" RUN_TARGET_NAME="PMConcertParaules" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
+    <envs />
+    <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+      <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+    </EXTENSION>
+    <method />
+  </configuration>
+</component>
