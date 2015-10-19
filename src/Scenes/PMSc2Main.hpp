@@ -9,6 +9,8 @@
 #ifndef PMSc2Main_hpp
 #define PMSc2Main_hpp
 
+#pragma once
+
 #include <stdio.h>
 #include "ofxScene.h"
 

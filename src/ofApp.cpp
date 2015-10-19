@@ -59,6 +59,12 @@ void ofApp::draw()
 }
 
 ///--------------------------------------------------------------
+void ofApp::exit()
+{
+    delete audioAnalyzer;
+}
+
+///--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
     switch(currentScene)
