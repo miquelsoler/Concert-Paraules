@@ -10,7 +10,7 @@
 
 Before building, make sure you've already downloaded these add-ons:
 
-* [ofxAudioAnalyzer] (https://github.com/leozimmerman/ofxAudioAnalyzer)
+* [ofxAudioAnalyzer] (https://github.com/miquelsoler/ofxAudioAnalyzer-PM)
 * [ofxJSON] (https://github.com/jefftimesten/ofxJSON)
 * [ofxSceneManager] (https://github.com/kokinomura/ofxSceneManager)
 * [ofxTween] (https://github.com/arturoc/ofxTween)
