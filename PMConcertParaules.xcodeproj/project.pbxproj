@@ -87,6 +87,7 @@
 		2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250E81BCE5D6600EEADDF /* tinyxml.cpp */; settings = {ASSET_TAGS = (); }; };
 		2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */; settings = {ASSET_TAGS = (); }; };
 		2A8250EF1BCE5D6600EEADDF /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */; settings = {ASSET_TAGS = (); }; };
+		2AD7552D1BD6587A009C8C06 /* PMBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AD7552B1BD6587A009C8C06 /* PMBaseScene.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED1E1BC4813A00F7F86A /* ofxSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED231BC4834300F7F86A /* ofxEasing.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED3E1BC4834300F7F86A /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED251BC4834300F7F86A /* ofxEasingBack.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -101,8 +102,8 @@
 		2ADCED471BC4834300F7F86A /* ofxEasingQuint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED371BC4834300F7F86A /* ofxEasingQuint.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED481BC4834300F7F86A /* ofxEasingSine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED391BC4834300F7F86A /* ofxEasingSine.cpp */; settings = {ASSET_TAGS = (); }; };
 		2ADCED491BC4834300F7F86A /* ofxTween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED3B1BC4834300F7F86A /* ofxTween.cpp */; settings = {ASSET_TAGS = (); }; };
-		2ADCED501BC4885700F7F86A /* PMSc1Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */; settings = {ASSET_TAGS = (); }; };
-		2ADCED561BC48E7900F7F86A /* PMSc2Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */; };
+		2ADCED501BC4885700F7F86A /* PMScene1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED4E1BC4885700F7F86A /* PMScene1.cpp */; settings = {ASSET_TAGS = (); }; };
+		2ADCED561BC48E7900F7F86A /* PMScene2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED511BC4887000F7F86A /* PMScene2.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
 		49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = BF2F2AA872288D30F53983EF /* tilt.c */; };
 		5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C88333E71C9457E441C33474 /* ofxButton.cpp */; };
@@ -390,6 +391,8 @@
 		2A8250E91BCE5D6600EEADDF /* tinyxml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		2AD7552B1BD6587A009C8C06 /* PMBaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseScene.cpp; sourceTree = "<group>"; };
+		2AD7552C1BD6587A009C8C06 /* PMBaseScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMBaseScene.hpp; sourceTree = "<group>"; };
 		2ADCED1B1BC4813A00F7F86A /* ofxScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxScene.h; sourceTree = "<group>"; };
 		2ADCED1C1BC4813A00F7F86A /* ofxSceneManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSceneManager.cpp; sourceTree = "<group>"; };
 		2ADCED1D1BC4813A00F7F86A /* ofxSceneManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSceneManager.h; sourceTree = "<group>"; };
@@ -420,10 +423,10 @@
 		2ADCED3A1BC4834300F7F86A /* ofxEasingSine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxEasingSine.h; sourceTree = "<group>"; };
 		2ADCED3B1BC4834300F7F86A /* ofxTween.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTween.cpp; sourceTree = "<group>"; };
 		2ADCED3C1BC4834300F7F86A /* ofxTween.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTween.h; sourceTree = "<group>"; };
-		2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMSc1Settings.cpp; sourceTree = "<group>"; };
-		2ADCED4F1BC4885700F7F86A /* PMSc1Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMSc1Settings.hpp; sourceTree = "<group>"; };
-		2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMSc2Main.cpp; sourceTree = "<group>"; };
-		2ADCED521BC4887000F7F86A /* PMSc2Main.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMSc2Main.hpp; sourceTree = "<group>"; };
+		2ADCED4E1BC4885700F7F86A /* PMScene1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMScene1.cpp; sourceTree = "<group>"; };
+		2ADCED4F1BC4885700F7F86A /* PMScene1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMScene1.hpp; sourceTree = "<group>"; };
+		2ADCED511BC4887000F7F86A /* PMScene2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMScene2.cpp; sourceTree = "<group>"; };
+		2ADCED521BC4887000F7F86A /* PMScene2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMScene2.hpp; sourceTree = "<group>"; };
 		2C7CF000B7B4F782C187C353 /* json.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = json.h; path = ../../../addons/ofxJSON/libs/jsoncpp/include/json/json.h; sourceTree = SOURCE_ROOT; };
 		3175B69741F3AE805AD3F527 /* keep_alive.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = keep_alive.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/keep_alive.h; sourceTree = SOURCE_ROOT; };
 		34FC4C582EA5ED68F36013CD /* audio.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = audio.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/audio.c; sourceTree = SOURCE_ROOT; };
@@ -1009,10 +1012,12 @@
 		2ADCED4D1BC4883100F7F86A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				2ADCED4E1BC4885700F7F86A /* PMSc1Settings.cpp */,
-				2ADCED4F1BC4885700F7F86A /* PMSc1Settings.hpp */,
-				2ADCED511BC4887000F7F86A /* PMSc2Main.cpp */,
-				2ADCED521BC4887000F7F86A /* PMSc2Main.hpp */,
+				2AD7552B1BD6587A009C8C06 /* PMBaseScene.cpp */,
+				2AD7552C1BD6587A009C8C06 /* PMBaseScene.hpp */,
+				2ADCED4E1BC4885700F7F86A /* PMScene1.cpp */,
+				2ADCED4F1BC4885700F7F86A /* PMScene1.hpp */,
+				2ADCED511BC4887000F7F86A /* PMScene2.cpp */,
+				2ADCED521BC4887000F7F86A /* PMScene2.hpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1342,8 +1347,8 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				2A8250C81BCE5CC500EEADDF /* ofxUILabel.cpp in Sources */,
-				2ADCED501BC4885700F7F86A /* PMSc1Settings.cpp in Sources */,
-				2ADCED561BC48E7900F7F86A /* PMSc2Main.cpp in Sources */,
+				2ADCED501BC4885700F7F86A /* PMScene1.cpp in Sources */,
+				2ADCED561BC48E7900F7F86A /* PMScene2.cpp in Sources */,
 				2ADCED3F1BC4834300F7F86A /* ofxEasingBounce.cpp in Sources */,
 				2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */,
 				2A8250D11BCE5CC500EEADDF /* ofxUIRangeSlider.cpp in Sources */,
@@ -1388,6 +1393,7 @@
 				686B0DF6249B52E1A85B39EC /* ofxKinect.cpp in Sources */,
 				2ADCED401BC4834300F7F86A /* ofxEasingCirc.cpp in Sources */,
 				2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */,
+				2AD7552D1BD6587A009C8C06 /* PMBaseScene.cpp in Sources */,
 				2A8250CF1BCE5CC500EEADDF /* ofxUINumberDialer.cpp in Sources */,
 				2A8250DD1BCE5CC500EEADDF /* ofxUIToggle.cpp in Sources */,
 				2A8250DA1BCE5CC500EEADDF /* ofxUITabBar.cpp in Sources */,
