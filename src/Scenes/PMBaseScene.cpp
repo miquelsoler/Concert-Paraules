@@ -8,11 +8,16 @@
 
 #include "PMBaseScene.hpp"
 
+///--------------------------------------------------------------
 PMBaseScene::PMBaseScene()
 {
-    baseFont.load(OF_TTF_SANS, 14, true, true, false, 0.0, 0);
+    baseFont.load(OF_TTF_SANS, 20, true, true, false, 0.3, 72);
+
+    // Disable fades
+    this->setSceneDuration(0, 0);
 }
 
+///--------------------------------------------------------------
 void PMBaseScene::draw()
 {
     ofClear(ofColor::black);

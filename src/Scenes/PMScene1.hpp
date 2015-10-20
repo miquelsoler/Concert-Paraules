@@ -13,21 +13,32 @@
 
 #include <stdio.h>
 #include "PMBaseScene.hpp"
+#include "ofxUI.h"
 
 class PMScene1 : public PMBaseScene
 {
 public:
 
-    PMScene1() : PMBaseScene() {};
+    PMScene1();
+    ~PMScene1();
 
     void setup();
     void update();
     void draw();
-    
+
+    void willDraw();
     void willExit();
 
 private:
 
+    void setupGUIPoem(float originX, ofxUIColor bgColor);
+    void setupGUIAudioSettings(float originX, ofxUIColor bgColor);
+
+    // UI
+    ofxUISuperCanvas    *guiPoemSelector;
+    ofxUISuperCanvas    *guiAudioSettings;
+    float               guiX, guiY;
+    float               guiPanelWidth = 200;
 };
 
 #endif /* PMScene1_hpp */

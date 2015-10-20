@@ -8,18 +8,29 @@
 
 #include "PMScene2.hpp"
 
+///--------------------------------------------------------------
+PMScene2::~PMScene2()
+{
+//    cout << "Called delete PMScene2";
+}
+
+///--------------------------------------------------------------
 void PMScene2::setup()
 {
     cout << "S2 setup" << endl;
 }
 
+///--------------------------------------------------------------
 void PMScene2::update()
 {
 
 }
 
+///--------------------------------------------------------------
 void PMScene2::draw()
 {
+//    cout << "SC2 draw" << endl;
+
     PMBaseScene::draw();
 
 #ifdef OF_DEBUG
@@ -27,6 +38,7 @@ void PMScene2::draw()
 #endif
 }
 
+///--------------------------------------------------------------
 void PMScene2::willExit()
 {
 }

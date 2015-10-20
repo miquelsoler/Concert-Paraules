@@ -17,7 +17,7 @@ void ofApp::setup()
         windowPosX = ofGetWindowPositionX();
         windowPosY = ofGetWindowPositionY();
     }
-    currentScene = 1;
+    currentScene = 0;
 
     // Settings
 
@@ -37,7 +37,12 @@ void ofApp::setup()
 
     // For testing purposes
 
-    audioAnalyzer = new PMDeviceAudioAnalyzer(0, 2, 0, 44100, 512);
+    int deviceId = 0;
+    int inChannels = 2;
+    int outChannels = 0;
+    int sampleRate = 44100;
+    int bufferSize = 512;
+    audioAnalyzer = new PMDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize);
 
     int channelNumber = 0;
     bool useMelBands = true;
