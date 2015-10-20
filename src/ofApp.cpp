@@ -1,8 +1,8 @@
 #include "ofApp.h"
 #include "PMSettingsManager.h"
 #include "Defaults.h"
-#include "PMSc1Settings.hpp"
-#include "PMSc2Main.hpp"
+#include "PMScene1.hpp"
+#include "PMScene2.hpp"
 
 ///--------------------------------------------------------------
 void ofApp::setup()
@@ -12,7 +12,11 @@ void ofApp::setup()
     ofBackground(ofColor::black);
 
     isFullScreen = (DEFAULT_WINDOW_MODE == OF_FULLSCREEN);
-
+    if (!isFullScreen)
+    {
+        windowPosX = ofGetWindowPositionX();
+        windowPosY = ofGetWindowPositionY();
+    }
     currentScene = 1;
 
     // Settings
@@ -25,9 +29,11 @@ void ofApp::setup()
 
     // Scenes
 
-    sceneManager.addScene(ofPtr<ofxScene>(new PMSc1Settings));
-    sceneManager.addScene(ofPtr<ofxScene>(new PMSc2Main));
+    sceneManager.addScene(ofPtr<ofxScene>(new PMScene1));
+    sceneManager.addScene(ofPtr<ofxScene>(new PMScene2));
     sceneManager.run();
+
+    cout << "Res: " << ofGetWidth() << "x" << ofGetHeight() << endl;
 
     // For testing purposes
 
@@ -52,13 +58,13 @@ void ofApp::update()
 ///--------------------------------------------------------------
 void ofApp::draw()
 {
+    sceneManager.draw();
+
     if (showFPS)
     {
         ofSetColor(ofColor::white);
         ofDrawBitmapString(ofToString(ofGetFrameRate()) + "fps", 15, ofGetHeight() - 15);
     }
-
-    sceneManager.draw();
 }
 
 ///--------------------------------------------------------------
@@ -70,47 +76,59 @@ void ofApp::exit()
 ///--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
-    switch(currentScene)
+    switch(key)
     {
-        case 0:
+        // Change scene
+        case OF_KEY_LEFT:
+        case OF_KEY_RIGHT:
         {
             sceneManager.changeScene();
-            currentScene = 1;
+            currentScene = (currentScene + 1) % 2;
+            cout << "--- CURRENT SCENE: " << currentScene << " -----------" << endl;
             break;
         }
-        case 1:
+        // Change window mode
+        case 'f':
+        case 'F':
         {
-            switch(key)
+            isFullScreen = !isFullScreen;
+            if (!isFullScreen)
             {
-                case 'f':
-                case 'F':
-                {
-                    // Change window mode
-                    isFullScreen = !isFullScreen;
-                    ofSetFullscreen(isFullScreen);
-                    break;
-                }
-                case 'p':
-                case 'P':
-                {
-                    showFPS = !showFPS;
-                    break;
-                }
-                case 'k':
-                case 'K':
-                {
-                    audioAnalyzer->start();
-                    break;
-                }
-                case 'l':
-                case 'L':
-                {
-                    audioAnalyzer->stop();
-                    break;
-                }
-                default:
-                    break;
+                ofSetWindowShape(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+                ofSetWindowPosition(windowPosX, windowPosY);
             }
+            else
+            {
+                windowPosX = ofGetWindowPositionX();
+                windowPosY = ofGetWindowPositionY();
+            }
+
+            ofSetFullscreen(isFullScreen);
+
+            cout << "Res: " << ofGetWidth() << "x" << ofGetHeight() << endl;
+            break;
         }
+        // Show/hide FPS
+        case 'p':
+        case 'P':
+        {
+            showFPS = !showFPS;
+            break;
+        }
+        // Start/stop audio analysis
+        case 'k':
+        case 'K':
+        {
+            audioAnalyzer->start();
+            break;
+        }
+        case 'l':
+        case 'L':
+        {
+            audioAnalyzer->stop();
+            break;
+        }
+        default:
+            break;
     }
 }

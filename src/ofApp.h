@@ -24,4 +24,6 @@ private:
 
     ofxSceneManager         sceneManager;
     unsigned int            currentScene;
+
+    int                     windowPosX, windowPosY;
 };
