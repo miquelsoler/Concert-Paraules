@@ -18,7 +18,7 @@ class PMScene2 : public PMBaseScene
 {
 public:
 
-    PMScene2() {};
+    PMScene2() : PMBaseScene() {};
 
     void setup();
     void update();

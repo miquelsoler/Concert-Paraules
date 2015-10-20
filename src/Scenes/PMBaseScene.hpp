@@ -18,14 +18,17 @@ class PMBaseScene : public ofxScene
 {
 public:
 
+    PMBaseScene();
+
     virtual void setup() = 0;
     virtual void update() = 0;
-    virtual void draw() = 0;
+    virtual void draw();
 
     virtual void willExit() = 0;
 
 protected:
 
+    ofTrueTypeFont baseFont;
 };
 
 #endif /* PMBaseScene_hpp */

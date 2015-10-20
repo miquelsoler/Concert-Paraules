@@ -10,6 +10,7 @@
 
 void PMScene2::setup()
 {
+    cout << "S2 setup" << endl;
 }
 
 void PMScene2::update()
@@ -19,11 +20,13 @@ void PMScene2::update()
 
 void PMScene2::draw()
 {
-    ofClear(ofColor::black);
-    ofDrawBitmapString("MAIN SCENE", 15, 30);
+    PMBaseScene::draw();
+
+#ifdef OF_DEBUG
+    baseFont.drawString("MAIN", 15, 30);
+#endif
 }
 
 void PMScene2::willExit()
 {
-    cout << "S2 will exit" << endl;
 }

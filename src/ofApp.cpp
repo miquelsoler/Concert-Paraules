@@ -84,7 +84,6 @@ void ofApp::keyReleased(int key)
         {
             sceneManager.changeScene();
             currentScene = (currentScene + 1) % 2;
-            cout << "--- CURRENT SCENE: " << currentScene << " -----------" << endl;
             break;
         }
         // Change window mode

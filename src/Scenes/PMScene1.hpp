@@ -18,15 +18,13 @@ class PMScene1 : public PMBaseScene
 {
 public:
 
-    PMScene1() {};
+    PMScene1() : PMBaseScene() {};
 
     void setup();
     void update();
     void draw();
     
     void willExit();
-
-protected:
 
 private:
 
