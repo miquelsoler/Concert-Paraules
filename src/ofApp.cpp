@@ -46,7 +46,7 @@ void ofApp::setup()
 
     int channelNumber = 0;
     bool useMelBands = true;
-    int numMelBands = 24;
+    int numMelBands = 4;
     audioAnalyzer->setup(PMDAA_CHANNEL_MONO, channelNumber, useMelBands, numMelBands);
 }
 

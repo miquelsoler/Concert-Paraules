@@ -13,9 +13,10 @@ PMScene1::PMScene1() : PMBaseScene()
 {
     guiX = 20;
     guiY = 50;
-    guiPanelWidth = 200;
+    guiPanelWidth = 300;
 
     float panelOriginX = guiX;
+    float panelMarginX = 20;
 
     // GUI settings
 
@@ -23,11 +24,17 @@ PMScene1::PMScene1() : PMBaseScene()
 
     // GUI
     {
+        int panelNumber = 0;
+        panelOriginX += (guiPanelWidth * panelNumber) + panelMarginX;
+
+//        soundStream.printDeviceList();
+
         // Poem selector
         this->setupGUIPoem(panelOriginX, bgColor);
 
         // Audio settings
-        panelOriginX += guiPanelWidth;
+        panelNumber++;
+        panelOriginX += (guiPanelWidth * panelNumber) + panelMarginX;
         this->setupGUIAudioSettings(panelOriginX, bgColor);
     }
 }

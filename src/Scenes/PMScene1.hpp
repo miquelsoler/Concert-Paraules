@@ -38,7 +38,7 @@ private:
     ofxUISuperCanvas    *guiPoemSelector;
     ofxUISuperCanvas    *guiAudioSettings;
     float               guiX, guiY;
-    float               guiPanelWidth = 200;
+    float               guiPanelWidth;
 };
 
 #endif /* PMScene1_hpp */
