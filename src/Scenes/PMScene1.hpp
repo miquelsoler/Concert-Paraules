@@ -12,8 +12,9 @@
 #pragma once
 
 #include <stdio.h>
-#include "PMBaseScene.hpp"
 #include "ofxUI.h"
+#include "PMBaseScene.hpp"
+#include "PMDeviceAudioAnalyzer.hpp"
 
 class PMScene1 : public PMBaseScene
 {
@@ -31,14 +32,25 @@ public:
 
 private:
 
-    void setupGUIPoem(float originX, ofxUIColor bgColor);
-    void setupGUIAudioSettings(float originX, ofxUIColor bgColor);
+    float setupGUIPoem(float originX, ofxUIColor bgColor);
+    float setupGUIAudioSettings(float originX, ofxUIColor bgColor);
+
+    string buildStringForSoundDevice(ofSoundDevice *soundDevice);
 
     // UI
-    ofxUISuperCanvas    *guiPoemSelector;
-    ofxUISuperCanvas    *guiAudioSettings;
-    float               guiX, guiY;
-    float               guiPanelWidth;
+    ofxUISuperCanvas        *guiPoemSelector;
+    ofxUISuperCanvas        *guiAudioSettings;
+    float                   guiX, guiY;
+    float                   guiPanelWidth;
+
+    // Convenience attributes
+    vector <ofSoundDevice>  soundDevices;
+
+    // Settings
+    int                     selectedSoundDevice;
+    PMDAA_ChannelMode       selectedChannelMode;
+    int                     selectedChannel;
+    
 };
 
 #endif /* PMScene1_hpp */

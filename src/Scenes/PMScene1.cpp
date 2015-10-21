@@ -11,31 +11,32 @@
 ///--------------------------------------------------------------
 PMScene1::PMScene1() : PMBaseScene()
 {
-    guiX = 20;
-    guiY = 50;
-    guiPanelWidth = 300;
-
-    float panelOriginX = guiX;
-    float panelMarginX = 20;
-
-    // GUI settings
-
-    ofxUIColor bgColor = ofColor::darkGreen;
+    // Settings
+    {
+        selectedSoundDevice = 0;
+        selectedChannelMode = PMDAA_CHANNEL_MULTI;
+        selectedChannel = 0;
+    }
 
     // GUI
     {
-        int panelNumber = 0;
-        panelOriginX += (guiPanelWidth * panelNumber) + panelMarginX;
+        guiX = 20;
+        guiY = 50;
+        guiPanelWidth = 500;
 
-//        soundStream.printDeviceList();
+        float panelOriginX;
+        float panelMarginX = 20;
+
+        ofxUIColor bgColor = ofColor(30);
+        int lastWidth;
 
         // Poem selector
-        this->setupGUIPoem(panelOriginX, bgColor);
+        panelOriginX = guiX;
+        lastWidth = this->setupGUIPoem(panelOriginX, bgColor);
 
         // Audio settings
-        panelNumber++;
-        panelOriginX += (guiPanelWidth * panelNumber) + panelMarginX;
-        this->setupGUIAudioSettings(panelOriginX, bgColor);
+        panelOriginX += lastWidth + panelMarginX;
+        lastWidth = this->setupGUIAudioSettings(panelOriginX, bgColor);
     }
 }
 
@@ -84,20 +85,61 @@ void PMScene1::willExit()
 }
 
 ///--------------------------------------------------------------
-void PMScene1::setupGUIPoem(float originX, ofxUIColor bgColor)
+float PMScene1::setupGUIPoem(float originX, ofxUIColor bgColor)
 {
-    guiPoemSelector = new ofxUISuperCanvas("POEM", originX, guiY, guiPanelWidth, ofGetHeight());
+    guiPoemSelector = new ofxUISuperCanvas("POEM");
     guiPoemSelector->setColorBack(bgColor);
     guiPoemSelector->addSpacer();
+
+    guiPoemSelector->setPosition(originX, guiY);
     guiPoemSelector->autoSizeToFitWidgets();
+
+    return guiPoemSelector->getRect()->getWidth();
 }
 
 ///--------------------------------------------------------------
-void PMScene1::setupGUIAudioSettings(float originX, ofxUIColor bgColor)
+float PMScene1::setupGUIAudioSettings(float originX, ofxUIColor bgColor)
 {
-    guiAudioSettings = new ofxUISuperCanvas("AUDIO SETTINGS", originX, guiY, guiPanelWidth, ofGetHeight());
+    soundDevices = PMDeviceAudioAnalyzer::getInstance().getDevices();
+
+    guiAudioSettings = new ofxUISuperCanvas("AUDIO SETTINGS", OFX_UI_FONT_LARGE);
+
     guiAudioSettings->setColorBack(bgColor);
     guiAudioSettings->addSpacer();
 
+    // Device
+    {
+        guiAudioSettings->addLabel("> DEVICE");
+
+        vector<string> soundDevicesList;
+        for (int i=0; i<soundDevices.size(); i++)
+            soundDevicesList.push_back(buildStringForSoundDevice(&soundDevices[i]));
+
+        ofxUIRadio *radioButtons = guiAudioSettings->addRadio("Sound Devices", soundDevicesList);
+        radioButtons->activateToggle(buildStringForSoundDevice(&soundDevices[selectedSoundDevice]));
+    }
+
+    // Channel mode
+    {
+        guiAudioSettings->addSpacer();
+        guiAudioSettings->addLabel("> CHANNEL MODE");
+
+        vector<string> channelModesList;
+        channelModesList.push_back("Multi");
+        channelModesList.push_back("Mono");
+        ofxUIRadio *radioButtons = guiAudioSettings->addRadio("Channel Mode", channelModesList);
+        radioButtons->activateToggle(channelModesList[selectedChannelMode]);
+    }
+
+    guiAudioSettings->setPosition(originX, guiY);
     guiAudioSettings->autoSizeToFitWidgets();
+
+    return guiAudioSettings->getRect()->getWidth();
+}
+
+///--------------------------------------------------------------
+string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
+{
+    string result = soundDevice->name + " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
+    return result;
 }
