@@ -42,12 +42,14 @@ void ofApp::setup()
     int outChannels = 0;
     int sampleRate = 44100;
     int bufferSize = 512;
-    audioAnalyzer = new PMDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize);
+
+    PMDeviceAudioAnalyzer &audioAnalyzer = PMDeviceAudioAnalyzer::getInstance();
+    audioAnalyzer.init(deviceId, inChannels, outChannels, sampleRate, bufferSize);
 
     int channelNumber = 0;
     bool useMelBands = true;
     int numMelBands = 4;
-    audioAnalyzer->setup(PMDAA_CHANNEL_MONO, channelNumber, useMelBands, numMelBands);
+    audioAnalyzer.setup(PMDAA_CHANNEL_MONO, channelNumber, useMelBands, numMelBands);
 }
 
 ///--------------------------------------------------------------
@@ -75,7 +77,7 @@ void ofApp::draw()
 ///--------------------------------------------------------------
 void ofApp::exit()
 {
-    delete audioAnalyzer;
+//    delete audioAnalyzer;
 }
 
 ///--------------------------------------------------------------
@@ -123,13 +125,13 @@ void ofApp::keyReleased(int key)
         case 'k':
         case 'K':
         {
-            audioAnalyzer->start();
+            PMDeviceAudioAnalyzer::getInstance().start();
             break;
         }
         case 'l':
         case 'L':
         {
-            audioAnalyzer->stop();
+            PMDeviceAudioAnalyzer::getInstance().stop();
             break;
         }
         default:
