@@ -12,6 +12,7 @@
 		21A059755481CC0BF969FD2D /* keep_alive.c in Sources */ = {isa = PBXBuildFile; fileRef = A3528DDFF05B00283552455D /* keep_alive.c */; };
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
 		2A0360621BD4F951007E1D52 /* ofxAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A035FFF1BD4F951007E1D52 /* ofxAudioAnalyzer.cpp */; settings = {ASSET_TAGS = (); }; };
+		2A0EF8571BD7F3B300D40230 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */; settings = {ASSET_TAGS = (); }; };
 		2A1A4FA41BC41C9500D6E2E2 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */; settings = {ASSET_TAGS = (); }; };
 		2A1A4FA51BC41C9500D6E2E2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F931BC41C9500D6E2E2 /* Accelerate.framework */; settings = {ASSET_TAGS = (); }; };
 		2A1A4FA61BC41C9500D6E2E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F941BC41C9500D6E2E2 /* AppKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -259,6 +260,8 @@
 		2A03605F1BD4F951007E1D52 /* tnt_vec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tnt_vec.h; sourceTree = "<group>"; };
 		2A0360601BD4F951007E1D52 /* tnt_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tnt_version.h; sourceTree = "<group>"; };
 		2A0360611BD4F951007E1D52 /* yamlast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yamlast.h; sourceTree = "<group>"; };
+		2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
+		2A0EF8561BD7F3B300D40230 /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
 		2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		2A1A4F931BC41C9500D6E2E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		2A1A4F941BC41C9500D6E2E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -791,6 +794,8 @@
 		2A7BCDAD1BCD1028004840A4 /* PMAudioAnalysis */ = {
 			isa = PBXGroup;
 			children = (
+				2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */,
+				2A0EF8561BD7F3B300D40230 /* PMAudioAnalyzer.hpp */,
 				2A7BCDAE1BCD1028004840A4 /* PMDeviceAudioAnalyzer.cpp */,
 				2A7BCDAF1BCD1028004840A4 /* PMDeviceAudioAnalyzer.hpp */,
 				2A7BCDB21BCD1C60004840A4 /* PMAudioOutParams.h */,
@@ -1393,6 +1398,7 @@
 				686B0DF6249B52E1A85B39EC /* ofxKinect.cpp in Sources */,
 				2ADCED401BC4834300F7F86A /* ofxEasingCirc.cpp in Sources */,
 				2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */,
+				2A0EF8571BD7F3B300D40230 /* PMAudioAnalyzer.cpp in Sources */,
 				2AD7552D1BD6587A009C8C06 /* PMBaseScene.cpp in Sources */,
 				2A8250CF1BCE5CC500EEADDF /* ofxUINumberDialer.cpp in Sources */,
 				2A8250DD1BCE5CC500EEADDF /* ofxUIToggle.cpp in Sources */,

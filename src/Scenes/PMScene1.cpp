@@ -100,7 +100,7 @@ float PMScene1::setupGUIPoem(float originX, ofxUIColor bgColor)
 ///--------------------------------------------------------------
 float PMScene1::setupGUIAudioSettings(float originX, ofxUIColor bgColor)
 {
-    soundDevices = PMDeviceAudioAnalyzer::getInstance().getDevices();
+    soundDevices = PMAudioAnalyzer::getDevices();
 
     guiAudioSettings = new ofxUISuperCanvas("AUDIO SETTINGS", OFX_UI_FONT_LARGE);
 

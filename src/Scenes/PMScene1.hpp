@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "ofxUI.h"
 #include "PMBaseScene.hpp"
-#include "PMDeviceAudioAnalyzer.hpp"
+#include "PMAudioAnalyzer.hpp"
 
 class PMScene1 : public PMBaseScene
 {

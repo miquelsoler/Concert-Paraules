@@ -24,4 +24,6 @@ private:
     unsigned int            currentScene;
 
     int                     windowPosX, windowPosY;
+
+//    PMDeviceAudioAnalyzer*  audioAnalyzer;
 };

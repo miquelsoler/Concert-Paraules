@@ -3,6 +3,7 @@
 #include "Defaults.h"
 #include "PMScene1.hpp"
 #include "PMScene2.hpp"
+#include "PMAudioAnalyzer.hpp"
 
 ///--------------------------------------------------------------
 void ofApp::setup()
@@ -33,7 +34,7 @@ void ofApp::setup()
     sceneManager.addScene(ofPtr<ofxScene>(new PMScene2));
     sceneManager.run();
 
-    cout << "Res: " << ofGetWidth() << "x" << ofGetHeight() << endl;
+    PMAudioAnalyzer::getInstance().init(true, 4);
 
     // For testing purposes
 
@@ -42,14 +43,9 @@ void ofApp::setup()
     int outChannels = 0;
     int sampleRate = 44100;
     int bufferSize = 512;
-
-    PMDeviceAudioAnalyzer &audioAnalyzer = PMDeviceAudioAnalyzer::getInstance();
-    audioAnalyzer.init(deviceId, inChannels, outChannels, sampleRate, bufferSize);
-
     int channelNumber = 0;
-    bool useMelBands = true;
-    int numMelBands = 4;
-    audioAnalyzer.setup(PMDAA_CHANNEL_MONO, channelNumber, useMelBands, numMelBands);
+
+    PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
 }
 
 ///--------------------------------------------------------------
@@ -70,7 +66,7 @@ void ofApp::draw()
     if (showFPS)
     {
         ofSetColor(ofColor::white);
-        ofDrawBitmapString(ofToString(ofGetFrameRate()) + "fps", 15, ofGetHeight() - 15);
+        ofDrawBitmapString(ofToString(int(roundf(ofGetFrameRate()))) + "fps", 15, ofGetHeight() - 15);
     }
 }
 
@@ -125,13 +121,13 @@ void ofApp::keyReleased(int key)
         case 'k':
         case 'K':
         {
-            PMDeviceAudioAnalyzer::getInstance().start();
+            PMAudioAnalyzer::getInstance().start();
             break;
         }
         case 'l':
         case 'L':
         {
-            PMDeviceAudioAnalyzer::getInstance().stop();
+            PMAudioAnalyzer::getInstance().stop();
             break;
         }
         default:
