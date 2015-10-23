@@ -7,6 +7,7 @@
 //
 
 #include "PMScene1.hpp"
+#include "PMSettingsManager.h"
 
 ///--------------------------------------------------------------
 PMScene1::PMScene1() : PMBaseScene()
@@ -16,16 +17,6 @@ PMScene1::PMScene1() : PMBaseScene()
         // Load sound devices and erase those with no input channels
 
         soundDevices = PMAudioAnalyzer::getDevices();
-        vector<int> devicesWithNoInputChannels;
-        for (int i=0; i<soundDevices.size(); i++)
-        {
-            if (soundDevices[i].inputChannels == 0)
-                devicesWithNoInputChannels.push_back(i);
-        }
-        for (int i=devicesWithNoInputChannels.size()-1; i>=0; i--)
-        {
-            soundDevices.erase(soundDevices.begin() + devicesWithNoInputChannels[i]);
-        }
 
         selectedSoundDevices.push_back(0);
         selectedChannels.push_back(0);
@@ -121,31 +112,39 @@ float PMScene1::setupGUIAudioSettings(float originX)
     guiAudioSettings->setColorBack(canvasBgColor);
     guiAudioSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
 
+    PMSettingsManager settingsManager = PMSettingsManager::getInstance();
+
     // Device
     {
         int maxChannelCols = 16;
 
         int numDevices = soundDevices.size();
 
-        vector<string> soundDevicesList;
-        for (int i=0; i<numDevices; i++)
-            soundDevicesList.push_back(buildStringForSoundDevice(&soundDevices[i]));
+        vector<string> soundDevicesNames;
+        for (int iDevice=0; iDevice<numDevices; ++iDevice)
+            soundDevicesNames.push_back(buildStringForSoundDevice(&soundDevices[iDevice]));
 
         int numRows, numCols;
         int numChannels;
 
-        for (int i=0; i<numDevices; i++)
+        for (int iDevice=0; iDevice<numDevices; ++iDevice)
         {
+            numChannels = soundDevices[iDevice].inputChannels;
+
+            if (numChannels <= 0) continue; // Skip devices without input channels
+
             guiAudioSettings->addSpacer();
-            ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesList[i], selectedSoundDevices[i]);
-            deviceToggle->setID(i);
+            ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesNames[iDevice], selectedSoundDevices[iDevice]);
+            deviceToggle->setID(iDevice);
             deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+
+            bool isDeviceEnabled = settingsManager.deviceSettings.count(iDevice) == 1;
+            deviceToggle->setValue(isDeviceEnabled);
 
             // Channel matrix
 
             guiAudioSettings->addLabel("Input channels:",OFX_UI_FONT_SMALL)->setColorFill(channelsLabelColor);
 
-            int numChannels = soundDevices[i].inputChannels;
             if (numChannels <= maxChannelCols) {
                 numRows = 1;
                 numCols = numChannels;
@@ -154,9 +153,13 @@ float PMScene1::setupGUIAudioSettings(float originX)
                 numCols = maxChannelCols;
             }
 
-            ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesList[i], numRows, numCols, 20, 20);
+            ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesNames[iDevice], numRows, numCols, 20, 20);
+            vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
 
-            vector<ofxUIToggle *> toggles = channelMatrix->getToggles();
+            for (int iToggle=0; iToggle<numChannels; ++iToggle)
+            {
+//                channelToggles[iToggle]->toggleValue();
+            }
         }
     }
 
@@ -185,6 +188,8 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
 ///--------------------------------------------------------------
 string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
 {
-    string result = soundDevice->name + " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
+    string result = "  [" + ofToString(soundDevice->deviceID) + "] " +
+        soundDevice->name +
+        " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
     return ofToUpper(result);
 }

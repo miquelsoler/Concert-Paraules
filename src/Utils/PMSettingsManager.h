@@ -31,10 +31,10 @@ public:
     bool                                releaseShowGUI;
     bool                                releaseShowFPS;
 
-    // Input devices (pair of deviceID + array of channels per device
+    // Input devices (map of deviceID + array of channels per device)
     map<int, vector<int>>               deviceSettings;
 
-    
+
     void writeToFile();
 
 private:

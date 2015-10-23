@@ -59,8 +59,6 @@ private:
     // Settings
     vector<int>             selectedSoundDevices;
     vector<int>             selectedChannels;
-
-    
 };
 
 #endif /* PMScene1_hpp */
