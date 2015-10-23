@@ -208,11 +208,12 @@ void PMScene1::addDeviceChannels(unsigned int deviceIndex)
 
         bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
 
-        // Channel IDs are dxxc where d is the device ID and xxc is the channel index
+        // Widged channels now have and IDs with format [DxxC] where D is the device ID and xxC is the channel index
         // E.g.: ID 4058 matches device with ID 4 and channel number 58
-        channelToggles[iToggle]->setID((deviceIndex * 1000) + iToggle);
 
-        channelToggles[iToggle]->setValue(isChannelEnabled);
+        ofxUIToggle *currentTogle = channelToggles[iToggle];
+        currentTogle->setID((deviceIndex * 1000) + iToggle);
+        currentTogle->setValue(isChannelEnabled);
     }
 }
 
@@ -220,7 +221,7 @@ void PMScene1::addDeviceChannels(unsigned int deviceIndex)
 string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
 {
     string result = "  <" + ofToString(soundDevice->deviceID) + "> " +
-        soundDevice->name +
-        " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
-    return ofToUpper(result);
+        ofToUpper(soundDevice->name) +
+        " (in:" + ofToString(soundDevice->inputChannels) + " out:" + ofToString(soundDevice->outputChannels) + ")";
+    return result;
 }
