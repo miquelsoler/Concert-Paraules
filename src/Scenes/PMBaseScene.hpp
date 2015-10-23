@@ -28,6 +28,8 @@ public:
 
 protected:
 
+    ofColor backgroundColor;
+
     ofTrueTypeFont baseFont;
 };
 

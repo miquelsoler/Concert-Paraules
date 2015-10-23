@@ -15,10 +15,12 @@ PMBaseScene::PMBaseScene()
 
     // Disable fades
     this->setSceneDuration(0, 0);
+
+    backgroundColor = ofColor::black;
 }
 
 ///--------------------------------------------------------------
 void PMBaseScene::draw()
 {
-    ofClear(ofColor::black);
+    ofClear(backgroundColor);
 }

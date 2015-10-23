@@ -16,6 +16,8 @@
 #include "PMBaseScene.hpp"
 #include "PMAudioAnalyzer.hpp"
 
+using namespace std;
+
 class PMScene1 : public PMBaseScene
 {
 public:
@@ -32,24 +34,32 @@ public:
 
 private:
 
-    float setupGUIPoem(float originX, ofxUIColor bgColor);
-    float setupGUIAudioSettings(float originX, ofxUIColor bgColor);
+    float setupGUIPoem(float originX);
+    float setupGUIAudioSettings(float originX);
+
+    void handleEventInputDevices(ofxUIEventArgs &e);
 
     string buildStringForSoundDevice(ofSoundDevice *soundDevice);
 
     // UI
     ofxUISuperCanvas        *guiPoemSelector;
     ofxUISuperCanvas        *guiAudioSettings;
+
     float                   guiX, guiY;
     float                   guiPanelWidth;
+
+    ofColor                 canvasBgColor;
+    ofColor                 canvasTitleColor;
+    ofColor                 deviceLabelColor;
+    ofColor                 channelsLabelColor;
 
     // Convenience attributes
     vector <ofSoundDevice>  soundDevices;
 
     // Settings
-    int                     selectedSoundDevice;
-    PMDAA_ChannelMode       selectedChannelMode;
-    int                     selectedChannel;
+    vector<int>             selectedSoundDevices;
+    vector<int>             selectedChannels;
+
     
 };
 

@@ -32,10 +32,6 @@ void PMScene2::draw()
 //    cout << "SC2 draw" << endl;
 
     PMBaseScene::draw();
-
-#ifdef OF_DEBUG
-    baseFont.drawString("MAIN", 15, 30);
-#endif
 }
 
 ///--------------------------------------------------------------

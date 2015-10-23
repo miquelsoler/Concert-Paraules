@@ -13,30 +13,50 @@ PMScene1::PMScene1() : PMBaseScene()
 {
     // Settings
     {
-        selectedSoundDevice = 0;
-        selectedChannelMode = PMDAA_CHANNEL_MULTI;
-        selectedChannel = 0;
+        // Load sound devices and erase those with no input channels
+
+        soundDevices = PMAudioAnalyzer::getDevices();
+        vector<int> devicesWithNoInputChannels;
+        for (int i=0; i<soundDevices.size(); i++)
+        {
+            if (soundDevices[i].inputChannels == 0)
+                devicesWithNoInputChannels.push_back(i);
+        }
+        for (int i=devicesWithNoInputChannels.size()-1; i>=0; i--)
+        {
+            soundDevices.erase(soundDevices.begin() + devicesWithNoInputChannels[i]);
+        }
+
+        selectedSoundDevices.push_back(0);
+        selectedChannels.push_back(0);
+
+        backgroundColor = ofColor(64, 73, 47);
+        canvasBgColor = ofColor(0, 0, 0, 50);
+        canvasTitleColor = ofColor(252, 239, 157);
+        deviceLabelColor = ofColor(255, 255, 200);
+        channelsLabelColor = ofColor(180, 180, 100);
     }
 
     // GUI
     {
         guiX = 20;
-        guiY = 50;
+        guiY = 20;
         guiPanelWidth = 500;
 
         float panelOriginX;
         float panelMarginX = 20;
 
-        ofxUIColor bgColor = ofColor(30);
+        ofxUIColor bgColor = ofColor(50,70,20);
+        
         int lastWidth;
 
         // Poem selector
         panelOriginX = guiX;
-        lastWidth = this->setupGUIPoem(panelOriginX, bgColor);
+        lastWidth = this->setupGUIPoem(panelOriginX);
 
         // Audio settings
         panelOriginX += lastWidth + panelMarginX;
-        lastWidth = this->setupGUIAudioSettings(panelOriginX, bgColor);
+        lastWidth = this->setupGUIAudioSettings(panelOriginX);
     }
 }
 
@@ -64,10 +84,6 @@ void PMScene1::draw()
 //    cout << "SC1 draw" << endl;
 
     PMBaseScene::draw();
-
-#ifdef OF_DEBUG
-    baseFont.drawString("CONCERT DE LES PARAULES - Configuració", 15, 30);
-#endif
 }
 
 ///--------------------------------------------------------------
@@ -85,61 +101,90 @@ void PMScene1::willExit()
 }
 
 ///--------------------------------------------------------------
-float PMScene1::setupGUIPoem(float originX, ofxUIColor bgColor)
+float PMScene1::setupGUIPoem(float originX)
 {
-    guiPoemSelector = new ofxUISuperCanvas("POEM");
-    guiPoemSelector->setColorBack(bgColor);
+    guiPoemSelector = new ofxUISuperCanvas("POEM", OFX_UI_FONT_LARGE);
+    guiPoemSelector->setColorBack(canvasBgColor);
+    guiPoemSelector->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiPoemSelector->addSpacer();
 
     guiPoemSelector->setPosition(originX, guiY);
     guiPoemSelector->autoSizeToFitWidgets();
-
+    
     return guiPoemSelector->getRect()->getWidth();
 }
 
 ///--------------------------------------------------------------
-float PMScene1::setupGUIAudioSettings(float originX, ofxUIColor bgColor)
+float PMScene1::setupGUIAudioSettings(float originX)
 {
-    soundDevices = PMAudioAnalyzer::getDevices();
-
-    guiAudioSettings = new ofxUISuperCanvas("AUDIO SETTINGS", OFX_UI_FONT_LARGE);
-
-    guiAudioSettings->setColorBack(bgColor);
-    guiAudioSettings->addSpacer();
+    guiAudioSettings = new ofxUISuperCanvas("INPUT DEVICES", OFX_UI_FONT_LARGE);
+    guiAudioSettings->setColorBack(canvasBgColor);
+    guiAudioSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
 
     // Device
     {
-        guiAudioSettings->addLabel("> DEVICE");
+        int maxChannelCols = 16;
+
+        int numDevices = soundDevices.size();
 
         vector<string> soundDevicesList;
-        for (int i=0; i<soundDevices.size(); i++)
+        for (int i=0; i<numDevices; i++)
             soundDevicesList.push_back(buildStringForSoundDevice(&soundDevices[i]));
 
-        ofxUIRadio *radioButtons = guiAudioSettings->addRadio("Sound Devices", soundDevicesList);
-        radioButtons->activateToggle(buildStringForSoundDevice(&soundDevices[selectedSoundDevice]));
-    }
+        int numRows, numCols;
+        int numChannels;
 
-    // Channel mode
-    {
-        guiAudioSettings->addSpacer();
-        guiAudioSettings->addLabel("> CHANNEL MODE");
+        for (int i=0; i<numDevices; i++)
+        {
+            guiAudioSettings->addSpacer();
+            ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesList[i], selectedSoundDevices[i]);
+            deviceToggle->setID(i);
+            deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
 
-        vector<string> channelModesList;
-        channelModesList.push_back("Multi");
-        channelModesList.push_back("Mono");
-        ofxUIRadio *radioButtons = guiAudioSettings->addRadio("Channel Mode", channelModesList);
-        radioButtons->activateToggle(channelModesList[selectedChannelMode]);
+            // Channel matrix
+
+            guiAudioSettings->addLabel("Input channels:",OFX_UI_FONT_SMALL)->setColorFill(channelsLabelColor);
+
+            int numChannels = soundDevices[i].inputChannels;
+            if (numChannels <= maxChannelCols) {
+                numRows = 1;
+                numCols = numChannels;
+            } else {
+                numRows = numChannels / maxChannelCols;
+                numCols = maxChannelCols;
+            }
+
+            ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesList[i], numRows, numCols, 20, 20);
+
+            vector<ofxUIToggle *> toggles = channelMatrix->getToggles();
+        }
     }
 
     guiAudioSettings->setPosition(originX, guiY);
     guiAudioSettings->autoSizeToFitWidgets();
 
+    ofAddListener(guiAudioSettings->newGUIEvent, this, &PMScene1::handleEventInputDevices);
+
     return guiAudioSettings->getRect()->getWidth();
 }
+
+///--------------------------------------------------------------
+void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
+{
+    string name = e.widget->getName();
+    int kind = e.widget->getKind();
+
+    if (kind != OFX_UI_WIDGET_TOGGLE) return;
+
+    ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
+    selectedSoundDevices[toggle->getID()] = toggle->getValue();
+    cout << name << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
+}
+
 
 ///--------------------------------------------------------------
 string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
 {
     string result = soundDevice->name + " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
-    return result;
+    return ofToUpper(result);
 }
