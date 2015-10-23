@@ -112,7 +112,7 @@ float PMScene1::setupGUIAudioSettings(float originX)
     guiAudioSettings->setColorBack(canvasBgColor);
     guiAudioSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
 
-    PMSettingsManager settingsManager = PMSettingsManager::getInstance();
+    PMSettingsManager &settingsManager = PMSettingsManager::getInstance();
 
     // Device
     {
@@ -158,7 +158,12 @@ float PMScene1::setupGUIAudioSettings(float originX)
 
             for (int iToggle=0; iToggle<numChannels; ++iToggle)
             {
-//                channelToggles[iToggle]->toggleValue();
+                if (!isDeviceEnabled) continue;
+
+                vector<int> &enabledDeviceChannels = settingsManager.deviceSettings[iDevice];
+
+                bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
+                channelToggles[iToggle]->setValue(isChannelEnabled);
             }
         }
     }
