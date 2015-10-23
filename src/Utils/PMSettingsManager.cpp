@@ -50,11 +50,11 @@ bool PMSettingsManager::loadSettings()
 
     // App Settings
     {
+        prefix = "App Settings";
         deviceSettings.clear();
 
-        prefix = "App Settings";
+        // Traverse devices and fill the deviceSettings map
 
-        // Traverse devices
         Json::Value devices = json[prefix]["Devices"];
         for (int iDevice=0; iDevice<devices.size(); ++iDevice)
         {
@@ -67,8 +67,9 @@ bool PMSettingsManager::loadSettings()
             for (int iChannel=0; iChannel<channels.size(); ++iChannel)
                 deviceChannelsIDs.push_back(channels[iChannel]["Id"].asInt());
 
-            deviceSettings.push_back(pair<int, vector<int>>(deviceID, deviceChannelsIDs));
+            deviceSettings[deviceID] = deviceChannelsIDs;
         }
+
     }
 
     return parsingSuccessful;

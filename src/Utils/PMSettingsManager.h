@@ -32,8 +32,9 @@ public:
     bool                                releaseShowFPS;
 
     // Input devices (pair of deviceID + array of channels per device
-    vector<pair<int, vector<int>>>      deviceSettings;
+    map<int, vector<int>>               deviceSettings;
 
+    
     void writeToFile();
 
 private:
