@@ -39,6 +39,10 @@ private:
 
     void handleEventInputDevices(ofxUIEventArgs &e);
 
+    void buildAudioAnalyzersFromSetup();
+
+    bool addDevice(unsigned int deviceIndex);
+    void addDeviceChannels(unsigned int deviceIndex);
     string buildStringForSoundDevice(ofSoundDevice *soundDevice);
 
     // UI
@@ -55,6 +59,7 @@ private:
 
     // Convenience attributes
     vector <ofSoundDevice>  soundDevices;
+    vector<string>          soundDevicesNames;
 
     // Settings
     vector<int>             selectedSoundDevices;

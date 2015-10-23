@@ -9,6 +9,8 @@
 #include "PMScene1.hpp"
 #include "PMSettingsManager.h"
 
+#pragma mark - UI building
+
 ///--------------------------------------------------------------
 PMScene1::PMScene1() : PMBaseScene()
 {
@@ -112,59 +114,23 @@ float PMScene1::setupGUIAudioSettings(float originX)
     guiAudioSettings->setColorBack(canvasBgColor);
     guiAudioSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
 
-    PMSettingsManager &settingsManager = PMSettingsManager::getInstance();
-
-    // Device
+    // Add devices and per-device channels
     {
-        int maxChannelCols = 16;
-
+        int numChannels;
         int numDevices = soundDevices.size();
 
-        vector<string> soundDevicesNames;
         for (int iDevice=0; iDevice<numDevices; ++iDevice)
             soundDevicesNames.push_back(buildStringForSoundDevice(&soundDevices[iDevice]));
 
-        int numRows, numCols;
-        int numChannels;
-
-        for (int iDevice=0; iDevice<numDevices; ++iDevice)
+        for (unsigned int iDevice=0; iDevice<numDevices; ++iDevice)
         {
             numChannels = soundDevices[iDevice].inputChannels;
-
             if (numChannels <= 0) continue; // Skip devices without input channels
 
-            guiAudioSettings->addSpacer();
-            ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesNames[iDevice], selectedSoundDevices[iDevice]);
-            deviceToggle->setID(iDevice);
-            deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+            bool isDeviceEnabled = addDevice(iDevice);
+            if (!isDeviceEnabled) continue;
 
-            bool isDeviceEnabled = settingsManager.deviceSettings.count(iDevice) == 1;
-            deviceToggle->setValue(isDeviceEnabled);
-
-            // Channel matrix
-
-            guiAudioSettings->addLabel("Input channels:",OFX_UI_FONT_SMALL)->setColorFill(channelsLabelColor);
-
-            if (numChannels <= maxChannelCols) {
-                numRows = 1;
-                numCols = numChannels;
-            } else {
-                numRows = numChannels / maxChannelCols;
-                numCols = maxChannelCols;
-            }
-
-            ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesNames[iDevice], numRows, numCols, 20, 20);
-            vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
-
-            for (int iToggle=0; iToggle<numChannels; ++iToggle)
-            {
-                if (!isDeviceEnabled) continue;
-
-                vector<int> &enabledDeviceChannels = settingsManager.deviceSettings[iDevice];
-
-                bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
-                channelToggles[iToggle]->setValue(isChannelEnabled);
-            }
+            addDeviceChannels(iDevice);
         }
     }
 
@@ -175,6 +141,8 @@ float PMScene1::setupGUIAudioSettings(float originX)
 
     return guiAudioSettings->getRect()->getWidth();
 }
+
+#pragma mark - Event management
 
 ///--------------------------------------------------------------
 void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
@@ -189,11 +157,69 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
     cout << name << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
 }
 
+#pragma mark - Build scene 2 from settings
+
+///--------------------------------------------------------------
+void PMScene1::buildAudioAnalyzersFromSetup()
+{
+}
+
+#pragma mark - Convenience methods
+
+///--------------------------------------------------------------
+bool PMScene1::addDevice(unsigned int deviceIndex)
+{
+    // Device list + enabling/disabling devices
+
+    guiAudioSettings->addSpacer();
+
+    ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesNames[deviceIndex], selectedSoundDevices[deviceIndex]);
+    deviceToggle->setID(deviceIndex);
+    deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+
+    bool isDeviceEnabled = PMSettingsManager::getInstance().deviceSettings.count(deviceIndex) == 1;
+    deviceToggle->setValue(isDeviceEnabled);
+
+    return isDeviceEnabled;
+}
+
+///--------------------------------------------------------------
+void PMScene1::addDeviceChannels(unsigned int deviceIndex)
+{
+    guiAudioSettings->addLabel("Input channels:",OFX_UI_FONT_SMALL)->setColorFill(channelsLabelColor);
+
+    int maxChannelCols = 16;
+    int numChannels = soundDevices[deviceIndex].inputChannels;
+
+    int numRows = 1;
+    int numCols = numChannels;
+
+    if (numChannels > maxChannelCols) {
+        numRows = numChannels / maxChannelCols;
+        numCols = maxChannelCols;
+    }
+
+    ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesNames[deviceIndex], numRows, numCols, 20, 20);
+    vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
+
+    for (int iToggle=0; iToggle<numChannels; ++iToggle)
+    {
+        vector<int> &enabledDeviceChannels = PMSettingsManager::getInstance().deviceSettings[deviceIndex];
+
+        bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
+
+        // Channel IDs are dxxc where d is the device ID and xxc is the channel index
+        // E.g.: ID 4058 matches device with ID 4 and channel number 58
+        channelToggles[iToggle]->setID((deviceIndex * 1000) + iToggle);
+
+        channelToggles[iToggle]->setValue(isChannelEnabled);
+    }
+}
 
 ///--------------------------------------------------------------
 string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
 {
-    string result = "  [" + ofToString(soundDevice->deviceID) + "] " +
+    string result = "  <" + ofToString(soundDevice->deviceID) + "> " +
         soundDevice->name +
         " (In:" + ofToString(soundDevice->inputChannels) + " Out:" + ofToString(soundDevice->outputChannels) + ")";
     return ofToUpper(result);
