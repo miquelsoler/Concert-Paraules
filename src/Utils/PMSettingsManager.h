@@ -24,12 +24,17 @@ public:
     }
 
     // Debug Mode
-    bool            debugShowGUI;
-    bool            debugShowFPS;
+    bool                                debugShowGUI;
+    bool                                debugShowFPS;
 
     // Release Mode
-    bool            releaseShowGUI;
-    bool            releaseShowFPS;
+    bool                                releaseShowGUI;
+    bool                                releaseShowFPS;
+
+    // Input devices (pair of deviceID + array of channels per device
+    vector<pair<int, vector<int>>>      deviceSettings;
+
+    void writeToFile();
 
 private:
 

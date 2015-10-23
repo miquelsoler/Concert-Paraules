@@ -6,5 +6,23 @@
     "Release Mode": {
         "Show GUI": false,
         "Show FPS": false
+    },
+    "App Settings": {
+        "Devices":
+        [
+			{
+            	"Id": 230,
+                "Channels": [
+					{"Id": 0},
+                    {"Id": 1}
+                ]
+            },
+         	{
+         		"Id": 41,
+         		"Channels": [
+        			{"Id": 0}
+            	]
+         	}
+        ]
     }
 }
