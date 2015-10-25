@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "PMDeviceAudioAnalyzer.hpp"
-#include "ofxSceneManager.h"
+#include "PMSceneManager.hpp"
 
 class ofApp : public ofBaseApp
 {
@@ -20,7 +19,7 @@ private:
     bool                    showFPS;
     bool                    isFullScreen;
 
-    ofxSceneManager         sceneManager;
+    PMSceneManager          *sceneManager;
     unsigned int            currentScene;
 
     int                     windowPosX, windowPosY;

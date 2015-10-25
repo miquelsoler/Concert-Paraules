@@ -1,8 +1,6 @@
 #include "ofApp.h"
 #include "PMSettingsManager.h"
 #include "Defaults.h"
-#include "PMScene1.hpp"
-#include "PMScene2.hpp"
 #include "PMAudioAnalyzer.hpp"
 
 ///--------------------------------------------------------------
@@ -30,9 +28,8 @@ void ofApp::setup()
 
     // Scenes
 
-    sceneManager.addScene(ofPtr<ofxScene>(new PMScene1));
-    sceneManager.addScene(ofPtr<ofxScene>(new PMScene2));
-    sceneManager.run();
+    sceneManager = &(PMSceneManager::getInstance());
+    sceneManager->init();
 
     PMAudioAnalyzer::getInstance().init(true, 4);
 
@@ -55,13 +52,13 @@ void ofApp::update()
     ofShowCursor();
 #endif
 
-    sceneManager.update();
+    sceneManager->update();
 }
 
 ///--------------------------------------------------------------
 void ofApp::draw()
 {
-    sceneManager.draw();
+    sceneManager->draw();
 
     if (showFPS)
     {
@@ -81,14 +78,6 @@ void ofApp::keyReleased(int key)
 {
     switch(key)
     {
-        // Change scene
-        case OF_KEY_LEFT:
-        case OF_KEY_RIGHT:
-        {
-            sceneManager.changeScene();
-            currentScene = (currentScene + 1) % 2;
-            break;
-        }
         // Change window mode
         case 'f':
         case 'F':

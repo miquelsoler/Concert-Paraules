@@ -7,6 +7,7 @@
 //
 
 #include "PMSettingsManager.h"
+#include "ofUtils.h"
 
 const std::string FILENAME = "settings/settings.json";
 
@@ -79,5 +80,9 @@ void PMSettingsManager::writeToFile()
 
     // Debug mode
     {
+        data[STR_DEBUG_MODE][STR_SHOW_GUI] = debugShowGUI;
     }
+
+    ofFile outputFile(ofToDataPath("json/country_data.json"), ofFile::WriteOnly);
+    outputFile << data;
 }

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <stdio.h>
+#include "ofxSceneManager.h"
 #include "ofxScene.h"
 
 class PMBaseScene : public ofxScene

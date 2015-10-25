@@ -34,12 +34,12 @@ public:
 
 private:
 
-    float setupGUIPoem(float originX);
-    float setupGUIAudioSettings(float originX);
+    float setupGUIPoem(float originX, float originY);
+    float setupGUIAudioSettings(float originX, float originY);
+    void setupGUIMainButtons();
 
     void handleEventInputDevices(ofxUIEventArgs &e);
-
-    void buildAudioAnalyzersFromSetup();
+    void handleEventMainButtons(ofxUIEventArgs &e);
 
     bool addDevice(unsigned int deviceIndex);
     void addDeviceChannels(unsigned int deviceIndex);
@@ -48,6 +48,7 @@ private:
     // UI
     ofxUISuperCanvas        *guiPoemSelector;
     ofxUISuperCanvas        *guiAudioSettings;
+    ofxUISuperCanvas        *guiMainButtons;
 
     float                   guiX, guiY;
     float                   guiPanelWidth;

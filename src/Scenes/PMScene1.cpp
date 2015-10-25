@@ -7,12 +7,17 @@
 //
 
 #include "PMScene1.hpp"
+#include "PMSceneManager.hpp"
 #include "PMSettingsManager.h"
+
+
+static const string     STR_MAIN_SAVE       = "SAVE & CONTINUE";
+static const string     STR_MAIN_IGNORE     = "IGNORE & CONTINUE";
 
 #pragma mark - UI building
 
 ///--------------------------------------------------------------
-PMScene1::PMScene1() : PMBaseScene()
+PMScene1::PMScene1()
 {
     // Settings
     {
@@ -24,6 +29,7 @@ PMScene1::PMScene1() : PMBaseScene()
         selectedChannels.push_back(0);
 
         backgroundColor = ofColor(64, 73, 47);
+
         canvasBgColor = ofColor(0, 0, 0, 50);
         canvasTitleColor = ofColor(252, 239, 157);
         deviceLabelColor = ofColor(255, 255, 200);
@@ -36,7 +42,7 @@ PMScene1::PMScene1() : PMBaseScene()
         guiY = 20;
         guiPanelWidth = 500;
 
-        float panelOriginX;
+        float panelOriginX, panelOriginY;
         float panelMarginX = 20;
 
         ofxUIColor bgColor = ofColor(50,70,20);
@@ -45,11 +51,14 @@ PMScene1::PMScene1() : PMBaseScene()
 
         // Poem selector
         panelOriginX = guiX;
-        lastWidth = this->setupGUIPoem(panelOriginX);
+        lastWidth = this->setupGUIPoem(panelOriginX, guiY);
 
         // Audio settings
         panelOriginX += lastWidth + panelMarginX;
-        lastWidth = this->setupGUIAudioSettings(panelOriginX);
+        lastWidth = this->setupGUIAudioSettings(panelOriginX, guiY);
+
+        // Continue buttons
+        this->setupGUIMainButtons();
     }
 }
 
@@ -91,24 +100,27 @@ void PMScene1::willExit()
 {
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);
+    guiMainButtons->setVisible(false);
 }
 
+#pragma mark - Panels
+
 ///--------------------------------------------------------------
-float PMScene1::setupGUIPoem(float originX)
+float PMScene1::setupGUIPoem(float originX, float originY)
 {
     guiPoemSelector = new ofxUISuperCanvas("POEM", OFX_UI_FONT_LARGE);
     guiPoemSelector->setColorBack(canvasBgColor);
     guiPoemSelector->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiPoemSelector->addSpacer();
 
-    guiPoemSelector->setPosition(originX, guiY);
+    guiPoemSelector->setPosition(originX, originY);
     guiPoemSelector->autoSizeToFitWidgets();
     
     return guiPoemSelector->getRect()->getWidth();
 }
 
 ///--------------------------------------------------------------
-float PMScene1::setupGUIAudioSettings(float originX)
+float PMScene1::setupGUIAudioSettings(float originX, float originY)
 {
     guiAudioSettings = new ofxUISuperCanvas("INPUT DEVICES", OFX_UI_FONT_LARGE);
     guiAudioSettings->setColorBack(canvasBgColor);
@@ -132,7 +144,7 @@ float PMScene1::setupGUIAudioSettings(float originX)
         }
     }
 
-    guiAudioSettings->setPosition(originX, guiY);
+    guiAudioSettings->setPosition(originX, originY);
     guiAudioSettings->autoSizeToFitWidgets();
 
     ofAddListener(guiAudioSettings->newGUIEvent, this, &PMScene1::handleEventInputDevices);
@@ -140,26 +152,60 @@ float PMScene1::setupGUIAudioSettings(float originX)
     return guiAudioSettings->getRect()->getWidth();
 }
 
+///--------------------------------------------------------------
+void PMScene1::setupGUIMainButtons()
+{
+    guiMainButtons = new ofxUISuperCanvas("GO TO MAIN SCENE");
+    guiMainButtons->setColorBack(canvasBgColor);
+    guiMainButtons->getCanvasTitle()->setColorFill(canvasTitleColor);
+
+    guiMainButtons->addLabelButton(STR_MAIN_SAVE, false);
+    guiMainButtons->addLabelButton(STR_MAIN_IGNORE, false);
+
+    guiMainButtons->autoSizeToFitWidgets();
+
+    ofxUIRectangle *widgetRect = guiMainButtons->getRect();
+
+    float marginSize = 20;
+    guiMainButtons->setPosition(ofGetWidth() - widgetRect->getWidth() - marginSize,
+                                ofGetHeight() - widgetRect->getHeight() - marginSize);
+
+    ofAddListener(guiMainButtons->newGUIEvent, this, &PMScene1::handleEventMainButtons);
+}
+
 #pragma mark - Event management
 
 ///--------------------------------------------------------------
 void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
 {
-    string name = e.widget->getName();
-    int kind = e.widget->getKind();
+    string widgetName = e.widget->getName();
 
-    if (kind != OFX_UI_WIDGET_TOGGLE) return;
+    if (e.widget->getKind() != OFX_UI_WIDGET_TOGGLE) return;
 
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
     selectedSoundDevices[toggle->getID()] = toggle->getValue();
-    cout << name << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
+    cout << widgetName << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
 }
 
-#pragma mark - Build scene 2 from settings
-
-///--------------------------------------------------------------
-void PMScene1::buildAudioAnalyzersFromSetup()
+void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
 {
+    string widgetName = e.widget->getName();
+
+    if (e.getKind() != OFX_UI_WIDGET_LABELBUTTON) return;
+
+    ofxUILabelButton *button = (ofxUILabelButton *)e.widget;
+    if (!button->getValue()) return; // Ignore releases
+
+    if (widgetName == STR_MAIN_SAVE)
+    {
+        cout << "Save" << endl;
+        PMSceneManager::getInstance().changeScene();
+    }
+    else if (widgetName == STR_MAIN_IGNORE)
+    {
+        cout << "Ignore" << endl;
+        PMSceneManager::getInstance().changeScene();
+    }
 }
 
 #pragma mark - Convenience methods
