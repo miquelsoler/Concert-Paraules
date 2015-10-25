@@ -14,6 +14,18 @@
 #include <stdio.h>
 #include "ofxJSON.h"
 
+// Debug/release string settings
+static const string     STR_DEBUG_MODE      = "Debug Mode";
+static const string     STR_RELEASE_MODE    = "Release Mode";
+static const string     STR_SHOW_GUI        = "Show GUI";
+static const string     STR_SHOW_FPS        = "Show FPS";
+
+// "Concert de les paraules" string settings
+static const string     STR_APP_SETTINGS    = "App Settings";
+static const string     STR_AS_DEVICES      = "Devices";
+static const string     STR_AS_CHANNELS     = "Channels";
+static const string     STR_AS_CHANNEL_ID   = "Id";
+
 class PMSettingsManager
 {
 public:

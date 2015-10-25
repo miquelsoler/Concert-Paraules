@@ -32,40 +32,35 @@ bool PMSettingsManager::loadSettings()
     cout << "PARSING RESULT: " << parsingSuccessful << endl;
 #endif
 
-    string prefix, subprefix;
-
-    // Debug Mode
+    // Debug mode
     {
-        prefix = "Debug Mode";
-        debugShowGUI = json[prefix]["Show GUI"].asBool();
-        debugShowFPS = json[prefix]["Show FPS"].asBool();
+        debugShowGUI = json[STR_DEBUG_MODE][STR_SHOW_GUI].asBool();
+        debugShowFPS = json[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
     }
 
     // Release mode
     {
-        prefix = "Release Mode";
-        releaseShowGUI = json[prefix]["Show GUI"].asBool();
-        releaseShowFPS = json[prefix]["Show FPS"].asBool();
+        releaseShowGUI = json[STR_RELEASE_MODE][STR_SHOW_GUI].asBool();
+        releaseShowFPS = json[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
     }
 
     // App Settings
     {
-        prefix = "App Settings";
         deviceSettings.clear();
 
         // Traverse devices and fill the deviceSettings map
 
-        Json::Value devices = json[prefix]["Devices"];
+        Json::Value devices = json[STR_APP_SETTINGS][STR_AS_DEVICES];
         for (int iDevice=0; iDevice<devices.size(); ++iDevice)
         {
             Json::Value device = devices[iDevice];
-            int deviceID = devices[iDevice]["Id"].asInt();
+            int deviceID = devices[iDevice][STR_AS_CHANNEL_ID].asInt();
 
             // For each device, traverse channels
             vector<int> deviceChannelsIDs;
-            Json::Value channels = devices[iDevice]["Channels"];
+            Json::Value channels = devices[iDevice][STR_AS_CHANNELS];
             for (int iChannel=0; iChannel<channels.size(); ++iChannel)
-                deviceChannelsIDs.push_back(channels[iChannel]["Id"].asInt());
+                deviceChannelsIDs.push_back(channels[iChannel][STR_AS_CHANNEL_ID].asInt());
 
             deviceSettings[deviceID] = deviceChannelsIDs;
         }
@@ -79,4 +74,10 @@ bool PMSettingsManager::loadSettings()
 void PMSettingsManager::writeToFile()
 {
     // TO BE DONE (maybe move to ofxXmlSettings...)
+
+    ofxJSONElement data;
+
+    // Debug mode
+    {
+    }
 }

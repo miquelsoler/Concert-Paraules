@@ -116,7 +116,6 @@ float PMScene1::setupGUIAudioSettings(float originX)
 
     // Add devices and per-device channels
     {
-        int numChannels;
         int numDevices = soundDevices.size();
 
         for (int iDevice=0; iDevice<numDevices; ++iDevice)
@@ -124,13 +123,12 @@ float PMScene1::setupGUIAudioSettings(float originX)
 
         for (unsigned int iDevice=0; iDevice<numDevices; ++iDevice)
         {
-            numChannels = soundDevices[iDevice].inputChannels;
+            int numChannels = soundDevices[iDevice].inputChannels;
             if (numChannels <= 0) continue; // Skip devices without input channels
 
             bool isDeviceEnabled = addDevice(iDevice);
-            if (!isDeviceEnabled) continue;
-
-            addDeviceChannels(iDevice);
+            if (isDeviceEnabled)
+                addDeviceChannels(iDevice);
         }
     }
 
