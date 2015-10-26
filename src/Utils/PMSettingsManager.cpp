@@ -14,7 +14,7 @@ const std::string FILENAME = "settings/settings.json";
 ///--------------------------------------------------------------
 PMSettingsManager::PMSettingsManager()
 {
-    bool parserResult = loadSettings();
+    bool parserResult = loadFromJSONFile();
     if (!parserResult)
     {
         ofLog(OF_LOG_ERROR, "BAD FORMAT IN settings.json. Now quitting...");
@@ -23,7 +23,7 @@ PMSettingsManager::PMSettingsManager()
 }
 
 ///--------------------------------------------------------------
-bool PMSettingsManager::loadSettings()
+bool PMSettingsManager::loadFromJSONFile()
 {
     // JSON parse
 
@@ -72,17 +72,7 @@ bool PMSettingsManager::loadSettings()
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::writeToFile()
+void PMSettingsManager::writeToJSONFile()
 {
-    // TO BE DONE (maybe move to ofxXmlSettings...)
-
-    ofxJSONElement data;
-
-    // Debug mode
-    {
-        data[STR_DEBUG_MODE][STR_SHOW_GUI] = debugShowGUI;
-    }
-
-    ofFile outputFile(ofToDataPath("json/country_data.json"), ofFile::WriteOnly);
-    outputFile << data;
+    json.save(FILENAME, true);
 }

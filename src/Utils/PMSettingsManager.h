@@ -47,12 +47,12 @@ public:
     map<int, vector<int>>               deviceSettings;
 
 
-    void writeToFile();
+    void writeToJSONFile();
 
 private:
 
     PMSettingsManager();
-    bool loadSettings();
+    bool loadFromJSONFile();
 
     ofxJSONElement  json;
 };

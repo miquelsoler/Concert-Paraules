@@ -1,36 +1,48 @@
 {
-    "Debug Mode": {
-        "Show GUI": true,
-        "Show FPS": true
-    },
-    "Release Mode": {
-        "Show GUI": false,
-        "Show FPS": false
-    },
-    "App Settings": {
-        "Devices":
-        [
-			{
-            	"Id": 0,
-                "Channels": [
-					{"Id": 0},
-                    {"Id": 1}
-                ]
-            },
-         	{
-         		"Id": 3,
-         		"Channels": [
-        			{"Id": 1}
-            	]
-         	},
-         	{
-         		"Id": 4,
-         		"Channels": [
-         			{"Id": 3},
-         			{"Id": 6},
-         			{"Id": 9}
-         		]
-         	}
-        ]
-    }
+   "App Settings" : {
+      "Devices" : [
+         {
+            "Channels" : [
+               {
+                  "Id" : 0
+               },
+               {
+                  "Id" : 1
+               }
+            ],
+            "Id" : 0
+         },
+         {
+            "Channels" : [
+               {
+                  "Id" : 1
+               }
+            ],
+            "Id" : 3
+         },
+         {
+            "Channels" : [
+               {
+                  "Id" : 3
+               },
+               {
+                  "Id" : 6
+               },
+               {
+                  "Id" : 9
+               }
+            ],
+            "Id" : 4
+         }
+      ]
+   },
+   "Debug Mode" : {
+      "Show FPS" : true,
+      "Show GUI" : true
+   },
+   "Release Mode" : {
+      "Show FPS" : false,
+      "Show GUI" : false
+   }
 }
+
