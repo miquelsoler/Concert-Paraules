@@ -23,9 +23,9 @@ void ofApp::setup()
     // Settings
 
 #ifdef OF_DEBUG
-    showFPS = PMSettingsManager::getInstance().debugShowFPS;
+    showFPS = PMSettingsManager::getInstance().getDebugShowFPS();
 #else
-    showFPS = PMSettingsManager::getInstance().releaseShowFPS;
+    showFPS = PMSettingsManager::getInstance().releaseShowFPS();
 #endif
 
     // Scenes

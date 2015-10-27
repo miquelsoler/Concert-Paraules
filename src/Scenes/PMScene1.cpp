@@ -229,38 +229,7 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
 #pragma mark - Convenience methods
 
 ///--------------------------------------------------------------
-bool PMScene1::addDevice(unsigned int deviceIndex)
+void PMScene1::enableDevice(unsigned int deviceIndex)
 {
-    // Device list + enabling/disabling devices
 
-    guiAudioSettings->addSpacer();
-
-    bool isDeviceEnabled = true;
-    return isDeviceEnabled;
-}
-
-///--------------------------------------------------------------
-void PMScene1::addDeviceChannels(unsigned int deviceIndex)
-{
-    guiAudioSettings->addLabel("Input channels:",OFX_UI_FONT_SMALL)->setColorFill(channelsLabelColor);
-
-    int maxChannelCols = 16;
-    int numChannels = soundDevices[deviceIndex].inputChannels;
-
-    int numRows = 1;
-    int numCols = numChannels;
-
-    if (numChannels > maxChannelCols) {
-        numRows = numChannels / maxChannelCols;
-        numCols = maxChannelCols;
-    }
-}
-
-///--------------------------------------------------------------
-string PMScene1::buildStringForSoundDevice(ofSoundDevice *soundDevice)
-{
-    string result = "  <" + ofToString(soundDevice->deviceID) + "> " +
-        ofToUpper(soundDevice->name) +
-        " (in:" + ofToString(soundDevice->inputChannels) + " out:" + ofToString(soundDevice->outputChannels) + ")";
-    return result;
 }

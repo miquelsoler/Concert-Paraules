@@ -36,21 +36,9 @@ PMSettingsManager::PMSettingsManager()
 #pragma mark - Getters and setters
 
 ///--------------------------------------------------------------
-bool PMSettingsManager::getDebugShowGUI()
-{
-    return debugShowGUI;
-}
-
-///--------------------------------------------------------------
 bool PMSettingsManager::getDebugShowFPS()
 {
     return debugShowFPS;
-}
-
-///--------------------------------------------------------------
-bool PMSettingsManager::getReleaseShowGUI()
-{
-    return releaseShowGUI;
 }
 
 ///--------------------------------------------------------------
@@ -92,13 +80,11 @@ bool PMSettingsManager::loadGeneralSettings()
 
     // Debug mode
     {
-        debugShowGUI = jsonGeneral[STR_DEBUG_MODE][STR_SHOW_GUI].asBool();
         debugShowFPS = jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
     }
 
     // Release mode
     {
-        releaseShowGUI = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_GUI].asBool();
         releaseShowFPS = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
     }
 

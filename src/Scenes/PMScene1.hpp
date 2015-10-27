@@ -41,9 +41,7 @@ private:
     void handleEventInputDevices(ofxUIEventArgs &e);
     void handleEventMainButtons(ofxUIEventArgs &e);
 
-    bool addDevice(unsigned int deviceIndex);
-    void addDeviceChannels(unsigned int deviceIndex);
-    string buildStringForSoundDevice(ofSoundDevice *soundDevice);
+    void enableDevice(unsigned int deviceIndex);
 
     // UI
     ofxUISuperCanvas        *guiPoemSelector;

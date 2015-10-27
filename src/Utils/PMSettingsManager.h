@@ -54,9 +54,7 @@ public:
     }
 
     // General
-    bool getDebugShowGUI();
     bool getDebugShowFPS();
-    bool getReleaseShowGUI();
     bool getReleaseShowFPS();
 
     // Audio devices
@@ -64,20 +62,18 @@ public:
     void enableAudioDevice(bool enable, unsigned int deviceID);
     void enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
 
+    void writeAudioDevicesSettings();
+
+private:
+
     // Debug Mode
-    bool                        debugShowGUI;
     bool                        debugShowFPS;
 
     // Release Mode
-    bool                        releaseShowGUI;
     bool                        releaseShowFPS;
 
     // Input devices (map of deviceID + array of channels per device)
     vector<SettingsDevice>      deviceSettings;
-
-    void writeAudioDevicesSettings();
-
-private:
 
     PMSettingsManager();
     bool loadGeneralSettings();
