@@ -34,8 +34,8 @@ public:
 
 private:
 
-    float setupGUIPoem(float originX, float originY);
-    float setupGUIAudioSettings(float originX, float originY);
+    int setupGUIPoem(float originX, float originY);
+    int setupGUIAudioSettings(float originX, float originY);
     void setupGUIMainButtons();
 
     void handleEventInputDevices(ofxUIEventArgs &e);

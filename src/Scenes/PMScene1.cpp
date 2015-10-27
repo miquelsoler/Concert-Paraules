@@ -23,7 +23,7 @@ PMScene1::PMScene1()
     {
         // Load sound devices and erase those with no input channels
 
-        soundDevices = PMAudioAnalyzer::getDevices();
+        soundDevices = PMAudioAnalyzer::getInputDevices();
 
         selectedSoundDevices.push_back(0);
         selectedChannels.push_back(0);
@@ -106,7 +106,7 @@ void PMScene1::willExit()
 #pragma mark - Panels
 
 ///--------------------------------------------------------------
-float PMScene1::setupGUIPoem(float originX, float originY)
+int PMScene1::setupGUIPoem(float originX, float originY)
 {
     guiPoemSelector = new ofxUISuperCanvas("POEM", OFX_UI_FONT_LARGE);
     guiPoemSelector->setColorBack(canvasBgColor);
@@ -116,11 +116,11 @@ float PMScene1::setupGUIPoem(float originX, float originY)
     guiPoemSelector->setPosition(originX, originY);
     guiPoemSelector->autoSizeToFitWidgets();
     
-    return guiPoemSelector->getRect()->getWidth();
+    return int(guiPoemSelector->getRect()->getWidth());
 }
 
 ///--------------------------------------------------------------
-float PMScene1::setupGUIAudioSettings(float originX, float originY)
+int PMScene1::setupGUIAudioSettings(float originX, float originY)
 {
     guiAudioSettings = new ofxUISuperCanvas("INPUT DEVICES", OFX_UI_FONT_LARGE);
     guiAudioSettings->setColorBack(canvasBgColor);
@@ -128,7 +128,7 @@ float PMScene1::setupGUIAudioSettings(float originX, float originY)
 
     // Add devices and per-device channels
     {
-        int numDevices = soundDevices.size();
+        unsigned long numDevices = soundDevices.size();
 
         for (int iDevice=0; iDevice<numDevices; ++iDevice)
             soundDevicesNames.push_back(buildStringForSoundDevice(&soundDevices[iDevice]));
@@ -149,7 +149,7 @@ float PMScene1::setupGUIAudioSettings(float originX, float originY)
 
     ofAddListener(guiAudioSettings->newGUIEvent, this, &PMScene1::handleEventInputDevices);
 
-    return guiAudioSettings->getRect()->getWidth();
+    return int(guiAudioSettings->getRect()->getWidth());
 }
 
 ///--------------------------------------------------------------
@@ -167,8 +167,8 @@ void PMScene1::setupGUIMainButtons()
     ofxUIRectangle *widgetRect = guiMainButtons->getRect();
 
     float marginSize = 20;
-    guiMainButtons->setPosition(ofGetWidth() - widgetRect->getWidth() - marginSize,
-                                ofGetHeight() - widgetRect->getHeight() - marginSize);
+    guiMainButtons->setPosition(int(ofGetWidth() - widgetRect->getWidth() - marginSize),
+                                int(ofGetHeight() - widgetRect->getHeight() - marginSize));
 
     ofAddListener(guiMainButtons->newGUIEvent, this, &PMScene1::handleEventMainButtons);
 }

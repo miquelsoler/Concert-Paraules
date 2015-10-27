@@ -18,6 +18,8 @@ void ofApp::setup()
     }
     currentScene = 0;
 
+    PMAudioAnalyzer::getInstance().init(true, 4);
+
     // Settings
 
 #ifdef OF_DEBUG
@@ -30,8 +32,6 @@ void ofApp::setup()
 
     sceneManager = &(PMSceneManager::getInstance());
     sceneManager->init();
-
-    PMAudioAnalyzer::getInstance().init(true, 4);
 
     // For testing purposes
 
