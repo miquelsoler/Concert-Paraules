@@ -33,6 +33,8 @@ public:
      */
     PMDeviceAudioAnalyzer(int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize);
 
+    PMDeviceAudioAnalyzer() {};
+
     ~PMDeviceAudioAnalyzer();
 
     /**
