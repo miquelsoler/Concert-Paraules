@@ -217,13 +217,14 @@ bool PMScene1::addDevice(unsigned int deviceIndex)
 
     guiAudioSettings->addSpacer();
 
-    ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesNames[deviceIndex], selectedSoundDevices[deviceIndex]);
-    deviceToggle->setID(deviceIndex);
-    deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+//    ofxUIToggle* deviceToggle = guiAudioSettings->addToggle(soundDevicesNames[deviceIndex], selectedSoundDevices[deviceIndex]);
+//    deviceToggle->setID(deviceIndex);
+//    deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+//
+//    bool isDeviceEnabled = PMSettingsManager::getInstance().deviceSettings.count(deviceIndex) == 1;
+//    deviceToggle->setValue(isDeviceEnabled);
 
-    bool isDeviceEnabled = PMSettingsManager::getInstance().deviceSettings.count(deviceIndex) == 1;
-    deviceToggle->setValue(isDeviceEnabled);
-
+    bool isDeviceEnabled = true;
     return isDeviceEnabled;
 }
 
@@ -243,22 +244,22 @@ void PMScene1::addDeviceChannels(unsigned int deviceIndex)
         numCols = maxChannelCols;
     }
 
-    ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesNames[deviceIndex], numRows, numCols, 20, 20);
-    vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
-
-    for (int iToggle=0; iToggle<numChannels; ++iToggle)
-    {
-        vector<int> &enabledDeviceChannels = PMSettingsManager::getInstance().deviceSettings[deviceIndex];
-
-        bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
-
-        // Widged channels now have and IDs with format [DxxC] where D is the device ID and xxC is the channel index
-        // E.g.: ID 4058 matches device with ID 4 and channel number 58
-
-        ofxUIToggle *currentTogle = channelToggles[iToggle];
-        currentTogle->setID((deviceIndex * 1000) + iToggle);
-        currentTogle->setValue(isChannelEnabled);
-    }
+//    ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(soundDevicesNames[deviceIndex], numRows, numCols, 20, 20);
+//    vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
+//
+//    for (int iToggle=0; iToggle<numChannels; ++iToggle)
+//    {
+//        vector<int> &enabledDeviceChannels = PMSettingsManager::getInstance().deviceSettings[deviceIndex];
+//
+//        bool isChannelEnabled = std::find(enabledDeviceChannels.begin(), enabledDeviceChannels.end(), iToggle) != enabledDeviceChannels.end();
+//
+//        // Widged channels now have and IDs with format [DxxC] where D is the device ID and xxC is the channel index
+//        // E.g.: ID 4058 matches device with ID 4 and channel number 58
+//
+//        ofxUIToggle *currentTogle = channelToggles[iToggle];
+//        currentTogle->setID((deviceIndex * 1000) + iToggle);
+//        currentTogle->setValue(isChannelEnabled);
+//    }
 }
 
 ///--------------------------------------------------------------

@@ -29,6 +29,12 @@ static const string STR_CHANNELS            = "3. Channels";
 static const string STR_CHANNEL_ID          = "1. Id";
 static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 
+struct DeviceChannel
+{
+    int ID;
+    bool enabled;
+};
+
 class PMSettingsManager
 {
 public:
@@ -38,11 +44,13 @@ public:
         return instance;
     }
 
+    // General
     bool getDebugShowGUI();
     bool getDebugShowFPS();
     bool getReleaseShowGUI();
     bool getReleaseShowFPS();
 
+    // Audio devices
     void enableDevice(bool enable, unsigned int deviceID);
     void enableDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
 
@@ -55,8 +63,7 @@ public:
     bool                                releaseShowFPS;
 
     // Input devices (map of deviceID + array of channels per device)
-    map<int, vector<int>>               deviceSettings;
-
+    map<int, vector<DeviceChannel>>     deviceSettings;
 
     void writeAudioDevicesSettings();
 

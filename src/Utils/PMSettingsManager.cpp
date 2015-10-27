@@ -142,15 +142,29 @@ bool PMSettingsManager::loadAudioDevicesSettings()
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::buildAudioDevicesVectorFromJSON()
-{
-//    // deviceSettings
-//
-//    for (int i=0; i<jsonAudioDevices[STR_DEVICES].size(); ++i)
-//    {
-//        int deviceID = jsonAudioDevices[STR_DEVICES][STR_DEVICE_ID].asInt();
-//        cout << deviceID << endl;
-//    }
+void PMSettingsManager::buildAudioDevicesVectorFromJSON() {
+    cout << jsonAudioDevices[STR_DEVICES].size() << endl;
+
+    for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size(); ++i)
+    {
+        Json::Value jsonDevice = jsonAudioDevices[STR_DEVICES][i];
+        int deviceID = jsonDevice[STR_DEVICE_ID].asInt();
+
+        Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
+        vector<DeviceChannel> deviceChannels;
+
+        for (int j = 0; j < jsonDeviceChannels.size(); ++j) {
+            Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
+
+            DeviceChannel channel;
+            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
+            channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
+
+            deviceChannels.push_back(channel);
+        }
+
+        deviceSettings[deviceID] = deviceChannels;
+    }
 }
 
 ///--------------------------------------------------------------
