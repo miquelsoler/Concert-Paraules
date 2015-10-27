@@ -60,13 +60,19 @@ bool PMSettingsManager::getReleaseShowFPS()
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::enableDevice(bool enable, unsigned int deviceID)
+vector<SettingsDevice> *PMSettingsManager::getAudioDevices()
+{
+    return &deviceSettings;
+};
+
+///--------------------------------------------------------------
+void PMSettingsManager::enableAudioDevice(bool enable, unsigned int deviceID)
 {
 
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::enableDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID)
+void PMSettingsManager::enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID)
 {
 
 }
@@ -96,33 +102,6 @@ bool PMSettingsManager::loadGeneralSettings()
         releaseShowFPS = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
     }
 
-//    // App Settings
-//    {
-//        deviceSettings.clear();
-//
-//        // Traverse devices and fill the deviceSettings map
-//
-//        Json::Value devices = jsonGeneral[STR_APP_SETTINGS][STR_AS_DEVICES];
-//
-//        for (int iDevice=0; iDevice<devices.size(); ++iDevice)
-//        {
-//            Json::Value device = devices[iDevice];
-//            int deviceID = devices[iDevice][STR_AS_DEVICE_ID].asInt();
-//
-//            // For each device, traverse channels
-//            vector<int> deviceChannelsIDs;
-//            Json::Value channels = devices[iDevice][STR_AS_CHANNELS];
-//            for (int iChannel=0; iChannel<channels.size(); ++iChannel)
-//                deviceChannelsIDs.push_back(channels[iChannel][STR_AS_CHANNEL_ID].asInt());
-//
-//            deviceSettings[deviceID] = deviceChannelsIDs;
-//        }
-//    }
-
-//    findDeviceWithID(0);
-//    findChannelWithID(1, 3);
-//    findDeviceWithID(32);
-
     return parsingSuccessful;
 }
 
@@ -142,28 +121,33 @@ bool PMSettingsManager::loadAudioDevicesSettings()
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::buildAudioDevicesVectorFromJSON() {
-    cout << jsonAudioDevices[STR_DEVICES].size() << endl;
-
+void PMSettingsManager::buildAudioDevicesVectorFromJSON()
+{
     for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size(); ++i)
     {
         Json::Value jsonDevice = jsonAudioDevices[STR_DEVICES][i];
-        int deviceID = jsonDevice[STR_DEVICE_ID].asInt();
+
+        SettingsDevice device;
+        device.name = jsonDevice[STR_DEVICE_NAME].asString();
+        device.ID = jsonDevice[STR_DEVICE_ID].asInt();
+        device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
 
         Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
-        vector<DeviceChannel> deviceChannels;
+        vector<SettingsDeviceChannel> deviceChannels;
 
         for (int j = 0; j < jsonDeviceChannels.size(); ++j) {
             Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
 
-            DeviceChannel channel;
+            SettingsDeviceChannel channel;
             channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
             channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
 
             deviceChannels.push_back(channel);
         }
 
-        deviceSettings[deviceID] = deviceChannels;
+        device.channels = deviceChannels;
+
+        deviceSettings.push_back(device);
     }
 }
 
@@ -179,6 +163,7 @@ void PMSettingsManager::createAudioDeviceJSONSettings()
         Json::Value jsonDevice;
         jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
         jsonDevice[STR_DEVICE_ENABLED] = false;
+        jsonDevice[STR_DEVICE_NAME] = devices[i].name;
 
         jsonDevice[STR_CHANNELS] = Json::arrayValue;
         for (int j=0; j<devices[i].inputChannels; ++j)

@@ -23,16 +23,25 @@ static const string STR_SHOW_FPS            = "Show FPS";
 // Audio device settings
 static const string STR_APP_SETTINGS        = "App Settings";
 static const string STR_DEVICES             = "Devices";
-static const string STR_DEVICE_ID           = "1. Id";
-static const string STR_DEVICE_ENABLED      = "2. Enabled";
-static const string STR_CHANNELS            = "3. Channels";
+static const string STR_DEVICE_NAME         = "1. Name";
+static const string STR_DEVICE_ID           = "2. Id";
+static const string STR_DEVICE_ENABLED      = "3. Enabled";
+static const string STR_CHANNELS            = "4. Channels";
 static const string STR_CHANNEL_ID          = "1. Id";
 static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 
-struct DeviceChannel
+struct SettingsDeviceChannel
 {
     int ID;
     bool enabled;
+};
+
+struct SettingsDevice
+{
+    string name;
+    int ID;
+    bool enabled;
+    vector<SettingsDeviceChannel> channels;
 };
 
 class PMSettingsManager
@@ -51,19 +60,20 @@ public:
     bool getReleaseShowFPS();
 
     // Audio devices
-    void enableDevice(bool enable, unsigned int deviceID);
-    void enableDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
+    vector<SettingsDevice> *getAudioDevices();
+    void enableAudioDevice(bool enable, unsigned int deviceID);
+    void enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
 
     // Debug Mode
-    bool                                debugShowGUI;
-    bool                                debugShowFPS;
+    bool                        debugShowGUI;
+    bool                        debugShowFPS;
 
     // Release Mode
-    bool                                releaseShowGUI;
-    bool                                releaseShowFPS;
+    bool                        releaseShowGUI;
+    bool                        releaseShowFPS;
 
     // Input devices (map of deviceID + array of channels per device)
-    map<int, vector<DeviceChannel>>     deviceSettings;
+    vector<SettingsDevice>      deviceSettings;
 
     void writeAudioDevicesSettings();
 
