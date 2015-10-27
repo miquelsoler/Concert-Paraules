@@ -66,7 +66,9 @@ private:
     bool loadGeneralSettings();
     bool loadAudioDevicesSettings();
 
-    void createAudioDeviceSettings();
+    void buildAudioDevicesVectorFromJSON();
+
+    void createAudioDeviceJSONSettings();
 
     int findDeviceWithID(int deviceID);
     int findChannelWithID(int channelID, int deviceID);

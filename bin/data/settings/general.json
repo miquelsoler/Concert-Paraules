@@ -1,41 +1,4 @@
 {
-   "App Settings" : {
-      "Devices" : [
-         {
-            "Channels" : [
-               {
-                  "Id" : 0
-               },
-               {
-                  "Id" : 1
-               }
-            ],
-            "Id" : 0
-         },
-         {
-            "Channels" : [
-               {
-                  "Id" : 1
-               }
-            ],
-            "Id" : 3
-         },
-         {
-            "Channels" : [
-               {
-                  "Id" : 3
-               },
-               {
-                  "Id" : 6
-               },
-               {
-                  "Id" : 9
-               }
-            ],
-            "Id" : 4
-         }
-      ]
-   },
    "Debug Mode" : {
       "Show FPS" : true,
       "Show GUI" : true
