@@ -22,12 +22,12 @@ static const string STR_SHOW_FPS            = "Show FPS";
 
 // Audio device settings
 static const string STR_APP_SETTINGS        = "App Settings";
-static const string STR_AS_DEVICES          = "Devices";
-static const string STR_AS_DEVICE_ID        = "1. Id";
-static const string STR_AS_DEVICE_ENABLED   = "2. Enabled";
-static const string STR_AS_CHANNELS         = "3. Channels";
-static const string STR_AS_CHANNEL_ID       = "1. Id";
-static const string STR_AS_CHANNEL_ENABLED  = "2. Enabled";
+static const string STR_DEVICES             = "Devices";
+static const string STR_DEVICE_ID           = "1. Id";
+static const string STR_DEVICE_ENABLED      = "2. Enabled";
+static const string STR_CHANNELS            = "3. Channels";
+static const string STR_CHANNEL_ID          = "1. Id";
+static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 
 class PMSettingsManager
 {

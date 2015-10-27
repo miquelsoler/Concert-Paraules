@@ -144,6 +144,13 @@ bool PMSettingsManager::loadAudioDevicesSettings()
 ///--------------------------------------------------------------
 void PMSettingsManager::buildAudioDevicesVectorFromJSON()
 {
+//    // deviceSettings
+//
+//    for (int i=0; i<jsonAudioDevices[STR_DEVICES].size(); ++i)
+//    {
+//        int deviceID = jsonAudioDevices[STR_DEVICES][STR_DEVICE_ID].asInt();
+//        cout << deviceID << endl;
+//    }
 }
 
 ///--------------------------------------------------------------
@@ -151,28 +158,26 @@ void PMSettingsManager::createAudioDeviceJSONSettings()
 {
     vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
 
-    jsonAudioDevices[STR_AS_DEVICES] = Json::arrayValue;
+    jsonAudioDevices[STR_DEVICES] = Json::arrayValue;
 
     for (int i=0; i<devices.size(); ++i)
     {
         Json::Value jsonDevice;
-        jsonDevice[STR_AS_DEVICE_ID] = devices[i].deviceID;
-        jsonDevice[STR_AS_DEVICE_ENABLED] = false;
+        jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
+        jsonDevice[STR_DEVICE_ENABLED] = false;
 
-        jsonDevice[STR_AS_CHANNELS] = Json::arrayValue;
+        jsonDevice[STR_CHANNELS] = Json::arrayValue;
         for (int j=0; j<devices[i].inputChannels; ++j)
         {
             Json::Value jsonDeviceChannel;
-            jsonDeviceChannel[STR_AS_CHANNEL_ID] = j;
-            jsonDeviceChannel[STR_AS_CHANNEL_ENABLED] = false;
+            jsonDeviceChannel[STR_CHANNEL_ID] = j;
+            jsonDeviceChannel[STR_CHANNEL_ENABLED] = false;
 
-            jsonDevice[STR_AS_CHANNELS].append(jsonDeviceChannel);
+            jsonDevice[STR_CHANNELS].append(jsonDeviceChannel);
         }
 
-        jsonAudioDevices[STR_AS_DEVICES].append(jsonDevice);
+        jsonAudioDevices[STR_DEVICES].append(jsonDevice);
     }
-
-    cout << jsonAudioDevices[STR_AS_DEVICES].size() << endl;
 
     writeAudioDevicesSettings();
 }
@@ -193,11 +198,11 @@ int PMSettingsManager::findDeviceWithID(int _deviceID)
 
     bool found = false;
     Json::Value defaultValue = -1;
-    int numDevices = jsonGeneral[STR_APP_SETTINGS][STR_AS_DEVICES].size();
+    int numDevices = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES].size();
 
     for (int i=0; i<numDevices && !found; ++i)
     {
-        Json::Value deviceID = jsonGeneral[STR_APP_SETTINGS][STR_AS_DEVICES][i].get(STR_AS_DEVICE_ID, &defaultValue);
+        Json::Value deviceID = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES][i].get(STR_DEVICE_ID, &defaultValue);
         found = deviceID == _deviceID;
         if (found) result = i;
     }
@@ -217,7 +222,7 @@ int PMSettingsManager::findChannelWithID(int _channelID, int _deviceID)
     if (deviceIndex == -1)
         return result;
 
-    Json::Value device = jsonGeneral[STR_APP_SETTINGS][STR_AS_DEVICES][deviceIndex];
+    Json::Value device = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES][deviceIndex];
 
     bool found = false;
     Json::Value defaultValue = -1;
@@ -225,6 +230,6 @@ int PMSettingsManager::findChannelWithID(int _channelID, int _deviceID)
 
     for (int i=0; i<numChannels; ++i)
     {
-        Json::Value channelId = device[STR_AS_CHANNELS];
+        Json::Value channelId = device[STR_CHANNELS];
     }
 }
