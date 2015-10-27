@@ -48,7 +48,7 @@ bool PMSettingsManager::getReleaseShowFPS()
 }
 
 ///--------------------------------------------------------------
-vector<SettingsDevice> *PMSettingsManager::getAudioDevices()
+vector<PMSettingsDevice> *PMSettingsManager::getAudioDevices()
 {
     return &deviceSettings;
 };
@@ -113,18 +113,18 @@ void PMSettingsManager::buildAudioDevicesVectorFromJSON()
     {
         Json::Value jsonDevice = jsonAudioDevices[STR_DEVICES][i];
 
-        SettingsDevice device;
+        PMSettingsDevice device;
         device.name = jsonDevice[STR_DEVICE_NAME].asString();
         device.ID = jsonDevice[STR_DEVICE_ID].asInt();
         device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
 
         Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
-        vector<SettingsDeviceChannel> deviceChannels;
+        vector<PMSettingsDeviceChannel> deviceChannels;
 
         for (int j = 0; j < jsonDeviceChannels.size(); ++j) {
             Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
 
-            SettingsDeviceChannel channel;
+            PMSettingsDeviceChannel channel;
             channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
             channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
 

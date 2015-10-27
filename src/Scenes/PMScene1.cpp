@@ -128,11 +128,11 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
 
     // Add devices and per-device channels
     {
-        vector<SettingsDevice> *devices = PMSettingsManager::getInstance().getAudioDevices();
+        vector<PMSettingsDevice> *devices = PMSettingsManager::getInstance().getAudioDevices();
         int maxChannelCols = 16;
 
         for (int iDevice=0; iDevice < devices->size(); ++iDevice) {
-            SettingsDevice device = (*devices)[iDevice];
+            PMSettingsDevice device = (*devices)[iDevice];
 
             guiAudioSettings->addSpacer();
             ofxUIToggle *deviceToggle = guiAudioSettings->addToggle(device.name, device.enabled);
@@ -152,7 +152,7 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
             vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
             for (int iChannel=0; iChannel < device.channels.size(); ++iChannel)
             {
-                SettingsDeviceChannel channel = device.channels[iChannel];
+                PMSettingsDeviceChannel channel = device.channels[iChannel];
                 bool isChannelEnabled = device.channels[iChannel].enabled;
 
                 ofxUIToggle *currentToggle = channelToggles[iChannel];

@@ -13,6 +13,8 @@
 
 #include <stdio.h>
 #include "ofxJSON.h"
+#include "PMSettingsDevice.h"
+#include "PMSettingsDeviceChannel.h"
 
 // Debug/release string settings
 static const string STR_DEBUG_MODE          = "Debug Mode";
@@ -30,19 +32,6 @@ static const string STR_CHANNELS            = "4. Channels";
 static const string STR_CHANNEL_ID          = "1. Id";
 static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 
-struct SettingsDeviceChannel
-{
-    int ID;
-    bool enabled;
-};
-
-struct SettingsDevice
-{
-    string name;
-    int ID;
-    bool enabled;
-    vector<SettingsDeviceChannel> channels;
-};
 
 class PMSettingsManager
 {
@@ -58,7 +47,7 @@ public:
     bool getReleaseShowFPS();
 
     // Audio devices
-    vector<SettingsDevice> *getAudioDevices();
+    vector<PMSettingsDevice> *getAudioDevices();
     void enableAudioDevice(bool enable, unsigned int deviceID);
     void enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
 
@@ -66,14 +55,12 @@ public:
 
 private:
 
-    // Debug Mode
+    // Debug/release modes
     bool                        debugShowFPS;
-
-    // Release Mode
     bool                        releaseShowFPS;
 
     // Input devices (map of deviceID + array of channels per device)
-    vector<SettingsDevice>      deviceSettings;
+    vector<PMSettingsDevice>      deviceSettings;
 
     PMSettingsManager();
     bool loadGeneralSettings();
