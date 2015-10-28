@@ -14,6 +14,8 @@
 static const string     STR_MAIN_SAVE       = "SAVE & CONTINUE";
 static const string     STR_MAIN_IGNORE     = "IGNORE & CONTINUE";
 
+static const int        MAX_CHANNELS_COLS   = 16;
+
 #pragma mark - UI building
 
 ///--------------------------------------------------------------
@@ -129,7 +131,6 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
     // Add devices and per-device channels
     {
         vector<PMSettingsDevice> *devices = PMSettingsManager::getInstance().getAudioDevices();
-        int maxChannelCols = 16;
 
         for (int iDevice=0; iDevice < devices->size(); ++iDevice) {
             PMSettingsDevice device = (*devices)[iDevice];
@@ -143,9 +144,9 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
             int numRows = 1;
             int numCols = numChannels;
 
-            if (numChannels > maxChannelCols) {
-                numRows = numChannels / maxChannelCols;
-                numCols = maxChannelCols;
+            if (numChannels > MAX_CHANNELS_COLS) {
+                numRows = numChannels / MAX_CHANNELS_COLS;
+                numCols = MAX_CHANNELS_COLS;
             }
 
             ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(device.name, numRows, numCols, 20, 20);

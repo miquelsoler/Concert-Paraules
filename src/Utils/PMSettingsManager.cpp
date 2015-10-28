@@ -79,14 +79,10 @@ bool PMSettingsManager::loadGeneralSettings()
 #endif
 
     // Debug mode
-    {
-        debugShowFPS = jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
-    }
+    debugShowFPS = jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
 
     // Release mode
-    {
-        releaseShowFPS = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
-    }
+    releaseShowFPS = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
 
     return parsingSuccessful;
 }
