@@ -138,6 +138,7 @@ int PMScene1::setupGUIAudioSettings(int originX, int originY)
 
             ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(device.name, numRows, numCols, 20, 20);
             channelMatrix->setID(device.ID);
+            channelMatrix->setParent(deviceToggle);
 
             vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
             for (int iChannel=0; iChannel < device.channels.size(); ++iChannel)
@@ -190,16 +191,20 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
     if (e.widget->getKind() != OFX_UI_WIDGET_TOGGLE) return;
 
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
-    bool isEnabled = toggle->getValue();
+
+    bool toggleValue = toggle->getValue();
 
     unsigned int deviceID, channelID;
-
     if (toggle->getParent()->getKind() != OFX_UI_WIDGET_TOGGLEMATRIX)
     {
         // It's a device toggle
 
         deviceID = (unsigned int)(toggle->getID());
-        PMSettingsManager::getInstance().enableAudioDevice(deviceID, toggle->getValue());
+        PMSettingsManager::getInstance().enableAudioDevice(deviceID, toggleValue);
+
+        // If device is disabled, disable all of its channels
+        if (toggleValue == false)
+            disableAllChannelsForDevice(toggle);
     }
     else
     {
@@ -207,7 +212,20 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
 
         deviceID = (unsigned int)(toggle->getParent()->getID());
         channelID = (unsigned int)(toggle->getID());
-        PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceID, channelID, toggle->getValue());
+        PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceID, channelID, toggleValue);
+
+        // If channel is enabled, enable its device if it wasn't
+        if (toggleValue == true)
+        {
+            ofxUIToggle *deviceToggle = (ofxUIToggle *)(toggle->getParent()->getParent());
+            deviceToggle->setValue(true);
+        }
+
+        // If channel is disabled and all of them are, disable its device
+        if (toggleValue == false)
+        {
+            disableDeviceIfNoChannels(toggle);
+        }
     }
 
 #ifdef OF_DEBUG
@@ -223,5 +241,50 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
     if (!button->getValue()) return; // Ignore releases
 
     PMSettingsManager::getInstance().writeAudioDevicesSettings();
-    PMSceneManager::getInstance().changeScene();
+//    PMSceneManager::getInstance().changeScene();
+}
+
+#pragma mark - Convenience methods
+
+void PMScene1::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
+{
+    vector<ofxUIWidget *> allWidgets = guiAudioSettings->getWidgets();
+    ofxUIWidget *channelToggles;
+    bool found = false;
+    for (int i=0; i<allWidgets.size() && !found; ++i)
+    {
+        ofxUIWidgetType type = allWidgets[i]->getKind();
+        found = (allWidgets[i]->getParent() == deviceToggle) && (allWidgets[i]->getKind() == OFX_UI_WIDGET_TOGGLEMATRIX);
+        if (found)
+            channelToggles = allWidgets[i];
+    }
+    if (found)
+    {
+        ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
+        toggleMatrix->setAllToggles(false);
+
+        int matrixSize = int(toggleMatrix->getToggles().size());
+        for (int i=0; i<matrixSize; i++)
+            PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceToggle->getID(), i, false);
+    }
+}
+
+void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
+{
+    ofxUIToggleMatrix *toggleMatrix = (ofxUIToggleMatrix *) (channelToggle->getParent());
+    vector<ofxUIToggle *> allToggles = toggleMatrix->getToggles();
+
+    bool allDisabled = true;
+    for (int i = 0; i < allToggles.size() && allDisabled; ++i) {
+        if (allToggles[i]->getValue() == true)
+            allDisabled = false;
+    }
+
+    if (allDisabled)
+    {
+        ofxUIToggle *deviceToggle = (ofxUIToggle *) (channelToggle->getParent()->getParent());
+        deviceToggle->setValue(false);
+
+        PMSettingsManager::getInstance().enableAudioDevice((unsigned int)(deviceToggle->getID()), false);
+    }
 }

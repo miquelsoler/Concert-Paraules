@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include "ofxUI.h"
 #include "PMBaseScene.hpp"
-#include "PMAudioAnalyzer.hpp"
 
 using namespace std;
 
@@ -41,9 +40,9 @@ private:
     void handleEventInputDevices(ofxUIEventArgs &e);
     void handleEventMainButtons(ofxUIEventArgs &e);
 
-    void enableDevice(unsigned int deviceIndex);
+    void disableAllChannelsForDevice(ofxUIToggle *deviceToggle);
+    void disableDeviceIfNoChannels(ofxUIToggle *channelToggle);
 
-    // UI
     ofxUISuperCanvas        *guiPoemSelector;
     ofxUISuperCanvas        *guiAudioSettings;
     ofxUISuperCanvas        *guiMainButtons;

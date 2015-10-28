@@ -56,13 +56,31 @@ vector<PMSettingsDevice> *PMSettingsManager::getAudioDevices()
 ///--------------------------------------------------------------
 void PMSettingsManager::enableAudioDevice(unsigned int deviceID, bool enable)
 {
-//    jsonAudioDevices[STR_DEVICES][deviceID][STR_DEVICE_ENABLED] = enable;
+    bool found = false;
+    int deviceIndex = 0;
+    for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size() && !found; ++i)  {
+        found = jsonAudioDevices[STR_DEVICES][i][STR_DEVICE_ID].asInt() == deviceID;
+        if (found) deviceIndex = i;
+    }
+
+    if (found) {
+        jsonAudioDevices[STR_DEVICES][deviceIndex][STR_DEVICE_ENABLED] = enable;
+    }
 }
 
 ///--------------------------------------------------------------
 void PMSettingsManager::enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable)
 {
+    bool found = false;
+    int deviceIndex = 0;
+    for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size() && !found; ++i)  {
+        found = jsonAudioDevices[STR_DEVICES][i][STR_DEVICE_ID].asInt() == deviceID;
+        if (found) deviceIndex = i;
+    }
 
+    if (found) {
+        jsonAudioDevices[STR_DEVICES][deviceIndex][STR_CHANNELS][channelID][STR_CHANNEL_ENABLED] = enable;
+    }
 }
 
 #pragma mark - Read/write JSON file
