@@ -38,13 +38,13 @@ PMSettingsManager::PMSettingsManager()
 ///--------------------------------------------------------------
 bool PMSettingsManager::getDebugShowFPS()
 {
-    return debugShowFPS;
+    return jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
 }
 
 ///--------------------------------------------------------------
 bool PMSettingsManager::getReleaseShowFPS()
 {
-    return releaseShowFPS;
+    return jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
 }
 
 ///--------------------------------------------------------------
@@ -54,13 +54,13 @@ vector<PMSettingsDevice> *PMSettingsManager::getAudioDevices()
 };
 
 ///--------------------------------------------------------------
-void PMSettingsManager::enableAudioDevice(bool enable, unsigned int deviceID)
+void PMSettingsManager::enableAudioDevice(unsigned int deviceID, bool enable)
 {
-
+//    jsonAudioDevices[STR_DEVICES][deviceID][STR_DEVICE_ENABLED] = enable;
 }
 
 ///--------------------------------------------------------------
-void PMSettingsManager::enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID)
+void PMSettingsManager::enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable)
 {
 
 }
@@ -77,12 +77,6 @@ bool PMSettingsManager::loadGeneralSettings()
 #ifdef OF_DEBUG
     cout << "PARSING RESULT: " << parsingSuccessful << endl;
 #endif
-
-    // Debug mode
-    debugShowFPS = jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
-
-    // Release mode
-    releaseShowFPS = jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
 
     return parsingSuccessful;
 }
@@ -167,50 +161,4 @@ void PMSettingsManager::createAudioDeviceJSONSettings()
 void PMSettingsManager::writeAudioDevicesSettings()
 {
     jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
-}
-
-///--------------------------------------------------------------
-int PMSettingsManager::findDeviceWithID(int _deviceID)
-{
-    // Returns the index in the array of devices inside the JSON file
-    // -1 means not found
-
-    int result = -1;
-
-    bool found = false;
-    Json::Value defaultValue = -1;
-    int numDevices = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES].size();
-
-    for (int i=0; i<numDevices && !found; ++i)
-    {
-        Json::Value deviceID = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES][i].get(STR_DEVICE_ID, &defaultValue);
-        found = deviceID == _deviceID;
-        if (found) result = i;
-    }
-
-    return result;
-}
-
-///--------------------------------------------------------------
-int PMSettingsManager::findChannelWithID(int _channelID, int _deviceID)
-{
-    // Returns the index in the array of device channels inside the JSON file
-    // -1 means not found
-
-    int result = -1;
-
-    int deviceIndex = findDeviceWithID(_deviceID);
-    if (deviceIndex == -1)
-        return result;
-
-    Json::Value device = jsonGeneral[STR_APP_SETTINGS][STR_DEVICES][deviceIndex];
-
-    bool found = false;
-    Json::Value defaultValue = -1;
-    int numChannels = device.size();
-
-    for (int i=0; i<numChannels; ++i)
-    {
-        Json::Value channelId = device[STR_CHANNELS];
-    }
 }

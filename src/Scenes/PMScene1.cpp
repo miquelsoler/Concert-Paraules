@@ -12,8 +12,6 @@
 
 
 static const string     STR_MAIN_SAVE       = "SAVE & CONTINUE";
-static const string     STR_MAIN_IGNORE     = "IGNORE & CONTINUE";
-
 static const int        MAX_CHANNELS_COLS   = 16;
 
 #pragma mark - UI building
@@ -23,32 +21,21 @@ PMScene1::PMScene1()
 {
     // Settings
     {
-        // Load sound devices and erase those with no input channels
-
-        soundDevices = PMAudioAnalyzer::getInputDevices();
-
-        selectedSoundDevices.push_back(0);
-        selectedChannels.push_back(0);
-
         backgroundColor = ofColor(64, 73, 47);
 
         canvasBgColor = ofColor(0, 0, 0, 50);
         canvasTitleColor = ofColor(252, 239, 157);
         deviceLabelColor = ofColor(255, 255, 200);
-        channelsLabelColor = ofColor(180, 180, 100);
     }
 
     // GUI
     {
         guiX = 20;
         guiY = 20;
-        guiPanelWidth = 500;
 
-        float panelOriginX, panelOriginY;
-        float panelMarginX = 20;
+        int panelOriginX;
+        int panelMarginX = 20;
 
-        ofxUIColor bgColor = ofColor(50,70,20);
-        
         int lastWidth;
 
         // Poem selector
@@ -108,7 +95,7 @@ void PMScene1::willExit()
 #pragma mark - Panels
 
 ///--------------------------------------------------------------
-int PMScene1::setupGUIPoem(float originX, float originY)
+int PMScene1::setupGUIPoem(int originX, int originY)
 {
     guiPoemSelector = new ofxUISuperCanvas("POEM", OFX_UI_FONT_LARGE);
     guiPoemSelector->setColorBack(canvasBgColor);
@@ -122,7 +109,7 @@ int PMScene1::setupGUIPoem(float originX, float originY)
 }
 
 ///--------------------------------------------------------------
-int PMScene1::setupGUIAudioSettings(float originX, float originY)
+int PMScene1::setupGUIAudioSettings(int originX, int originY)
 {
     guiAudioSettings = new ofxUISuperCanvas("INPUT DEVICES", OFX_UI_FONT_LARGE);
     guiAudioSettings->setColorBack(canvasBgColor);
@@ -140,7 +127,7 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
             deviceToggle->setID(device.ID);
             deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
 
-            int numChannels = device.channels.size();
+            int numChannels = int(device.channels.size());
             int numRows = 1;
             int numCols = numChannels;
 
@@ -150,6 +137,8 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
             }
 
             ofxUIToggleMatrix *channelMatrix = guiAudioSettings->addToggleMatrix(device.name, numRows, numCols, 20, 20);
+            channelMatrix->setID(device.ID);
+
             vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
             for (int iChannel=0; iChannel < device.channels.size(); ++iChannel)
             {
@@ -157,7 +146,7 @@ int PMScene1::setupGUIAudioSettings(float originX, float originY)
                 bool isChannelEnabled = device.channels[iChannel].enabled;
 
                 ofxUIToggle *currentToggle = channelToggles[iChannel];
-                currentToggle->setID((device.ID * 1000) + iChannel);
+                currentToggle->setID(iChannel);
                 currentToggle->setValue(isChannelEnabled);
             }
         }
@@ -179,7 +168,6 @@ void PMScene1::setupGUIMainButtons()
     guiMainButtons->getCanvasTitle()->setColorFill(canvasTitleColor);
 
     guiMainButtons->addLabelButton(STR_MAIN_SAVE, false);
-    guiMainButtons->addLabelButton(STR_MAIN_IGNORE, false);
 
     guiMainButtons->autoSizeToFitWidgets();
 
@@ -202,35 +190,38 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
     if (e.widget->getKind() != OFX_UI_WIDGET_TOGGLE) return;
 
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
-    selectedSoundDevices[toggle->getID()] = toggle->getValue();
+    bool isEnabled = toggle->getValue();
+
+    unsigned int deviceID, channelID;
+
+    if (toggle->getParent()->getKind() != OFX_UI_WIDGET_TOGGLEMATRIX)
+    {
+        // It's a device toggle
+
+        deviceID = (unsigned int)(toggle->getID());
+        PMSettingsManager::getInstance().enableAudioDevice(deviceID, toggle->getValue());
+    }
+    else
+    {
+        // It's a channel toggle
+
+        deviceID = (unsigned int)(toggle->getParent()->getID());
+        channelID = (unsigned int)(toggle->getID());
+        PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceID, channelID, toggle->getValue());
+    }
+
+#ifdef OF_DEBUG
     cout << widgetName << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
+#endif
 }
 
 void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
 {
-    string widgetName = e.widget->getName();
-
     if (e.getKind() != OFX_UI_WIDGET_LABELBUTTON) return;
 
     ofxUILabelButton *button = (ofxUILabelButton *)e.widget;
     if (!button->getValue()) return; // Ignore releases
 
-    if (widgetName == STR_MAIN_SAVE)
-    {
-        cout << "Save" << endl;
-        PMSceneManager::getInstance().changeScene();
-    }
-    else if (widgetName == STR_MAIN_IGNORE)
-    {
-        cout << "Ignore" << endl;
-        PMSceneManager::getInstance().changeScene();
-    }
-}
-
-#pragma mark - Convenience methods
-
-///--------------------------------------------------------------
-void PMScene1::enableDevice(unsigned int deviceIndex)
-{
-
+    PMSettingsManager::getInstance().writeAudioDevicesSettings();
+    PMSceneManager::getInstance().changeScene();
 }

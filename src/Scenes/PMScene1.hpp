@@ -34,8 +34,8 @@ public:
 
 private:
 
-    int setupGUIPoem(float originX, float originY);
-    int setupGUIAudioSettings(float originX, float originY);
+    int setupGUIPoem(int originX, int originY);
+    int setupGUIAudioSettings(int originX, int originY);
     void setupGUIMainButtons();
 
     void handleEventInputDevices(ofxUIEventArgs &e);
@@ -48,21 +48,11 @@ private:
     ofxUISuperCanvas        *guiAudioSettings;
     ofxUISuperCanvas        *guiMainButtons;
 
-    float                   guiX, guiY;
-    float                   guiPanelWidth;
+    int                     guiX, guiY;
 
     ofColor                 canvasBgColor;
     ofColor                 canvasTitleColor;
     ofColor                 deviceLabelColor;
-    ofColor                 channelsLabelColor;
-
-    // Convenience attributes
-    vector <ofSoundDevice>  soundDevices;
-    vector<string>          soundDevicesNames;
-
-    // Settings
-    vector<int>             selectedSoundDevices;
-    vector<int>             selectedChannels;
 };
 
 #endif /* PMScene1_hpp */

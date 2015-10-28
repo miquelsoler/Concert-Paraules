@@ -48,19 +48,12 @@ public:
 
     // Audio devices
     vector<PMSettingsDevice> *getAudioDevices();
-    void enableAudioDevice(bool enable, unsigned int deviceID);
-    void enableAudioDeviceChannel(bool enable, unsigned int deviceID, unsigned int channelID);
+    void enableAudioDevice(unsigned int deviceID, bool enable);
+    void enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable);
 
     void writeAudioDevicesSettings();
 
 private:
-
-    // Debug/release modes
-    bool                        debugShowFPS;
-    bool                        releaseShowFPS;
-
-    // Input devices (map of deviceID + array of channels per device)
-    vector<PMSettingsDevice>      deviceSettings;
 
     PMSettingsManager();
     bool loadGeneralSettings();
@@ -70,8 +63,7 @@ private:
 
     void createAudioDeviceJSONSettings();
 
-    int findDeviceWithID(int deviceID);
-    int findChannelWithID(int channelID, int deviceID);
+    vector<PMSettingsDevice> deviceSettings;
 
     ofxJSONElement jsonGeneral;
     ofxJSONElement jsonAudioDevices;
