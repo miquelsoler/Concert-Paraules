@@ -3,7 +3,6 @@
 #include "Defaults.h"
 #include "PMAudioAnalyzer.hpp"
 
-///--------------------------------------------------------------
 void ofApp::setup()
 {
     ofSetFrameRate(60);
@@ -44,7 +43,6 @@ void ofApp::setup()
     PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
 }
 
-///--------------------------------------------------------------
 void ofApp::update()
 {
 #ifdef OF_DEBUG
@@ -54,7 +52,6 @@ void ofApp::update()
     sceneManager->update();
 }
 
-///--------------------------------------------------------------
 void ofApp::draw()
 {
     sceneManager->draw();
@@ -66,13 +63,11 @@ void ofApp::draw()
     }
 }
 
-///--------------------------------------------------------------
 void ofApp::exit()
 {
 //    delete audioAnalyzer;
 }
 
-///--------------------------------------------------------------
 void ofApp::keyReleased(int key)
 {
     switch(key)

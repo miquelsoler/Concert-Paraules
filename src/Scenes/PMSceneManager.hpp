@@ -31,7 +31,6 @@ public:
 private:
 
     ofxSceneManager         sceneManager;
-
 };
 
 #endif /* PMSceneManager_hpp */
