@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include "PMBaseScene.hpp"
+#include "PMRendererPaintbrush.h"
 
 class PMScene2 : public PMBaseScene
 {
@@ -27,10 +28,9 @@ public:
     
     void willExit();
 
-protected:
-
 private:
 
+    PMBaseRenderer *renderer;
 };
 
 #endif /* PMScene2_hpp */

@@ -19,11 +19,9 @@
 // Debug/release string settings
 static const string STR_DEBUG_MODE          = "Debug Mode";
 static const string STR_RELEASE_MODE        = "Release Mode";
-static const string STR_SHOW_GUI            = "Show GUI";
 static const string STR_SHOW_FPS            = "Show FPS";
 
 // Audio device settings
-static const string STR_APP_SETTINGS        = "App Settings";
 static const string STR_DEVICES             = "Devices";
 static const string STR_DEVICE_NAME         = "1. Name";
 static const string STR_DEVICE_ID           = "2. Id";

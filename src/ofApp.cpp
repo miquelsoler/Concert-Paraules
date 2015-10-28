@@ -16,7 +16,6 @@ void ofApp::setup()
         windowPosX = ofGetWindowPositionX();
         windowPosY = ofGetWindowPositionY();
     }
-    currentScene = 0;
 
     PMAudioAnalyzer::getInstance().init(true, 4);
 

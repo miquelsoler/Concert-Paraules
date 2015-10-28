@@ -142,7 +142,6 @@ int PMScene1::setupGUIAudioSettings(int originX, int originY)
             vector<ofxUIToggle *> channelToggles = channelMatrix->getToggles();
             for (int iChannel=0; iChannel < device.channels.size(); ++iChannel)
             {
-                PMSettingsDeviceChannel channel = device.channels[iChannel];
                 bool isChannelEnabled = device.channels[iChannel].enabled;
 
                 ofxUIToggle *currentToggle = channelToggles[iChannel];
@@ -202,7 +201,7 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
         PMSettingsManager::getInstance().enableAudioDevice(deviceID, toggleValue);
 
         // If device is disabled, disable all of its channels
-        if (toggleValue == false)
+        if (!toggleValue)
             disableAllChannelsForDevice(toggle);
     }
     else
@@ -214,14 +213,14 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
         PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceID, channelID, toggleValue);
 
         // If channel is enabled, enable its device if it wasn't
-        if (toggleValue == true)
+        if (toggleValue)
         {
             ofxUIToggle *deviceToggle = (ofxUIToggle *)(toggle->getParent()->getParent());
             deviceToggle->setValue(true);
         }
 
         // If channel is disabled and all of them are, disable its device
-        if (toggleValue == false)
+        if (!toggleValue)
         {
             disableDeviceIfNoChannels(toggle);
         }
@@ -252,7 +251,6 @@ void PMScene1::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
     bool found = false;
     for (int i=0; i<allWidgets.size() && !found; ++i)
     {
-        ofxUIWidgetType type = allWidgets[i]->getKind();
         found = (allWidgets[i]->getParent() == deviceToggle) && (allWidgets[i]->getKind() == OFX_UI_WIDGET_TOGGLEMATRIX);
         if (found)
             channelToggles = allWidgets[i];
@@ -263,8 +261,8 @@ void PMScene1::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
         toggleMatrix->setAllToggles(false);
 
         int matrixSize = int(toggleMatrix->getToggles().size());
-        for (int i=0; i<matrixSize; i++)
-            PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceToggle->getID(), i, false);
+        for (unsigned int i=0; i<matrixSize; i++)
+            PMSettingsManager::getInstance().enableAudioDeviceChannel((unsigned int)(deviceToggle->getID()), i, false);
     }
 }
 
@@ -276,7 +274,7 @@ void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
     bool allDisabled = true;
     for (int i = 0; i < allToggles.size() && allDisabled; ++i)
     {
-        if (allToggles[i]->getValue() == true)
+        if (allToggles[i]->getValue())
             allDisabled = false;
     }
 

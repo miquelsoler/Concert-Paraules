@@ -21,8 +21,6 @@ public:
         return instance;
     }
 
-    void addScene();
-
     void init();
 
     void update();

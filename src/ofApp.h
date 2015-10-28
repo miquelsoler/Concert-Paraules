@@ -20,7 +20,6 @@ private:
     bool                    isFullScreen;
 
     PMSceneManager          *sceneManager;
-    unsigned int            currentScene;
 
     int                     windowPosX, windowPosY;
 };
