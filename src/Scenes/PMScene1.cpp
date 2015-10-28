@@ -61,7 +61,6 @@ PMScene1::~PMScene1()
 ///--------------------------------------------------------------
 void PMScene1::setup()
 {
-    cout << "S1 setup" << endl;
 }
 
 ///--------------------------------------------------------------
@@ -241,7 +240,7 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
     if (!button->getValue()) return; // Ignore releases
 
     PMSettingsManager::getInstance().writeAudioDevicesSettings();
-//    PMSceneManager::getInstance().changeScene();
+    PMSceneManager::getInstance().changeScene();
 }
 
 #pragma mark - Convenience methods
@@ -275,7 +274,8 @@ void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
     vector<ofxUIToggle *> allToggles = toggleMatrix->getToggles();
 
     bool allDisabled = true;
-    for (int i = 0; i < allToggles.size() && allDisabled; ++i) {
+    for (int i = 0; i < allToggles.size() && allDisabled; ++i)
+    {
         if (allToggles[i]->getValue() == true)
             allDisabled = false;
     }
