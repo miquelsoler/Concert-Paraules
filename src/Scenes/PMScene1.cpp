@@ -85,8 +85,6 @@ void PMScene1::update()
 ///--------------------------------------------------------------
 void PMScene1::draw()
 {
-//    cout << "SC1 draw" << endl;
-
     PMBaseScene::draw();
 }
 
@@ -95,6 +93,8 @@ void PMScene1::willDraw()
 {
     guiPoemSelector->setVisible(true);
     guiAudioSettings->setVisible(true);
+    guiRendererSettings->setVisible(true);
+    guiMainButtons->setVisible(true);
 }
 
 ///--------------------------------------------------------------
@@ -102,6 +102,7 @@ void PMScene1::willExit()
 {
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);
+    guiRendererSettings->setVisible(false);
     guiMainButtons->setVisible(false);
 }
 

@@ -7,7 +7,6 @@
 #ifndef PMCONCERTPARAULES_PMSETTINGSDEVICE_H
 #define PMCONCERTPARAULES_PMSETTINGSDEVICE_H
 
-#include <stdio.h>
 #include "PMSettingsDeviceChannel.h"
 
 class PMSettingsDevice

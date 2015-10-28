@@ -9,9 +9,28 @@
 #include "PMSettingsManager.h"
 #include "PMAudioAnalyzer.hpp"
 
+static const string FILENAME_GENERAL        = "settings/general.json";
+static const string FILENAME_AUDIODEVICES   = "settings/audioDevices.json";
+static const string FILENAME_POEM           = "settings/poem.json";
 
-const string FILENAME_GENERAL = "settings/general.json";
-const string FILENAME_AUDIODEVICES = "settings/audioDevices.json";
+// Debug/release string settings
+static const string STR_DEBUG_MODE          = "Debug Mode";
+static const string STR_RELEASE_MODE        = "Release Mode";
+static const string STR_SHOW_FPS            = "Show FPS";
+
+// Audio device settings
+static const string STR_DEVICES             = "Devices";
+static const string STR_DEVICE_NAME         = "1. Name";
+static const string STR_DEVICE_ID           = "2. Id";
+static const string STR_DEVICE_ENABLED      = "3. Enabled";
+static const string STR_CHANNELS            = "4. Channels";
+static const string STR_CHANNEL_ID          = "1. Id";
+static const string STR_CHANNEL_ENABLED     = "2. Enabled";
+
+// Poem settings
+static const string STR_POEM_FILE           = "Poem File";
+static const string STR_POEM_VALID          = "Valid File";
+static const string STR_POEM_FILE_DEFAULT   = "<None>";
 
 #pragma mark - Internal setup
 
@@ -21,39 +40,45 @@ PMSettingsManager::PMSettingsManager()
     bool parserResult = loadGeneralSettings();
     if (!parserResult)
     {
-        ofLog(OF_LOG_ERROR, "BAD FORMAT IN general.json. Now quitting...");
+        string msg = "BAD FORMAT IN " + FILENAME_GENERAL + ". Now quitting...";
+        ofLog(OF_LOG_ERROR, msg);
         std::exit(EXIT_FAILURE);
     }
 
     parserResult = loadAudioDevicesSettings();
     if (!parserResult)
     {
-        ofLog(OF_LOG_ERROR, "BAD FORMAT IN audioDevices.json. Now quitting...");
+        string msg = "BAD FORMAT IN " + FILENAME_AUDIODEVICES + ". Now quitting...";
+        ofLog(OF_LOG_ERROR, msg);
+        std::exit(EXIT_FAILURE);
+    }
+
+    parserResult = loadPoemSettings();
+    if (!parserResult)
+    {
+        string msg = "BAD FORMAT IN " + FILENAME_POEM + ". Now quitting...";
+        ofLog(OF_LOG_ERROR, msg);
         std::exit(EXIT_FAILURE);
     }
 }
 
 #pragma mark - Getters and setters
 
-///--------------------------------------------------------------
 bool PMSettingsManager::getDebugShowFPS()
 {
     return jsonGeneral[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
 }
 
-///--------------------------------------------------------------
 bool PMSettingsManager::getReleaseShowFPS()
 {
     return jsonGeneral[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
 }
 
-///--------------------------------------------------------------
 vector<PMSettingsDevice> *PMSettingsManager::getAudioDevices()
 {
     return &deviceSettings;
 };
 
-///--------------------------------------------------------------
 void PMSettingsManager::enableAudioDevice(unsigned int deviceID, bool enable)
 {
     bool found = false;
@@ -68,7 +93,6 @@ void PMSettingsManager::enableAudioDevice(unsigned int deviceID, bool enable)
     }
 }
 
-///--------------------------------------------------------------
 void PMSettingsManager::enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable)
 {
     bool found = false;
@@ -85,21 +109,11 @@ void PMSettingsManager::enableAudioDeviceChannel(unsigned int deviceID, unsigned
 
 #pragma mark - Read/write JSON file
 
-///--------------------------------------------------------------
 bool PMSettingsManager::loadGeneralSettings()
 {
-    // JSON parse
-
-    bool parsingSuccessful = jsonGeneral.open(FILENAME_GENERAL);
-
-#ifdef OF_DEBUG
-    cout << "PARSING RESULT: " << parsingSuccessful << endl;
-#endif
-
-    return parsingSuccessful;
+    return jsonGeneral.open(FILENAME_GENERAL);
 }
 
-///--------------------------------------------------------------
 bool PMSettingsManager::loadAudioDevicesSettings()
 {
     ofFile audioDevicesFile(FILENAME_AUDIODEVICES);
@@ -113,6 +127,68 @@ bool PMSettingsManager::loadAudioDevicesSettings()
 
     return result;
 }
+
+bool PMSettingsManager::loadPoemSettings()
+{
+    ofFile poemFile(FILENAME_POEM);
+    bool fileExists = poemFile.exists();
+    poemFile.close();
+
+    if (!fileExists) createPoemJSONSettings();
+
+    bool result = jsonPoem.open(FILENAME_POEM);
+    return result;
+}
+
+void PMSettingsManager::createAudioDeviceJSONSettings()
+{
+    vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
+
+    jsonAudioDevices[STR_DEVICES] = Json::arrayValue;
+
+    for (int i=0; i<devices.size(); ++i)
+    {
+        Json::Value jsonDevice;
+        jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
+        jsonDevice[STR_DEVICE_ENABLED] = false;
+        jsonDevice[STR_DEVICE_NAME] = devices[i].name;
+
+        jsonDevice[STR_CHANNELS] = Json::arrayValue;
+        for (int j=0; j<devices[i].inputChannels; ++j)
+        {
+            Json::Value jsonDeviceChannel;
+            jsonDeviceChannel[STR_CHANNEL_ID] = j;
+            jsonDeviceChannel[STR_CHANNEL_ENABLED] = false;
+
+            jsonDevice[STR_CHANNELS].append(jsonDeviceChannel);
+        }
+
+        jsonAudioDevices[STR_DEVICES].append(jsonDevice);
+    }
+
+    writeAudioDevicesSettings();
+}
+
+void PMSettingsManager::createPoemJSONSettings()
+{
+    jsonPoem[STR_POEM_FILE] = STR_POEM_FILE_DEFAULT;
+    jsonPoem[STR_POEM_VALID] = false;
+    jsonPoem.save(FILENAME_POEM, true);
+}
+
+void PMSettingsManager::writeAudioDevicesSettings()
+{
+    jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
+}
+
+void PMSettingsManager::addPoem(string filePath)
+{
+    jsonPoem[STR_POEM_FILE] = filePath;
+    jsonPoem[STR_POEM_VALID] = true;
+    jsonPoem.save(FILENAME_POEM, true);
+}
+
+#pragma mark - Convenience methods
 
 ///--------------------------------------------------------------
 void PMSettingsManager::buildAudioDevicesVectorFromJSON()
@@ -143,40 +219,4 @@ void PMSettingsManager::buildAudioDevicesVectorFromJSON()
 
         deviceSettings.push_back(device);
     }
-}
-
-///--------------------------------------------------------------
-void PMSettingsManager::createAudioDeviceJSONSettings()
-{
-    vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
-
-    jsonAudioDevices[STR_DEVICES] = Json::arrayValue;
-
-    for (int i=0; i<devices.size(); ++i)
-    {
-        Json::Value jsonDevice;
-        jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
-        jsonDevice[STR_DEVICE_ENABLED] = false;
-        jsonDevice[STR_DEVICE_NAME] = devices[i].name;
-
-        jsonDevice[STR_CHANNELS] = Json::arrayValue;
-        for (int j=0; j<devices[i].inputChannels; ++j)
-        {
-            Json::Value jsonDeviceChannel;
-            jsonDeviceChannel[STR_CHANNEL_ID] = j;
-            jsonDeviceChannel[STR_CHANNEL_ENABLED] = false;
-
-            jsonDevice[STR_CHANNELS].append(jsonDeviceChannel);
-        }
-
-        jsonAudioDevices[STR_DEVICES].append(jsonDevice);
-    }
-
-    writeAudioDevicesSettings();
-}
-
-///--------------------------------------------------------------
-void PMSettingsManager::writeAudioDevicesSettings()
-{
-    jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
 }

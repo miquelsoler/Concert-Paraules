@@ -111,3 +111,4 @@ Desktop.ini
 
 .mailmap
 bin/data/settings/audioDevices.json
+bin/data/settings/poem.json
