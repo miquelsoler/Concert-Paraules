@@ -33,8 +33,11 @@ public:
 
 private:
 
+    void dragEvent(ofDragInfo dragInfo); // Just in case we need it for poem selection (drag text file to scene)
+
     int setupGUIPoem(int originX, int originY);
-    int setupGUIAudioSettings(int originX, int originY);
+    int setupGUIAudio(int originX, int originY);
+    int setupGUIRenderer(int originX, int originY);
     void setupGUIMainButtons();
 
     void handleEventInputDevices(ofxUIEventArgs &e);
@@ -45,6 +48,7 @@ private:
 
     ofxUISuperCanvas        *guiPoemSelector;
     ofxUISuperCanvas        *guiAudioSettings;
+    ofxUISuperCanvas        *guiRendererSettings;
     ofxUISuperCanvas        *guiMainButtons;
 
     int                     guiX, guiY;

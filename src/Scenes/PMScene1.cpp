@@ -11,8 +11,18 @@
 #include "PMSettingsManager.h"
 
 
-static const string     STR_MAIN_SAVE       = "SAVE & CONTINUE";
-static const int        MAX_CHANNELS_COLS   = 16;
+static const string     STR_HEADER_POEM         = "POEM";
+static const string     STR_HEADER_AUDIO        = "INPUT DEVICES";
+static const string     STR_HEADER_RENDERER     = "RENDER MODE";
+static const string     STR_HEADER_MAINBUTTONS  = "GO TO MAIN SCENE";
+
+static const string     STR_RENDERER_PAINTBRUSH = "Paint Brush";
+static const string     STR_RENDERER_TYPOGRAPHY = "Typography";
+static const string     STR_RENDERER_COLORS      = "Colors";
+
+static const string     STR_MAINBUTTONS_SAVE    = "SAVE & CONTINUE";
+
+static const int        MAX_CHANNELS_COLS       = 16;
 
 #pragma mark - UI building
 
@@ -44,7 +54,11 @@ PMScene1::PMScene1()
 
         // Audio settings
         panelOriginX += lastWidth + panelMarginX;
-        lastWidth = this->setupGUIAudioSettings(panelOriginX, guiY);
+        lastWidth = this->setupGUIAudio(panelOriginX, guiY);
+
+        // Renderer settings
+        panelOriginX += lastWidth + panelMarginX;
+        this->setupGUIRenderer(panelOriginX, guiY);
 
         // Continue buttons
         this->setupGUIMainButtons();
@@ -96,7 +110,7 @@ void PMScene1::willExit()
 ///--------------------------------------------------------------
 int PMScene1::setupGUIPoem(int originX, int originY)
 {
-    guiPoemSelector = new ofxUISuperCanvas("POEM", OFX_UI_FONT_LARGE);
+    guiPoemSelector = new ofxUISuperCanvas(STR_HEADER_POEM, OFX_UI_FONT_LARGE);
     guiPoemSelector->setColorBack(canvasBgColor);
     guiPoemSelector->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiPoemSelector->addSpacer();
@@ -108,9 +122,9 @@ int PMScene1::setupGUIPoem(int originX, int originY)
 }
 
 ///--------------------------------------------------------------
-int PMScene1::setupGUIAudioSettings(int originX, int originY)
+int PMScene1::setupGUIAudio(int originX, int originY)
 {
-    guiAudioSettings = new ofxUISuperCanvas("INPUT DEVICES", OFX_UI_FONT_LARGE);
+    guiAudioSettings = new ofxUISuperCanvas(STR_HEADER_AUDIO, OFX_UI_FONT_LARGE);
     guiAudioSettings->setColorBack(canvasBgColor);
     guiAudioSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
 
@@ -160,13 +174,34 @@ int PMScene1::setupGUIAudioSettings(int originX, int originY)
 }
 
 ///--------------------------------------------------------------
+int PMScene1::setupGUIRenderer(int originX, int originY)
+{
+    guiRendererSettings = new ofxUISuperCanvas(STR_HEADER_RENDERER, OFX_UI_FONT_LARGE);
+    guiRendererSettings->setColorBack(canvasBgColor);
+    guiRendererSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
+    guiRendererSettings->addSpacer();
+
+    vector<string> modeNames;
+    modeNames.push_back(STR_RENDERER_PAINTBRUSH);
+    modeNames.push_back(STR_RENDERER_TYPOGRAPHY);
+    modeNames.push_back(STR_RENDERER_COLORS);
+    guiRendererSettings->addRadio("Render Modes", modeNames);
+
+    guiRendererSettings->setPosition(originX, originY);
+    guiRendererSettings->autoSizeToFitWidgets();
+
+    return int(guiRendererSettings->getRect()->getWidth());
+
+}
+
+///--------------------------------------------------------------
 void PMScene1::setupGUIMainButtons()
 {
-    guiMainButtons = new ofxUISuperCanvas("GO TO MAIN SCENE");
+    guiMainButtons = new ofxUISuperCanvas(STR_HEADER_MAINBUTTONS);
     guiMainButtons->setColorBack(canvasBgColor);
     guiMainButtons->getCanvasTitle()->setColorFill(canvasTitleColor);
 
-    guiMainButtons->addLabelButton(STR_MAIN_SAVE, false);
+    guiMainButtons->addLabelButton(STR_MAINBUTTONS_SAVE, false);
 
     guiMainButtons->autoSizeToFitWidgets();
 
@@ -285,4 +320,11 @@ void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
 
         PMSettingsManager::getInstance().enableAudioDevice((unsigned int)(deviceToggle->getID()), false);
     }
+}
+
+void PMScene1::dragEvent(ofDragInfo dragInfo)
+{
+#ifdef OF_DEBUG
+    cout << "Dragged file \"" << dragInfo.files[0] << "\" into scene" << endl;
+#endif
 }
