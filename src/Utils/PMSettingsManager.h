@@ -37,7 +37,9 @@ public:
     void writeAudioDevicesSettings();
 
     // Poem
+    string getPoemFilename();
     void addPoem(string filePath);
+    void writePoemSettings();
 
 private:
 

@@ -115,6 +115,7 @@ int PMScene1::setupGUIPoem(int originX, int originY)
     guiPoemSelector->setColorBack(canvasBgColor);
     guiPoemSelector->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiPoemSelector->addSpacer();
+    guiPoemSelector->addLabel(PMSettingsManager::getInstance().getPoemFilename(), OFX_UI_FONT_MEDIUM);
 
     guiPoemSelector->setPosition(originX, originY);
     guiPoemSelector->autoSizeToFitWidgets();
@@ -325,6 +326,24 @@ void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
 
 void PMScene1::dragEvent(ofDragInfo dragInfo)
 {
+    string filename = dragInfo.files[0];
+
+    PMSettingsManager::getInstance().addPoem(filename);
+    PMSettingsManager::getInstance().writePoemSettings();
+
+    vector <ofxUIWidget *> poemWidgets = guiPoemSelector->getWidgets();
+    ofxUILabel *fileLabel;
+    bool found = false;
+    for (int i=0; i<poemWidgets.size() && !found; i++)
+    {
+        found = (poemWidgets[i]->getKind() == OFX_UI_WIDGET_LABEL) && (poemWidgets[i]->getName() != STR_HEADER_POEM);
+        if (found)
+            fileLabel = (ofxUILabel *)(poemWidgets[i]);
+    }
+
+    if (found)
+        fileLabel->setLabel(filename);
+
 #ifdef OF_DEBUG
     cout << "Dragged file \"" << dragInfo.files[0] << "\" into scene" << endl;
 #endif

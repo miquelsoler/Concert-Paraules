@@ -107,12 +107,26 @@ void PMSettingsManager::enableAudioDeviceChannel(unsigned int deviceID, unsigned
     }
 }
 
-#pragma mark - Read/write JSON file
+string PMSettingsManager::getPoemFilename()
+{
+    return jsonPoem[STR_POEM_FILE].asString();
+}
+
+void PMSettingsManager::addPoem(string filePath)
+{
+    jsonPoem[STR_POEM_FILE] = filePath;
+    jsonPoem[STR_POEM_VALID] = true;
+    jsonPoem.save(FILENAME_POEM, true);
+}
+
+#pragma mark - General settings
 
 bool PMSettingsManager::loadGeneralSettings()
 {
     return jsonGeneral.open(FILENAME_GENERAL);
 }
+
+#pragma mark - Audio settings
 
 bool PMSettingsManager::loadAudioDevicesSettings()
 {
@@ -125,18 +139,6 @@ bool PMSettingsManager::loadAudioDevicesSettings()
     bool result = jsonAudioDevices.open(FILENAME_AUDIODEVICES);
     if (result) buildAudioDevicesVectorFromJSON();
 
-    return result;
-}
-
-bool PMSettingsManager::loadPoemSettings()
-{
-    ofFile poemFile(FILENAME_POEM);
-    bool fileExists = poemFile.exists();
-    poemFile.close();
-
-    if (!fileExists) createPoemJSONSettings();
-
-    bool result = jsonPoem.open(FILENAME_POEM);
     return result;
 }
 
@@ -169,6 +171,25 @@ void PMSettingsManager::createAudioDeviceJSONSettings()
     writeAudioDevicesSettings();
 }
 
+void PMSettingsManager::writeAudioDevicesSettings()
+{
+    jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
+}
+
+#pragma mark - Poem settings
+
+bool PMSettingsManager::loadPoemSettings()
+{
+    ofFile poemFile(FILENAME_POEM);
+    bool fileExists = poemFile.exists();
+    poemFile.close();
+
+    if (!fileExists) createPoemJSONSettings();
+
+    bool result = jsonPoem.open(FILENAME_POEM);
+    return result;
+}
+
 void PMSettingsManager::createPoemJSONSettings()
 {
     jsonPoem[STR_POEM_FILE] = STR_POEM_FILE_DEFAULT;
@@ -176,15 +197,8 @@ void PMSettingsManager::createPoemJSONSettings()
     jsonPoem.save(FILENAME_POEM, true);
 }
 
-void PMSettingsManager::writeAudioDevicesSettings()
+void PMSettingsManager::writePoemSettings()
 {
-    jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
-}
-
-void PMSettingsManager::addPoem(string filePath)
-{
-    jsonPoem[STR_POEM_FILE] = filePath;
-    jsonPoem[STR_POEM_VALID] = true;
     jsonPoem.save(FILENAME_POEM, true);
 }
 
