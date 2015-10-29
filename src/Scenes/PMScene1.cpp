@@ -185,7 +185,7 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
 
     ofxUIRadio *modeRadioButtons;
 
-    // Add radiobuttons
+    // Add radio buttons for renderer modes
     {
         vector<string> modeNames;
         for (int iRenderer = 0; iRenderer < renderers->size(); ++iRenderer) {
@@ -195,11 +195,12 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
         modeRadioButtons = guiRendererSettings->addRadio("Render Modes", modeNames);
     }
 
-    // Set toggle states according to settings file
+    // Set selected mode and ID according to settings file
     {
         vector<ofxUIToggle *> modeButtonsToggles = modeRadioButtons->getToggles();
         for (int i = 0; i < modeButtonsToggles.size(); ++i) {
             PMSettingsRenderer renderer = (*renderers)[i];
+            modeButtonsToggles[i]->setID(renderer.ID);
             modeButtonsToggles[i]->setValue(renderer.enabled);
         }
     }
@@ -207,8 +208,9 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
     guiRendererSettings->setPosition(originX, originY);
     guiRendererSettings->autoSizeToFitWidgets();
 
-    return int(guiRendererSettings->getRect()->getWidth());
+    ofAddListener(guiRendererSettings->newGUIEvent, this, &PMScene1::handleEventRendererMode);
 
+    return int(guiRendererSettings->getRect()->getWidth());
 }
 
 ///--------------------------------------------------------------
@@ -281,6 +283,17 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
 #ifdef OF_DEBUG
     cout << widgetName << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
 #endif
+}
+
+void PMScene1::handleEventRendererMode(ofxUIEventArgs &e)
+{
+    if (e.getKind() != OFX_UI_WIDGET_TOGGLE) return;
+
+    ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
+    if (!toggle->getValue()) return; // Ignore releases
+
+    PMSettingsManager::getInstance().enableRenderer(toggle->getID());
+    PMSettingsManager::getInstance().writeRenderersSettings();
 }
 
 void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)

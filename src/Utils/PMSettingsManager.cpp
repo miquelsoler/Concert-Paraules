@@ -345,6 +345,15 @@ vector<PMSettingsRenderer> *PMSettingsManager::getRenderers()
     return &renderersSettings;
 }
 
+void PMSettingsManager::enableRenderer(unsigned int rendererID)
+{
+    for (int i=0; i<jsonRenderers[STR_RENDERERS].size(); ++i)
+    {
+        bool enabled = (jsonRenderers[STR_RENDERERS][i][STR_RENDERER_ID].asInt() == rendererID);
+        jsonRenderers[STR_RENDERERS][i][STR_RENDERER_ENABLED] = enabled;
+    }
+}
+
 void PMSettingsManager::writeRenderersSettings()
 {
     jsonRenderers.save(FILENAME_RENDERERS, true);

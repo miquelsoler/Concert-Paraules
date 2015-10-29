@@ -41,6 +41,7 @@ private:
     void setupGUIMainButtons();
 
     void handleEventInputDevices(ofxUIEventArgs &e);
+    void handleEventRendererMode(ofxUIEventArgs &e);
     void handleEventMainButtons(ofxUIEventArgs &e);
 
     void disableAllChannelsForDevice(ofxUIToggle *deviceToggle);

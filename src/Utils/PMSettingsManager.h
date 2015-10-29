@@ -44,6 +44,7 @@ public:
 
     // Renderers
     vector<PMSettingsRenderer> *getRenderers();
+    void enableRenderer(unsigned int rendererID);
     void writeRenderersSettings();
 
 private:
