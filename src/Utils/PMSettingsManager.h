@@ -15,6 +15,7 @@
 #include "ofxJSON.h"
 #include "PMSettingsDevice.h"
 #include "PMSettingsDeviceChannel.h"
+#include "PMSettingsRenderer.h"
 
 
 class PMSettingsManager
@@ -42,6 +43,7 @@ public:
     void writePoemSettings();
 
     // Renderers
+    vector<PMSettingsRenderer> *getRenderers();
     void writeRenderersSettings();
 
 private:
@@ -49,18 +51,22 @@ private:
     PMSettingsManager();
 
     bool loadGeneralSettings();
+
     bool loadAudioDevicesSettings();
-    bool loadPoemSettings();
-    bool loadRenderersSettings();
-
     void createAudioDeviceJSONSettings();
-    void createPoemJSONSettings();
-    void createRenderersJSONSettings();
-
     void buildAudioDevicesVectorFromJSON();
+    vector<PMSettingsDevice> devicesSettings;
+
+    bool loadPoemSettings();
+    void createPoemJSONSettings();
+
+    bool loadRenderersSettings();
+    void createRenderersJSONSettings();
+    void buildRenderersVectorFromJSON();
+    vector<PMSettingsRenderer> renderersSettings;
+
     bool fileExists(string filename);
 
-    vector<PMSettingsDevice> deviceSettings;
 
     ofxJSONElement jsonGeneral;
     ofxJSONElement jsonAudioDevices;

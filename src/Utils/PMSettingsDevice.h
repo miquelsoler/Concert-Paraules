@@ -12,8 +12,8 @@
 class PMSettingsDevice
 {
 public:
-    string name;
     int ID;
+    string name;
     bool enabled;
     vector<PMSettingsDeviceChannel> channels;
 };

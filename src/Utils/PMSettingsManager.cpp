@@ -44,6 +44,13 @@ static const string STR_RENDERER_PAINTBRUSH = "Paint Brush";
 static const string STR_RENDERER_TYPOGRAPHY = "Typography";
 static const string STR_RENDERER_COLORS     = "Colors";
 
+typedef enum
+{
+    PMSRENDERER_PAINTBRUSH = 0,
+    PMSRENDERER_TYPOGRAPHY = 1,
+    PMSRENDERER_COLORS = 2
+} PMS_RendererMode;
+
 #pragma mark - Internal setup
 
 ///--------------------------------------------------------------
@@ -96,7 +103,7 @@ bool PMSettingsManager::getReleaseShowFPS()
 
 vector<PMSettingsDevice> *PMSettingsManager::getAudioDevices()
 {
-    return &deviceSettings;
+    return &devicesSettings;
 };
 
 void PMSettingsManager::enableAudioDevice(unsigned int deviceID, bool enable)
@@ -188,6 +195,36 @@ void PMSettingsManager::createAudioDeviceJSONSettings()
     writeAudioDevicesSettings();
 }
 
+void PMSettingsManager::buildAudioDevicesVectorFromJSON()
+{
+    for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size(); ++i)
+    {
+        Json::Value jsonDevice = jsonAudioDevices[STR_DEVICES][i];
+
+        PMSettingsDevice device;
+        device.name = jsonDevice[STR_DEVICE_NAME].asString();
+        device.ID = jsonDevice[STR_DEVICE_ID].asInt();
+        device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
+
+        Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
+        vector<PMSettingsDeviceChannel> deviceChannels;
+
+        for (int j = 0; j < jsonDeviceChannels.size(); ++j) {
+            Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
+
+            PMSettingsDeviceChannel channel;
+            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
+            channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
+
+            deviceChannels.push_back(channel);
+        }
+
+        device.channels = deviceChannels;
+
+        devicesSettings.push_back(device);
+    }
+}
+
 void PMSettingsManager::writeAudioDevicesSettings()
 {
     jsonAudioDevices.save(FILENAME_AUDIODEVICES, true);
@@ -224,6 +261,8 @@ bool PMSettingsManager::loadRenderersSettings()
         createRenderersJSONSettings();
 
     bool result = jsonRenderers.open(FILENAME_RENDERERS);
+    if (result) buildRenderersVectorFromJSON();
+
     return result;
 }
 
@@ -235,7 +274,7 @@ void PMSettingsManager::createRenderersJSONSettings()
         Json::Value jsonRenderer;
         jsonRenderer.clear();
         jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_PAINTBRUSH;
-        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_PAINTBRUSH;
         jsonRenderer[STR_RENDERER_ENABLED] = true;
         jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
         jsonRenderers[STR_RENDERERS].append(jsonRenderer);
@@ -244,7 +283,7 @@ void PMSettingsManager::createRenderersJSONSettings()
     {
         Json::Value jsonRenderer;
         jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_TYPOGRAPHY;
-        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_TYPOGRAPHY;
         jsonRenderer[STR_RENDERER_ENABLED] = false;
         jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
         jsonRenderers[STR_RENDERERS].append(jsonRenderer);
@@ -253,7 +292,7 @@ void PMSettingsManager::createRenderersJSONSettings()
     {
         Json::Value jsonRenderer;
         jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_COLORS;
-        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_COLORS;
         jsonRenderer[STR_RENDERER_ENABLED] = false;
         jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
         jsonRenderers[STR_RENDERERS].append(jsonRenderer);
@@ -262,43 +301,56 @@ void PMSettingsManager::createRenderersJSONSettings()
     writeRenderersSettings();
 }
 
+void PMSettingsManager::buildRenderersVectorFromJSON()
+{
+    for (int i=0; i<jsonRenderers[STR_RENDERERS].size(); ++i)
+    {
+        Json::Value jsonRenderer = jsonRenderers[STR_RENDERERS][i];
+
+        PMSettingsRenderer renderer;
+        renderer.ID = jsonRenderer[STR_RENDERER_ID].asInt();
+        renderer.name = jsonRenderer[STR_RENDERER_NAME].asString();
+        renderer.enabled = jsonRenderer[STR_RENDERER_ENABLED].asBool();
+
+        switch(jsonRenderer[STR_RENDERER_ID].asInt())
+        {
+            case PMSRENDERER_PAINTBRUSH:
+            {
+                PMSettingsRendererPaintbrush rendererPaintbrush;
+                rendererPaintbrush.size = 10;
+                renderer.specificSettings = rendererPaintbrush;
+                break;
+            }
+            case PMSRENDERER_TYPOGRAPHY:
+            {
+                PMSettingsRendererTypography rendererTypography;
+                renderer.specificSettings = rendererTypography;
+                break;
+            }
+            case PMSRENDERER_COLORS:
+            {
+                PMSettingsRendererColors rendererColors;
+                renderer.specificSettings = rendererColors;
+                break;
+            }
+            default: break;
+        }
+
+        renderersSettings.push_back(renderer);
+    }
+}
+
+vector<PMSettingsRenderer> *PMSettingsManager::getRenderers()
+{
+    return &renderersSettings;
+}
+
 void PMSettingsManager::writeRenderersSettings()
 {
     jsonRenderers.save(FILENAME_RENDERERS, true);
 }
 
 #pragma mark - Convenience methods
-
-///--------------------------------------------------------------
-void PMSettingsManager::buildAudioDevicesVectorFromJSON()
-{
-    for (int i = 0; i < jsonAudioDevices[STR_DEVICES].size(); ++i)
-    {
-        Json::Value jsonDevice = jsonAudioDevices[STR_DEVICES][i];
-
-        PMSettingsDevice device;
-        device.name = jsonDevice[STR_DEVICE_NAME].asString();
-        device.ID = jsonDevice[STR_DEVICE_ID].asInt();
-        device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
-
-        Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
-        vector<PMSettingsDeviceChannel> deviceChannels;
-
-        for (int j = 0; j < jsonDeviceChannels.size(); ++j) {
-            Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
-
-            PMSettingsDeviceChannel channel;
-            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
-            channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
-
-            deviceChannels.push_back(channel);
-        }
-
-        device.channels = deviceChannels;
-
-        deviceSettings.push_back(device);
-    }
-}
 
 bool PMSettingsManager::fileExists(string filename)
 {

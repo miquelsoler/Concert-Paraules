@@ -172,6 +172,8 @@
 		214760F05B0754A0E92C02B2 /* PMSettingsDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSettingsDevice.h; sourceTree = "<group>"; };
 		2147637322935D592B82D3A5 /* PMBaseRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseRenderer.cpp; sourceTree = "<group>"; };
 		2147686E219E442DCD619EED /* PMBaseRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseRenderer.h; sourceTree = "<group>"; };
+		21476BCCE788D4763EED41E1 /* PMSettingsRendererSpecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSettingsRendererSpecific.h; sourceTree = "<group>"; };
+		21476BFE4F5217582B3A51C1 /* PMSettingsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSettingsRenderer.h; sourceTree = "<group>"; };
 		21476CC0CE997FACA5B392F5 /* PMRendererPaintbrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererPaintbrush.h; sourceTree = "<group>"; };
 		21476D3A0BB0660D6CDD1D3D /* PMRendererPaintbrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererPaintbrush.cpp; sourceTree = "<group>"; };
 		21BDE665988474F1B1F4D302 /* jsoncpp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = jsoncpp.cpp; path = ../../../addons/ofxJSON/libs/jsoncpp/src/jsoncpp.cpp; sourceTree = SOURCE_ROOT; };
@@ -803,6 +805,8 @@
 				2A4BBCFC1BBD925D00142482 /* PMSettingsManager.h */,
 				2147608FBAA6F8BF553610CB /* PMSettingsDeviceChannel.h */,
 				214760F05B0754A0E92C02B2 /* PMSettingsDevice.h */,
+				21476BFE4F5217582B3A51C1 /* PMSettingsRenderer.h */,
+				21476BCCE788D4763EED41E1 /* PMSettingsRendererSpecific.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1770,7 +1774,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAudioAnalyzer-PM/libs/essentia/include/";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};

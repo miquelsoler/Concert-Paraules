@@ -16,11 +16,6 @@ static const string     STR_HEADER_AUDIO        = "INPUT DEVICES";
 static const string     STR_HEADER_RENDERER     = "RENDER MODE";
 static const string     STR_HEADER_MAINBUTTONS  = "GO TO MAIN SCENE";
 
-/**/ // TO BE DELETED
-static const string     STR_RENDERER_PAINTBRUSH = "Paint Brush";
-static const string     STR_RENDERER_TYPOGRAPHY = "Typography";
-static const string     STR_RENDERER_COLORS      = "Colors";
-
 static const string     STR_MAINBUTTONS_SAVE    = "SAVE & CONTINUE";
 
 static const int        MAX_CHANNELS_COLS       = 16;
@@ -186,12 +181,28 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
     guiRendererSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiRendererSettings->addSpacer();
 
-    vector<string> modeNames;
-    modeNames.push_back(STR_RENDERER_PAINTBRUSH);
-    modeNames.push_back(STR_RENDERER_TYPOGRAPHY);
-    modeNames.push_back(STR_RENDERER_COLORS);
-    ofxUIRadio *modeButtons = guiRendererSettings->addRadio("Render Modes", modeNames);
-    modeButtons->activateToggle(STR_RENDERER_PAINTBRUSH);
+    vector<PMSettingsRenderer> *renderers = PMSettingsManager::getInstance().getRenderers();
+
+    ofxUIRadio *modeRadioButtons;
+
+    // Add radiobuttons
+    {
+        vector<string> modeNames;
+        for (int iRenderer = 0; iRenderer < renderers->size(); ++iRenderer) {
+            PMSettingsRenderer renderer = (*renderers)[iRenderer];
+            modeNames.push_back(renderer.name);
+        }
+        modeRadioButtons = guiRendererSettings->addRadio("Render Modes", modeNames);
+    }
+
+    // Set toggle states according to settings file
+    {
+        vector<ofxUIToggle *> modeButtonsToggles = modeRadioButtons->getToggles();
+        for (int i = 0; i < modeButtonsToggles.size(); ++i) {
+            PMSettingsRenderer renderer = (*renderers)[i];
+            modeButtonsToggles[i]->setValue(renderer.enabled);
+        }
+    }
 
     guiRendererSettings->setPosition(originX, originY);
     guiRendererSettings->autoSizeToFitWidgets();
@@ -336,7 +347,7 @@ void PMScene1::dragEvent(ofDragInfo dragInfo)
     PMSettingsManager::getInstance().writePoemSettings();
 
     vector <ofxUIWidget *> poemWidgets = guiPoemSelector->getWidgets();
-    ofxUILabel *fileLabel;
+    ofxUILabel *fileLabel = NULL;
     bool found = false;
     for (int i=0; i<poemWidgets.size() && !found; i++)
     {
