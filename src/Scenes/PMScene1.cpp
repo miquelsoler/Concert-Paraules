@@ -16,6 +16,7 @@ static const string     STR_HEADER_AUDIO        = "INPUT DEVICES";
 static const string     STR_HEADER_RENDERER     = "RENDER MODE";
 static const string     STR_HEADER_MAINBUTTONS  = "GO TO MAIN SCENE";
 
+/**/ // TO BE DELETED
 static const string     STR_RENDERER_PAINTBRUSH = "Paint Brush";
 static const string     STR_RENDERER_TYPOGRAPHY = "Typography";
 static const string     STR_RENDERER_COLORS      = "Colors";
@@ -70,6 +71,8 @@ PMScene1::~PMScene1()
 {
     delete guiPoemSelector;
     delete guiAudioSettings;
+    delete guiRendererSettings;
+    delete guiMainButtons;
 }
 
 ///--------------------------------------------------------------
@@ -187,7 +190,8 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
     modeNames.push_back(STR_RENDERER_PAINTBRUSH);
     modeNames.push_back(STR_RENDERER_TYPOGRAPHY);
     modeNames.push_back(STR_RENDERER_COLORS);
-    guiRendererSettings->addRadio("Render Modes", modeNames);
+    ofxUIRadio *modeButtons = guiRendererSettings->addRadio("Render Modes", modeNames);
+    modeButtons->activateToggle(STR_RENDERER_PAINTBRUSH);
 
     guiRendererSettings->setPosition(originX, originY);
     guiRendererSettings->autoSizeToFitWidgets();

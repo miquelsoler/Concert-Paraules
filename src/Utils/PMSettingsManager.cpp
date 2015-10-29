@@ -12,6 +12,7 @@
 static const string FILENAME_GENERAL        = "settings/general.json";
 static const string FILENAME_AUDIODEVICES   = "settings/audioDevices.json";
 static const string FILENAME_POEM           = "settings/poem.json";
+static const string FILENAME_RENDERERS      = "settings/renderers.json";
 
 // Debug/release string settings
 static const string STR_DEBUG_MODE          = "Debug Mode";
@@ -31,6 +32,17 @@ static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 static const string STR_POEM_FILE           = "Poem File";
 static const string STR_POEM_VALID          = "Valid File";
 static const string STR_POEM_FILE_DEFAULT   = "<None>";
+
+// Renderers settings
+static const string STR_RENDERERS           = "Renderers";
+static const string STR_RENDERER_NAME       = "1. Name";
+static const string STR_RENDERER_ID         = "2. Id";
+static const string STR_RENDERER_ENABLED    = "3. Enabled";
+static const string STR_RENDERER_SETTINGS   = "4. Settings";
+
+static const string STR_RENDERER_PAINTBRUSH = "Paint Brush";
+static const string STR_RENDERER_TYPOGRAPHY = "Typography";
+static const string STR_RENDERER_COLORS     = "Colors";
 
 #pragma mark - Internal setup
 
@@ -57,6 +69,14 @@ PMSettingsManager::PMSettingsManager()
     if (!parserResult)
     {
         string msg = "BAD FORMAT IN " + FILENAME_POEM + ". Now quitting...";
+        ofLog(OF_LOG_ERROR, msg);
+        std::exit(EXIT_FAILURE);
+    }
+
+    parserResult = loadRenderersSettings();
+    if (!parserResult)
+    {
+        string msg = "BAD FORMAT IN " + FILENAME_RENDERERS + ". Now quitting...";
         ofLog(OF_LOG_ERROR, msg);
         std::exit(EXIT_FAILURE);
     }
@@ -130,11 +150,8 @@ bool PMSettingsManager::loadGeneralSettings()
 
 bool PMSettingsManager::loadAudioDevicesSettings()
 {
-    ofFile audioDevicesFile(FILENAME_AUDIODEVICES);
-    bool fileExists = audioDevicesFile.exists();
-    audioDevicesFile.close();
-
-    if (!fileExists) createAudioDeviceJSONSettings();
+    if (!fileExists(FILENAME_AUDIODEVICES))
+        createAudioDeviceJSONSettings();
 
     bool result = jsonAudioDevices.open(FILENAME_AUDIODEVICES);
     if (result) buildAudioDevicesVectorFromJSON();
@@ -180,11 +197,8 @@ void PMSettingsManager::writeAudioDevicesSettings()
 
 bool PMSettingsManager::loadPoemSettings()
 {
-    ofFile poemFile(FILENAME_POEM);
-    bool fileExists = poemFile.exists();
-    poemFile.close();
-
-    if (!fileExists) createPoemJSONSettings();
+    if (!fileExists(FILENAME_POEM))
+        createPoemJSONSettings();
 
     bool result = jsonPoem.open(FILENAME_POEM);
     return result;
@@ -200,6 +214,57 @@ void PMSettingsManager::createPoemJSONSettings()
 void PMSettingsManager::writePoemSettings()
 {
     jsonPoem.save(FILENAME_POEM, true);
+}
+
+#pragma mark - Renderer settings
+
+bool PMSettingsManager::loadRenderersSettings()
+{
+    if (!fileExists(FILENAME_RENDERERS))
+        createRenderersJSONSettings();
+
+    bool result = jsonRenderers.open(FILENAME_RENDERERS);
+    return result;
+}
+
+void PMSettingsManager::createRenderersJSONSettings()
+{
+    jsonRenderers[STR_RENDERERS] = Json::arrayValue;
+
+    {
+        Json::Value jsonRenderer;
+        jsonRenderer.clear();
+        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_PAINTBRUSH;
+        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ENABLED] = true;
+        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
+        jsonRenderers[STR_RENDERERS].append(jsonRenderer);
+    }
+
+    {
+        Json::Value jsonRenderer;
+        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_TYPOGRAPHY;
+        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ENABLED] = false;
+        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
+        jsonRenderers[STR_RENDERERS].append(jsonRenderer);
+    }
+
+    {
+        Json::Value jsonRenderer;
+        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_COLORS;
+        jsonRenderer[STR_RENDERER_ID] = 0;
+        jsonRenderer[STR_RENDERER_ENABLED] = false;
+        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
+        jsonRenderers[STR_RENDERERS].append(jsonRenderer);
+    }
+
+    writeRenderersSettings();
+}
+
+void PMSettingsManager::writeRenderersSettings()
+{
+    jsonRenderers.save(FILENAME_RENDERERS, true);
 }
 
 #pragma mark - Convenience methods
@@ -233,4 +298,13 @@ void PMSettingsManager::buildAudioDevicesVectorFromJSON()
 
         deviceSettings.push_back(device);
     }
+}
+
+bool PMSettingsManager::fileExists(string filename)
+{
+    ofFile file(filename);
+    bool fileExists = file.exists();
+    file.close();
+
+    return fileExists;
 }

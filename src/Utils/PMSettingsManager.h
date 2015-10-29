@@ -41,23 +41,31 @@ public:
     void addPoem(string filePath);
     void writePoemSettings();
 
+    // Renderers
+    void writeRenderersSettings();
+
 private:
 
     PMSettingsManager();
+
     bool loadGeneralSettings();
     bool loadAudioDevicesSettings();
     bool loadPoemSettings();
+    bool loadRenderersSettings();
 
     void createAudioDeviceJSONSettings();
     void createPoemJSONSettings();
+    void createRenderersJSONSettings();
 
     void buildAudioDevicesVectorFromJSON();
+    bool fileExists(string filename);
 
     vector<PMSettingsDevice> deviceSettings;
 
     ofxJSONElement jsonGeneral;
     ofxJSONElement jsonAudioDevices;
     ofxJSONElement jsonPoem;
+    ofxJSONElement jsonRenderers;
 };
 
 #endif /* defined(__ConductrEnter__SettingsManager__) */
