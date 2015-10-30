@@ -13,7 +13,11 @@
 
 #include <stdio.h>
 #include "ofxUI.h"
+#include "PMSceneManager.hpp";
 #include "PMBaseScene.hpp"
+#include "PMSettingsManagerPoem.h"
+#include "PMSettingsManagerAudioDevices.h"
+#include "PMSettingsManagerRenderers.h"
 
 using namespace std;
 
@@ -47,16 +51,20 @@ private:
     void disableAllChannelsForDevice(ofxUIToggle *deviceToggle);
     void disableDeviceIfNoChannels(ofxUIToggle *channelToggle);
 
-    ofxUISuperCanvas        *guiPoemSelector;
-    ofxUISuperCanvas        *guiAudioSettings;
-    ofxUISuperCanvas        *guiRendererSettings;
-    ofxUISuperCanvas        *guiMainButtons;
+    ofxUISuperCanvas                *guiPoemSelector;
+    ofxUISuperCanvas                *guiAudioSettings;
+    ofxUISuperCanvas                *guiRendererSettings;
+    ofxUISuperCanvas                *guiMainButtons;
 
-    int                     guiX, guiY;
+    int                             guiX, guiY;
 
-    ofColor                 canvasBgColor;
-    ofColor                 canvasTitleColor;
-    ofColor                 deviceLabelColor;
+    ofColor                         canvasBgColor;
+    ofColor                         canvasTitleColor;
+    ofColor                         deviceLabelColor;
+
+    PMSettingsManagerPoem           *settingsPoem;
+    PMSettingsManagerAudioDevices   *settingsAudioDevices;
+    PMSettingsManagerRenderers      *settingsRenderer;
 };
 
 #endif /* PMScene1_hpp */

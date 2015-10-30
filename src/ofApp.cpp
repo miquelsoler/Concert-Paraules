@@ -1,5 +1,5 @@
 #include "ofApp.h"
-#include "PMSettingsManager.h"
+#include "PMSettingsManagerGeneral.h"
 #include "Defaults.h"
 #include "PMAudioAnalyzer.hpp"
 
@@ -21,9 +21,9 @@ void ofApp::setup()
     // Settings
 
 #ifdef OF_DEBUG
-    showFPS = PMSettingsManager::getInstance().getDebugShowFPS();
+    showFPS = PMSettingsManagerGeneral::getInstance().getDebugShowFPS();
 #else
-    showFPS = PMSettingsManager::getInstance().getReleaseShowFPS();
+    showFPS = PMSettingsManagerGeneral::getInstance().getReleaseShowFPS();
 #endif
 
     // Scenes

@@ -13,66 +13,23 @@
 
 #include <stdio.h>
 #include "ofxJSON.h"
-#include "PMSettingsDevice.h"
-#include "PMSettingsDeviceChannel.h"
-#include "PMSettingsRenderer.h"
 
 
 class PMSettingsManager
 {
 public:
-    static PMSettingsManager &getInstance()
-    {
-        static PMSettingsManager instance;
-        return instance;
-    }
+    virtual void writeJSON();
 
-    // General
-    bool getDebugShowFPS();
-    bool getReleaseShowFPS();
+protected:
 
-    // Audio devices
-    vector<PMSettingsDevice> *getAudioDevices();
-    void enableAudioDevice(unsigned int deviceID, bool enable);
-    void enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable);
-    void writeAudioDevicesSettings();
-
-    // Poem
-    string getPoemFilename();
-    void addPoem(string filePath);
-    void writePoemSettings();
-
-    // Renderers
-    vector<PMSettingsRenderer> *getRenderers();
-    void enableRenderer(unsigned int rendererID);
-    void writeRenderersSettings();
-
-private:
-
-    PMSettingsManager();
-
-    bool loadGeneralSettings();
-
-    bool loadAudioDevicesSettings();
-    void createAudioDeviceJSONSettings();
-    void buildAudioDevicesVectorFromJSON();
-    vector<PMSettingsDevice> devicesSettings;
-
-    bool loadPoemSettings();
-    void createPoemJSONSettings();
-
-    bool loadRenderersSettings();
-    void createRenderersJSONSettings();
-    void buildRenderersVectorFromJSON();
-    vector<PMSettingsRenderer> renderersSettings;
+    PMSettingsManager() {};
+    virtual bool load(string filename);
+    virtual void createJSONSettings() = 0;
 
     bool fileExists(string filename);
 
-
-    ofxJSONElement jsonGeneral;
-    ofxJSONElement jsonAudioDevices;
-    ofxJSONElement jsonPoem;
-    ofxJSONElement jsonRenderers;
+    ofxJSONElement  json;
+    string          filename;
 };
 
 #endif /* defined(__ConductrEnter__SettingsManager__) */

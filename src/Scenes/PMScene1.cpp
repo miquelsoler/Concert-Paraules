@@ -7,9 +7,6 @@
 //
 
 #include "PMScene1.hpp"
-#include "PMSceneManager.hpp"
-#include "PMSettingsManager.h"
-
 
 static const string     STR_HEADER_POEM         = "POEM";
 static const string     STR_HEADER_AUDIO        = "INPUT DEVICES";
@@ -25,6 +22,10 @@ static const int        MAX_CHANNELS_COLS       = 16;
 ///--------------------------------------------------------------
 PMScene1::PMScene1()
 {
+    settingsPoem = &PMSettingsManagerPoem::getInstance();
+    settingsAudioDevices = &PMSettingsManagerAudioDevices::getInstance();
+    settingsRenderer = &PMSettingsManagerRenderers::getInstance();
+
     // Settings
     {
         backgroundColor = ofColor(64, 73, 47);
@@ -113,11 +114,11 @@ int PMScene1::setupGUIPoem(int originX, int originY)
     guiPoemSelector->setColorBack(canvasBgColor);
     guiPoemSelector->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiPoemSelector->addSpacer();
-    guiPoemSelector->addLabel(PMSettingsManager::getInstance().getPoemFilename(), OFX_UI_FONT_MEDIUM);
+    guiPoemSelector->addLabel(settingsPoem->getPoemFilename(), OFX_UI_FONT_MEDIUM);
 
     guiPoemSelector->setPosition(originX, originY);
     guiPoemSelector->autoSizeToFitWidgets();
-    
+
     return int(guiPoemSelector->getRect()->getWidth());
 }
 
@@ -130,7 +131,7 @@ int PMScene1::setupGUIAudio(int originX, int originY)
 
     // Add devices and per-device channels
     {
-        vector<PMSettingsDevice> *devices = PMSettingsManager::getInstance().getAudioDevices();
+        vector<PMSettingsDevice> *devices = settingsAudioDevices->getAudioDevices();
 
         for (int iDevice=0; iDevice < devices->size(); ++iDevice) {
             PMSettingsDevice device = (*devices)[iDevice];
@@ -181,7 +182,7 @@ int PMScene1::setupGUIRenderer(int originX, int originY)
     guiRendererSettings->getCanvasTitle()->setColorFill(canvasTitleColor);
     guiRendererSettings->addSpacer();
 
-    vector<PMSettingsRenderer> *renderers = PMSettingsManager::getInstance().getRenderers();
+    vector<PMSettingsRenderer> *renderers = settingsRenderer->getRenderers();
 
     ofxUIRadio *modeRadioButtons;
 
@@ -252,7 +253,7 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
         // It's a device toggle
 
         deviceID = (unsigned int)(toggle->getID());
-        PMSettingsManager::getInstance().enableAudioDevice(deviceID, toggleValue);
+        settingsAudioDevices->enableAudioDevice(deviceID, toggleValue);
 
         // If device is disabled, disable all of its channels
         if (!toggleValue)
@@ -264,7 +265,7 @@ void PMScene1::handleEventInputDevices(ofxUIEventArgs &e)
 
         deviceID = (unsigned int)(toggle->getParent()->getID());
         channelID = (unsigned int)(toggle->getID());
-        PMSettingsManager::getInstance().enableAudioDeviceChannel(deviceID, channelID, toggleValue);
+        settingsAudioDevices->enableAudioDeviceChannel(deviceID, channelID, toggleValue);
 
         // If channel is enabled, enable its device if it wasn't
         if (toggleValue)
@@ -292,8 +293,8 @@ void PMScene1::handleEventRendererMode(ofxUIEventArgs &e)
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
     if (!toggle->getValue()) return; // Ignore releases
 
-    PMSettingsManager::getInstance().enableRenderer(toggle->getID());
-    PMSettingsManager::getInstance().writeRenderersSettings();
+    settingsRenderer->enableRenderer((unsigned int)(toggle->getID()));
+    settingsRenderer->writeJSON();
 }
 
 void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
@@ -303,7 +304,7 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
     ofxUILabelButton *button = (ofxUILabelButton *)e.widget;
     if (!button->getValue()) return; // Ignore releases
 
-    PMSettingsManager::getInstance().writeAudioDevicesSettings();
+    settingsAudioDevices->writeJSON();
     PMSceneManager::getInstance().changeScene();
 }
 
@@ -312,7 +313,7 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
 void PMScene1::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
 {
     vector<ofxUIWidget *> allWidgets = guiAudioSettings->getWidgets();
-    ofxUIWidget *channelToggles;
+    ofxUIWidget *channelToggles = NULL;
     bool found = false;
     for (int i=0; i<allWidgets.size() && !found; ++i)
     {
@@ -327,7 +328,7 @@ void PMScene1::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
 
         int matrixSize = int(toggleMatrix->getToggles().size());
         for (unsigned int i=0; i<matrixSize; i++)
-            PMSettingsManager::getInstance().enableAudioDeviceChannel((unsigned int)(deviceToggle->getID()), i, false);
+            settingsAudioDevices->enableAudioDeviceChannel((unsigned int)(deviceToggle->getID()), i, false);
     }
 }
 
@@ -348,7 +349,7 @@ void PMScene1::disableDeviceIfNoChannels(ofxUIToggle *channelToggle)
         ofxUIToggle *deviceToggle = (ofxUIToggle *) (channelToggle->getParent()->getParent());
         deviceToggle->setValue(false);
 
-        PMSettingsManager::getInstance().enableAudioDevice((unsigned int)(deviceToggle->getID()), false);
+        settingsAudioDevices->enableAudioDevice((unsigned int)(deviceToggle->getID()), false);
     }
 }
 
@@ -356,8 +357,8 @@ void PMScene1::dragEvent(ofDragInfo dragInfo)
 {
     string filename = dragInfo.files[0];
 
-    PMSettingsManager::getInstance().addPoem(filename);
-    PMSettingsManager::getInstance().writePoemSettings();
+    settingsPoem->addPoem(filename);
+    settingsPoem->writeJSON();
 
     vector <ofxUIWidget *> poemWidgets = guiPoemSelector->getWidgets();
     ofxUILabel *fileLabel = NULL;

@@ -19,11 +19,4 @@ public:
     PMSettingsRendererSpecific  specificSettings;
 };
 
-
-//{
-//"1. Name" : "Paint Brush",
-//"2. Id" : 0,
-//"3. Enabled" : true,
-//"4. Settings" : []
-
 #endif //PMCONCERTPARAULES_PMSETTINGSRENDERER_H
