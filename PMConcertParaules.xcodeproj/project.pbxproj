@@ -10,7 +10,11 @@
 		0F8F016776681D468C0D0949 /* audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 34FC4C582EA5ED68F36013CD /* audio.c */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
 		2147604446C15CA35597C1F3 /* PMRendererPaintbrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476D3A0BB0660D6CDD1D3D /* PMRendererPaintbrush.cpp */; };
+		2147630077A5E22BFFA11F7E /* PMUICanvasPoem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */; };
 		214769B2FDC06D0F46A77FE5 /* PMBaseRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147637322935D592B82D3A5 /* PMBaseRenderer.cpp */; };
+		214769DF1DD1A3716E744298 /* PMUICanvasRenderers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476186E83EB468153057FC /* PMUICanvasRenderers.cpp */; };
+		21476AD602C8C54673B991C2 /* PMUICanvasAudioDevices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214769FFAFA89D76FF3F5B54 /* PMUICanvasAudioDevices.cpp */; };
+		21476F9BD440BBB91D5A320F /* PMBaseUICanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */; };
 		21A059755481CC0BF969FD2D /* keep_alive.c in Sources */ = {isa = PBXBuildFile; fileRef = A3528DDFF05B00283552455D /* keep_alive.c */; };
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
 		2A0360621BD4F951007E1D52 /* ofxAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A035FFF1BD4F951007E1D52 /* ofxAudioAnalyzer.cpp */; };
@@ -172,8 +176,16 @@
 		1645F56257269CD0356320BD /* ofxJSON.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxJSON.h; path = ../../../addons/ofxJSON/src/ofxJSON.h; sourceTree = SOURCE_ROOT; };
 		17E65988300FBD9AAA2CD0CA /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = ../../../addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
 		1C0DA2561397A7DE0246858B /* ofxGuiGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGuiGroup.h; path = ../../../addons/ofxGui/src/ofxGuiGroup.h; sourceTree = SOURCE_ROOT; };
+		21476186E83EB468153057FC /* PMUICanvasRenderers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasRenderers.cpp; sourceTree = "<group>"; };
+		214761BC2FD1F98A62BC8FB1 /* PMUICanvasAudioDevices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasAudioDevices.h; sourceTree = "<group>"; };
+		2147623A05E314D4815D3968 /* PMUICanvasRenderers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasRenderers.h; sourceTree = "<group>"; };
+		214763100FA5934E0098B682 /* PMUICanvasPoem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasPoem.h; sourceTree = "<group>"; };
 		2147637322935D592B82D3A5 /* PMBaseRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseRenderer.cpp; sourceTree = "<group>"; };
 		2147686E219E442DCD619EED /* PMBaseRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseRenderer.h; sourceTree = "<group>"; };
+		2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseUICanvas.cpp; sourceTree = "<group>"; };
+		214769FFAFA89D76FF3F5B54 /* PMUICanvasAudioDevices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasAudioDevices.cpp; sourceTree = "<group>"; };
+		21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasPoem.cpp; sourceTree = "<group>"; };
+		21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseUICanvas.h; sourceTree = "<group>"; };
 		21476CC0CE997FACA5B392F5 /* PMRendererPaintbrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererPaintbrush.h; sourceTree = "<group>"; };
 		21476D3A0BB0660D6CDD1D3D /* PMRendererPaintbrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererPaintbrush.cpp; sourceTree = "<group>"; };
 		21BDE665988474F1B1F4D302 /* jsoncpp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = jsoncpp.cpp; path = ../../../addons/ofxJSON/libs/jsoncpp/src/jsoncpp.cpp; sourceTree = SOURCE_ROOT; };
@@ -389,7 +401,7 @@
 		2A82509E1BCE5CC500EEADDF /* ofxUISpectrum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUISpectrum.cpp; sourceTree = "<group>"; };
 		2A82509F1BCE5CC500EEADDF /* ofxUISpectrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUISpectrum.h; sourceTree = "<group>"; };
 		2A8250A01BCE5CC500EEADDF /* ofxUISuperCanvas.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUISuperCanvas.cpp; sourceTree = "<group>"; };
-		2A8250A11BCE5CC500EEADDF /* ofxUISuperCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUISuperCanvas.h; sourceTree = "<group>"; };
+		2A8250A11BCE5CC500EEADDF /* ofxUISuperCanvas.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxUISuperCanvas.h; sourceTree = "<group>"; };
 		2A8250A21BCE5CC500EEADDF /* ofxUITabBar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUITabBar.cpp; sourceTree = "<group>"; };
 		2A8250A31BCE5CC500EEADDF /* ofxUITabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUITabBar.h; sourceTree = "<group>"; };
 		2A8250A41BCE5CC500EEADDF /* ofxUITextArea.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUITextArea.cpp; sourceTree = "<group>"; };
@@ -543,6 +555,21 @@
 				2C171637C399A50881F147E9 /* libusb-1.0 */,
 			);
 			name = include;
+			sourceTree = "<group>";
+		};
+		214765AE440B55849C0E601A /* UICanvas */ = {
+			isa = PBXGroup;
+			children = (
+				2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */,
+				21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */,
+				21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */,
+				214763100FA5934E0098B682 /* PMUICanvasPoem.h */,
+				214769FFAFA89D76FF3F5B54 /* PMUICanvasAudioDevices.cpp */,
+				214761BC2FD1F98A62BC8FB1 /* PMUICanvasAudioDevices.h */,
+				21476186E83EB468153057FC /* PMUICanvasRenderers.cpp */,
+				2147623A05E314D4815D3968 /* PMUICanvasRenderers.h */,
+			);
+			path = UICanvas;
 			sourceTree = "<group>";
 		};
 		21476E2647D8522F3969E81C /* Renderer */ = {
@@ -1276,6 +1303,7 @@
 				2ADCED4D1BC4883100F7F86A /* Scenes */,
 				21476E2647D8522F3969E81C /* Renderer */,
 				2A5E61AB1BE2EB480037FD79 /* Settings */,
+				214765AE440B55849C0E601A /* UICanvas */,
 				2A7BCDAC1BCD1028004840A4 /* External */,
 			);
 			path = src;
@@ -1527,6 +1555,10 @@
 				2A929C3E1BDD5DB700B5E921 /* PMSceneManager.cpp in Sources */,
 				214769B2FDC06D0F46A77FE5 /* PMBaseRenderer.cpp in Sources */,
 				2147604446C15CA35597C1F3 /* PMRendererPaintbrush.cpp in Sources */,
+				21476F9BD440BBB91D5A320F /* PMBaseUICanvas.cpp in Sources */,
+				21476AD602C8C54673B991C2 /* PMUICanvasAudioDevices.cpp in Sources */,
+				2147630077A5E22BFFA11F7E /* PMUICanvasPoem.cpp in Sources */,
+				214769DF1DD1A3716E744298 /* PMUICanvasRenderers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

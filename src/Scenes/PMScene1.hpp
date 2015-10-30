@@ -13,13 +13,16 @@
 
 #include <stdio.h>
 #include "ofxUI.h"
-#include "PMSceneManager.hpp";
+#include "PMSceneManager.hpp"
 #include "PMBaseScene.hpp"
 #include "PMSettingsManagerPoem.h"
 #include "PMSettingsManagerAudioDevices.h"
 #include "PMSettingsManagerRenderers.h"
 
-using namespace std;
+#include "PMUICanvasPoem.h"
+#include "PMUICanvasAudioDevices.h"
+#include "PMUICanvasRenderers.h"
+
 
 class PMScene1 : public PMBaseScene
 {
@@ -39,32 +42,20 @@ private:
 
     void dragEvent(ofDragInfo dragInfo); // Just in case we need it for poem selection (drag text file to scene)
 
-    int setupGUIPoem(int originX, int originY);
-    int setupGUIAudio(int originX, int originY);
-    int setupGUIRenderer(int originX, int originY);
     void setupGUIMainButtons();
 
-    void handleEventInputDevices(ofxUIEventArgs &e);
-    void handleEventRendererMode(ofxUIEventArgs &e);
     void handleEventMainButtons(ofxUIEventArgs &e);
 
-    void disableAllChannelsForDevice(ofxUIToggle *deviceToggle);
-    void disableDeviceIfNoChannels(ofxUIToggle *channelToggle);
-
-    ofxUISuperCanvas                *guiPoemSelector;
-    ofxUISuperCanvas                *guiAudioSettings;
-    ofxUISuperCanvas                *guiRendererSettings;
     ofxUISuperCanvas                *guiMainButtons;
+
+    PMUICanvasPoem                  *guiPoemSelector;
+    PMUICanvasAudioDevices          *guiAudioSettings;
+    PMUICanvasRenderers             *guiRendererSettings;
 
     int                             guiX, guiY;
 
     ofColor                         canvasBgColor;
     ofColor                         canvasTitleColor;
-    ofColor                         deviceLabelColor;
-
-    PMSettingsManagerPoem           *settingsPoem;
-    PMSettingsManagerAudioDevices   *settingsAudioDevices;
-    PMSettingsManagerRenderers      *settingsRenderer;
 };
 
 #endif /* PMScene1_hpp */
