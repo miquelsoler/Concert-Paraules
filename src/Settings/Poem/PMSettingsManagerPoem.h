@@ -25,7 +25,10 @@ public:
     void createJSONSettings();
 
     string getPoemFilename();
-    void addPoem(string filePath);
+    bool getPoemValidity();
+    void setPoem(string filePath);
+
+    string getFolderPath();
 };
 
 #endif //PMCONCERTPARAULES_PMSETTINGSMANAGERPOEM_H

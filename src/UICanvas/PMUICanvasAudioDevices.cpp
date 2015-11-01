@@ -6,9 +6,9 @@
 
 static const int MAX_CHANNELS_COLS = 8;
 
-void PMUICanvasAudioDevices::init(int posX, int posY)
+void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, int height)
 {
-    PMBaseUICanvas::init(posX, posY);
+    PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
     settings = &PMSettingsManagerAudioDevices::getInstance();
 
@@ -51,7 +51,7 @@ void PMUICanvasAudioDevices::init(int posX, int posY)
         }
     }
 
-    autoSizeToFitWidgets();
+    if (autosize) autoSizeToFitWidgets();
 
     ofAddListener(newGUIEvent, this, &PMUICanvasAudioDevices::handleEvents);
 }

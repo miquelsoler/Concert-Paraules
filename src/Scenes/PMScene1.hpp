@@ -40,8 +40,6 @@ public:
 
 private:
 
-    void dragEvent(ofDragInfo dragInfo); // Just in case we need it for poem selection (drag text file to scene)
-
     void setupGUIMainButtons();
 
     void handleEventMainButtons(ofxUIEventArgs &e);
@@ -51,8 +49,6 @@ private:
     PMUICanvasPoem                  *guiPoemSelector;
     PMUICanvasAudioDevices          *guiAudioSettings;
     PMUICanvasRenderers             *guiRendererSettings;
-
-    int                             guiX, guiY;
 
     ofColor                         canvasBgColor;
     ofColor                         canvasTitleColor;

@@ -5,6 +5,7 @@
 #include "PMSettingsManagerPoem.h"
 
 static const string FILENAME                = "settings/poem.json";
+static const string FOLDER_PATH             = "poems";
 
 static const string STR_POEM_FILE           = "Poem File";
 static const string STR_POEM_VALID          = "Valid File";
@@ -45,9 +46,19 @@ string PMSettingsManagerPoem::getPoemFilename()
     return json[STR_POEM_FILE].asString();
 }
 
-void PMSettingsManagerPoem::addPoem(string filePath)
+bool PMSettingsManagerPoem::getPoemValidity()
+{
+    return json[STR_POEM_VALID].asBool();
+}
+
+void PMSettingsManagerPoem::setPoem(string filePath)
 {
     json[STR_POEM_FILE] = filePath;
     json[STR_POEM_VALID] = true;
     json.save(FILENAME, true);
+}
+
+string PMSettingsManagerPoem::getFolderPath()
+{
+    return FOLDER_PATH;
 }

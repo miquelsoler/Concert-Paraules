@@ -9,7 +9,7 @@
 #include "PMScene1.hpp"
 
 static const string     STR_HEADER_MAINBUTTONS  = "GO TO MAIN SCENE";
-static const string     STR_MAINBUTTONS_SAVE    = "SAVE & CONTINUE";
+static const string     STR_MAINBUTTONS_SAVE    = "CONTINUE";
 
 
 #pragma mark - UI building
@@ -27,30 +27,26 @@ PMScene1::PMScene1()
 
     // GUI
     {
-        guiX = 20;
-        guiY = 20;
-
-        int panelOriginX;
-        int panelMarginX = 20;
+        int panelMargin = 20;
+        int panelPosX = panelMargin;
+        int panelPosY = panelMargin;
 
         int lastWidth;
 
         // Poem selector
-        panelOriginX = guiX;
         guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_LARGE);
-        guiPoemSelector->init(panelOriginX, guiY);
-        lastWidth = int(guiPoemSelector->getWidth());
+        guiPoemSelector->init(panelPosX, panelPosY, false, ofGetWidth() - 2*panelMargin, 70);
 
         // Audio settings
-        panelOriginX += lastWidth + panelMarginX;
+        panelPosY += guiPoemSelector->getHeight() + panelMargin;
         guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_LARGE);
-        guiAudioSettings->init(panelOriginX, guiY);
+        guiAudioSettings->init(panelPosX, panelPosY);
         lastWidth = int(guiAudioSettings->getWidth());
 
         // Renderer settings
-        panelOriginX += lastWidth + panelMarginX;
+        panelPosX += lastWidth + panelMargin;
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
-        guiRendererSettings->init(panelOriginX, guiY);
+        guiRendererSettings->init(panelPosX, panelPosY);
 
         // Continue buttons
         this->setupGUIMainButtons();
@@ -131,33 +127,5 @@ void PMScene1::handleEventMainButtons(ofxUIEventArgs &e)
     ofxUILabelButton *button = (ofxUILabelButton *)e.widget;
     if (!button->getValue()) return; // Ignore releases
 
-//    settingsAudioDevices->writeJSON();
     PMSceneManager::getInstance().changeScene();
-}
-
-#pragma mark - Convenience methods
-
-void PMScene1::dragEvent(ofDragInfo dragInfo)
-{
-//    string filename = dragInfo.files[0];
-//
-//    settingsPoem->addPoem(filename);
-//    settingsPoem->writeJSON();
-//
-//    vector <ofxUIWidget *> poemWidgets = guiPoemSelector->getWidgets();
-//    ofxUILabel *fileLabel = NULL;
-//    bool found = false;
-//    for (int i=0; i<poemWidgets.size() && !found; i++)
-//    {
-//        found = (poemWidgets[i]->getKind() == OFX_UI_WIDGET_LABEL) && (poemWidgets[i]->getName() != STR_HEADER_POEM);
-//        if (found)
-//            fileLabel = (ofxUILabel *)(poemWidgets[i]);
-//    }
-//
-//    if (found)
-//        fileLabel->setLabel(filename);
-//
-//#ifdef OF_DEBUG
-//    cout << "Dragged file \"" << dragInfo.files[0] << "\" into scene" << endl;
-//#endif
 }

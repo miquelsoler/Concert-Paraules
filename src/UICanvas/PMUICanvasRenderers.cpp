@@ -4,9 +4,9 @@
 
 #include "PMUICanvasRenderers.h"
 
-void PMUICanvasRenderers::init(int posX, int posY)
+void PMUICanvasRenderers::init(int posX, int posY, bool autosize, int width, int height)
 {
-    PMBaseUICanvas::init(posX, posY);
+    PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
     settings = &PMSettingsManagerRenderers::getInstance();
 
@@ -34,7 +34,7 @@ void PMUICanvasRenderers::init(int posX, int posY)
         }
     }
 
-    autoSizeToFitWidgets();
+    if (autosize) autoSizeToFitWidgets();
 
     ofAddListener(newGUIEvent, this, &PMUICanvasRenderers::handleEvents);
 }

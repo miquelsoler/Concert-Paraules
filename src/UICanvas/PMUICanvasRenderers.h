@@ -15,7 +15,7 @@ public:
 
     PMUICanvasRenderers(string title, int headerFontSize) : PMBaseUICanvas(title, headerFontSize) {}
 
-    virtual void init(int posX, int posY);
+    virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
