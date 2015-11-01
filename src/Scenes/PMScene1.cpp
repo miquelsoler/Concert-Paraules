@@ -8,7 +8,6 @@
 
 #include "PMScene1.hpp"
 
-static const string     STR_HEADER_MAINBUTTONS  = "GO TO MAIN SCENE";
 static const string     STR_MAINBUTTONS_SAVE    = "CONTINUE";
 
 
@@ -20,14 +19,11 @@ PMScene1::PMScene1()
     // Settings
     {
         backgroundColor = ofColor(64, 73, 47);
-
         canvasBgColor = ofColor(0, 0, 0, 50);
-        canvasTitleColor = ofColor(252, 239, 157);
     }
 
     // GUI
     {
-        int panelMargin = 20;
         int panelPosX = panelMargin;
         int panelPosY = panelMargin;
 
@@ -101,9 +97,8 @@ void PMScene1::willExit()
 ///--------------------------------------------------------------
 void PMScene1::setupGUIMainButtons()
 {
-    guiMainButtons = new ofxUISuperCanvas(STR_HEADER_MAINBUTTONS);
+    guiMainButtons = new ofxUICanvas();
     guiMainButtons->setColorBack(canvasBgColor);
-    guiMainButtons->getCanvasTitle()->setColorFill(canvasTitleColor);
 
     guiMainButtons->addLabelButton(STR_MAINBUTTONS_SAVE, false);
 
@@ -111,9 +106,8 @@ void PMScene1::setupGUIMainButtons()
 
     ofxUIRectangle *widgetRect = guiMainButtons->getRect();
 
-    float marginSize = 20;
-    guiMainButtons->setPosition(int(ofGetWidth() - widgetRect->getWidth() - marginSize),
-                                int(ofGetHeight() - widgetRect->getHeight() - marginSize));
+    guiMainButtons->setPosition(int(ofGetWidth() - widgetRect->getWidth() - panelMargin),
+                                int(ofGetHeight() - widgetRect->getHeight() - panelMargin));
 
     ofAddListener(guiMainButtons->newGUIEvent, this, &PMScene1::handleEventMainButtons);
 }

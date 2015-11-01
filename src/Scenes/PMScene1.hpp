@@ -44,14 +44,15 @@ private:
 
     void handleEventMainButtons(ofxUIEventArgs &e);
 
-    ofxUISuperCanvas                *guiMainButtons;
+    ofxUICanvas                     *guiMainButtons;
 
     PMUICanvasPoem                  *guiPoemSelector;
     PMUICanvasAudioDevices          *guiAudioSettings;
     PMUICanvasRenderers             *guiRendererSettings;
 
     ofColor                         canvasBgColor;
-    ofColor                         canvasTitleColor;
+
+    int                             panelMargin = 5;
 };
 
 #endif /* PMScene1_hpp */
