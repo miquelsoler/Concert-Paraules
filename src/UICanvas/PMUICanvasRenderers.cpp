@@ -47,5 +47,5 @@ void PMUICanvasRenderers::handleEvents(ofxUIEventArgs &e)
     if (!toggle->getValue()) return; // Ignore releases
 
     settings->enableRenderer((unsigned int)(toggle->getID()));
-    settings->writeJSON();
+    settings->write();
 }

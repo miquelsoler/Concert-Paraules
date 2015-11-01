@@ -18,7 +18,7 @@
 class PMSettingsManager
 {
 public:
-    virtual void writeJSON();
+    virtual void write();
 
 protected:
 

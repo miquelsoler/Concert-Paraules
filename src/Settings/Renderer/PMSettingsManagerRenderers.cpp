@@ -80,7 +80,7 @@ void PMSettingsManagerRenderers::createJSONSettings()
         json[STR_RENDERERS].append(jsonRenderer);
     }
 
-    writeJSON();
+    write();
 }
 
 void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()

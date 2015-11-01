@@ -101,7 +101,7 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
         }
     }
 
-    settings->writeJSON();
+    settings->write();
 
 #ifdef OF_DEBUG
     cout << widgetName << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;

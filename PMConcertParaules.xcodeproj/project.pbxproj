@@ -842,8 +842,8 @@
 			children = (
 				2A5E61B61BE2EB480037FD79 /* PMSettingsManager.cpp */,
 				2A5E61B71BE2EB480037FD79 /* PMSettingsManager.h */,
-				2A5E61B81BE2EB480037FD79 /* Poem */,
 				2A5E61B31BE2EB480037FD79 /* General */,
+				2A5E61B81BE2EB480037FD79 /* Poem */,
 				2A5E61AC1BE2EB480037FD79 /* Audio */,
 				2A5E61BB1BE2EB480037FD79 /* Renderer */,
 			);

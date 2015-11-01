@@ -15,7 +15,7 @@ bool PMSettingsManager::load(string filename)
     return json.open(filename);
 }
 
-void PMSettingsManager::writeJSON()
+void PMSettingsManager::write()
 {
     json.save(filename, true);
 }

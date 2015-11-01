@@ -66,7 +66,7 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
         json[STR_DEVICES].append(jsonDevice);
     }
 
-    writeJSON();
+    write();
 }
 
 void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
