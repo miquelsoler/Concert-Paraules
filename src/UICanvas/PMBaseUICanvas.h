@@ -15,11 +15,12 @@ public:
     PMBaseUICanvas(string title, int headerFontSize) : ofxUISuperCanvas(title, headerFontSize) {}
 
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
-
-    virtual void handleEvents(ofxUIEventArgs &e) = 0;
+    void setBackgroundColor(ofColor backgroundColor);
 
     float getWidth();
     float getHeight();
+
+    virtual void handleEvents(ofxUIEventArgs &e) = 0;
 
 protected:
 

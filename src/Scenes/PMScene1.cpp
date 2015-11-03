@@ -7,13 +7,13 @@
 //
 
 #include "PMScene1.hpp"
+#include "PMSceneManager.hpp"
 
 static const string     STR_MAINBUTTONS_SAVE    = "CONTINUE";
 
 
 #pragma mark - UI building
 
-///--------------------------------------------------------------
 PMScene1::PMScene1()
 {
     // Settings
@@ -31,25 +31,27 @@ PMScene1::PMScene1()
 
         // Poem selector
         guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_LARGE);
-        guiPoemSelector->init(panelPosX, panelPosY, false, ofGetWidth() - 2*panelMargin, 70);
+        guiPoemSelector->init(panelPosX, panelPosY, false, 500, 70);
+        guiPoemSelector->setVisible(false);
 
         // Audio settings
         panelPosY += guiPoemSelector->getHeight() + panelMargin;
         guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_LARGE);
         guiAudioSettings->init(panelPosX, panelPosY);
+        guiAudioSettings->setVisible(false);
         lastWidth = int(guiAudioSettings->getWidth());
 
         // Renderer settings
         panelPosX += lastWidth + panelMargin;
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
         guiRendererSettings->init(panelPosX, panelPosY);
+        guiRendererSettings->setVisible(false);
 
         // Continue buttons
         this->setupGUIMainButtons();
     }
 }
 
-///--------------------------------------------------------------
 PMScene1::~PMScene1()
 {
     delete guiPoemSelector;
@@ -58,23 +60,19 @@ PMScene1::~PMScene1()
     delete guiMainButtons;
 }
 
-///--------------------------------------------------------------
 void PMScene1::setup()
 {
 }
 
-///--------------------------------------------------------------
 void PMScene1::update()
 {
 }
 
-///--------------------------------------------------------------
 void PMScene1::draw()
 {
     PMBaseScene::draw();
 }
 
-///--------------------------------------------------------------
 void PMScene1::willDraw()
 {
     guiPoemSelector->setVisible(true);
@@ -83,8 +81,12 @@ void PMScene1::willDraw()
     guiMainButtons->setVisible(true);
 }
 
-///--------------------------------------------------------------
 void PMScene1::willExit()
+{
+    exit();
+}
+
+void PMScene1::exit()
 {
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);
@@ -94,7 +96,6 @@ void PMScene1::willExit()
 
 #pragma mark - Panels
 
-///--------------------------------------------------------------
 void PMScene1::setupGUIMainButtons()
 {
     guiMainButtons = new ofxUICanvas();

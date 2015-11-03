@@ -58,13 +58,14 @@ void ofApp::draw()
 
     if (showFPS)
     {
-        ofSetColor(ofColor::white);
+        ofSetColor(ofColor::black);
         ofDrawBitmapString(ofToString(int(roundf(ofGetFrameRate()))) + "fps", 15, ofGetHeight() - 15);
     }
 }
 
 void ofApp::exit()
 {
+    sceneManager->willExit();
 //    delete audioAnalyzer;
 }
 
@@ -87,10 +88,7 @@ void ofApp::keyReleased(int key)
                 windowPosX = ofGetWindowPositionX();
                 windowPosY = ofGetWindowPositionY();
             }
-
             ofSetFullscreen(isFullScreen);
-
-            cout << "Res: " << ofGetWidth() << "x" << ofGetHeight() << endl;
             break;
         }
         // Show/hide FPS

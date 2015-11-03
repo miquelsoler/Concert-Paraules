@@ -23,9 +23,9 @@ public:
 
     virtual void setup() = 0;
     virtual void update() = 0;
-    virtual void draw();
+    virtual void draw() = 0;
 
-    virtual void willExit() = 0;
+    virtual void exit() = 0;
 
 protected:
 

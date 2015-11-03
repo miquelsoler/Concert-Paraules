@@ -13,7 +13,6 @@
 
 #include <stdio.h>
 #include "ofxUI.h"
-#include "PMSceneManager.hpp"
 #include "PMBaseScene.hpp"
 #include "PMSettingsManagerPoem.h"
 #include "PMSettingsManagerAudioDevices.h"
@@ -37,6 +36,8 @@ public:
 
     void willDraw();
     void willExit();
+
+    void exit();
 
 private:
 

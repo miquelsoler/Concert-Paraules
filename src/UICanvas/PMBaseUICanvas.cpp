@@ -21,6 +21,12 @@ void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int hei
     }
 }
 
+void PMBaseUICanvas::setBackgroundColor(ofColor backgroundColor)
+{
+    setColorBack(backgroundColor);
+}
+
+
 float PMBaseUICanvas::getWidth()
 {
     return getRect()->getWidth();

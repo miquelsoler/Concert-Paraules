@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "PMBaseScene.hpp"
 #include "PMRendererPaintbrush.h"
+#include "PMUICanvasRenderers.h"
 
 class PMScene2 : public PMBaseScene
 {
@@ -25,12 +26,19 @@ public:
     void setup();
     void update();
     void draw();
-    
+
+    void willDraw();
     void willExit();
+
+    void exit();
+
+    void keyReleased(int key);
 
 private:
 
     PMBaseRenderer *renderer;
+
+    PMUICanvasRenderers *guiRendererSettings;
 };
 
 #endif /* PMScene2_hpp */

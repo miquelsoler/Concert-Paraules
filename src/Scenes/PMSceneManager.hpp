@@ -9,8 +9,17 @@
 #ifndef PMSceneManager_hpp
 #define PMSceneManager_hpp
 
+#pragma once
+
 #include <stdio.h>
 #include "ofxSceneManager.h"
+#include "PMBaseScene.hpp"
+
+typedef enum
+{
+    Scene1 = 0,
+    Scene2 = 1
+} PMSMSceneIndex;
 
 class PMSceneManager
 {
@@ -27,10 +36,14 @@ public:
     void draw();
 
     void changeScene();
+    void changeScene(PMSMSceneIndex sceneIndex);
+
+    void willExit();
 
 private:
 
     ofxSceneManager         sceneManager;
+    vector<PMBaseScene *>   scenes;
 };
 
 #endif /* PMSceneManager_hpp */
