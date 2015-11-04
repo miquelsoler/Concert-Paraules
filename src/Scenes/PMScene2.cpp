@@ -57,7 +57,6 @@ void PMScene2::willExit()
 
 void PMScene2::exit()
 {
-    cout << "S2 exit" << endl;
     guiRendererSettings->saveSettings("settings/gui/renderers2.xml");
     guiRendererSettings->setVisible(false);
 }

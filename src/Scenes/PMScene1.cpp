@@ -9,7 +9,7 @@
 #include "PMScene1.hpp"
 #include "PMSceneManager.hpp"
 
-static const string     STR_MAINBUTTONS_SAVE    = "CONTINUE";
+static const string STR_MAINBUTTONS_SAVE    = "CONTINUE";
 
 
 #pragma mark - UI building
@@ -30,20 +30,20 @@ PMScene1::PMScene1()
         int lastWidth;
 
         // Poem selector
-        guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_LARGE);
+        guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_MEDIUM);
         guiPoemSelector->init(panelPosX, panelPosY, false, 500, 70);
         guiPoemSelector->setVisible(false);
 
         // Audio settings
         panelPosY += guiPoemSelector->getHeight() + panelMargin;
-        guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_LARGE);
+        guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_MEDIUM);
         guiAudioSettings->init(panelPosX, panelPosY);
         guiAudioSettings->setVisible(false);
         lastWidth = int(guiAudioSettings->getWidth());
 
         // Renderer settings
         panelPosX += lastWidth + panelMargin;
-        guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
+        guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
         guiRendererSettings->init(panelPosX, panelPosY);
         guiRendererSettings->setVisible(false);
 
@@ -75,6 +75,11 @@ void PMScene1::draw()
 
 void PMScene1::willDraw()
 {
+    guiPoemSelector->loadSettings("settings/gui/pome1.xml");
+    guiAudioSettings->loadSettings("settings/gui/audioDevices1.xml");
+    guiRendererSettings->loadSettings("settings/gui/renderers1.xml");
+    guiMainButtons->loadSettings("settings/gui/mainButtons1.xml");
+
     guiPoemSelector->setVisible(true);
     guiAudioSettings->setVisible(true);
     guiRendererSettings->setVisible(true);
@@ -88,6 +93,11 @@ void PMScene1::willExit()
 
 void PMScene1::exit()
 {
+    guiPoemSelector->saveSettings("settings/gui/pome1.xml");
+    guiAudioSettings->saveSettings("settings/gui/audioDevices1.xml");
+    guiRendererSettings->saveSettings("settings/gui/renderers1.xml");
+    guiMainButtons->saveSettings("settings/gui/mainButtons1.xml");
+
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);
     guiRendererSettings->setVisible(false);
@@ -98,7 +108,7 @@ void PMScene1::exit()
 
 void PMScene1::setupGUIMainButtons()
 {
-    guiMainButtons = new ofxUICanvas();
+    guiMainButtons = new ofxUISuperCanvas(" ", OFX_UI_FONT_MEDIUM);
     guiMainButtons->setColorBack(canvasBgColor);
 
     guiMainButtons->addLabelButton(STR_MAINBUTTONS_SAVE, false);
