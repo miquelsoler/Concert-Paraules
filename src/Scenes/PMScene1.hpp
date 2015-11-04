@@ -21,6 +21,7 @@
 #include "PMUICanvasPoem.h"
 #include "PMUICanvasAudioDevices.h"
 #include "PMUICanvasRenderers.h"
+#include "PMUICanvasNavigation.h"
 
 
 class PMScene1 : public PMBaseScene
@@ -41,18 +42,12 @@ public:
 
 private:
 
-    void setupGUIMainButtons();
-
-    void handleEventMainButtons(ofxUIEventArgs &e);
-
-    ofxUICanvas                     *guiMainButtons;
-
     PMUICanvasPoem                  *guiPoemSelector;
     PMUICanvasAudioDevices          *guiAudioSettings;
     PMUICanvasRenderers             *guiRendererSettings;
+    PMUICanvasNavigation            *guiNavigation;
 
     ofColor                         canvasBgColor;
-
     int                             panelMargin = 5;
 };
 

@@ -5,6 +5,8 @@
 #ifndef PMCONCERTPARAULES_PMUICANVASAUDIODEVICES_H
 #define PMCONCERTPARAULES_PMUICANVASAUDIODEVICES_H
 
+#pragma once
+
 #include "PMBaseUICanvas.h"
 
 #include "PMSettingsManagerAudioDevices.h"

@@ -15,6 +15,7 @@
 #include "PMBaseScene.hpp"
 #include "PMRendererPaintbrush.h"
 #include "PMUICanvasRenderers.h"
+#include "PMUICanvasNavigation.h"
 
 class PMScene2 : public PMBaseScene
 {
@@ -36,9 +37,14 @@ public:
 
 private:
 
-    PMBaseRenderer *renderer;
+    PMBaseRenderer          *renderer;
 
-    PMUICanvasRenderers *guiRendererSettings;
+    PMUICanvasRenderers     *guiRenderer;
+    PMUICanvasNavigation    *guiNavigation;
+
+    ofColor                 canvasBgColor;
+
+    bool                    showGUI;
 };
 
 #endif /* PMScene2_hpp */

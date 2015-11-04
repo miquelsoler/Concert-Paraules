@@ -7,28 +7,40 @@
 //
 
 #include "PMScene2.hpp"
-#include "PMSceneManager.hpp"
+#include "PMSettingsManagerGeneral.h"
 
 ///--------------------------------------------------------------
 PMScene2::PMScene2()
 {
-    backgroundColor = ofColor::white;
+#ifdef OF_DEBUG
+    showGUI= PMSettingsManagerGeneral::getInstance().getDebugShowGUIScene2();
+#else
+    showGUI = PMSettingsManagerGeneral::getInstance().getReleaseShowGUIScene2();
+#endif
 
-    guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
-    guiRendererSettings->init(200, 200);
-    guiRendererSettings->setBackgroundColor(ofColor(100, 100, 100, 255));
-    guiRendererSettings->setVisible(false);
+    backgroundColor = ofColor::white;
+    canvasBgColor = ofColor(100, 100, 100, 200);
+
+    guiRenderer = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
+    guiRenderer->init(200, 200);
+    guiRenderer->setBackgroundColor(canvasBgColor);
+    guiRenderer->setVisible(false);
+
+    guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
+    guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
+    guiNavigation->setBackgroundColor(canvasBgColor);
+    guiNavigation->setVisible(false);
 }
 
 
 PMScene2::~PMScene2()
 {
-    delete guiRendererSettings;
+    delete guiRenderer;
+    delete guiNavigation;
 }
 
 void PMScene2::setup()
 {
-    cout << "S2 setup" << endl;
 }
 
 void PMScene2::update()
@@ -46,8 +58,11 @@ void PMScene2::draw()
 
 void PMScene2::willDraw()
 {
-    guiRendererSettings->loadSettings("settings/gui/renderers2.xml");
-    guiRendererSettings->setVisible(true);
+    guiRenderer->loadSettings("settings/gui/renderers2.xml");
+    guiNavigation->loadSettings("settings/gui/navigation2.xml");
+
+    guiRenderer->setVisible(showGUI);
+    guiNavigation->setVisible(showGUI);
 }
 
 void PMScene2::willExit()
@@ -57,8 +72,11 @@ void PMScene2::willExit()
 
 void PMScene2::exit()
 {
-    guiRendererSettings->saveSettings("settings/gui/renderers2.xml");
-    guiRendererSettings->setVisible(false);
+    guiRenderer->saveSettings("settings/gui/renderers2.xml");
+    guiNavigation->saveSettings("settings/gui/navigation2.xml");
+
+    guiRenderer->setVisible(false);
+    guiNavigation->setVisible(false);
 }
 
 void PMScene2::keyReleased(int key)
@@ -68,9 +86,11 @@ void PMScene2::keyReleased(int key)
         case 'g':
         case 'G':
         {
-            guiRendererSettings->setVisible(!guiRendererSettings->isVisible());
+            showGUI = !showGUI;
+            guiRenderer->setVisible(showGUI);
+            guiNavigation->setVisible(showGUI);
             break;
         }
+        default: break;
     }
-    cout << "Scene2 key released" << endl;
 }

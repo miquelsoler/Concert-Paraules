@@ -5,7 +5,6 @@
 #include "PMUICanvasPoem.h"
 
 
-
 void PMUICanvasPoem::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);

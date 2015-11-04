@@ -5,6 +5,8 @@
 #ifndef PMCONCERTPARAULES_PMBASEUICANVAS_H
 #define PMCONCERTPARAULES_PMBASEUICANVAS_H
 
+#pragma once
+
 #include "ofxUI.h"
 
 

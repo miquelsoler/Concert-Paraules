@@ -5,6 +5,8 @@
 #ifndef PMCONCERTPARAULES_PMUICANVASPOEM_H
 #define PMCONCERTPARAULES_PMUICANVASPOEM_H
 
+#pragma once
+
 #include "PMBaseUICanvas.h"
 
 #include "PMSettingsManagerPoem.h"

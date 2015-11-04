@@ -9,6 +9,7 @@ static const string FILENAME            = "settings/general.json";
 static const string STR_DEBUG_MODE      = "Debug Mode";
 static const string STR_RELEASE_MODE    = "Release Mode";
 static const string STR_SHOW_FPS        = "Show FPS";
+static const string STR_SHOW_GUI        = "Show GUI Scene2";
 
 
 PMSettingsManagerGeneral::PMSettingsManagerGeneral() : PMSettingsManager()
@@ -29,7 +30,17 @@ bool PMSettingsManagerGeneral::getDebugShowFPS()
     return json[STR_DEBUG_MODE][STR_SHOW_FPS].asBool();
 }
 
+bool PMSettingsManagerGeneral::getDebugShowGUIScene2()
+{
+    return json[STR_DEBUG_MODE][STR_SHOW_GUI].asBool();
+}
+
 bool PMSettingsManagerGeneral::getReleaseShowFPS()
 {
     return json[STR_RELEASE_MODE][STR_SHOW_FPS].asBool();
+}
+
+bool PMSettingsManagerGeneral::getReleaseShowGUIScene2()
+{
+    return json[STR_RELEASE_MODE][STR_SHOW_GUI].asBool();
 }

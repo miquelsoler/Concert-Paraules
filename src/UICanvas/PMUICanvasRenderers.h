@@ -5,6 +5,8 @@
 #ifndef PMCONCERTPARAULES_PMUICANVASRENDERERS_H
 #define PMCONCERTPARAULES_PMUICANVASRENDERERS_H
 
+#pragma once
+
 #include "PMBaseUICanvas.h"
 
 #include "PMSettingsManagerRenderers.h"

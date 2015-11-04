@@ -1,8 +1,10 @@
 {
    "Debug Mode" : {
-      "Show FPS" : true
+     "Show FPS" : true,
+     "Show GUI Scene2" : true
    },
    "Release Mode" : {
-      "Show FPS" : false
+     "Show FPS" : false,
+     "Show GUI Scene2" : false
    }
 }
