@@ -7,11 +7,21 @@
 
 #pragma once
 
+#include "ofMain.h"
+
 class PMBaseRenderer
 {
+public:
+
     virtual void setup();
     virtual void update();
     virtual void draw();
+
+    virtual void drawIntoFBO() = 0;
+
+protected:
+
+    ofFbo fbo;
 };
 
 

@@ -3,3 +3,18 @@
 //
 
 #include "PMRendererPaintbrush.h"
+
+void PMRendererPaintbrush::setup()
+{
+    PMBaseRenderer::setup();
+}
+
+void PMRendererPaintbrush::update()
+{
+    PMBaseRenderer::update();
+}
+
+void PMRendererPaintbrush::drawIntoFBO()
+{
+
+}

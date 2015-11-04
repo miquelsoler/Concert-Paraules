@@ -14,4 +14,5 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
+    drawIntoFBO();
 }

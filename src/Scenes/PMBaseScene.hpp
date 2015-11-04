@@ -29,8 +29,9 @@ public:
 
 protected:
 
-    ofColor backgroundColor;
+    void keyReleased(int key);
 
+    ofColor backgroundColor;
     ofTrueTypeFont baseFont;
 };
 

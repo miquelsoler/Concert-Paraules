@@ -39,7 +39,7 @@ private:
 
     PMBaseRenderer          *renderer;
 
-    PMUICanvasRenderers     *guiRenderer;
+    PMUICanvasRenderers     *guiRenderers;
     PMUICanvasNavigation    *guiNavigation;
 
     ofColor                 canvasBgColor;

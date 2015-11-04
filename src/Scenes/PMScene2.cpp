@@ -19,49 +19,59 @@ PMScene2::PMScene2()
 #endif
 
     backgroundColor = ofColor::white;
-    canvasBgColor = ofColor(100, 100, 100, 200);
 
-    guiRenderer = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
-    guiRenderer->init(200, 200);
-    guiRenderer->setBackgroundColor(canvasBgColor);
-    guiRenderer->setVisible(false);
+    // GUI
+    {
+        canvasBgColor = ofColor(50, 50, 50, 200);
 
-    guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
-    guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
-    guiNavigation->setBackgroundColor(canvasBgColor);
-    guiNavigation->setVisible(false);
+        guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
+        guiRenderers->init(200, 200);
+        guiRenderers->setBackgroundColor(canvasBgColor);
+        guiRenderers->setVisible(false);
+
+        guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
+        guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
+        guiNavigation->setBackgroundColor(canvasBgColor);
+        guiNavigation->setVisible(false);
+    }
+
+    // Renderer
+    {
+        renderer = new PMRendererPaintbrush();
+    }
 }
 
 
 PMScene2::~PMScene2()
 {
-    delete guiRenderer;
+    delete guiRenderers;
     delete guiNavigation;
 }
 
 void PMScene2::setup()
 {
+    renderer->setup();
 }
 
 void PMScene2::update()
 {
-
+    renderer->update();
 }
 
 void PMScene2::draw()
 {
+    renderer->draw();
+
     PMBaseScene::draw();
 
-    ofSetColor(ofColor::red);
-    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 300);
 }
 
 void PMScene2::willDraw()
 {
-    guiRenderer->loadSettings("settings/gui/renderers2.xml");
+    guiRenderers->loadSettings("settings/gui/renderers2.xml");
     guiNavigation->loadSettings("settings/gui/navigation2.xml");
 
-    guiRenderer->setVisible(showGUI);
+    guiRenderers->setVisible(showGUI);
     guiNavigation->setVisible(showGUI);
 }
 
@@ -72,22 +82,24 @@ void PMScene2::willExit()
 
 void PMScene2::exit()
 {
-    guiRenderer->saveSettings("settings/gui/renderers2.xml");
+    guiRenderers->saveSettings("settings/gui/renderers2.xml");
     guiNavigation->saveSettings("settings/gui/navigation2.xml");
 
-    guiRenderer->setVisible(false);
+    guiRenderers->setVisible(false);
     guiNavigation->setVisible(false);
 }
 
 void PMScene2::keyReleased(int key)
 {
+    PMBaseScene::keyReleased(key);
+
     switch(key)
     {
         case 'g':
         case 'G':
         {
             showGUI = !showGUI;
-            guiRenderer->setVisible(showGUI);
+            guiRenderers->setVisible(showGUI);
             guiNavigation->setVisible(showGUI);
             break;
         }

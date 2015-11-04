@@ -11,7 +11,15 @@
 
 class PMRendererPaintbrush : public PMBaseRenderer
 {
+public:
 
+    virtual void setup();
+    virtual void update();
+    virtual void drawIntoFBO();
+
+private:
+
+    ofImage brush;
 };
 
 
