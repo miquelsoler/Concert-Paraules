@@ -16,5 +16,5 @@ void PMRendererPaintbrush::update()
 
 void PMRendererPaintbrush::drawIntoFBO()
 {
-
+    cout << "Paintbrush drawIntoFBO" << endl;
 }

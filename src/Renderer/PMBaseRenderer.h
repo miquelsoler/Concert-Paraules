@@ -13,6 +13,8 @@ class PMBaseRenderer
 {
 public:
 
+    PMBaseRenderer();
+
     virtual void setup();
     virtual void update();
     virtual void draw();

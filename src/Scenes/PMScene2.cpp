@@ -63,7 +63,6 @@ void PMScene2::draw()
     renderer->draw();
 
     PMBaseScene::draw();
-
 }
 
 void PMScene2::willDraw()
