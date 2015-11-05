@@ -26,12 +26,12 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
         guiRenderers->init(200, 200);
         guiRenderers->setBackgroundColor(canvasBgColor);
-        guiRenderers->setVisible(false);
+        guiRenderers->setVisible(true);
 
         guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
         guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
         guiNavigation->setBackgroundColor(canvasBgColor);
-        guiNavigation->setVisible(false);
+        guiNavigation->setVisible(true);
     }
 
     // Renderer
@@ -50,12 +50,12 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
-//    renderer->setup();
+    renderer->setup();
 }
 
 void PMScene2::update()
 {
-//    renderer->update();
+    renderer->update();
 }
 
 void PMScene2::updateEnter()
@@ -84,7 +84,7 @@ void PMScene2::draw()
     ofDrawCircle(100, 100, 100);
 //    PMBaseScene::draw();
 
-//    renderer->draw();
+    renderer->draw();
 }
 
 void PMScene2::exit()
