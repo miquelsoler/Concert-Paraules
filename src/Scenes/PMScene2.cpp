@@ -26,12 +26,12 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
         guiRenderers->init(200, 200);
         guiRenderers->setBackgroundColor(canvasBgColor);
-        guiRenderers->setVisible(true);
+        guiRenderers->setVisible(false);
 
         guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
         guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
         guiNavigation->setBackgroundColor(canvasBgColor);
-        guiNavigation->setVisible(true);
+        guiNavigation->setVisible(false);
     }
 
     // Renderer
