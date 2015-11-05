@@ -12,24 +12,29 @@
 #pragma once
 
 #include <stdio.h>
+#include "ofMain.h"
 #include "ofxSceneManager.h"
 #include "ofxScene.h"
 
-class PMBaseScene : public ofxScene
+class PMBaseScene : public ofxFadeScene
 {
 public:
 
-    PMBaseScene();
+    PMBaseScene(const string &name);
 
     virtual void setup() = 0;
     virtual void update() = 0;
+    virtual void updateEnter();
+    virtual void updateExit() = 0;
     virtual void draw() = 0;
 
     virtual void exit() = 0;
 
-protected:
+    virtual void changeScene() {};
 
-    void keyReleased(int key);
+    ofEvent<unsigned int> eventChangeScene;
+
+protected:
 
     ofColor backgroundColor;
     ofTrueTypeFont baseFont;

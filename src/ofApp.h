@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "PMSceneManager.hpp"
+#include "ofxAppUtils.h"
 
-class ofApp : public ofBaseApp
+class ofApp : public ofxApp
 {
 public:
 
@@ -16,10 +16,12 @@ public:
 
 private:
 
+    void changeScene(unsigned int &sceneIndex);
+
     bool                    showFPS;
     bool                    isFullScreen;
 
-    PMSceneManager          *sceneManager;
+    ofxSceneManager         sceneManager;
 
     int                     windowPosX, windowPosY;
 };

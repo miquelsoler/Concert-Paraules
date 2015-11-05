@@ -9,8 +9,7 @@
 #include "PMScene2.hpp"
 #include "PMSettingsManagerGeneral.h"
 
-///--------------------------------------------------------------
-PMScene2::PMScene2()
+PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
 #ifdef OF_DEBUG
     showGUI= PMSettingsManagerGeneral::getInstance().getDebugShowGUIScene2();
@@ -37,7 +36,8 @@ PMScene2::PMScene2()
 
     // Renderer
     {
-        renderer = new PMRendererPaintbrush();
+        ofColor rendererClearColor = ofColor(255, 0, 0);
+        renderer = new PMRendererPaintbrush(rendererClearColor);
     }
 }
 
@@ -50,33 +50,41 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
-    renderer->setup();
+//    renderer->setup();
 }
 
 void PMScene2::update()
 {
-    renderer->update();
+//    renderer->update();
+}
+
+void PMScene2::updateEnter()
+{
+    if (isEnteringFirst())
+    {
+        guiRenderers->loadSettings("settings/gui/renderers2.xml");
+        guiNavigation->loadSettings("settings/gui/navigation2.xml");
+
+        guiRenderers->setVisible(showGUI);
+        guiNavigation->setVisible(showGUI);
+    }
+
+    PMBaseScene::updateEnter();
+}
+
+void PMScene2::updateExit()
+{
+    exit();
 }
 
 void PMScene2::draw()
 {
-    renderer->draw();
+    ofClear(backgroundColor);
+    ofSetColor(ofColor::red);
+    ofDrawCircle(100, 100, 100);
+//    PMBaseScene::draw();
 
-    PMBaseScene::draw();
-}
-
-void PMScene2::willDraw()
-{
-    guiRenderers->loadSettings("settings/gui/renderers2.xml");
-    guiNavigation->loadSettings("settings/gui/navigation2.xml");
-
-    guiRenderers->setVisible(showGUI);
-    guiNavigation->setVisible(showGUI);
-}
-
-void PMScene2::willExit()
-{
-    exit();
+//    renderer->draw();
 }
 
 void PMScene2::exit()
@@ -104,4 +112,10 @@ void PMScene2::keyReleased(int key)
         }
         default: break;
     }
+}
+
+void PMScene2::changeScene()
+{
+    unsigned int nextSceneIndex = 0;
+    ofNotifyEvent(eventChangeScene, nextSceneIndex, this);
 }

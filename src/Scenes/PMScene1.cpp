@@ -8,10 +8,9 @@
 
 #include "PMScene1.hpp"
 
-
 #pragma mark - UI building
 
-PMScene1::PMScene1()
+PMScene1::PMScene1() : PMBaseScene("Scene 1")
 {
     // Settings
     {
@@ -52,6 +51,8 @@ PMScene1::PMScene1()
         guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
         guiNavigation->setBackgroundColor(canvasBgColor);
         guiNavigation->setVisible(false);
+
+        ofAddListener(guiNavigation->eventContinuePressed, this, &PMScene1::changeScene);
     }
 }
 
@@ -71,32 +72,37 @@ void PMScene1::update()
 {
 }
 
-void PMScene1::draw()
+void PMScene1::updateEnter()
 {
-    PMBaseScene::draw();
+    if (isEnteringFirst())
+    {
+        guiPoemSelector->loadSettings("settings/gui/poem1.xml");
+        guiAudioSettings->loadSettings("settings/gui/audioDevices1.xml");
+        guiRendererSettings->loadSettings("settings/gui/renderers1.xml");
+        guiNavigation->loadSettings("settings/gui/navigation1.xml");
+
+        guiPoemSelector->setVisible(true);
+        guiAudioSettings->setVisible(true);
+        guiRendererSettings->setVisible(true);
+        guiNavigation->setVisible(true);
+    }
+
+    PMBaseScene::updateEnter();
 }
 
-void PMScene1::willDraw()
-{
-    guiPoemSelector->loadSettings("settings/gui/pome1.xml");
-    guiAudioSettings->loadSettings("settings/gui/audioDevices1.xml");
-    guiRendererSettings->loadSettings("settings/gui/renderers1.xml");
-    guiNavigation->loadSettings("settings/gui/navigation1.xml");
-
-    guiPoemSelector->setVisible(true);
-    guiAudioSettings->setVisible(true);
-    guiRendererSettings->setVisible(true);
-    guiNavigation->setVisible(true);
-}
-
-void PMScene1::willExit()
+void PMScene1::updateExit()
 {
     exit();
 }
 
+void PMScene1::draw()
+{
+    ofClear(backgroundColor);
+}
+
 void PMScene1::exit()
 {
-    guiPoemSelector->saveSettings("settings/gui/pome1.xml");
+    guiPoemSelector->saveSettings("settings/gui/poem1.xml");
     guiAudioSettings->saveSettings("settings/gui/audioDevices1.xml");
     guiRendererSettings->saveSettings("settings/gui/renderers1.xml");
     guiNavigation->saveSettings("settings/gui/navigation1.xml");
@@ -105,4 +111,10 @@ void PMScene1::exit()
     guiAudioSettings->setVisible(false);
     guiRendererSettings->setVisible(false);
     guiNavigation->setVisible(false);
+}
+
+void PMScene1::changeScene()
+{
+    unsigned int nextSceneIndex = 1;
+    ofNotifyEvent(eventChangeScene, nextSceneIndex, this);
 }

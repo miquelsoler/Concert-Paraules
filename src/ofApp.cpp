@@ -1,7 +1,11 @@
 #include "ofApp.h"
-#include "PMSettingsManagerGeneral.h"
+
 #include "Defaults.h"
+#include "PMSettingsManagerGeneral.h"
 #include "PMAudioAnalyzer.hpp"
+
+#include "PMScene1.hpp"
+#include "PMScene2.hpp"
 
 void ofApp::setup()
 {
@@ -28,8 +32,21 @@ void ofApp::setup()
 
     // Scenes
 
-    sceneManager = &(PMSceneManager::getInstance());
-    sceneManager->init();
+    PMScene1 *scene1 = new PMScene1();
+    scene1->setSingleSetup(true);
+    ofAddListener(scene1->eventChangeScene, this, &ofApp::changeScene);
+    sceneManager.add(scene1);
+
+    PMScene2 *scene2 = new PMScene2();
+    scene2->setSingleSetup(true);
+    sceneManager.add(scene2);
+
+    sceneManager.setup(true);
+    sceneManager.setOverlap(false);
+    ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
+
+    setSceneManager(&sceneManager);
+    sceneManager.gotoScene(0, false);
 
     // For testing purposes
 
@@ -48,24 +65,28 @@ void ofApp::update()
 #ifdef OF_DEBUG
     ofShowCursor();
 #endif
-
-    sceneManager->update();
 }
 
 void ofApp::draw()
 {
-    sceneManager->draw();
+    ofColor debugMessagesColor = ofColor(127);
 
     if (showFPS)
     {
-        ofSetColor(ofColor::black);
-        ofDrawBitmapString(ofToString(int(roundf(ofGetFrameRate()))) + "fps", 15, ofGetHeight() - 15);
+        ofSetColor(debugMessagesColor);
+        ofxBitmapString(15, ofGetHeight() - 15) << roundf(ofGetFrameRate()) << "fps" << endl;
     }
+
+#if OF_DEBUG
+    ofSetColor(debugMessagesColor);
+    ofxBitmapString(15, ofGetHeight()-28)
+            << "[Current Scene] ID: " << sceneManager.getCurrentSceneIndex()
+            << " Name: " << sceneManager.getCurrentSceneName() << endl;
+#endif
 }
 
 void ofApp::exit()
 {
-    sceneManager->willExit();
 //    delete audioAnalyzer;
 }
 
@@ -73,6 +94,16 @@ void ofApp::keyReleased(int key)
 {
     switch(key)
     {
+        case OF_KEY_RIGHT:
+        {
+            sceneManager.nextScene();
+            break;
+        }
+        case OF_KEY_LEFT:
+        {
+            sceneManager.prevScene();
+            break;
+        }
         // Change window mode
         case 'f':
         case 'F':
@@ -114,4 +145,9 @@ void ofApp::keyReleased(int key)
         default:
             break;
     }
+}
+
+void ofApp::changeScene(unsigned int &sceneIndex)
+{
+    sceneManager.gotoScene(sceneIndex, true);
 }

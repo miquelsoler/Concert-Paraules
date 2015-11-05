@@ -12,7 +12,6 @@
 #pragma once
 
 #include <stdio.h>
-#include "ofxUI.h"
 #include "PMBaseScene.hpp"
 #include "PMSettingsManagerPoem.h"
 #include "PMSettingsManagerAudioDevices.h"
@@ -33,12 +32,12 @@ public:
 
     void setup();
     void update();
+    void updateEnter();
+    void updateExit();
     void draw();
-
-    void willDraw();
-    void willExit();
-
     void exit();
+
+    void changeScene();
 
 private:
 

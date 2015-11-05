@@ -26,14 +26,14 @@ public:
 
     void setup();
     void update();
+    void updateEnter();
+    void updateExit();
     void draw();
-
-    void willDraw();
-    void willExit();
 
     void exit();
 
     void keyReleased(int key);
+    void changeScene();
 
 private:
 

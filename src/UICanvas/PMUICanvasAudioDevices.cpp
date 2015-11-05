@@ -61,7 +61,6 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
 {
     if (e.widget->getKind() != OFX_UI_WIDGET_TOGGLE) return;
 
-    string widgetName = e.widget->getName();
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
 
     bool toggleValue = toggle->getValue();
@@ -102,10 +101,6 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
     }
 
     settings->write();
-
-#ifdef OF_DEBUG
-    cout << widgetName << "\t value: " << toggle->getValue() << "\t id: " << toggle->getID() << endl;
-#endif
 }
 
 void PMUICanvasAudioDevices::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)

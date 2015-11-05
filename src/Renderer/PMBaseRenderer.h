@@ -13,7 +13,7 @@ class PMBaseRenderer
 {
 public:
 
-    PMBaseRenderer();
+    PMBaseRenderer(ofColor clearColor);
 
     virtual void setup();
     virtual void update();
@@ -23,7 +23,8 @@ public:
 
 protected:
 
-    ofFbo fbo;
+    ofFbo       fbo;
+    ofColor     clearColor;
 };
 
 

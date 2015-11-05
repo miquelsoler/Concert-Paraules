@@ -4,7 +4,6 @@
 
 #include "PMUICanvasNavigation.h"
 
-#include "PMSceneManager.hpp"
 
 static const string STR_NAVIGATION_BUTTON_SAVE = "CONTINUE";
 
@@ -28,5 +27,5 @@ void PMUICanvasNavigation::handleEvents(ofxUIEventArgs &e)
     ofxUILabelButton *button = (ofxUILabelButton *)e.widget;
     if (!button->getValue()) return; // Ignore releases
 
-    PMSceneManager::getInstance().changeScene();
+    ofNotifyEvent(eventContinuePressed, this);
 }

@@ -13,6 +13,8 @@ class PMRendererPaintbrush : public PMBaseRenderer
 {
 public:
 
+    PMRendererPaintbrush(ofColor clearColor) : PMBaseRenderer(clearColor) {};
+
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
