@@ -36,7 +36,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        ofColor rendererClearColor = ofColor(255, 0, 0);
+        ofColor rendererClearColor = ofColor(255, 255, 255);
         renderer = new PMRendererPaintbrush(rendererClearColor);
     }
 }
@@ -79,11 +79,7 @@ void PMScene2::updateExit()
 
 void PMScene2::draw()
 {
-    ofClear(backgroundColor);
-    ofSetColor(ofColor::red);
-    ofDrawCircle(100, 100, 100);
-//    PMBaseScene::draw();
-
+    ofClear(ofColor::white);
     renderer->draw();
 }
 
