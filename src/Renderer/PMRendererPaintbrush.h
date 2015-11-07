@@ -13,7 +13,7 @@ class PMRendererPaintbrush : public PMBaseRenderer
 {
 public:
 
-    PMRendererPaintbrush(ofColor clearColor) : PMBaseRenderer(clearColor) {};
+    PMRendererPaintbrush() : PMBaseRenderer() {};
 
     virtual void setup();
     virtual void update();

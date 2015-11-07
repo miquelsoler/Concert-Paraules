@@ -13,7 +13,7 @@ class PMBaseRenderer
 {
 public:
 
-    PMBaseRenderer(ofColor clearColor);
+    PMBaseRenderer();
 
     virtual void setup();
     virtual void update();

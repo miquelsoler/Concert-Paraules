@@ -4,20 +4,19 @@
 
 #include "PMBaseRenderer.h"
 
-PMBaseRenderer::PMBaseRenderer(ofColor _clearColor)
+PMBaseRenderer::PMBaseRenderer()
 {
-    clearColor = _clearColor;
-
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F);
 }
 
 void PMBaseRenderer::setup()
 {
+    cout << "PMBaseRenderer::setup()" << endl;
     fbo.begin();
     {
         // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
         // so it's good to clear it before starting to draw it
-        ofClear(clearColor);
+        ofClear(255, 255, 255, 255);
     }
     fbo.end();
 

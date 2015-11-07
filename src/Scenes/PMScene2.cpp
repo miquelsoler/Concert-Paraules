@@ -31,8 +31,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        ofColor rendererClearColor = ofColor(255, 255, 255);
-        renderer = new PMRendererPaintbrush(rendererClearColor);
+        renderer = new PMRendererPaintbrush();
     }
 }
 
@@ -43,6 +42,7 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
+//    ofBackground(ofColor::white);
     renderer->setup();
 }
 
@@ -73,7 +73,6 @@ void PMScene2::updateExit()
 
 void PMScene2::draw()
 {
-    ofClear(ofColor::white);
     renderer->draw();
 }
 
@@ -95,6 +94,7 @@ void PMScene2::keyReleased(int key)
         {
             showGUI = !showGUI;
             guiRenderers->setVisible(showGUI);
+            ofClear(backgroundColor);
             break;
         }
         default: break;

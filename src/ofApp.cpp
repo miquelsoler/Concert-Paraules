@@ -39,8 +39,8 @@ void ofApp::setup()
     sceneManager.add(scene2);
 
     sceneManager.setup(true);
-
     sceneManager.setOverlap(true);
+
     ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 
     setSceneManager(&sceneManager);
@@ -82,6 +82,9 @@ void ofApp::draw()
             << "[Current Scene] ID: " << sceneManager.getCurrentSceneIndex()
             << " Name: " << sceneManager.getCurrentSceneName() << endl;
 #endif
+
+
+    ofSetColor(ofColor::white);
 }
 
 void ofApp::exit()
