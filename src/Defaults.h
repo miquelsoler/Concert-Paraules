@@ -16,4 +16,7 @@ static const int            DEFAULT_WINDOW_HEIGHT       = 1080;
 
 static const ofWindowMode   DEFAULT_WINDOW_MODE         = OF_WINDOW;
 
+static const int            DEFAULT_SAMPLERATE          = 44100;
+static const int            DEFAULT_BUFFERSIZE          = 512;
+
 #endif

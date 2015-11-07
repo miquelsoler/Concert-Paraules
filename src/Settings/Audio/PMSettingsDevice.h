@@ -15,6 +15,8 @@ public:
     int ID;
     string name;
     bool enabled;
+    int inChannels;
+    int outChannels;
     vector<PMSettingsDeviceChannel> channels;
 };
 

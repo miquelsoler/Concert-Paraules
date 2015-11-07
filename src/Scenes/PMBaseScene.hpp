@@ -28,7 +28,7 @@ public:
     virtual void updateExit() = 0;
     virtual void draw() = 0;
 
-    virtual void exit() = 0;
+    virtual void saveSettings() = 0;
 
 protected:
 

@@ -82,8 +82,7 @@ void PMScene1::updateEnter()
 
 void PMScene1::updateExit()
 {
-    exit();
-
+    saveSettings();
     PMBaseScene::updateExit();
 }
 
@@ -92,7 +91,7 @@ void PMScene1::draw()
     ofClear(backgroundColor);
 }
 
-void PMScene1::exit()
+void PMScene1::saveSettings()
 {
     guiPoemSelector->saveSettings("settings/gui/poem1.xml");
     guiAudioSettings->saveSettings("settings/gui/audioDevices1.xml");

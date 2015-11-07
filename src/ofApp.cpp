@@ -38,23 +38,23 @@ void ofApp::setup()
     PMScene2 *scene2 = new PMScene2();
     sceneManager.add(scene2);
 
-    sceneManager.setup(true);
+    sceneManager.setup(false);
     sceneManager.setOverlap(true);
 
     ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 
     setSceneManager(&sceneManager);
 
-    // For testing purposes
-
-    int deviceId = 0;
-    int inChannels = 2;
-    int outChannels = 0;
-    int sampleRate = 44100;
-    int bufferSize = 512;
-    int channelNumber = 0;
-
-    PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
+//    // For testing purposes
+//
+//    int deviceId = 0;
+//    int inChannels = 2;
+//    int outChannels = 0;
+//    int sampleRate = 44100;
+//    int bufferSize = 512;
+//    int channelNumber = 0;
+//
+//    PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
 
     sceneManager.gotoScene("Scene 1", false);
 }
@@ -89,6 +89,10 @@ void ofApp::draw()
 
 void ofApp::exit()
 {
+    PMScene1 * scene1 = (PMScene1 *)(sceneManager.getScene("Scene 1"));
+    scene1->saveSettings();
+    PMScene2 * scene2 = (PMScene2 *)(sceneManager.getScene("Scene 2"));
+    scene2->saveSettings();
 //    delete audioAnalyzer;
 }
 

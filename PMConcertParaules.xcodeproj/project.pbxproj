@@ -878,10 +878,10 @@
 		2A5E61AC1BE2EB480037FD79 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				2A5E61AD1BE2EB480037FD79 /* PMSettingsDevice.h */,
-				2A5E61AE1BE2EB480037FD79 /* PMSettingsDeviceChannel.h */,
 				2A5E61AF1BE2EB480037FD79 /* PMSettingsManagerAudioDevices.cpp */,
 				2A5E61B01BE2EB480037FD79 /* PMSettingsManagerAudioDevices.h */,
+				2A5E61AD1BE2EB480037FD79 /* PMSettingsDevice.h */,
+				2A5E61AE1BE2EB480037FD79 /* PMSettingsDeviceChannel.h */,
 				2A5E61B11BE2EB480037FD79 /* PMSettingsRenderer.h */,
 				2A5E61B21BE2EB480037FD79 /* PMSettingsRendererSpecific.h */,
 			);
@@ -1908,7 +1908,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAudioAnalyzer-PM/libs/essentia/include/";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

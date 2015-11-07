@@ -11,7 +11,9 @@ static const string STR_DEVICES             = "Devices";
 static const string STR_DEVICE_NAME         = "1. Name";
 static const string STR_DEVICE_ID           = "2. Id";
 static const string STR_DEVICE_ENABLED      = "3. Enabled";
-static const string STR_CHANNELS            = "4. Channels";
+static const string STR_DEVICE_INCHANNELS   = "4. Input Channels";
+static const string STR_DEVICE_OUTCHANNELS  = "5. Output Channels";
+static const string STR_CHANNELS            = "6. Channels";
 static const string STR_CHANNEL_ID          = "1. Id";
 static const string STR_CHANNEL_ENABLED     = "2. Enabled";
 
@@ -52,6 +54,8 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
         jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
         jsonDevice[STR_DEVICE_ENABLED] = (i==0);
         jsonDevice[STR_DEVICE_NAME] = devices[i].name;
+        jsonDevice[STR_DEVICE_INCHANNELS] = devices[i].inputChannels;
+        jsonDevice[STR_DEVICE_OUTCHANNELS] = devices[i].outputChannels;
 
         jsonDevice[STR_CHANNELS] = Json::arrayValue;
         for (int j=0; j<devices[i].inputChannels; ++j)
@@ -71,6 +75,8 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
 
 void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
 {
+    devicesSettings.clear();
+
     for (int i = 0; i < json[STR_DEVICES].size(); ++i)
     {
         Json::Value jsonDevice = json[STR_DEVICES][i];
@@ -79,6 +85,8 @@ void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
         device.name = jsonDevice[STR_DEVICE_NAME].asString();
         device.ID = jsonDevice[STR_DEVICE_ID].asInt();
         device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
+        device.inChannels = jsonDevice[STR_DEVICE_INCHANNELS].asInt();
+        device.outChannels = jsonDevice[STR_DEVICE_OUTCHANNELS].asInt();
 
         Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
         vector<PMSettingsDeviceChannel> deviceChannels;
@@ -101,6 +109,7 @@ void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
 
 vector<PMSettingsDevice> *PMSettingsManagerAudioDevices::getAudioDevices()
 {
+    buildAudioDevicesVectorFromJSON();
     return &devicesSettings;
 };
 

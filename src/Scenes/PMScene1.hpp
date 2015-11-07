@@ -36,7 +36,7 @@ public:
     void updateExit();
     void draw();
 
-    void exit();
+    void saveSettings();
 
 private:
 
