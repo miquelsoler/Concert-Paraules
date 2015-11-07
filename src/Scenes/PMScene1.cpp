@@ -10,6 +10,8 @@
 
 #pragma mark - UI building
 
+static const string STR_CANVAS_BASEPATH = "settings/gui/";
+
 PMScene1::PMScene1() : PMBaseScene("Scene 1")
 {
     // Settings
@@ -68,9 +70,9 @@ void PMScene1::updateEnter()
 //    cout << "PMScene1::updateEnter()" << endl;
     if (isEnteringFirst())
     {
-        guiPoemSelector->loadSettings("settings/gui/poem1.xml");
-        guiAudioSettings->loadSettings("settings/gui/audioDevices1.xml");
-        guiRendererSettings->loadSettings("settings/gui/renderers1.xml");
+        guiPoemSelector->loadSettings(STR_CANVAS_BASEPATH + "poem1.xml");
+        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
+        guiRendererSettings->loadSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
 
         guiPoemSelector->setVisible(true);
         guiAudioSettings->setVisible(true);
@@ -93,9 +95,9 @@ void PMScene1::draw()
 
 void PMScene1::saveSettings()
 {
-    guiPoemSelector->saveSettings("settings/gui/poem1.xml");
-    guiAudioSettings->saveSettings("settings/gui/audioDevices1.xml");
-    guiRendererSettings->saveSettings("settings/gui/renderers1.xml");
+    guiPoemSelector->saveSettings(STR_CANVAS_BASEPATH + "poem1.xml");
+    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
+    guiRendererSettings->saveSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
 
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);

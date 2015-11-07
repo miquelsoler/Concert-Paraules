@@ -15,7 +15,8 @@
 #include "PMBaseScene.hpp"
 #include "PMRendererPaintbrush.h"
 #include "PMUICanvasRenderers.h"
-#include "PMUICanvasNavigation.h"
+#include "PMUICanvasAudioAnalyzer.h"
+#include "PMAudioAnalyzer.hpp"
 
 class PMScene2 : public PMBaseScene
 {
@@ -34,11 +35,15 @@ public:
 
     void keyReleased(int key);
 
+    void pitchChanged(pitchParams &pitchParams);
+
 private:
 
     PMBaseRenderer          *renderer;
 
     PMUICanvasRenderers     *guiRenderers;
+    PMUICanvasAudioAnalyzer *guiAudioAnalyzer;
+    bool                    guiAudioAnalyzerCreated;
 
     ofColor                 canvasBgColor;
 

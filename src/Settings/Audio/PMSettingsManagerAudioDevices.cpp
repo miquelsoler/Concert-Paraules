@@ -38,6 +38,7 @@ bool PMSettingsManagerAudioDevices::load(string filename)
 
     bool result = PMSettingsManager::load(filename);
     if (result) buildAudioDevicesVectorFromJSON();
+    // TODO: Clean JSON when new devices plugged/unplugged. In the mean time, delete settings/audioDevices.json and restart app.
 
     return result;
 }

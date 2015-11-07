@@ -8,10 +8,10 @@
 
 #include "PMScene2.hpp"
 #include "Defaults.h"
-#include "PMAudioAnalyzer.hpp"
 #include "PMSettingsManagerGeneral.h"
 #include "PMSettingsManagerAudioDevices.h"
 
+static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
@@ -27,10 +27,17 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     {
         canvasBgColor = ofColor(50, 50, 50, 200);
 
-        guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_LARGE);
+        guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
         guiRenderers->init(200, 200);
         guiRenderers->setBackgroundColor(canvasBgColor);
         guiRenderers->setVisible(false);
+
+        guiAudioAnalyzerCreated = false;
+
+//        guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
+//        guiAudioAnalyzer->init(200, 400);
+//        guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+//        guiAudioAnalyzer->setVisible(false);
     }
 
     // Renderer
@@ -42,10 +49,14 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 PMScene2::~PMScene2()
 {
     delete guiRenderers;
+    delete guiAudioAnalyzer;
 }
 
 void PMScene2::setup()
 {
+#if OF_DEBUG
+    cout << "S2 SETUP" << endl;
+#endif
     vector<PMSettingsDevice> *audioDevices = PMSettingsManagerAudioDevices::getInstance().getAudioDevices();
     vector<PMSettingsDevice>::iterator itDevice;
 
@@ -65,8 +76,25 @@ void PMScene2::setup()
             int outChannels = (*itDevice).outChannels;
             int channelNumber = channel.ID;
 
-            PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE, PMDAA_CHANNEL_MONO, channelNumber);
+            PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId,
+                    inChannels, outChannels,
+                    DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
+                    PMDAA_CHANNEL_MONO, channelNumber);
+
+            ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
         }
+    }
+
+    // GUI
+    {
+        if (!guiAudioAnalyzerCreated) {
+            guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
+            guiAudioAnalyzer->init(200, 400);
+            guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+            guiAudioAnalyzer->setVisible(false);
+        }
+
+        guiAudioAnalyzerCreated = true;
     }
 
     renderer->setup();
@@ -82,9 +110,14 @@ void PMScene2::updateEnter()
 //    cout << "PMScene2::updateEnter()" << endl;
     if (isEnteringFirst())
     {
-        guiRenderers->loadSettings("settings/gui/renderers2.xml");
+        guiRenderers->loadSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
         guiRenderers->setVisible(showGUI);
+
+        guiAudioAnalyzer->loadSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
+        guiAudioAnalyzer->setVisible(showGUI);
     }
+
+    PMAudioAnalyzer::getInstance().start();
 
     PMBaseScene::updateEnter();
 }
@@ -102,9 +135,17 @@ void PMScene2::draw()
 
 void PMScene2::saveSettings()
 {
-    guiRenderers->saveSettings("settings/gui/renderers2.xml");
+    PMAudioAnalyzer::getInstance().stop();
+    PMAudioAnalyzer::getInstance().clear();
+
+    guiRenderers->saveSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
     guiRenderers->setVisible(false);
+
+    guiAudioAnalyzer->saveSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
+    guiAudioAnalyzer->setVisible(false);
 }
+
+#pragma mark - Keyboard events
 
 void PMScene2::keyReleased(int key)
 {
@@ -122,4 +163,11 @@ void PMScene2::keyReleased(int key)
         }
         default: break;
     }
+}
+
+#pragma mark - Audio Events
+
+void PMScene2::pitchChanged(pitchParams &pitchParams)
+{
+    cout << "[EVENT] Pitch> DV:" << pitchParams.deviceID << " CH:" << pitchParams.channel << " Freq:" << pitchParams.freq << endl;
 }

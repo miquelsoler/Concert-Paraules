@@ -14,9 +14,11 @@ class PMBaseUICanvas : public ofxUISuperCanvas
 {
 public:
 
-    PMBaseUICanvas(string title, int headerFontSize) : ofxUISuperCanvas(title, headerFontSize) {}
+    PMBaseUICanvas(string title, int headerFontSize);
 
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
+    virtual void clear() {};
+
     void setBackgroundColor(ofColor backgroundColor);
 
     float getWidth();
