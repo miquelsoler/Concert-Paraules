@@ -14,7 +14,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
     int i=0;
     for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer, ++i)
     {
-        addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()));
+        addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()));
         addSpacer();
 
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
