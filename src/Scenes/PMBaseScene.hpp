@@ -16,7 +16,7 @@
 #include "ofxSceneManager.h"
 #include "ofxScene.h"
 
-class PMBaseScene : public ofxScene
+class PMBaseScene : public ofxFadeScene
 {
 public:
 

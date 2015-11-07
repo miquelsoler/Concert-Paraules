@@ -65,7 +65,7 @@ void PMScene1::update()
 
 void PMScene1::updateEnter()
 {
-    cout << "PMScene1::updateEnter()" << endl;
+//    cout << "PMScene1::updateEnter()" << endl;
     if (isEnteringFirst())
     {
         guiPoemSelector->loadSettings("settings/gui/poem1.xml");

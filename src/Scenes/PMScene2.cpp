@@ -53,7 +53,7 @@ void PMScene2::update()
 
 void PMScene2::updateEnter()
 {
-    cout << "PMScene2::updateEnter()" << endl;
+//    cout << "PMScene2::updateEnter()" << endl;
     if (isEnteringFirst())
     {
         guiRenderers->loadSettings("settings/gui/renderers2.xml");

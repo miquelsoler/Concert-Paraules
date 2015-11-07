@@ -33,15 +33,12 @@ void ofApp::setup()
     // Scenes
 
     PMScene1 *scene1 = new PMScene1();
-//    scene1->setSingleSetup(true);
     sceneManager.add(scene1);
 
     PMScene2 *scene2 = new PMScene2();
-//    scene2->setSingleSetup(true);
     sceneManager.add(scene2);
 
     sceneManager.setup(true);
-    sceneManager.gotoScene("Scene 1", true);
 
     sceneManager.setOverlap(true);
     ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
@@ -58,6 +55,8 @@ void ofApp::setup()
     int channelNumber = 0;
 
     PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
+
+    sceneManager.gotoScene("Scene 1", false);
 }
 
 void ofApp::update()
@@ -71,7 +70,7 @@ void ofApp::draw()
 {
     ofColor debugMessagesColor = ofColor(127);
 
-    if (showFPS)
+    if (showFPS && sceneManager.getCurrentSceneIndex() != -1)
     {
         ofSetColor(debugMessagesColor);
         ofxBitmapString(15, ofGetHeight() - 15) << roundf(ofGetFrameRate()) << "fps" << endl;
