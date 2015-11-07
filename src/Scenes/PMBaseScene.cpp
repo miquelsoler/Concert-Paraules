@@ -8,7 +8,7 @@
 
 #include "PMBaseScene.hpp"
 
-PMBaseScene::PMBaseScene(const string &name) : ofxFadeScene(name)
+PMBaseScene::PMBaseScene(const string &name) : ofxScene(name)
 {
     baseFont.load(OF_TTF_SANS, 20, true, true, false, 0.3, 72);
 
@@ -21,5 +21,10 @@ void PMBaseScene::draw()
 
 void PMBaseScene::updateEnter()
 {
-    ofxFadeScene::updateEnter();
+    ofxScene::updateEnter();
+}
+
+void PMBaseScene::updateExit()
+{
+    ofxScene::updateExit();
 }

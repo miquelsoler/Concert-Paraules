@@ -16,8 +16,6 @@ public:
 
 private:
 
-    void changeScene(unsigned int &sceneIndex);
-
     bool                    showFPS;
     bool                    isFullScreen;
 

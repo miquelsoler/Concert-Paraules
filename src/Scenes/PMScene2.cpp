@@ -27,11 +27,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         guiRenderers->init(200, 200);
         guiRenderers->setBackgroundColor(canvasBgColor);
         guiRenderers->setVisible(false);
-
-        guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
-        guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
-        guiNavigation->setBackgroundColor(canvasBgColor);
-        guiNavigation->setVisible(false);
     }
 
     // Renderer
@@ -41,11 +36,9 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     }
 }
 
-
 PMScene2::~PMScene2()
 {
     delete guiRenderers;
-    delete guiNavigation;
 }
 
 void PMScene2::setup()
@@ -60,13 +53,12 @@ void PMScene2::update()
 
 void PMScene2::updateEnter()
 {
+    cout << "PMScene2::updateEnter()" << endl;
     if (isEnteringFirst())
     {
         guiRenderers->loadSettings("settings/gui/renderers2.xml");
-        guiNavigation->loadSettings("settings/gui/navigation2.xml");
 
         guiRenderers->setVisible(showGUI);
-        guiNavigation->setVisible(showGUI);
     }
 
     PMBaseScene::updateEnter();
@@ -75,6 +67,8 @@ void PMScene2::updateEnter()
 void PMScene2::updateExit()
 {
     exit();
+
+    PMBaseScene::updateExit();
 }
 
 void PMScene2::draw()
@@ -86,10 +80,8 @@ void PMScene2::draw()
 void PMScene2::exit()
 {
     guiRenderers->saveSettings("settings/gui/renderers2.xml");
-    guiNavigation->saveSettings("settings/gui/navigation2.xml");
 
     guiRenderers->setVisible(false);
-    guiNavigation->setVisible(false);
 }
 
 void PMScene2::keyReleased(int key)
@@ -103,15 +95,8 @@ void PMScene2::keyReleased(int key)
         {
             showGUI = !showGUI;
             guiRenderers->setVisible(showGUI);
-            guiNavigation->setVisible(showGUI);
             break;
         }
         default: break;
     }
-}
-
-void PMScene2::changeScene()
-{
-    unsigned int nextSceneIndex = 0;
-    ofNotifyEvent(eventChangeScene, nextSceneIndex, this);
 }

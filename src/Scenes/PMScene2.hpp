@@ -33,14 +33,12 @@ public:
     void exit();
 
     void keyReleased(int key);
-    void changeScene();
 
 private:
 
     PMBaseRenderer          *renderer;
 
     PMUICanvasRenderers     *guiRenderers;
-    PMUICanvasNavigation    *guiNavigation;
 
     ofColor                 canvasBgColor;
 

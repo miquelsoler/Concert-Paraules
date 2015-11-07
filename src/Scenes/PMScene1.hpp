@@ -35,16 +35,14 @@ public:
     void updateEnter();
     void updateExit();
     void draw();
-    void exit();
 
-    void changeScene();
+    void exit();
 
 private:
 
     PMUICanvasPoem                  *guiPoemSelector;
     PMUICanvasAudioDevices          *guiAudioSettings;
     PMUICanvasRenderers             *guiRendererSettings;
-    PMUICanvasNavigation            *guiNavigation;
 
     ofColor                         canvasBgColor;
     int                             panelMargin = 5;

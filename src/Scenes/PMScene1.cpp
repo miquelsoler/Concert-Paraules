@@ -45,14 +45,6 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
         guiRendererSettings->init(panelPosX, panelPosY);
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
-
-        // Navigation
-        guiNavigation = new PMUICanvasNavigation("NAVIGATION", OFX_UI_FONT_MEDIUM);
-        guiNavigation->init(ofGetWidth() - 300, ofGetHeight() - 300);
-        guiNavigation->setBackgroundColor(canvasBgColor);
-        guiNavigation->setVisible(false);
-
-        ofAddListener(guiNavigation->eventContinuePressed, this, &PMScene1::changeScene);
     }
 }
 
@@ -61,7 +53,6 @@ PMScene1::~PMScene1()
     delete guiPoemSelector;
     delete guiAudioSettings;
     delete guiRendererSettings;
-    delete guiNavigation;
 }
 
 void PMScene1::setup()
@@ -74,17 +65,16 @@ void PMScene1::update()
 
 void PMScene1::updateEnter()
 {
+    cout << "PMScene1::updateEnter()" << endl;
     if (isEnteringFirst())
     {
         guiPoemSelector->loadSettings("settings/gui/poem1.xml");
         guiAudioSettings->loadSettings("settings/gui/audioDevices1.xml");
         guiRendererSettings->loadSettings("settings/gui/renderers1.xml");
-        guiNavigation->loadSettings("settings/gui/navigation1.xml");
 
         guiPoemSelector->setVisible(true);
         guiAudioSettings->setVisible(true);
         guiRendererSettings->setVisible(true);
-        guiNavigation->setVisible(true);
     }
 
     PMBaseScene::updateEnter();
@@ -93,6 +83,8 @@ void PMScene1::updateEnter()
 void PMScene1::updateExit()
 {
     exit();
+
+    PMBaseScene::updateExit();
 }
 
 void PMScene1::draw()
@@ -105,16 +97,8 @@ void PMScene1::exit()
     guiPoemSelector->saveSettings("settings/gui/poem1.xml");
     guiAudioSettings->saveSettings("settings/gui/audioDevices1.xml");
     guiRendererSettings->saveSettings("settings/gui/renderers1.xml");
-    guiNavigation->saveSettings("settings/gui/navigation1.xml");
 
     guiPoemSelector->setVisible(false);
     guiAudioSettings->setVisible(false);
     guiRendererSettings->setVisible(false);
-    guiNavigation->setVisible(false);
-}
-
-void PMScene1::changeScene()
-{
-    unsigned int nextSceneIndex = 1;
-    ofNotifyEvent(eventChangeScene, nextSceneIndex, this);
 }

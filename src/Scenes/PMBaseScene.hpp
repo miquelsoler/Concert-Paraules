@@ -16,7 +16,7 @@
 #include "ofxSceneManager.h"
 #include "ofxScene.h"
 
-class PMBaseScene : public ofxFadeScene
+class PMBaseScene : public ofxScene
 {
 public:
 
@@ -29,10 +29,6 @@ public:
     virtual void draw() = 0;
 
     virtual void exit() = 0;
-
-    virtual void changeScene() {};
-
-    ofEvent<unsigned int> eventChangeScene;
 
 protected:
 

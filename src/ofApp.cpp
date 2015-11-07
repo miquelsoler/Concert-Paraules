@@ -33,20 +33,20 @@ void ofApp::setup()
     // Scenes
 
     PMScene1 *scene1 = new PMScene1();
-    scene1->setSingleSetup(true);
-    ofAddListener(scene1->eventChangeScene, this, &ofApp::changeScene);
+//    scene1->setSingleSetup(true);
     sceneManager.add(scene1);
 
     PMScene2 *scene2 = new PMScene2();
-    scene2->setSingleSetup(true);
+//    scene2->setSingleSetup(true);
     sceneManager.add(scene2);
 
     sceneManager.setup(true);
-    sceneManager.setOverlap(false);
+    sceneManager.gotoScene("Scene 1", true);
+
+    sceneManager.setOverlap(true);
     ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 
     setSceneManager(&sceneManager);
-    sceneManager.gotoScene(0, false);
 
     // For testing purposes
 
@@ -94,16 +94,10 @@ void ofApp::keyReleased(int key)
 {
     switch(key)
     {
-        case OF_KEY_RIGHT:
-        {
-            sceneManager.nextScene();
-            break;
-        }
-        case OF_KEY_LEFT:
-        {
-            sceneManager.prevScene();
-            break;
-        }
+        // Scene change
+        case OF_KEY_RIGHT:  sceneManager.nextScene(); break;
+        case OF_KEY_LEFT:   sceneManager.prevScene(); break;
+
         // Change window mode
         case 'f':
         case 'F':
@@ -145,9 +139,4 @@ void ofApp::keyReleased(int key)
         default:
             break;
     }
-}
-
-void ofApp::changeScene(unsigned int &sceneIndex)
-{
-    sceneManager.gotoScene(sceneIndex, true);
 }
