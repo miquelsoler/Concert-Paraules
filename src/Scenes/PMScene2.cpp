@@ -169,5 +169,5 @@ void PMScene2::keyReleased(int key)
 
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
-    cout << "[EVENT] Pitch> DV:" << pitchParams.deviceID << " CH:" << pitchParams.channel << " Freq:" << pitchParams.freq << endl;
+//    cout << "[EVENT] Pitch> DV:" << pitchParams.deviceID << " CH:" << pitchParams.channel << " Freq:" << pitchParams.freq << endl;
 }

@@ -8,6 +8,7 @@
 #include "PMBaseUICanvas.h"
 
 #include "PMAudioOutParams.h"
+#include "PMAudioAnalyzer.hpp"
 
 class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
 {
@@ -20,7 +21,21 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
+    vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
+
+    // Pitch ----------------------------------
+
     void pitchChanged(pitchParams &pitchParams);
+
+    ofxUIRangeSlider    *pitchRangedSlider0;
+    ofxUISlider         *pitchSlider0;
+    ofxUIRangeSlider    *pitchRangedSlider1;
+    ofxUISlider         *pitchSlider1;
+
+    float pitchMinFreq0, pitchMaxFreq0;
+    float currentPitchFreq0;
+    float pitchMinFreq1, pitchMaxFreq1;
+    float currentPitchFreq1;
 };
 
 
