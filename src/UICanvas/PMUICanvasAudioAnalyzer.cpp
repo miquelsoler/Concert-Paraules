@@ -25,16 +25,16 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()), OFX_UI_FONT_MEDIUM);
 
         if (i == 0) {
-            pitchRangedSlider0 = addRangeSlider("Min/Max", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq0, pitchMaxFreq0, 300, 10);
+            pitchRangedSlider0 = addRangeSlider("Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq0, pitchMaxFreq0, 300, 10);
             pitchRangedSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
-            pitchSlider0 = addSlider("Current", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq0, 300, 10);
+            pitchSlider0 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq0, 300, 10);
             pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
 
             pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
         } else {
-            pitchRangedSlider1 = addRangeSlider("Min/Max", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq1, pitchMaxFreq1, 300, 10);
+            pitchRangedSlider1 = addRangeSlider("\"Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq1, pitchMaxFreq1, 300, 10);
             pitchRangedSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
-            pitchSlider1 = addSlider("Current", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq1, 300, 10);
+            pitchSlider1 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq1, 300, 10);
             pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
             pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
         }
@@ -88,7 +88,7 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
             // Seconds of the two possible channels
             if ((pitchParams.freq > PITCH_MINFREQ) && (pitchParams.freq < pitchMinFreq1)) {
                 pitchMinFreq1 = pitchParams.freq;
-                pitchRangedSlider1->setValueLow(pitchMinFreq1);
+                pitchRangedSlider1->setValueLow(pitchMinFreq1) ;
             }
             if (pitchParams.freq > pitchMaxFreq1) {
                 pitchMaxFreq1 = pitchParams.freq;

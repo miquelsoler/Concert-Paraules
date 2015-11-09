@@ -2,28 +2,28 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>19.000000000</XPosition>
+    <XPosition>7.000000000</XPosition>
     <YPosition>103.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>6</Kind>
-    <Name>Min/Max</Name>
-    <HighValue>361.456634521</HighValue>
+    <Name>Freq (min/max)</Name>
+    <HighValue>796.445129395</HighValue>
     <LowValue>171.595336914</LowValue>
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>Current</Name>
-    <Value>277.549713135</Value>
+    <Name>Freq (current)</Name>
+    <Value>184.757934570</Value>
 </Widget>
 <Widget>
     <Kind>6</Kind>
-    <Name>Min/Max</Name>
-    <HighValue>298.969573975</HighValue>
+    <Name>&quot;Freq (min/max)</Name>
+    <HighValue>799.011840820</HighValue>
     <LowValue>171.595336914</LowValue>
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>Current</Name>
-    <Value>176.984634399</Value>
+    <Name>Freq (current)</Name>
+    <Value>178.290466309</Value>
 </Widget>
