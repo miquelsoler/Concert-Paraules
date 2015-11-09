@@ -21,7 +21,7 @@ void ofApp::setup()
     }
 
     // Initialize audio analyzer
-    PMAudioAnalyzer::getInstance().init(true, 4, true, -45);
+    PMAudioAnalyzer::getInstance().init(true, 4, true, -50);
 
     // Settings
 

@@ -12,34 +12,65 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
     pitchMinFreq0 = pitchMinFreq1 = PITCH_MAXFREQ;
     pitchMaxFreq0 = pitchMaxFreq1 = PITCH_MINFREQ;
 
+    silenceOn0 = false;
+    silenceOn1 = false;
+
     audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
-    int i=0;
+    int iDevice =0;
 
-    addSpacer();
-    ofxUILabel *pitchLabel = addLabel("PITCH");
-    pitchLabel->setColorFill(titleColor);
-    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer, ++i)
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer, ++iDevice)
     {
+        ofxUILabel *deviceLabel = addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()));
+        deviceLabel->setColorFill(titleColor);
+
         addSpacer();
-        addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()), OFX_UI_FONT_MEDIUM);
 
-        if (i == 0) {
-            pitchRangedSlider0 = addRangeSlider("Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq0, pitchMaxFreq0, 300, 10);
-            pitchRangedSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
-            pitchSlider0 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq0, 300, 10);
-            pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
+        // Pitch
+        {
+            addLabel("PITCH");
+            if (iDevice == 0) {
+                // Min/max pitch freqs
+                pitchRangedSlider0 = addRangeSlider("Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq0, pitchMaxFreq0, 300, 10);
+                pitchRangedSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
 
-            pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
-        } else {
-            pitchRangedSlider1 = addRangeSlider("\"Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq1, pitchMaxFreq1, 300, 10);
-            pitchRangedSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
-            pitchSlider1 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq1, 300, 10);
-            pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
-            pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
+                // Current freq value
+                pitchSlider0 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq0, 300, 10);
+                pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
+
+            } else {
+                // Min/max pitch freqs
+                pitchRangedSlider1 = addRangeSlider("\"Freq (min/max)", PITCH_MINFREQ, PITCH_MAXFREQ, pitchMinFreq1, pitchMaxFreq1, 300, 10);
+                pitchRangedSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
+
+                // Current freq value
+                pitchSlider1 = addSlider("Freq (current)", PITCH_MINFREQ, PITCH_MAXFREQ, &currentPitchFreq1, 300, 10);
+                pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
+            }
+
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
         }
 
-        ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
+        // Silence
+        {
+            addLabel("SILENCE");
+// ofxUILabelToggle* ofxUICanvas::addLabelToggle(string _name, bool *_value, float w, float h, float x, float y, bool _justifyLeft) {
+// ofxUILabelToggle* ofxUICanvas::addLabelToggle(string _name, bool *_value, bool _justifyLeft) {
+
+            if (iDevice == 0) {
+                silenceToggle0 = addLabelToggle("SILENCE", &silenceOn0);
+                silenceToggle0->setTriggerType(OFX_UI_TRIGGER_NONE);
+            } else {
+                silenceToggle1 = addLabelToggle("SILENCE", &silenceOn1);
+                silenceToggle1->setTriggerType(OFX_UI_TRIGGER_NONE);
+            }
+
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
+        }
+
+//        addSpacer();
     }
 
     if (autosize) autoSizeToFitWidgets();
@@ -98,4 +129,28 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
             currentPitchFreq1 = pitchParams.freq;
         }
     }
+}
+
+void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
+{
+    bool found = false;
+    int i=0, index = -1;
+
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end() && !found; ++itAudioAnalyzer, ++i)
+    {
+        found = (silenceParams.deviceID == (*itAudioAnalyzer)->getDeviceID()) && (silenceParams.channel == (*itAudioAnalyzer)->getChannelNumber());
+        if (found) index = i;
+    }
+
+    if (found)
+    {
+        if (index == 0)
+        {
+            silenceOn0 = !silenceOn0;
+        } else if (index == 1) {
+            silenceOn1 = !silenceOn1;
+        }
+    }
+
 }

@@ -36,6 +36,16 @@ public:
     float currentPitchFreq0;
     float pitchMinFreq1, pitchMaxFreq1;
     float currentPitchFreq1;
+
+    // Silence
+
+    void silenceStateChanged(silenceParams &silenceParams);
+
+    ofxUILabelToggle    *silenceToggle0;
+    ofxUILabelToggle    *silenceToggle1;
+
+    bool silenceOn0;
+    bool silenceOn1;
 };
 
 
