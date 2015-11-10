@@ -34,7 +34,6 @@ void PMBrushContainer::setSize(float normalizedSize)
 
 void PMBrushContainer::draw()
 {
-    cout << "PMBrushContainer::draw() at Y=" << y << endl;
     int halfSize = size >> 1;
     brush.draw(x - halfSize, y - halfSize, size, size);
 }

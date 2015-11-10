@@ -56,7 +56,6 @@ void PMRendererPaintbrush::setPositionX(float normalizedX)
 void PMRendererPaintbrush::setPositionY(float normalizedY)
 {
     brush->setPositionY(normalizedY);
-    cout << "PMRendererPaintbrush::setPositionY(" << normalizedY << ")" << endl;
 }
 
 void PMRendererPaintbrush::setSize(float normalizedSize)

@@ -179,6 +179,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     float yMax = 0.0f;
 
     float y = ofMap(pitchParams.freq, pitchFreqMin, pitchFreqMax, yMin, yMax, true);
+//    cout << "New Y: " << y << endl;
     renderer->setPositionY(y);
 }
 
