@@ -21,12 +21,13 @@ public:
     virtual void drawIntoFBO();
 
     void setPosition(float normalizedX, float normalizedY);
+    void setPositionX(float normalizedX);
+    void setPositionY(float normalizedY);
     void setSize(float normalizedSize);
 
 private:
 
     PMBrushContainer *brush;
-//    ofImage brush;
 };
 
 

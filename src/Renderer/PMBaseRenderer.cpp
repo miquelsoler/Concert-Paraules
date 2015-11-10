@@ -20,6 +20,8 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
+    shouldPaint = false;
+
     ofSetBackgroundAuto(false);
 }
 
@@ -30,4 +32,9 @@ void PMBaseRenderer::update()
 void PMBaseRenderer::draw()
 {
     drawIntoFBO();
+}
+
+void PMBaseRenderer::setShouldPaint(bool _shouldPaint)
+{
+    shouldPaint = _shouldPaint;
 }

@@ -3,6 +3,7 @@
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 #include "PMAudioAnalyzer.hpp"
+#include "PMAudioAnalyzerConstants.h"
 
 #include "PMScene1.hpp"
 #include "PMScene2.hpp"
@@ -22,8 +23,7 @@ void ofApp::setup()
 
     // Initialize audio analyzer
     int numMelBands = 4;
-    int silenceThreshold = -50;
-    PMAudioAnalyzer::getInstance().init(true, numMelBands, true, silenceThreshold);
+    PMAudioAnalyzer::getInstance().init(true, numMelBands, true, AUDIOANALYZER_SILENCE_THRESHOLD);
 
     // Settings
 

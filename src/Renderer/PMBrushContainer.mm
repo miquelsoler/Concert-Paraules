@@ -11,7 +11,17 @@ PMBrushContainer::PMBrushContainer(string filename)
 
 void PMBrushContainer::setPosition(float normalizedX, float normalizedY)
 {
+    setPositionX(normalizedX);
+    setPositionY(normalizedY);
+}
+
+void PMBrushContainer::setPositionX(float normalizedX)
+{
     x = int(float(ofGetWidth()) * normalizedX);
+}
+
+void PMBrushContainer::setPositionY(float normalizedY)
+{
     y = int(float(ofGetHeight()) * normalizedY);
 }
 
@@ -24,6 +34,7 @@ void PMBrushContainer::setSize(float normalizedSize)
 
 void PMBrushContainer::draw()
 {
+    cout << "PMBrushContainer::draw() at Y=" << y << endl;
     int halfSize = size >> 1;
     brush.draw(x - halfSize, y - halfSize, size, size);
 }

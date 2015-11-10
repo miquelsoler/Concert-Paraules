@@ -363,7 +363,7 @@
 		2A6A74E01BBDA34F00D8F661 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = "<group>"; };
 		2A7BCDAE1BCD1028004840A4 /* PMDeviceAudioAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMDeviceAudioAnalyzer.cpp; sourceTree = "<group>"; };
 		2A7BCDAF1BCD1028004840A4 /* PMDeviceAudioAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMDeviceAudioAnalyzer.hpp; sourceTree = "<group>"; };
-		2A7BCDB21BCD1C60004840A4 /* PMAudioOutParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAudioOutParams.h; sourceTree = "<group>"; };
+		2A7BCDB21BCD1C60004840A4 /* PMAudioInParams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAudioInParams.h; sourceTree = "<group>"; };
 		2A8250591BCE5CC500EEADDF /* ofxUI.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxUI.h; sourceTree = "<group>"; };
 		2A82505A1BCE5CC500EEADDF /* ofxUI2DGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUI2DGraph.cpp; sourceTree = "<group>"; };
 		2A82505B1BCE5CC500EEADDF /* ofxUI2DGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxUI2DGraph.h; sourceTree = "<group>"; };
@@ -977,7 +977,7 @@
 				2A0EF8561BD7F3B300D40230 /* PMAudioAnalyzer.hpp */,
 				2A7BCDAE1BCD1028004840A4 /* PMDeviceAudioAnalyzer.cpp */,
 				2A7BCDAF1BCD1028004840A4 /* PMDeviceAudioAnalyzer.hpp */,
-				2A7BCDB21BCD1C60004840A4 /* PMAudioOutParams.h */,
+				2A7BCDB21BCD1C60004840A4 /* PMAudioInParams.h */,
 				21476644DC7FABCC1C1E83BD /* PMAudioAnalyzerConstants.h */,
 			);
 			path = PMAudioAnalysis;

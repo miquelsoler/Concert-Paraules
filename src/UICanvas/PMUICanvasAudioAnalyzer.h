@@ -7,7 +7,7 @@
 
 #include "PMBaseUICanvas.h"
 
-#include "PMAudioOutParams.h"
+#include "PMAudioInParams.h"
 #include "PMAudioAnalyzer.hpp"
 
 class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
