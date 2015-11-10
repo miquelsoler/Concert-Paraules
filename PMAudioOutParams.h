@@ -10,27 +10,37 @@
 
 #pragma once
 
-struct baseAudioOutParams
+struct baseAudioInParams
 {
     int deviceID;
     int channel;
 };
 
-struct pitchParams : public baseAudioOutParams
+struct pitchParams : public baseAudioInParams
 {
     float freq;
+    float confidence;
     float midiNote;
     float midiNoteNoOctave;
 };
 
-struct onsetParams : public baseAudioOutParams
+struct energyParams : public baseAudioInParams
+{
+    float energy;
+};
+
+struct silenceParams : public baseAudioInParams
 {
 };
 
-struct freqBandsParams : public baseAudioOutParams
+struct freqBandsParams : public baseAudioInParams
 {
     float *melBands;
     int numBands;
+};
+
+struct onsetParams : public baseAudioInParams
+{
 };
 
 

@@ -44,12 +44,26 @@ public:
      * - useMelBands: true if it needs obtaining mel bands
      * - numMelBands: number of mel bands (ignored when useMelBands=false)
      */
-    void setup(PMDAA_ChannelMode channelMode, int channelNumber, bool useMelBands, int numMelBands);
+    void setup(PMDAA_ChannelMode channelMode, int channelNumber,
+            bool useMelBands, int numMelBands,
+            bool useSilence, int silenceThreshold);
 
     void start();
     void stop();
 
+    void clear();
+
     void audioIn(float *input, int bufferSize, int nChannels);
+
+    int getDeviceID() { return deviceID; };
+    int getChannelNumber() { return channelNumber; };
+
+    // Events for listeners
+    ofEvent<pitchParams>        eventPitchChanged;
+    ofEvent<silenceParams>      eventSilenceStateChanged;
+    ofEvent<energyParams>       eventEnergyChanged;
+    ofEvent<onsetParams>        eventOnsetDetected;
+    ofEvent<freqBandsParams>    eventFreqBandsParams;
 
 private:
 
@@ -69,11 +83,10 @@ private:
     bool                        useMelBands;
     int                         numMelBands;
 
-    // Events for listeners
-    ofEvent<pitchParams>        eventPitchChanged;
-    ofEvent<onsetParams>        eventOnsetDetected;
-    ofEvent<void>               eventSilenceDetected;
-    ofEvent<freqBandsParams>    eventFreqBandsParams;
+    // Silence
+    bool                        useSilence;
+    int                         silenceThreshold;
+    bool                        wasSilent;
 
     // Internals
     ofSoundStream               soundStream;
