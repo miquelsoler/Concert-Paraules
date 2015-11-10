@@ -82,6 +82,7 @@ void PMScene2::setup()
                     PMDAA_CHANNEL_MONO, channelNumber);
 
             ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
+            ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
         }
     }
 
@@ -170,4 +171,11 @@ void PMScene2::keyReleased(int key)
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
 //    cout << "[EVENT] Pitch> DV:" << pitchParams.deviceID << " CH:" << pitchParams.channel << " Freq:" << pitchParams.freq << endl;
+}
+
+void PMScene2::energyChanged(energyParams &energyParams)
+{
+    float size = ofMap(energyParams.energy, 0, 2, 0.5, 1, true);
+//    cout << "Energy: " << energyParams.energy << endl;
+    renderer->setSize(size);
 }

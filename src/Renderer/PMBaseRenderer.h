@@ -21,6 +21,9 @@ public:
 
     virtual void drawIntoFBO() = 0;
 
+    virtual void setPosition(float normalizedX, float normalizedY) = 0 ;
+    virtual void setSize(float normalizedSize) = 0;
+
 protected:
 
     ofFbo       fbo;

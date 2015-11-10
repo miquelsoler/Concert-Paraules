@@ -8,6 +8,7 @@
 #pragma once
 
 #include "PMBaseRenderer.h"
+#include "PMBrushContainer.h"
 
 class PMRendererPaintbrush : public PMBaseRenderer
 {
@@ -19,9 +20,13 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
 
+    void setPosition(float normalizedX, float normalizedY);
+    void setSize(float normalizedSize);
+
 private:
 
-    ofImage brush;
+    PMBrushContainer *brush;
+//    ofImage brush;
 };
 
 

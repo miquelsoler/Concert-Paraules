@@ -36,6 +36,7 @@ public:
     void keyReleased(int key);
 
     void pitchChanged(pitchParams &pitchParams);
+    void energyChanged(energyParams &energyParams);
 
 private:
 

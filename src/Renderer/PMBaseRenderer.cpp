@@ -6,7 +6,7 @@
 
 PMBaseRenderer::PMBaseRenderer()
 {
-    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F);
+    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
 }
 
 void PMBaseRenderer::setup()

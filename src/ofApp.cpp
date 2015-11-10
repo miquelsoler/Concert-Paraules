@@ -21,7 +21,9 @@ void ofApp::setup()
     }
 
     // Initialize audio analyzer
-    PMAudioAnalyzer::getInstance().init(true, 4, true, -50);
+    int numMelBands = 4;
+    int silenceThreshold = -50;
+    PMAudioAnalyzer::getInstance().init(true, numMelBands, true, silenceThreshold);
 
     // Settings
 
