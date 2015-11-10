@@ -8,7 +8,7 @@ void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
 
-    brush = new PMBrushContainer("brushes/pinzell2.png");
+    brush = new PMBrushContainer("brushes/splat8 copy.png");
     brush->setPosition(0.5, 0.5);
     brush->setSize(1);
 }

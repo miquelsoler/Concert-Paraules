@@ -34,6 +34,12 @@ void PMBrushContainer::setSize(float normalizedSize)
 
 void PMBrushContainer::draw()
 {
+    // TODO: Remove this. Just added for the mid-November demo
+    {
+        x += 5;
+        if (x >= ofGetWidth()) x = 0;
+    }
+
     int halfSize = size >> 1;
     brush.draw(x - halfSize, y - halfSize, size, size);
 }
