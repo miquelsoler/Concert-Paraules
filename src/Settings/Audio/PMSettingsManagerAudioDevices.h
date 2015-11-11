@@ -33,6 +33,7 @@ public:
 
 private:
 
+    bool JSONmatchesCurrentAudioDevices();
     void buildAudioDevicesVectorFromJSON();
     vector<PMSettingsDevice> devicesSettings;
 };

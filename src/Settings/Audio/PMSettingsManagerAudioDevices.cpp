@@ -37,14 +37,29 @@ bool PMSettingsManagerAudioDevices::load(string filename)
         createJSONSettings();
 
     bool result = PMSettingsManager::load(filename);
-    if (result) buildAudioDevicesVectorFromJSON();
-    // TODO: Clean JSON when new devices plugged/unplugged. In the mean time, delete settings/audioDevices.json and restart app.
+    if (result)
+    {
+        if (!JSONmatchesCurrentAudioDevices())
+            createJSONSettings();
+
+        buildAudioDevicesVectorFromJSON();
+    }
 
     return result;
 }
 
 void PMSettingsManagerAudioDevices::createJSONSettings()
 {
+    // TODO: Does it work?
+    if (fileExists(FILENAME))
+    {
+        ofFile file(filename);
+        file.remove(false);
+        file.close();
+    }
+
+    json.clear();
+
     vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
 
     json[STR_DEVICES] = Json::arrayValue;
@@ -72,6 +87,12 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
     }
 
     write();
+}
+
+bool PMSettingsManagerAudioDevices::JSONmatchesCurrentAudioDevices()
+{
+    // TODO: Compare actual audio devices with JSON settings.
+    return true;
 }
 
 void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
