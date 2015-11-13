@@ -5,8 +5,7 @@
 #ifndef PMCONCERTPARAULES_PMBRUSHCONTAINER_H
 #define PMCONCERTPARAULES_PMBRUSHCONTAINER_H
 
-#include "ofMain.h"
-
+#include "PMBaseRenderer.h"
 
 class PMBrushContainer
 {

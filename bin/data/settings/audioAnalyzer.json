@@ -4,8 +4,8 @@
     "Max Frequency": 300
   },
   "Energy": {
-    "Min Energy": 0,
-    "Max Energy": 1
+    "Min Energy": 0.0,
+    "Max Energy": 1.0
   },
   "Silence": {
     "Enabled": true,

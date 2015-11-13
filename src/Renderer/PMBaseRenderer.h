@@ -9,6 +9,7 @@
 
 #include "ofMain.h"
 
+
 class PMBaseRenderer
 {
 public:
@@ -30,6 +31,11 @@ public:
 protected:
 
     ofFbo   fbo;
+
+    // Originally based on Concert Paraules needing two microphones
+    unsigned int numInputs;
+
+    // Originally based on silence detection (no silence -> shouldPaint=true, silence -> should Paint=false)
     bool    shouldPaint;
 };
 
