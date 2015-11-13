@@ -14,7 +14,7 @@ class PMBaseRenderer
 {
 public:
 
-    PMBaseRenderer();
+    PMBaseRenderer(unsigned int numInputs);
 
     virtual void setup();
     virtual void update();
@@ -22,10 +22,10 @@ public:
 
     virtual void drawIntoFBO() = 0;
 
-    virtual void setPosition(float normalizedX, float normalizedY) = 0;
-    virtual void setPositionX(float normalizedX) = 0;
-    virtual void setPositionY(float normalizedY) = 0;
-    virtual void setSize(float normalizedSize) = 0;
+    virtual void setPosition(unsigned int inputId, float normalizedX, float normalizedY) = 0;
+    virtual void setPositionX(unsigned int inputId, float normalizedX) = 0;
+    virtual void setPositionY(unsigned int inputId, float normalizedY) = 0;
+    virtual void setSize(unsigned int inputId, float normalizedSize) = 0;
     void setShouldPaint(bool shouldPaint);
 
 protected:

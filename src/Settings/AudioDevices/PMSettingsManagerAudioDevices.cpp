@@ -99,13 +99,15 @@ void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
 {
     devicesSettings.clear();
 
+    unsigned int inputIndex = 0;
+
     for (int i = 0; i < json[STR_DEVICES].size(); ++i)
     {
         Json::Value jsonDevice = json[STR_DEVICES][i];
 
         PMSettingsDevice device;
         device.name = jsonDevice[STR_DEVICE_NAME].asString();
-        device.ID = jsonDevice[STR_DEVICE_ID].asInt();
+        device.ID = jsonDevice[STR_DEVICE_ID].asUInt();
         device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
         device.inChannels = jsonDevice[STR_DEVICE_INCHANNELS].asInt();
         device.outChannels = jsonDevice[STR_DEVICE_OUTCHANNELS].asInt();
@@ -117,10 +119,13 @@ void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
             Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
 
             PMSettingsDeviceChannel channel;
-            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asInt();
+            channel.inputIndex = inputIndex;
+            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asUInt();
             channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
 
             deviceChannels.push_back(channel);
+
+            inputIndex++;
         }
 
         device.channels = deviceChannels;

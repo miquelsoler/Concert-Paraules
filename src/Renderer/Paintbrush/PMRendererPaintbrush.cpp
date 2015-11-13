@@ -4,6 +4,11 @@
 
 #include "PMRendererPaintbrush.h"
 
+PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(numInputs)
+{
+
+}
+
 void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
@@ -43,22 +48,22 @@ void PMRendererPaintbrush::drawIntoFBO()
     fbo.draw(0, 0);
 }
 
-void PMRendererPaintbrush::setPosition(float normalizedX, float normalizedY)
+void PMRendererPaintbrush::setPosition(unsigned int inputId, float normalizedX, float normalizedY)
 {
     brush->setPosition(normalizedX, normalizedY);
 }
 
-void PMRendererPaintbrush::setPositionX(float normalizedX)
+void PMRendererPaintbrush::setPositionX(unsigned int inputId, float normalizedX)
 {
     brush->setPositionX(normalizedX);
 }
 
-void PMRendererPaintbrush::setPositionY(float normalizedY)
+void PMRendererPaintbrush::setPositionY(unsigned int inputId, float normalizedY)
 {
     brush->setPositionY(normalizedY);
 }
 
-void PMRendererPaintbrush::setSize(float normalizedSize)
+void PMRendererPaintbrush::setSize(unsigned int inputId, float normalizedSize)
 {
     brush->setSize(normalizedSize);
 }

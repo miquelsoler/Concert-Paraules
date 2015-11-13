@@ -44,7 +44,8 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        renderer = new PMRendererPaintbrush();
+        unsigned int numInputs = 1;
+        renderer = new PMRendererPaintbrush(numInputs);
     }
 }
 
@@ -56,11 +57,10 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
-#if OF_DEBUG
-    cout << "S2 SETUP" << endl;
-#endif
     vector<PMSettingsDevice> *audioDevices = PMSettingsManagerAudioDevices::getInstance().getAudioDevices();
     vector<PMSettingsDevice>::iterator itDevice;
+
+    unsigned int audioInputIndex = 0;
 
     for (itDevice = audioDevices->begin(); itDevice != audioDevices->end(); ++itDevice)
     {
@@ -78,7 +78,7 @@ void PMScene2::setup()
             int outChannels = (*itDevice).outChannels;
             int channelNumber = channel.ID;
 
-            PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId,
+            PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(audioInputIndex, deviceId,
                     inChannels, outChannels,
                     DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
                     PMDAA_CHANNEL_MONO, channelNumber);
@@ -86,6 +86,8 @@ void PMScene2::setup()
             ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
             ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
             ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+
+            audioInputIndex++;
         }
     }
 
@@ -179,7 +181,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 
     float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
 //    cout << "New Y: " << y << endl;
-    renderer->setPositionY(y);
+    renderer->setPositionY(0, y);
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
@@ -191,7 +193,7 @@ void PMScene2::energyChanged(energyParams &energyParams)
             audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(),
             normalizedSizeMin, normalizedSizeMax, true);
 
-    renderer->setSize(size);
+    renderer->setSize(0, size);
 }
 
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)

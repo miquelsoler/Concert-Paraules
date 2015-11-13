@@ -612,8 +612,8 @@
 			isa = PBXGroup;
 			children = (
 				21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */,
-				21476C64C75C50AC9AD53152 /* PMBrushContainer.h */,
 				21476D68C66406FA677D7373 /* PMRendererPaintbrush.h */,
+				21476C64C75C50AC9AD53152 /* PMBrushContainer.h */,
 				21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */,
 			);
 			path = Paintbrush;
@@ -1958,7 +1958,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAudioAnalyzer-PM/libs/essentia/include/";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

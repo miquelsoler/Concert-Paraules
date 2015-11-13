@@ -24,8 +24,8 @@ public:
     float getMaxPitchFreq();
     float getMinEnergy();
     float getMaxEnergy();
-    int getSilenceThreshold();
     bool getSilenceEnabled();
+    int getSilenceThreshold();
     unsigned int getSilenceQueueLength();
     bool getMelBandsEnabled();
     unsigned int getNumMelBands();

@@ -12,7 +12,7 @@
 class PMSettingsDevice
 {
 public:
-    int ID;
+    unsigned int ID;
     string name;
     bool enabled;
     int inChannels;

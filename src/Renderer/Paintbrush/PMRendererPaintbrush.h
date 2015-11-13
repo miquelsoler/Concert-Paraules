@@ -15,16 +15,16 @@ class PMRendererPaintbrush : public PMBaseRenderer
 {
 public:
 
-    PMRendererPaintbrush() : PMBaseRenderer() {};
+    PMRendererPaintbrush(unsigned int numInputs);
 
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
 
-    void setPosition(float normalizedX, float normalizedY);
-    void setPositionX(float normalizedX);
-    void setPositionY(float normalizedY);
-    void setSize(float normalizedSize);
+    void setPosition(unsigned int inputId, float normalizedX, float normalizedY);
+    void setPositionX(unsigned int inputId, float normalizedX);
+    void setPositionY(unsigned int inputId, float normalizedY);
+    void setSize(unsigned int inputId, float normalizedSize);
 
 private:
 
