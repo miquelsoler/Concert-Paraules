@@ -22,11 +22,11 @@ public:
 
     virtual void drawIntoFBO() = 0;
 
-    virtual void setPosition(unsigned int inputId, float normalizedX, float normalizedY) = 0;
-    virtual void setPositionX(unsigned int inputId, float normalizedX) = 0;
-    virtual void setPositionY(unsigned int inputId, float normalizedY) = 0;
-    virtual void setSize(unsigned int inputId, float normalizedSize) = 0;
-    void setShouldPaint(bool shouldPaint);
+    virtual void setPosition(unsigned int inputIndex, float normalizedX, float normalizedY) = 0;
+    virtual void setPositionX(unsigned int inputIndex, float normalizedX) = 0;
+    virtual void setPositionY(unsigned int inputIndex, float normalizedY) = 0;
+    virtual void setSize(unsigned int inputIndex, float normalizedSize) = 0;
+    void setShouldPaint(unsigned int inputIndex, bool shouldPaint);
 
 protected:
 

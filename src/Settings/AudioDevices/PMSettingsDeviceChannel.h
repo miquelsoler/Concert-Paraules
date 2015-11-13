@@ -10,7 +10,6 @@
 class PMSettingsDeviceChannel
 {
 public:
-    unsigned int inputIndex;
     unsigned int ID;
     bool enabled;
 };

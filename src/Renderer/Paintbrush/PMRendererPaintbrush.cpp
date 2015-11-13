@@ -13,7 +13,7 @@ void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
 
-    brush = new PMBrushContainer("brushes/splat8 copy.png");
+    brush = new PMBrushContainer("brushes/pinzell.png");
     brush->setPosition(0.5, 0.5);
     brush->setSize(1);
 }
@@ -29,41 +29,46 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+//        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+//        ofSetColor(255, 255, 255, 5);
+//        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
-//        ofFloatColor clearColor = ofFloatColor(1.0f, 1.0f, 1.0f, 0.01f);
-//        ofSetColor(clearColor);
-
-        ofSetColor(255, 255, 255, 5);
+        ofSetColor(255, 255, 255, 1);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
         if (shouldPaint)
         {
-            ofSetColor(255, 0, 0, 127);
+            ofSetColor(255, 0, 0, 255);
             brush->draw();
         }
         ofDisableBlendMode();
     }
     fbo.end();
+
+    ofSetColor(255, 255, 255, 255);
+
     fbo.draw(0, 0);
 }
 
-void PMRendererPaintbrush::setPosition(unsigned int inputId, float normalizedX, float normalizedY)
+void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)
 {
+    cout << "Input index: " << inputIndex << endl;
     brush->setPosition(normalizedX, normalizedY);
 }
 
-void PMRendererPaintbrush::setPositionX(unsigned int inputId, float normalizedX)
+void PMRendererPaintbrush::setPositionX(unsigned int inputIndex, float normalizedX)
 {
     brush->setPositionX(normalizedX);
 }
 
-void PMRendererPaintbrush::setPositionY(unsigned int inputId, float normalizedY)
+void PMRendererPaintbrush::setPositionY(unsigned int inputIndex, float normalizedY)
 {
     brush->setPositionY(normalizedY);
 }
 
-void PMRendererPaintbrush::setSize(unsigned int inputId, float normalizedSize)
+void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize)
 {
     brush->setSize(normalizedSize);
 }

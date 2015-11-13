@@ -21,10 +21,10 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
 
-    void setPosition(unsigned int inputId, float normalizedX, float normalizedY);
-    void setPositionX(unsigned int inputId, float normalizedX);
-    void setPositionY(unsigned int inputId, float normalizedY);
-    void setSize(unsigned int inputId, float normalizedSize);
+    void setPosition(unsigned int inputIndex, float normalizedX, float normalizedY);
+    void setPositionX(unsigned int inputIndex, float normalizedX);
+    void setPositionY(unsigned int inputIndex, float normalizedY);
+    void setSize(unsigned int inputIndex, float normalizedSize);
 
 private:
 

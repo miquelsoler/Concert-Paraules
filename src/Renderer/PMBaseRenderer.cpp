@@ -18,13 +18,13 @@ void PMBaseRenderer::setup()
     {
         // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
         // so it's good to clear it before starting to draw it
-        ofClear(255, 255, 255, 255);
+        ofClear(255, 255, 255, 0);
     }
     fbo.end();
 
     shouldPaint = false;
 
-    ofSetBackgroundAuto(false);
+//    ofSetBackgroundAuto(false);
 }
 
 void PMBaseRenderer::update()
@@ -36,7 +36,7 @@ void PMBaseRenderer::draw()
     drawIntoFBO();
 }
 
-void PMBaseRenderer::setShouldPaint(bool _shouldPaint)
+void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 {
     shouldPaint = _shouldPaint;
 }

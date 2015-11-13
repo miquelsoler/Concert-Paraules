@@ -76,7 +76,7 @@ void PMScene2::setup()
             int deviceId = (*itDevice).ID;
             int inChannels = (*itDevice).inChannels;
             int outChannels = (*itDevice).outChannels;
-            int channelNumber = channel.ID;
+            unsigned int channelNumber = channel.ID;
 
             PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(audioInputIndex, deviceId,
                     inChannels, outChannels,
@@ -181,7 +181,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 
     float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
 //    cout << "New Y: " << y << endl;
-    renderer->setPositionY(0, y);
+    renderer->setPositionY(pitchParams.audioInputIndex, y);
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
@@ -193,10 +193,10 @@ void PMScene2::energyChanged(energyParams &energyParams)
             audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(),
             normalizedSizeMin, normalizedSizeMax, true);
 
-    renderer->setSize(0, size);
+    renderer->setSize(energyParams.audioInputIndex, size);
 }
 
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 {
-    renderer->setShouldPaint(!silenceParams.isSilent);
+    renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
 }
