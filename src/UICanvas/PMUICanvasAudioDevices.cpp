@@ -28,7 +28,7 @@ void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, 
             int numCols = numChannels;
 
             if (numChannels > MAX_CHANNELS_COLS) {
-                numRows = ceilf(numChannels) / MAX_CHANNELS_COLS;
+                numRows = ceilf(float(numChannels) / float(MAX_CHANNELS_COLS));
                 numCols = MAX_CHANNELS_COLS;
             }
 

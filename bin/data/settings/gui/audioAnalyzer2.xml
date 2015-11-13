@@ -14,12 +14,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Freq (current)</Name>
-    <Value>186.187561035</Value>
+    <Value>175.376068115</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>SILENCE</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>6</Kind>
@@ -30,10 +30,10 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Freq (current)</Name>
-    <Value>200.049942017</Value>
+    <Value>195.753356934</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>SILENCE</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
