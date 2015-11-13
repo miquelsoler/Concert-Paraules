@@ -2,8 +2,8 @@
 
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
+#include "PMSettingsManagerAudioAnalyzers.h"
 #include "PMAudioAnalyzer.hpp"
-#include "PMAudioAnalyzerConstants.h"
 
 #include "PMScene1.hpp"
 #include "PMScene2.hpp"
@@ -22,18 +22,24 @@ void ofApp::setup()
     }
 
     // Initialize audio analyzer
-    int numMelBands = 4;
-    PMAudioAnalyzer::getInstance().init(
-            true, numMelBands,
-            true, AUDIOANALYZER_SILENCE_THRESHOLD, AUDIOANALYZER_SILENCE_QUEUELENGTH);
+    {
+        PMSettingsManagerAudioAnalyzers settingsAA = PMSettingsManagerAudioAnalyzers::getInstance();
 
-    // Settings
+        PMAudioAnalyzer::getInstance().init(
+                settingsAA.getMelBandsEnabled(), settingsAA.getNumMelBands(),
+                settingsAA.getMinPitchFreq(), settingsAA.getMaxPitchFreq(),
+                settingsAA.getSilenceEnabled(), settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
+                settingsAA.getSmoothingDelta());
+    }
 
+    // General Settings
+    {
 #ifdef OF_DEBUG
-    showFPS = PMSettingsManagerGeneral::getInstance().getDebugShowFPS();
+        showFPS = PMSettingsManagerGeneral::getInstance().getDebugShowFPS();
 #else
-    showFPS = PMSettingsManagerGeneral::getInstance().getReleaseShowFPS();
+        showFPS = PMSettingsManagerGeneral::getInstance().getReleaseShowFPS();
 #endif
+    }
 
     // Scenes
 
@@ -49,17 +55,6 @@ void ofApp::setup()
     ofSetLogLevel("ofxSceneManager", OF_LOG_VERBOSE); // lets see whats going on inside
 
     setSceneManager(&sceneManager);
-
-//    // For testing purposes
-//
-//    int deviceId = 0;
-//    int inChannels = 2;
-//    int outChannels = 0;
-//    int sampleRate = 44100;
-//    int bufferSize = 512;
-//    int channelNumber = 0;
-//
-//    PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(deviceId, inChannels, outChannels, sampleRate, bufferSize, PMDAA_CHANNEL_MONO, channelNumber);
 
     sceneManager.gotoScene("Scene 1", false);
 }

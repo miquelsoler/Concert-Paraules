@@ -3,14 +3,15 @@
 //
 
 #include "PMUICanvasAudioAnalyzer.h"
-#include "PMAudioAnalyzerConstants.h"
 
 void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
-    pitchMinFreq0 = pitchMinFreq1 = AUDIOANALYZER_PITCH_MAXFREQ;
-    pitchMaxFreq0 = pitchMaxFreq1 = AUDIOANALYZER_PITCH_MINFREQ;
+    settings = &PMSettingsManagerAudioAnalyzers::getInstance();
+
+    pitchMinFreq0 = pitchMinFreq1 = settings->getMaxPitchFreq();
+    pitchMaxFreq0 = pitchMaxFreq1 = settings->getMinPitchFreq();
 
     silenceOn0 = false;
     silenceOn1 = false;
@@ -31,20 +32,20 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             addLabel("PITCH");
             if (iDevice == 0) {
                 // Min/max pitch freqs
-                pitchRangedSlider0 = addRangeSlider("Freq (min/max)", AUDIOANALYZER_PITCH_MINFREQ, AUDIOANALYZER_PITCH_MAXFREQ, &pitchMinFreq0, &pitchMaxFreq0, 300, 10);
+                pitchRangedSlider0 = addRangeSlider("Freq (min/max)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &pitchMinFreq0, &pitchMaxFreq0, 300, 10);
                 pitchRangedSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
 
                 // Current freq value
-                pitchSlider0 = addSlider("Freq (current)", AUDIOANALYZER_PITCH_MINFREQ, AUDIOANALYZER_PITCH_MAXFREQ, &currentPitchFreq0, 300, 10);
+                pitchSlider0 = addSlider("Freq (current)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &currentPitchFreq0, 300, 10);
                 pitchSlider0->setTriggerType(OFX_UI_TRIGGER_NONE);
 
             } else {
                 // Min/max pitch freqs
-                pitchRangedSlider1 = addRangeSlider("\"Freq (min/max)", AUDIOANALYZER_PITCH_MINFREQ, AUDIOANALYZER_PITCH_MAXFREQ, pitchMinFreq1, pitchMaxFreq1, 300, 10);
+                pitchRangedSlider1 = addRangeSlider("\"Freq (min/max)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), pitchMinFreq1, pitchMaxFreq1, 300, 10);
                 pitchRangedSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
 
                 // Current freq value
-                pitchSlider1 = addSlider("Freq (current)", AUDIOANALYZER_PITCH_MINFREQ, AUDIOANALYZER_PITCH_MAXFREQ, &currentPitchFreq1, 300, 10);
+                pitchSlider1 = addSlider("Freq (current)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &currentPitchFreq1, 300, 10);
                 pitchSlider1->setTriggerType(OFX_UI_TRIGGER_NONE);
             }
 
@@ -103,7 +104,7 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
         if (index == 0)
         {
             // First of the two possible channels
-            if ((pitchParams.freq > AUDIOANALYZER_PITCH_MINFREQ) && (pitchParams.freq < pitchMinFreq0)) {
+            if ((pitchParams.freq > settings->getMinPitchFreq()) && (pitchParams.freq < pitchMinFreq0)) {
                 pitchMinFreq0 = pitchParams.freq;
 //                pitchRangedSlider0->setValueLow(pitchMinFreq0);
             }
@@ -118,7 +119,7 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
         else if (index == 1)
         {
             // Seconds of the two possible channels
-            if ((pitchParams.freq > AUDIOANALYZER_PITCH_MINFREQ) && (pitchParams.freq < pitchMinFreq1)) {
+            if ((pitchParams.freq > settings->getMinPitchFreq()) && (pitchParams.freq < pitchMinFreq1)) {
                 pitchMinFreq1 = pitchParams.freq;
 //                pitchRangedSlider1->setValueLow(pitchMinFreq1);
             }

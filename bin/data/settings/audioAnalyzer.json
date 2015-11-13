@@ -1,0 +1,22 @@
+{
+  "Pitch": {
+    "Min Frequency": 150,
+    "Max Frequency": 300
+  },
+  "Energy": {
+    "Min Energy": 0,
+    "Max Energy": 1
+  },
+  "Silence": {
+    "Enabled": true,
+    "Threshold (dB)": -45,
+    "Queue Length": 30
+  },
+  "Mel Bands": {
+    "Enabled": true,
+    "Number of Bands": 4
+  },
+  "Smoothing": {
+    "Delta": 0.75
+  }
+}

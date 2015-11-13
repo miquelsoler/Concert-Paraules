@@ -17,6 +17,7 @@
 #include "PMUICanvasRenderers.h"
 #include "PMUICanvasAudioAnalyzer.h"
 #include "PMAudioAnalyzer.hpp"
+#include "PMSettingsManagerAudioAnalyzers.h"
 
 class PMScene2 : public PMBaseScene
 {
@@ -50,6 +51,8 @@ private:
     ofColor                 canvasBgColor;
 
     bool                    showGUI;
+
+    PMSettingsManagerAudioAnalyzers *audioAnalyzersSettings;
 };
 
 #endif /* PMScene2_hpp */

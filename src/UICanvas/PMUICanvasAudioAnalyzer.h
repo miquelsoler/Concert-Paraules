@@ -9,6 +9,7 @@
 
 #include "PMAudioInParams.h"
 #include "PMAudioAnalyzer.hpp"
+#include "PMSettingsManagerAudioAnalyzers.h"
 
 class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
 {
@@ -37,7 +38,7 @@ public:
     float pitchMinFreq1, pitchMaxFreq1;
     float currentPitchFreq1;
 
-    // Silence
+    // Silence ----------------------------------
 
     void silenceStateChanged(silenceParams &silenceParams);
 
@@ -46,6 +47,10 @@ public:
 
     bool silenceOn0;
     bool silenceOn1;
+
+    // Settings
+
+    PMSettingsManagerAudioAnalyzers *settings;
 };
 
 

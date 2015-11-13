@@ -10,7 +10,6 @@
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 #include "PMSettingsManagerAudioDevices.h"
-#include "PMAudioAnalyzerConstants.h"
 
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
@@ -21,6 +20,8 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 #else
     showGUI = PMSettingsManagerGeneral::getInstance().getReleaseShowGUIScene2();
 #endif
+
+    audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
 
     backgroundColor = ofColor::white;
 
@@ -173,24 +174,22 @@ void PMScene2::keyReleased(int key)
 
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
-    float pitchFreqMin = AUDIOANALYZER_PITCH_MINFREQ;
-    float pitchFreqMax = AUDIOANALYZER_PITCH_MAXFREQ;
     float yMin = 1.0f;
     float yMax = 0.0f;
 
-    float y = ofMap(pitchParams.freq, pitchFreqMin, pitchFreqMax, yMin, yMax, true);
+    float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
 //    cout << "New Y: " << y << endl;
     renderer->setPositionY(y);
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
 {
-    float energyMin = AUDIOANALYZER_ENERGY_MIN;
-    float energyMax = AUDIOANALYZER_ENERGY_MAX;
     float normalizedSizeMin = 0.25f;
     float normalizedSizeMax = 1.0f;
 
-    float size = ofMap(energyParams.energy, energyMin, energyMax, normalizedSizeMin, normalizedSizeMax, true);
+    float size = ofMap(energyParams.energy,
+            audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(),
+            normalizedSizeMin, normalizedSizeMax, true);
 
     renderer->setSize(size);
 }
