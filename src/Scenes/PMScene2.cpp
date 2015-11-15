@@ -34,11 +34,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         guiRenderers->setVisible(false);
 
         guiAudioAnalyzerCreated = false;
-
-//        guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
-//        guiAudioAnalyzer->init(200, 400);
-//        guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
-//        guiAudioAnalyzer->setVisible(false);
     }
 
     // Renderer
@@ -58,13 +53,18 @@ PMScene2::~PMScene2()
         delete gui;
     }
     guiAudioAnalyzers.clear();
-//    delete guiAudioAnalyzer;
 }
 
 void PMScene2::setup()
 {
     enabledAudioDevices = PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices();
+
     vector<PMSettingsDevice>::iterator itDevice;
+
+    for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
+    {
+        cout << "Device: " << (*itDevice).ID << "Channels: " << (*itDevice).channels.size() << endl;
+    }
 
     unsigned int audioInputIndex = 0;
 
@@ -101,21 +101,22 @@ void PMScene2::setup()
     {
         if (!guiAudioAnalyzerCreated)
         {
-            /**/
-            for (int i=0; i<enabledAudioDevices->size(); ++i)
+            audioInputIndex = 0;
+            for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
             {
-                string title = "AUDIO ANALYZER " + ofToString(i);
-                PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, i);
-                guiAudioAnalyzer->init(200, 400 + (i*200));
-                guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
-                guiAudioAnalyzer->setVisible(false);
+                for (int i = 0; i < (*itDevice).channels.size(); ++i)
+                {
+                    string title = "AUDIO ANALYZER " + ofToString(audioInputIndex);
+                    PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
+                    guiAudioAnalyzer->init(200, 400 + (audioInputIndex * 200));
+                    guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+                    guiAudioAnalyzer->setVisible(false);
 
-                guiAudioAnalyzers.push_back(guiAudioAnalyzer);
+                    guiAudioAnalyzers.push_back(guiAudioAnalyzer);
+
+                    audioInputIndex++;
+                }
             }
-//            guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM, 0);
-//            guiAudioAnalyzer->init(200, 400);
-//            guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
-//            guiAudioAnalyzer->setVisible(false);
         }
 
         guiAudioAnalyzerCreated = true;
@@ -137,7 +138,6 @@ void PMScene2::updateEnter()
         guiRenderers->loadSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
         guiRenderers->setVisible(showGUI);
 
-        /**/
         int i;
         vector<PMUICanvasAudioAnalyzer *>::iterator it;
         for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++)
@@ -146,8 +146,6 @@ void PMScene2::updateEnter()
             (*it)->loadSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
             (*it)->setVisible(showGUI);
         }
-//        guiAudioAnalyzer->loadSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
-//        guiAudioAnalyzer->setVisible(showGUI);
     }
 
     PMAudioAnalyzer::getInstance().start();
@@ -174,7 +172,6 @@ void PMScene2::saveSettings()
     guiRenderers->saveSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
     guiRenderers->setVisible(false);
 
-    /**/
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
     for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
@@ -183,9 +180,6 @@ void PMScene2::saveSettings()
         (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
     }
-
-    //    guiAudioAnalyzer->saveSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
-//    guiAudioAnalyzer->setVisible(false);
 }
 
 #pragma mark - Keyboard events
@@ -201,12 +195,13 @@ void PMScene2::keyReleased(int key)
         {
             showGUI = !showGUI;
             guiRenderers->setVisible(showGUI);
-/**/
+
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for(it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
                 (*it)->setVisible(showGUI);
-//            guiAudioAnalyzer->setVisible(showGUI);
+
             ofClear(backgroundColor);
+
             break;
         }
         default: break;

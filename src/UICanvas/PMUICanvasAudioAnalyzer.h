@@ -22,9 +22,9 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
-    unsigned int audioInputIndex;
-
 private:
+
+    unsigned int audioInputIndex;
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 
@@ -32,25 +32,19 @@ private:
 
     void pitchChanged(pitchParams &pitchParams);
 
-    ofxUIRangeSlider    *pitchRangedSlider0;
-    ofxUISlider         *pitchSlider0;
-    ofxUIRangeSlider    *pitchRangedSlider1;
-    ofxUISlider         *pitchSlider1;
+    ofxUIRangeSlider    *pitchRangedSlider;
+    ofxUISlider         *pitchSlider;
 
-    float pitchMinFreq0, pitchMaxFreq0;
-    float currentPitchFreq0;
-    float pitchMinFreq1, pitchMaxFreq1;
-    float currentPitchFreq1;
+    float               pitchMinFreq, pitchMaxFreq;
+    float               currentPitchFreq;
 
     // Silence ----------------------------------
 
     void silenceStateChanged(silenceParams &silenceParams);
 
-    ofxUILabelToggle    *silenceToggle0;
-    ofxUILabelToggle    *silenceToggle1;
+    ofxUILabelToggle    *silenceToggle;
 
-    bool silenceOn0;
-    bool silenceOn1;
+    bool                silenceOn;
 
     // Settings
 
