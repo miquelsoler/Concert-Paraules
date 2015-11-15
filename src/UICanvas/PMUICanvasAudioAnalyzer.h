@@ -15,12 +15,16 @@ class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
 {
 public:
 
-    PMUICanvasAudioAnalyzer(string title, int headerFontSize) : PMBaseUICanvas(title, headerFontSize) {}
+    PMUICanvasAudioAnalyzer(string title, int headerFontSize, unsigned int audioInputIndex);
 
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
+
+    unsigned int audioInputIndex;
+
+private:
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 

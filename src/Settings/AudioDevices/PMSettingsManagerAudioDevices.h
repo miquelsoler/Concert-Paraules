@@ -28,14 +28,21 @@ public:
     void createJSONSettings();
 
     vector<PMSettingsDevice> *getAudioDevices();
+    vector<PMSettingsDevice> *getEnabledAudioDevices();
     void enableAudioDevice(unsigned int deviceID, bool enable);
     void enableAudioDeviceChannel(unsigned int deviceID, unsigned int channelID, bool enable);
 
 private:
 
     bool JSONmatchesCurrentAudioDevices();
-    void buildAudioDevicesVectorFromJSON();
+
+    void buildAllAudioDevicesVectorFromJSON();
+    void buildEnabledAudioDevicesVectorFromJSON();
+
+    unsigned int getNumEnabledChannelsForDevice(PMSettingsDevice *device);
+
     vector<PMSettingsDevice> devicesSettings;
+    vector<PMSettingsDevice> enabledDevices;
 };
 
 

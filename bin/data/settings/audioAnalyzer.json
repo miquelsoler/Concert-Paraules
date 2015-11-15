@@ -1,7 +1,7 @@
 {
   "Pitch": {
-    "Min Frequency": 150.0,
-    "Max Frequency": 300.0
+    "Min Frequency": 100.0,
+    "Max Frequency": 700.0
   },
   "Energy": {
     "Min Energy": 0.0,
@@ -17,6 +17,6 @@
     "Number of Bands": 4
   },
   "Smoothing": {
-    "Delta": 0.75
+    "Delta": 0.05
   }
 }

@@ -4,6 +4,11 @@
 
 #include "PMUICanvasAudioAnalyzer.h"
 
+PMUICanvasAudioAnalyzer::PMUICanvasAudioAnalyzer(string title, int headerFontSize, unsigned int _audioInputIndex) : PMBaseUICanvas(title, headerFontSize)
+{
+    audioInputIndex = _audioInputIndex;
+}
+
 void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
@@ -121,11 +126,9 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
             // Seconds of the two possible channels
             if ((pitchParams.freq > settings->getMinPitchFreq()) && (pitchParams.freq < pitchMinFreq1)) {
                 pitchMinFreq1 = pitchParams.freq;
-//                pitchRangedSlider1->setValueLow(pitchMinFreq1);
             }
             if (pitchParams.freq > pitchMaxFreq1) {
                 pitchMaxFreq1 = pitchParams.freq;
-//                pitchRangedSlider1->setValueHigh(pitchMaxFreq1);
             }
 
             currentPitchFreq1 = pitchParams.freq;
@@ -154,5 +157,4 @@ void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
             silenceOn1 = silenceParams.isSilent;
         }
     }
-
 }

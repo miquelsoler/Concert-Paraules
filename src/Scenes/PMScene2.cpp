@@ -9,7 +9,6 @@
 #include "PMScene2.hpp"
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
-#include "PMSettingsManagerAudioDevices.h"
 
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
@@ -44,25 +43,32 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        unsigned int numInputs = 1;
-        renderer = new PMRendererPaintbrush(numInputs);
+        renderer = new PMRendererPaintbrush((unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
     }
 }
 
 PMScene2::~PMScene2()
 {
     delete guiRenderers;
-    delete guiAudioAnalyzer;
+
+    /**/
+    for (int i=0; i<guiAudioAnalyzers.size(); ++i)
+    {
+        PMUICanvasAudioAnalyzer *gui = guiAudioAnalyzers[i];
+        delete gui;
+    }
+    guiAudioAnalyzers.clear();
+//    delete guiAudioAnalyzer;
 }
 
 void PMScene2::setup()
 {
-    vector<PMSettingsDevice> *audioDevices = PMSettingsManagerAudioDevices::getInstance().getAudioDevices();
+    enabledAudioDevices = PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices();
     vector<PMSettingsDevice>::iterator itDevice;
 
     unsigned int audioInputIndex = 0;
 
-    for (itDevice = audioDevices->begin(); itDevice != audioDevices->end(); ++itDevice)
+    for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
     {
         if (!(*itDevice).enabled) continue;
         unsigned int numChannels = (unsigned int)((*itDevice).channels.size());
@@ -93,11 +99,23 @@ void PMScene2::setup()
 
     // GUI
     {
-        if (!guiAudioAnalyzerCreated) {
-            guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
-            guiAudioAnalyzer->init(200, 400);
-            guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
-            guiAudioAnalyzer->setVisible(false);
+        if (!guiAudioAnalyzerCreated)
+        {
+            /**/
+            for (int i=0; i<enabledAudioDevices->size(); ++i)
+            {
+                string title = "AUDIO ANALYZER " + ofToString(i);
+                PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, i);
+                guiAudioAnalyzer->init(200, 400 + (i*200));
+                guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+                guiAudioAnalyzer->setVisible(false);
+
+                guiAudioAnalyzers.push_back(guiAudioAnalyzer);
+            }
+//            guiAudioAnalyzer = new PMUICanvasAudioAnalyzer("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM, 0);
+//            guiAudioAnalyzer->init(200, 400);
+//            guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+//            guiAudioAnalyzer->setVisible(false);
         }
 
         guiAudioAnalyzerCreated = true;
@@ -119,8 +137,17 @@ void PMScene2::updateEnter()
         guiRenderers->loadSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
         guiRenderers->setVisible(showGUI);
 
-        guiAudioAnalyzer->loadSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
-        guiAudioAnalyzer->setVisible(showGUI);
+        /**/
+        int i;
+        vector<PMUICanvasAudioAnalyzer *>::iterator it;
+        for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++)
+        {
+            string guiSettingsFilename = "audioAnalyzer2." + ofToString(i) + ".xml";
+            (*it)->loadSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
+            (*it)->setVisible(showGUI);
+        }
+//        guiAudioAnalyzer->loadSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
+//        guiAudioAnalyzer->setVisible(showGUI);
     }
 
     PMAudioAnalyzer::getInstance().start();
@@ -147,8 +174,18 @@ void PMScene2::saveSettings()
     guiRenderers->saveSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
     guiRenderers->setVisible(false);
 
-    guiAudioAnalyzer->saveSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
-    guiAudioAnalyzer->setVisible(false);
+    /**/
+    int i;
+    vector<PMUICanvasAudioAnalyzer *>::iterator it;
+    for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
+    {
+        string guiSettingsFilename = "audioAnalyzer2." + ofToString(i) + ".xml";
+        (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
+        (*it)->setVisible(false);
+    }
+
+    //    guiAudioAnalyzer->saveSettings(STR_CANVAS_BASEPATH + "audioAnalyzer2.xml");
+//    guiAudioAnalyzer->setVisible(false);
 }
 
 #pragma mark - Keyboard events
@@ -164,7 +201,11 @@ void PMScene2::keyReleased(int key)
         {
             showGUI = !showGUI;
             guiRenderers->setVisible(showGUI);
-            guiAudioAnalyzer->setVisible(showGUI);
+/**/
+            vector<PMUICanvasAudioAnalyzer *>::iterator it;
+            for(it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
+                (*it)->setVisible(showGUI);
+//            guiAudioAnalyzer->setVisible(showGUI);
             ofClear(backgroundColor);
             break;
         }
@@ -180,12 +221,12 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     float yMax = 0.0f;
 
     float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
-//    cout << "New Y: " << y << endl;
     renderer->setPositionY(pitchParams.audioInputIndex, y);
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
 {
+//    cout << "Energy from " << energyParams.audioInputIndex << ": " << energyParams.energy << endl;
     float normalizedSizeMin = 0.25f;
     float normalizedSizeMax = 1.0f;
 

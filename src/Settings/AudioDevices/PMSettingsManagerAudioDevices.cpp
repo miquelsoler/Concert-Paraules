@@ -42,7 +42,7 @@ bool PMSettingsManagerAudioDevices::load(string filename)
         if (!JSONmatchesCurrentAudioDevices())
             createJSONSettings();
 
-        buildAudioDevicesVectorFromJSON();
+        buildAllAudioDevicesVectorFromJSON();
     }
 
     return result;
@@ -95,7 +95,7 @@ bool PMSettingsManagerAudioDevices::JSONmatchesCurrentAudioDevices()
     return true;
 }
 
-void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
+void PMSettingsManagerAudioDevices::buildAllAudioDevicesVectorFromJSON()
 {
     devicesSettings.clear();
 
@@ -134,11 +134,59 @@ void PMSettingsManagerAudioDevices::buildAudioDevicesVectorFromJSON()
     }
 }
 
+void PMSettingsManagerAudioDevices::buildEnabledAudioDevicesVectorFromJSON()
+{
+    enabledDevices.clear();
+
+    for (int i = 0; i < json[STR_DEVICES].size(); ++i)
+    {
+        Json::Value jsonDevice = json[STR_DEVICES][i];
+
+        PMSettingsDevice device;
+        device.name = jsonDevice[STR_DEVICE_NAME].asString();
+        device.ID = jsonDevice[STR_DEVICE_ID].asUInt();
+        device.enabled = jsonDevice[STR_DEVICE_ENABLED].asBool();
+        device.inChannels = jsonDevice[STR_DEVICE_INCHANNELS].asInt();
+        device.outChannels = jsonDevice[STR_DEVICE_OUTCHANNELS].asInt();
+
+        if (device.inChannels <= 0) continue;
+        if (!(device.enabled)) continue;
+
+        Json::Value jsonDeviceChannels = jsonDevice[STR_CHANNELS];
+        vector<PMSettingsDeviceChannel> deviceChannels;
+
+        for (int j = 0; j < jsonDeviceChannels.size(); ++j)
+        {
+            Json::Value jsonDeviceChannel = jsonDeviceChannels[j];
+
+            PMSettingsDeviceChannel channel;
+            channel.ID = jsonDeviceChannel[STR_CHANNEL_ID].asUInt();
+            channel.enabled = jsonDeviceChannel[STR_CHANNEL_ENABLED].asBool();
+
+            if (!(channel.enabled)) continue;
+
+            deviceChannels.push_back(channel);
+        }
+
+        device.channels = deviceChannels;
+
+        if (device.channels.size() > 0)
+            enabledDevices.push_back(device);
+    }
+}
+
+
 vector<PMSettingsDevice> *PMSettingsManagerAudioDevices::getAudioDevices()
 {
-    buildAudioDevicesVectorFromJSON();
+    buildAllAudioDevicesVectorFromJSON();
     return &devicesSettings;
 };
+
+vector<PMSettingsDevice> *PMSettingsManagerAudioDevices::getEnabledAudioDevices()
+{
+    buildEnabledAudioDevicesVectorFromJSON();
+    return &enabledDevices;
+}
 
 void PMSettingsManagerAudioDevices::enableAudioDevice(unsigned int deviceID, bool enable)
 {
@@ -167,3 +215,15 @@ void PMSettingsManagerAudioDevices::enableAudioDeviceChannel(unsigned int device
         json[STR_DEVICES][deviceIndex][STR_CHANNELS][channelID][STR_CHANNEL_ENABLED] = enable;
     }
 }
+
+unsigned int PMSettingsManagerAudioDevices::getNumEnabledChannelsForDevice(PMSettingsDevice *device)
+{
+    if (device->channels.size() == 0) return 0;
+
+    unsigned int counter = 0;
+    for (int i=0; i<device->channels.size(); ++i)
+        if (device->channels[i].enabled) counter++;
+
+    return counter;
+}
+

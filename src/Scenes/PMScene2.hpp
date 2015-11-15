@@ -18,6 +18,7 @@
 #include "PMUICanvasAudioAnalyzer.h"
 #include "PMAudioAnalyzer.hpp"
 #include "PMSettingsManagerAudioAnalyzers.h"
+#include "PMSettingsManagerAudioDevices.h"
 
 class PMScene2 : public PMBaseScene
 {
@@ -42,17 +43,22 @@ public:
 
 private:
 
-    PMBaseRenderer          *renderer;
+    PMBaseRenderer                  *renderer;
 
-    PMUICanvasRenderers     *guiRenderers;
-    PMUICanvasAudioAnalyzer *guiAudioAnalyzer;
-    bool                    guiAudioAnalyzerCreated;
+    PMUICanvasRenderers             *guiRenderers;
+    /**/
+//    PMUICanvasAudioAnalyzer         *guiAudioAnalyzer;
+    vector<PMUICanvasAudioAnalyzer *> guiAudioAnalyzers;
 
-    ofColor                 canvasBgColor;
+    bool                            guiAudioAnalyzerCreated;
 
-    bool                    showGUI;
+    ofColor                         canvasBgColor;
+
+    bool                            showGUI;
 
     PMSettingsManagerAudioAnalyzers *audioAnalyzersSettings;
+
+    vector<PMSettingsDevice>        *enabledAudioDevices;
 };
 
 #endif /* PMScene2_hpp */
