@@ -55,8 +55,6 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
             addSpacer();
             ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
-
-
         }
 
         // Silence

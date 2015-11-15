@@ -33,6 +33,7 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
+    ofClear(255, 255, 255, 255);
     drawIntoFBO();
 }
 

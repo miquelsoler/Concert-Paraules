@@ -8,18 +8,18 @@
 <Widget>
     <Kind>6</Kind>
     <Name>Freq (min/max)</Name>
-    <HighValue>254.567703247</HighValue>
-    <LowValue>174.332351685</LowValue>
+    <HighValue>259.046234131</HighValue>
+    <LowValue>173.857192993</LowValue>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>Freq (current)</Name>
-    <Value>237.187393188</Value>
+    <Value>231.887985229</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>Energy</Name>
-    <Value>0.280515075</Value>
+    <Value>0.000555347</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
