@@ -108,7 +108,7 @@ void PMScene2::setup()
                 {
                     string title = "AUDIO ANALYZER " + ofToString(audioInputIndex);
                     PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
-                    guiAudioAnalyzer->init(200, 400 + (audioInputIndex * 200));
+                    guiAudioAnalyzer->init(200, 400 + (audioInputIndex * 250));
                     guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                     guiAudioAnalyzer->setVisible(false);
 

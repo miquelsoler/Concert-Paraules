@@ -8,12 +8,12 @@
 <Widget>
     <Kind>2</Kind>
     <Name>Apple Inc.: Built-in Microphone</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>Apple Inc.: Built-in Microphone(0,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -23,32 +23,32 @@
 <Widget>
     <Kind>2</Kind>
     <Name>Apple Inc.: Display Audio</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>Apple Inc.: Display Audio(0,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>Logitech: Logitech USB Microphone</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>Logitech: Logitech USB Microphone(0,0)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>MadCatz: Mad Catz Rock Band Microphone</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>MadCatz: Mad Catz Rock Band Microphone(0,0)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>

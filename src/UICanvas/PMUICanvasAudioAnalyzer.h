@@ -28,22 +28,27 @@ private:
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 
-    // Pitch ----------------------------------
+    // Pitch ------------------------------------
 
     void pitchChanged(pitchParams &pitchParams);
 
     ofxUIRangeSlider    *pitchRangedSlider;
     ofxUISlider         *pitchSlider;
-
     float               pitchMinFreq, pitchMaxFreq;
-    float               currentPitchFreq;
+    float               pitchCurrentFreq;
+
+    // Energy -----------------------------------
+
+    void energyChanged(energyParams &energyParams);
+
+    ofxUISlider         *energySilder;
+    float               energyCurrent;
 
     // Silence ----------------------------------
 
     void silenceStateChanged(silenceParams &silenceParams);
 
     ofxUILabelToggle    *silenceToggle;
-
     bool                silenceOn;
 
     // Settings

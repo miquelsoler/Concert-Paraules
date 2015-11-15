@@ -39,11 +39,24 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             pitchRangedSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
 
             // Current freq value
-            pitchSlider = addSlider("Freq (current)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &currentPitchFreq, 300, 10);
+            pitchSlider = addSlider("Freq (current)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &pitchCurrentFreq, 300, 10);
             pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
 
             addSpacer();
             ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
+        }
+
+        // Energy
+        {
+            addLabel("ENERGY");
+
+            energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
+            energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
+
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
+
+
         }
 
         // Silence
@@ -77,17 +90,22 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 
     if ((pitchParams.freq > settings->getMinPitchFreq()) && (pitchParams.freq < pitchMinFreq)) {
         pitchMinFreq = pitchParams.freq;
-//                pitchRangedSlider0->setValueLow(pitchMinFreq0);
     }
 
     if (pitchParams.freq > pitchMaxFreq) {
         pitchMaxFreq = pitchParams.freq;
-// TODO: Quan peta sembla que passa aquí:
-//                pitchRangedSlider0->setValueHigh(pitchMaxFreq0);
     }
 
-    currentPitchFreq = pitchParams.freq;
+    pitchCurrentFreq = pitchParams.freq;
 }
+
+void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
+{
+    if (energyParams.audioInputIndex != audioInputIndex) return;
+
+    energyCurrent = energyParams.energy;
+}
+
 
 void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
