@@ -26,9 +26,10 @@ void ofApp::setup()
         PMSettingsManagerAudioAnalyzers settingsAA = PMSettingsManagerAudioAnalyzers::getInstance();
 
         PMAudioAnalyzer::getInstance().init(
-                settingsAA.getMelBandsEnabled(), settingsAA.getNumMelBands(),
                 settingsAA.getMinPitchFreq(), settingsAA.getMaxPitchFreq(),
                 settingsAA.getSilenceEnabled(), settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
+                settingsAA.getMelBandsEnabled(), settingsAA.getNumMelBands(),
+                settingsAA.getOnsetsThreshold(), settingsAA.getOnsetsAlpha(),
                 settingsAA.getSmoothingDelta());
     }
 

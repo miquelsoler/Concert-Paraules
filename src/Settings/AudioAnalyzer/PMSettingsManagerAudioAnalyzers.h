@@ -22,13 +22,20 @@ public:
 
     float getMinPitchFreq();
     float getMaxPitchFreq();
+
     float getMinEnergy();
     float getMaxEnergy();
+
     bool getSilenceEnabled();
     int getSilenceThreshold();
     unsigned int getSilenceQueueLength();
+
     bool getMelBandsEnabled();
     unsigned int getNumMelBands();
+
+    float getOnsetsThreshold();
+    float getOnsetsAlpha();
+
     float getSmoothingDelta();
 };
 

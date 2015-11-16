@@ -46,7 +46,6 @@ PMScene2::~PMScene2()
 {
     delete guiRenderers;
 
-    /**/
     for (int i=0; i<guiAudioAnalyzers.size(); ++i)
     {
         PMUICanvasAudioAnalyzer *gui = guiAudioAnalyzers[i];
@@ -87,6 +86,7 @@ void PMScene2::setup()
             ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
             ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
             ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+            ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
 
             audioInputIndex++;
         }
@@ -97,7 +97,7 @@ void PMScene2::setup()
         if (!guiAudioAnalyzerCreated)
         {
             int initialY = 105;
-            int marginY = 230;
+            int marginY = 280;
             audioInputIndex = 0;
             for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
             {
@@ -129,7 +129,6 @@ void PMScene2::update()
 
 void PMScene2::updateEnter()
 {
-//    cout << "PMScene2::updateEnter()" << endl;
     if (isEnteringFirst())
     {
         guiRenderers->loadSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
@@ -218,7 +217,6 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 
 void PMScene2::energyChanged(energyParams &energyParams)
 {
-//    cout << "Energy from " << energyParams.audioInputIndex << ": " << energyParams.energy << endl;
     float normalizedSizeMin = 0.25f;
     float normalizedSizeMax = 1.0f;
 
@@ -232,4 +230,10 @@ void PMScene2::energyChanged(energyParams &energyParams)
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 {
     renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
+}
+
+void PMScene2::onsetDetected(onsetParams &onsetParams)
+{
+    string onsetString = onsetParams.isOnset ? "YES" : "NO";
+    cout << "Onset " << onsetParams.audioInputIndex << ": " << onsetString << endl;
 }

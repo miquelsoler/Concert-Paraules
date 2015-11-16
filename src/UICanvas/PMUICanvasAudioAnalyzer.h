@@ -51,6 +51,13 @@ private:
     ofxUILabelToggle    *silenceToggle;
     bool                silenceOn;
 
+    // Onset ------------------------------------
+
+    void onsetStateChanged(onsetParams &onsetParams);
+
+    ofxUILabelToggle    *onsetToggle;
+    bool                onsetOn;
+
     // Settings
 
     PMSettingsManagerAudioAnalyzers *settings;

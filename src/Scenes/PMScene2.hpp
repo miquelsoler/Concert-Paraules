@@ -40,6 +40,7 @@ public:
     void pitchChanged(pitchParams &pitchParams);
     void energyChanged(energyParams &energyParams);
     void silenceStateChanged(silenceParams &silenceParams);
+    void onsetDetected(onsetParams &onsetParams);
 
 private:
 

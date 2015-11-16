@@ -19,6 +19,9 @@ static const string STR_SILENCE_QUEUELENGTH     = "Queue Length";
 static const string STR_MELBANDS                = "Mel Bands";
 static const string STR_MELBANDS_ENABLE         = "Enabled";
 static const string STR_MELBANDS_NUMBANDS       = "Number of Bands";
+static const string STR_ONSETS                  = "Onsets";
+static const string STR_ONSETS_THRESHOLD        = "Silence Threshold";
+static const string STR_ONSETS_ALPHA            = "Alpha";
 static const string STR_SMOOTHING               = "Smoothing";
 static const string STR_SMOOTHING_DELTA         = "Delta";
 
@@ -35,53 +38,51 @@ PMSettingsManagerAudioAnalyzers::PMSettingsManagerAudioAnalyzers() : PMSettingsM
     }
 }
 
-float PMSettingsManagerAudioAnalyzers::getMinPitchFreq()
-{
+float PMSettingsManagerAudioAnalyzers::getMinPitchFreq() {
     return json[STR_PITCH][STR_PITCH_MINFREQ].asFloat();
 }
 
-float PMSettingsManagerAudioAnalyzers::getMaxPitchFreq()
-{
+float PMSettingsManagerAudioAnalyzers::getMaxPitchFreq() {
     return json[STR_PITCH][STR_PITCH_MAXFREQ].asFloat();
 }
 
-float PMSettingsManagerAudioAnalyzers::getMinEnergy()
-{
+float PMSettingsManagerAudioAnalyzers::getMinEnergy() {
     return json[STR_ENERGY][STR_ENERGY_MIN].asFloat();
 }
 
-float PMSettingsManagerAudioAnalyzers::getMaxEnergy()
-{
+float PMSettingsManagerAudioAnalyzers::getMaxEnergy() {
     return json[STR_ENERGY][STR_ENERGY_MAX].asFloat();
 }
 
-bool PMSettingsManagerAudioAnalyzers::getSilenceEnabled()
-{
+bool PMSettingsManagerAudioAnalyzers::getSilenceEnabled() {
     return json[STR_SILENCE][STR_SILENCE_ENABLE].asBool();
 }
 
-int PMSettingsManagerAudioAnalyzers::getSilenceThreshold()
-{
+int PMSettingsManagerAudioAnalyzers::getSilenceThreshold() {
     return json[STR_SILENCE][STR_SILENCE_THRESHOLD].asInt();
 }
 
-unsigned int PMSettingsManagerAudioAnalyzers::getSilenceQueueLength()
-{
+unsigned int PMSettingsManagerAudioAnalyzers::getSilenceQueueLength() {
     return json[STR_SILENCE][STR_SILENCE_QUEUELENGTH].asUInt();
 }
 
-bool PMSettingsManagerAudioAnalyzers::getMelBandsEnabled()
-{
+bool PMSettingsManagerAudioAnalyzers::getMelBandsEnabled() {
     return json[STR_MELBANDS][STR_MELBANDS_ENABLE].asBool();
 }
 
-unsigned int PMSettingsManagerAudioAnalyzers::getNumMelBands()
-{
+unsigned int PMSettingsManagerAudioAnalyzers::getNumMelBands() {
     return json[STR_MELBANDS][STR_MELBANDS_NUMBANDS].asUInt();
 }
 
-float PMSettingsManagerAudioAnalyzers::getSmoothingDelta()
-{
+float PMSettingsManagerAudioAnalyzers::getOnsetsThreshold() {
+    return json[STR_ONSETS][STR_ONSETS_THRESHOLD].asFloat();
+}
+
+float PMSettingsManagerAudioAnalyzers::getOnsetsAlpha() {
+    return json[STR_ONSETS][STR_ONSETS_ALPHA].asFloat();
+}
+
+float PMSettingsManagerAudioAnalyzers::getSmoothingDelta() {
     return json[STR_SMOOTHING][STR_SMOOTHING_DELTA].asFloat();
 }
 

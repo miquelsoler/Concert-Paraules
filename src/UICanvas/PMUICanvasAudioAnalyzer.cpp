@@ -67,6 +67,17 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             addSpacer();
             ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
         }
+
+        // Onset
+        {
+            addLabel("ONSET");
+
+            onsetToggle = addLabelToggle("ONSET", &onsetOn);
+            onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
+        }
     }
 
     if (autosize) autoSizeToFitWidgets();
@@ -100,7 +111,6 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 {
     if (energyParams.audioInputIndex != audioInputIndex) return;
-
     energyCurrent = energyParams.energy;
 }
 
@@ -108,6 +118,11 @@ void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
-
     silenceOn = silenceParams.isSilent;
+}
+
+void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
+{
+    if (onsetParams.audioInputIndex != audioInputIndex) return;
+    onsetOn = onsetParams.isOnset;
 }
