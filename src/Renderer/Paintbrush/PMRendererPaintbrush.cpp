@@ -4,25 +4,25 @@
 
 #include "PMRendererPaintbrush.h"
 
-PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(numInputs)
+PMRendererPaintbrush::PMRendererPaintbrush(unsigned int _numInputs) : PMBaseRenderer(_numInputs)
 {
-
+    for (int i=0; i<numInputs; ++i)
+    {
+        PMBrushContainer *brush = new PMBrushContainer("brushes/pinzell.png");
+        brush->setPosition(0.5, 0.5);
+        brush->setSize(1);
+        brushes.push_back(brush);
+    }
 }
 
 void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
-
-    brush = new PMBrushContainer("brushes/pinzell.png");
-    brush->setPosition(0.5, 0.5);
-    brush->setSize(1);
 }
 
 void PMRendererPaintbrush::update()
 {
     PMBaseRenderer::update();
-
-//    brush->setPosition(float(ofGetMouseX())/float(ofGetWidth()), float(ofGetMouseY())/float(ofGetHeight()));
 }
 
 void PMRendererPaintbrush::drawIntoFBO()
@@ -38,11 +38,14 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-        if (shouldPaint)
+        for (int i=0; i<numInputs; ++i)
         {
+            if (!shouldPaint[i]) continue;
+
             ofSetColor(255, 0, 0, 255);
-            brush->draw();
+            brushes[i]->draw();
         }
+
         ofDisableBlendMode();
     }
     fbo.end();
@@ -54,21 +57,20 @@ void PMRendererPaintbrush::drawIntoFBO()
 
 void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)
 {
-    cout << "Input index: " << inputIndex << endl;
-    brush->setPosition(normalizedX, normalizedY);
+    brushes[inputIndex]->setPosition(normalizedX, normalizedY);
 }
 
 void PMRendererPaintbrush::setPositionX(unsigned int inputIndex, float normalizedX)
 {
-    brush->setPositionX(normalizedX);
+    brushes[inputIndex]->setPositionX(normalizedX);
 }
 
 void PMRendererPaintbrush::setPositionY(unsigned int inputIndex, float normalizedY)
 {
-    brush->setPositionY(normalizedY);
+    brushes[inputIndex]->setPositionY(normalizedY);
 }
 
 void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize)
 {
-    brush->setSize(normalizedSize);
+    brushes[inputIndex]->setSize(normalizedSize);
 }

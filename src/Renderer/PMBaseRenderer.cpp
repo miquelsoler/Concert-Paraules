@@ -13,7 +13,6 @@ PMBaseRenderer::PMBaseRenderer(unsigned int _numInputs)
 
 void PMBaseRenderer::setup()
 {
-    cout << "PMBaseRenderer::setup()" << endl;
     fbo.begin();
     {
         // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
@@ -22,7 +21,7 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-    shouldPaint = false;
+    shouldPaint.assign(numInputs, false); // Init all elements with false;
 
 //    ofSetBackgroundAuto(false);
 }
@@ -39,5 +38,5 @@ void PMBaseRenderer::draw()
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 {
-    shouldPaint = _shouldPaint;
+    shouldPaint[inputIndex] = _shouldPaint;
 }

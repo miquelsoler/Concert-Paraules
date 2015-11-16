@@ -28,7 +28,7 @@ public:
 
 private:
 
-    PMBrushContainer *brush;
+    vector<PMBrushContainer *> brushes;
 };
 
 

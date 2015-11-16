@@ -30,13 +30,10 @@ public:
 
 protected:
 
-    ofFbo   fbo;
+    ofFbo           fbo;
 
-    // Originally based on Concert Paraules needing two microphones
-    unsigned int numInputs;
-
-    // Originally based on silence detection (no silence -> shouldPaint=true, silence -> should Paint=false)
-    bool    shouldPaint;
+    unsigned int    numInputs;     // Number of microphones
+    vector<bool>    shouldPaint;   // Enable/disable painting per input
 };
 
 
