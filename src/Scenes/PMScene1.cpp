@@ -29,14 +29,14 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
 
         // Poem selector
         guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_MEDIUM);
-        guiPoemSelector->init(panelPosX, panelPosY, false, 500, 70);
+        guiPoemSelector->init(5, 5, false, 500, 70);
         guiPoemSelector->setBackgroundColor(canvasBgColor);
         guiPoemSelector->setVisible(false);
 
         // Audio settings
         panelPosY += guiPoemSelector->getHeight() + panelMargin;
         guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_MEDIUM);
-        guiAudioSettings->init(panelPosX, panelPosY);
+        guiAudioSettings->init(5, 80);
         guiAudioSettings->setBackgroundColor(canvasBgColor);
         guiAudioSettings->setVisible(false);
         lastWidth = int(guiAudioSettings->getWidth());
@@ -44,7 +44,7 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
         // Renderer settings
         panelPosX += lastWidth + panelMargin;
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRendererSettings->init(panelPosX, panelPosY);
+        guiRendererSettings->init(310, 80);
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
     }

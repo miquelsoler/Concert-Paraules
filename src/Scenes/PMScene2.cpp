@@ -29,7 +29,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         canvasBgColor = ofColor(50, 50, 50, 200);
 
         guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRenderers->init(200, 200);
+        guiRenderers->init(5, 5);
         guiRenderers->setBackgroundColor(canvasBgColor);
         guiRenderers->setVisible(false);
 
@@ -60,11 +60,6 @@ void PMScene2::setup()
     enabledAudioDevices = PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices();
 
     vector<PMSettingsDevice>::iterator itDevice;
-
-    for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
-    {
-        cout << "Device: " << (*itDevice).ID << "Channels: " << (*itDevice).channels.size() << endl;
-    }
 
     unsigned int audioInputIndex = 0;
 
@@ -101,14 +96,16 @@ void PMScene2::setup()
     {
         if (!guiAudioAnalyzerCreated)
         {
+            int initialY = 105;
+            int marginY = 230;
             audioInputIndex = 0;
             for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
             {
                 for (int i = 0; i < (*itDevice).channels.size(); ++i)
                 {
-                    string title = "AUDIO ANALYZER " + ofToString(audioInputIndex);
+                    string title = "AUDIO ANALYZER " + ofToString(audioInputIndex + 1);
                     PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
-                    guiAudioAnalyzer->init(200, 400 + (audioInputIndex * 250));
+                    guiAudioAnalyzer->init(5, initialY + (audioInputIndex * marginY));
                     guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                     guiAudioAnalyzer->setVisible(false);
 
