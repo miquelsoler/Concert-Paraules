@@ -85,6 +85,8 @@ void PMSettingsManagerRenderers::createJSONSettings()
 
 void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()
 {
+    renderersSettings.clear();
+
     for (int i=0; i<json[STR_RENDERERS].size(); ++i)
     {
         Json::Value jsonRenderer = json[STR_RENDERERS][i];
@@ -125,6 +127,23 @@ void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()
 vector<PMSettingsRenderer> *PMSettingsManagerRenderers::getRenderers()
 {
     return &renderersSettings;
+}
+
+PMSettingsRenderer PMSettingsManagerRenderers::getSelectedRenderer()
+{
+    buildRenderersVectorFromJSON();
+
+    bool found = false;
+    int index = 0;
+
+    for (int i=0; i<renderersSettings.size() && !found; ++i)
+    {
+        found = renderersSettings[i].enabled;
+        if (found) index = i;
+    }
+
+    if (found) return renderersSettings[index];
+    else return PMSettingsRenderer();
 }
 
 void PMSettingsManagerRenderers::enableRenderer(unsigned int rendererID)

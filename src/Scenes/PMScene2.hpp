@@ -12,15 +12,21 @@
 #pragma once
 
 #include <stdio.h>
+
 #include "PMBaseScene.hpp"
+
 #include "PMRendererPaintbrush.h"
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
+
 #include "PMUICanvasRenderers.h"
 #include "PMUICanvasAudioAnalyzer.h"
+
 #include "PMAudioAnalyzer.hpp"
+
 #include "PMSettingsManagerAudioAnalyzers.h"
 #include "PMSettingsManagerAudioDevices.h"
+
 
 class PMScene2 : public PMBaseScene
 {
@@ -46,21 +52,18 @@ public:
 
 private:
 
-    PMBaseRenderer                  *renderer;
+    PMBaseRenderer                      *renderer;
 
-    PMUICanvasRenderers             *guiRenderers;
+    vector<PMUICanvasAudioAnalyzer *>   guiAudioAnalyzers;
+    bool                                guiAudioAnalyzerCreated;
 
-    vector<PMUICanvasAudioAnalyzer *> guiAudioAnalyzers;
+    ofColor                             canvasBgColor;
 
-    bool                            guiAudioAnalyzerCreated;
+    bool                                showGUI;
 
-    ofColor                         canvasBgColor;
+    PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
-    bool                            showGUI;
-
-    PMSettingsManagerAudioAnalyzers *audioAnalyzersSettings;
-
-    vector<PMSettingsDevice>        *enabledAudioDevices;
+    vector<PMSettingsDevice>            *enabledAudioDevices;
 };
 
 #endif /* PMScene2_hpp */

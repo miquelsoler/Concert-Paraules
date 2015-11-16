@@ -27,6 +27,8 @@ public:
     void createJSONSettings();
 
     vector<PMSettingsRenderer> *getRenderers();
+    PMSettingsRenderer getSelectedRenderer();
+
     void enableRenderer(unsigned int rendererID);
 
 private:

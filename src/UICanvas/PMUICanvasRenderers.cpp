@@ -9,7 +9,6 @@ void PMUICanvasRenderers::init(int posX, int posY, bool autosize, int width, int
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
     settings = &PMSettingsManagerRenderers::getInstance();
-
     vector<PMSettingsRenderer> *renderers = settings->getRenderers();
 
     ofxUIRadio *modeRadioButtons;
@@ -22,6 +21,8 @@ void PMUICanvasRenderers::init(int posX, int posY, bool autosize, int width, int
             modeNames.push_back(renderer.name);
         }
         modeRadioButtons = addRadio("Render Modes", modeNames);
+        modeRadioButtons->setName("Renderers radio buttons");
+        modeRadioButtons->setTriggerType(OFX_UI_TRIGGER_CHANGE);
     }
 
     // Set selected mode and ID according to settings file
@@ -31,6 +32,7 @@ void PMUICanvasRenderers::init(int posX, int posY, bool autosize, int width, int
             PMSettingsRenderer renderer = (*renderers)[i];
             modeButtonsToggles[i]->setID(renderer.ID);
             modeButtonsToggles[i]->setValue(renderer.enabled);
+            modeButtonsToggles[i]->setTriggerType(OFX_UI_TRIGGER_CHANGE);
         }
     }
 
@@ -42,6 +44,8 @@ void PMUICanvasRenderers::init(int posX, int posY, bool autosize, int width, int
 void PMUICanvasRenderers::handleEvents(ofxUIEventArgs &e)
 {
     if (e.getKind() != OFX_UI_WIDGET_TOGGLE) return;
+    if (e.getParent()->getKind() != OFX_UI_WIDGET_RADIO) return;
+    if (e.getParent()->getName() != "Renderers radio buttons") return;
 
     ofxUIToggle *toggle = (ofxUIToggle *)e.widget;
     if (!toggle->getValue()) return; // Ignore releases

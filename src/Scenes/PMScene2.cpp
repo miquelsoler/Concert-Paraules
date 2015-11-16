@@ -7,6 +7,7 @@
 //
 
 #include "PMScene2.hpp"
+
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 
@@ -27,25 +28,13 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     // GUI
     {
         canvasBgColor = ofColor(50, 50, 50, 200);
-
-        guiRenderers = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRenderers->init(5, 5);
-        guiRenderers->setBackgroundColor(canvasBgColor);
-        guiRenderers->setVisible(false);
-
         guiAudioAnalyzerCreated = false;
     }
 
-    // Renderer
-    {
-        renderer = new PMRendererPaintbrush((unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
-    }
 }
 
 PMScene2::~PMScene2()
 {
-    delete guiRenderers;
-
     for (int i=0; i<guiAudioAnalyzers.size(); ++i)
     {
         PMUICanvasAudioAnalyzer *gui = guiAudioAnalyzers[i];
@@ -56,67 +45,86 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
-    enabledAudioDevices = PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices();
-
-    vector<PMSettingsDevice>::iterator itDevice;
-
-    unsigned int audioInputIndex = 0;
-
-    for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
+    // Create Renderer
     {
-        if (!(*itDevice).enabled) continue;
-        unsigned int numChannels = (unsigned int)((*itDevice).channels.size());
-
-        for (unsigned int i=0; i<numChannels; i++)
+        unsigned int numAudioInputs = (unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size());
+        PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
+        switch(settingsRenderer.ID)
         {
-            PMSettingsDeviceChannel channel = (*itDevice).channels[i];
-
-            if (!channel.enabled) continue;
-
-            int deviceId = (*itDevice).ID;
-            int inChannels = (*itDevice).inChannels;
-            int outChannels = (*itDevice).outChannels;
-            unsigned int channelNumber = channel.ID;
-
-            PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(audioInputIndex, deviceId,
-                    inChannels, outChannels,
-                    DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
-                    PMDAA_CHANNEL_MONO, channelNumber);
-
-            ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
-            ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
-            ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
-            ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
-
-            audioInputIndex++;
+            case RENDERERTYPE_PAINTBRUSH:   renderer = new PMRendererPaintbrush(numAudioInputs); break;
+            case RENDERERTYPE_TYPOGRAPHY:   renderer = new PMRendererTypography(numAudioInputs); break;
+            case RENDERERTYPE_COLOR:        renderer = new PMRendererColor(numAudioInputs); break;
+            default:                        break;
         }
     }
 
-    // GUI
+    // Enabled audio devices
     {
-        if (!guiAudioAnalyzerCreated)
+        unsigned int audioInputIndex = 0;
+
+        enabledAudioDevices = PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices();
+
+        vector<PMSettingsDevice>::iterator itDevice;
+
+        // Creation of audio analyzers
         {
-            int initialY = 105;
-            int marginY = 280;
-            audioInputIndex = 0;
             for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
             {
-                for (int i = 0; i < (*itDevice).channels.size(); ++i)
-                {
-                    string title = "AUDIO ANALYZER " + ofToString(audioInputIndex + 1);
-                    PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
-                    guiAudioAnalyzer->init(5, initialY + (audioInputIndex * marginY));
-                    guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
-                    guiAudioAnalyzer->setVisible(false);
+                if (!(*itDevice).enabled) continue;
+                unsigned int numChannels = (unsigned int)((*itDevice).channels.size());
 
-                    guiAudioAnalyzers.push_back(guiAudioAnalyzer);
+                for (unsigned int i=0; i<numChannels; i++)
+                {
+                    PMSettingsDeviceChannel channel = (*itDevice).channels[i];
+
+                    if (!channel.enabled) continue;
+
+                    int deviceId = (*itDevice).ID;
+                    int inChannels = (*itDevice).inChannels;
+                    int outChannels = (*itDevice).outChannels;
+                    unsigned int channelNumber = channel.ID;
+
+                    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(audioInputIndex, deviceId,
+                            inChannels, outChannels,
+                            DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
+                            PMDAA_CHANNEL_MONO, channelNumber);
+
+                    ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
+                    ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
+                    ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+                    ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
 
                     audioInputIndex++;
                 }
             }
         }
 
-        guiAudioAnalyzerCreated = true;
+        // GUI
+        {
+            if (!guiAudioAnalyzerCreated)
+            {
+                int initialY = 5;
+                int marginY = 280;
+                audioInputIndex = 0;
+                for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
+                {
+                    for (int i = 0; i < (*itDevice).channels.size(); ++i)
+                    {
+                        string title = "AUDIO ANALYZER " + ofToString(audioInputIndex + 1);
+                        PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
+                        guiAudioAnalyzer->init(5, initialY + (audioInputIndex * marginY));
+                        guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
+                        guiAudioAnalyzer->setVisible(false);
+
+                        guiAudioAnalyzers.push_back(guiAudioAnalyzer);
+
+                        audioInputIndex++;
+                    }
+                }
+            }
+
+            guiAudioAnalyzerCreated = true;
+        }
     }
 
     renderer->setup();
@@ -131,9 +139,6 @@ void PMScene2::updateEnter()
 {
     if (isEnteringFirst())
     {
-        guiRenderers->loadSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
-        guiRenderers->setVisible(showGUI);
-
         int i;
         vector<PMUICanvasAudioAnalyzer *>::iterator it;
         for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++)
@@ -158,15 +163,16 @@ void PMScene2::updateExit()
 void PMScene2::draw()
 {
     renderer->draw();
+#ifdef OF_DEBUG
+    ofSetColor(127);
+    ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
+#endif
 }
 
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
     PMAudioAnalyzer::getInstance().clear();
-
-    guiRenderers->saveSettings(STR_CANVAS_BASEPATH + "renderers2.xml");
-    guiRenderers->setVisible(false);
 
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
@@ -190,7 +196,6 @@ void PMScene2::keyReleased(int key)
         case 'G':
         {
             showGUI = !showGUI;
-            guiRenderers->setVisible(showGUI);
 
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for(it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)

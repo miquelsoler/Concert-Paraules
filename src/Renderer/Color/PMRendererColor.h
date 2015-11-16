@@ -12,6 +12,8 @@
 
 class PMRendererColor : public PMBaseRenderer
 {
+public:
+
     PMRendererColor(unsigned int numInputs);
 
     virtual void setup();
