@@ -12,7 +12,7 @@
 
 class PMRendererColor : public PMBaseRenderer
 {
-    PMRendererColor(PMRendererType type, unsigned int numInputs);
+    PMRendererColor(unsigned int numInputs);
 
     virtual void setup();
     virtual void update();

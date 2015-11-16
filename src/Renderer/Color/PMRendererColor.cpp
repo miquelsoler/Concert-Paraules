@@ -4,7 +4,7 @@
 
 #include "PMRendererColor.h"
 
-PMRendererColor::PMRendererColor(PMRendererType type, unsigned int numInputs) : PMBaseRenderer(type, numInputs)
+PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_COLOR, numInputs)
 {
 
 }

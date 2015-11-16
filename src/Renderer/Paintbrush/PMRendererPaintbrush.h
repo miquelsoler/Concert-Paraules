@@ -15,7 +15,7 @@ class PMRendererPaintbrush : public PMBaseRenderer
 {
 public:
 
-    PMRendererPaintbrush(PMRendererType type, unsigned int numInputs);
+    PMRendererPaintbrush(unsigned int numInputs);
 
     virtual void setup();
     virtual void update();

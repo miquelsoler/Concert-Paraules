@@ -38,7 +38,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        renderer = new PMRendererPaintbrush(RENDERERTYPE_PAINTBRUSH, (unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
+        renderer = new PMRendererPaintbrush((unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
     }
 }
 

@@ -4,7 +4,7 @@
 
 #include "PMRendererTypography.h"
 
-PMRendererTypography::PMRendererTypography(PMRendererType type, unsigned int numInputs) : PMBaseRenderer(type, numInputs)
+PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
 
 }
