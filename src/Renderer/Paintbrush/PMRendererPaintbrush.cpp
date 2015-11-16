@@ -4,7 +4,7 @@
 
 #include "PMRendererPaintbrush.h"
 
-PMRendererPaintbrush::PMRendererPaintbrush(unsigned int _numInputs) : PMBaseRenderer(_numInputs)
+PMRendererPaintbrush::PMRendererPaintbrush(PMRendererType type, unsigned int numInputs) : PMBaseRenderer(type, numInputs)
 {
     for (int i=0; i<numInputs; ++i)
     {

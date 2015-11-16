@@ -38,7 +38,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     // Renderer
     {
-        renderer = new PMRendererPaintbrush((unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
+        renderer = new PMRendererPaintbrush(RENDERERTYPE_PAINTBRUSH, (unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size()));
     }
 }
 
@@ -212,7 +212,16 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     float yMax = 0.0f;
 
     float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
-    renderer->setPositionY(pitchParams.audioInputIndex, y);
+
+    switch(renderer->getType())
+    {
+        case RENDERERTYPE_PAINTBRUSH: {
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, y);
+            break;
+        }
+        default: break;
+    }
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
@@ -224,7 +233,15 @@ void PMScene2::energyChanged(energyParams &energyParams)
             audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(),
             normalizedSizeMin, normalizedSizeMax, true);
 
-    renderer->setSize(energyParams.audioInputIndex, size);
+    switch(renderer->getType())
+    {
+        case RENDERERTYPE_PAINTBRUSH: {
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *) renderer;
+            paintbrushRenderer->setSize(energyParams.audioInputIndex, size);
+            break;
+        }
+        default: break;
+    }
 }
 
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)

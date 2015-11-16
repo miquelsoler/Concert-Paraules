@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include "PMBaseScene.hpp"
 #include "PMRendererPaintbrush.h"
+#include "PMRendererTypography.h"
+#include "PMRendererColor.h"
 #include "PMUICanvasRenderers.h"
 #include "PMUICanvasAudioAnalyzer.h"
 #include "PMAudioAnalyzer.hpp"
@@ -47,8 +49,7 @@ private:
     PMBaseRenderer                  *renderer;
 
     PMUICanvasRenderers             *guiRenderers;
-    /**/
-//    PMUICanvasAudioAnalyzer         *guiAudioAnalyzer;
+
     vector<PMUICanvasAudioAnalyzer *> guiAudioAnalyzers;
 
     bool                            guiAudioAnalyzerCreated;

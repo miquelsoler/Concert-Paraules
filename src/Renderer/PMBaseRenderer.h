@@ -9,12 +9,18 @@
 
 #include "ofMain.h"
 
+typedef enum
+{
+    RENDERERTYPE_PAINTBRUSH = 0,
+    RENDERERTYPE_TYPOGRAPHY = 1,
+    RENDERERTYPE_COLOR = 2
+} PMRendererType;
 
 class PMBaseRenderer
 {
 public:
 
-    PMBaseRenderer(unsigned int numInputs);
+    PMBaseRenderer(PMRendererType type, unsigned int numInputs);
 
     virtual void setup();
     virtual void update();
@@ -22,18 +28,18 @@ public:
 
     virtual void drawIntoFBO() = 0;
 
-    virtual void setPosition(unsigned int inputIndex, float normalizedX, float normalizedY) = 0;
-    virtual void setPositionX(unsigned int inputIndex, float normalizedX) = 0;
-    virtual void setPositionY(unsigned int inputIndex, float normalizedY) = 0;
-    virtual void setSize(unsigned int inputIndex, float normalizedSize) = 0;
+    PMRendererType getType() { return type; };
+
     void setShouldPaint(unsigned int inputIndex, bool shouldPaint);
 
 protected:
 
-    ofFbo           fbo;
+    PMRendererType  type;
 
     unsigned int    numInputs;     // Number of microphones
     vector<bool>    shouldPaint;   // Enable/disable painting per input
+
+    ofFbo           fbo;
 };
 
 

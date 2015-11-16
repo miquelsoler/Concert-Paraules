@@ -4,10 +4,11 @@
 
 #include "PMBaseRenderer.h"
 
-PMBaseRenderer::PMBaseRenderer(unsigned int _numInputs)
+PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
 {
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
 
+    type = _type;
     numInputs = _numInputs;
 }
 
