@@ -1,7 +1,7 @@
 {
   "Pitch": {
     "Min Frequency": 100.0,
-    "Max Frequency": 700.0
+    "Max Frequency": 400.0
   },
   "Energy": {
     "Min Energy": 0.0,

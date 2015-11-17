@@ -9,6 +9,8 @@
 
 #include "PMBaseRenderer.h"
 
+#include "PMLetterContainer.h"
+
 
 class PMRendererTypography : public PMBaseRenderer
 {
@@ -19,6 +21,12 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+
+    void addLetter();
+
+private:
+
+    list<PMLetterContainer> letters;
 };
 
 

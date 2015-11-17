@@ -4,14 +4,19 @@
 
 #include "PMRendererTypography.h"
 
+static const unsigned int MAX_LETTERS = 50;
+
+
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
-
 }
 
 void PMRendererTypography::setup()
 {
-    PMBaseRenderer::setup();
+//    PMBaseRenderer::setup();
+//
+//    if (!letters.empty())
+//        letters.clear();
 }
 
 void PMRendererTypography::update()
@@ -23,22 +28,20 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-////        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-////        ofSetColor(255, 255, 255, 5);
-////        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+//////        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+//////        ofSetColor(255, 255, 255, 5);
+//////        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 //
 //        ofSetColor(255, 255, 255, 1);
 //        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 //
 //        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 //
-//        for (int i=0; i<numInputs; ++i)
-//        {
-//            if (!shouldPaint[i]) continue;
+//        ofSetColor(0, 0, 0, 255);
 //
-//            ofSetColor(255, 0, 0, 255);
-//            brushes[i]->draw();
-//        }
+//        list<PMLetterContainer>::iterator letterIt;
+//        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
+//            (*letterIt).draw();
 //
 //        ofDisableBlendMode();
     }
@@ -47,4 +50,16 @@ void PMRendererTypography::drawIntoFBO()
     ofSetColor(255, 255, 255, 255);
 
     fbo.draw(0, 0);
+}
+
+void PMRendererTypography::addLetter()
+{
+//    PMLetterContainer letterContainer("verdana.ttf");
+//    letterContainer.setPosition(0.5, 0.5);
+//    letterContainer.setSize(1.0);
+//
+//    letters.push_back(letterContainer);
+//
+//    if (letters.size() > MAX_LETTERS)
+//        letters.pop_front();
 }

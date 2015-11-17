@@ -258,4 +258,14 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
     string onsetString = onsetParams.isOnset ? "YES" : "NO";
     cout << "Onset " << onsetParams.audioInputIndex << ": " << onsetString << endl;
+
+    switch(renderer->getType())
+    {
+        case RENDERERTYPE_TYPOGRAPHY: {
+            PMRendererTypography *paintbrushRenderer = (PMRendererTypography *) renderer;
+            paintbrushRenderer->addLetter();
+            break;
+        }
+        default: break;
+    }
 }

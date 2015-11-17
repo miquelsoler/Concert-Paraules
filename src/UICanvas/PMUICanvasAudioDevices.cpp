@@ -76,6 +76,8 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
         // If device is disabled, disable all of its channels
         if (!toggleValue)
             disableAllChannelsForDevice(toggle);
+
+        settings->write();
     }
     else
     {
@@ -98,9 +100,9 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
         {
             disableDeviceIfNoChannels(toggle);
         }
-    }
 
-    settings->write();
+        settings->write();
+    }
 }
 
 void PMUICanvasAudioDevices::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)

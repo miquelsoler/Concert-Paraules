@@ -39,8 +39,8 @@ bool PMSettingsManagerAudioDevices::load(string filename)
     bool result = PMSettingsManager::load(filename);
     if (result)
     {
-        if (!JSONmatchesCurrentAudioDevices())
-            createJSONSettings();
+//        if (!JSONmatchesCurrentAudioDevices())
+//            createJSONSettings();
 
         buildAllAudioDevicesVectorFromJSON();
     }

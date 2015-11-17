@@ -16,6 +16,7 @@
 		214766871A909FA28DBF2AED /* PMSettingsManagerAudioAnalyzers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476BA1A52BB50BE2E69157 /* PMSettingsManagerAudioAnalyzers.cpp */; };
 		214769B2FDC06D0F46A77FE5 /* PMBaseRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147637322935D592B82D3A5 /* PMBaseRenderer.cpp */; };
 		214769DF1DD1A3716E744298 /* PMUICanvasRenderers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476186E83EB468153057FC /* PMUICanvasRenderers.cpp */; };
+		21476A3F17ADE620A7C92A13 /* PMLetterContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147696CA594AD8CED573E03 /* PMLetterContainer.cpp */; };
 		21476AD602C8C54673B991C2 /* PMUICanvasAudioDevices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214769FFAFA89D76FF3F5B54 /* PMUICanvasAudioDevices.cpp */; };
 		21476AF18555D7854FD53E24 /* PMRendererTypography.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476D535BA7C195477469B1 /* PMRendererTypography.cpp */; };
 		21476B37B46EB75D3E068DD1 /* PMUICanvasNavigation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147668DE320A4A97483F1AA /* PMUICanvasNavigation.cpp */; };
@@ -111,6 +112,12 @@
 		2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250E81BCE5D6600EEADDF /* tinyxml.cpp */; };
 		2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */; };
 		2A8250EF1BCE5D6600EEADDF /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */; };
+		2AAB0C751BFB52C200A5D41F /* aubio in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAB0C741BFB52C200A5D41F /* aubio */; };
+		2AC0886A1BFB59BC00488E72 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */; };
+		2AC0886B1BFB59BC00488E72 /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */; };
+		2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */; };
+		2AC0886D1BFB59BC00488E72 /* ofxAubioOnset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088661BFB59BC00488E72 /* ofxAubioOnset.cpp */; };
+		2AC0886E1BFB59BC00488E72 /* ofxAubioPitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088681BFB59BC00488E72 /* ofxAubioPitch.cpp */; };
 		2AD7552D1BD6587A009C8C06 /* PMBaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AD7552B1BD6587A009C8C06 /* PMBaseScene.cpp */; };
 		2ADCED3D1BC4834300F7F86A /* ofxEasing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED231BC4834300F7F86A /* ofxEasing.cpp */; };
 		2ADCED3E1BC4834300F7F86A /* ofxEasingBack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCED251BC4834300F7F86A /* ofxEasingBack.cpp */; };
@@ -195,10 +202,12 @@
 		214763D812CE7129EA735A5C /* PMSettingsManagerAudioAnalyzers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSettingsManagerAudioAnalyzers.h; sourceTree = "<group>"; };
 		21476648B04F0F248E7BEAD0 /* PMUICanvasNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasNavigation.h; sourceTree = "<group>"; };
 		2147668DE320A4A97483F1AA /* PMUICanvasNavigation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasNavigation.cpp; sourceTree = "<group>"; };
+		214767216AE745FD0EEA0063 /* PMLetterContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMLetterContainer.h; sourceTree = "<group>"; };
 		2147686E219E442DCD619EED /* PMBaseRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseRenderer.h; sourceTree = "<group>"; };
 		2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseUICanvas.cpp; sourceTree = "<group>"; };
 		21476891824C97A8B911E305 /* PMRendererColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererColor.h; sourceTree = "<group>"; };
 		214769686BA60A5908B495B3 /* PMUICanvasAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasAudioAnalyzer.cpp; sourceTree = "<group>"; };
+		2147696CA594AD8CED573E03 /* PMLetterContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMLetterContainer.cpp; sourceTree = "<group>"; };
 		214769FFAFA89D76FF3F5B54 /* PMUICanvasAudioDevices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasAudioDevices.cpp; sourceTree = "<group>"; };
 		21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasPoem.cpp; sourceTree = "<group>"; };
 		21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererPaintbrush.cpp; sourceTree = "<group>"; };
@@ -472,6 +481,18 @@
 		2A8250E91BCE5D6600EEADDF /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		2AAB0C741BFB52C200A5D41F /* aubio */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = aubio; path = "../../ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework/aubio.framework/aubio"; sourceTree = "<group>"; };
+		2AC0885F1BFB59BC00488E72 /* ofxAubio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubio.h; sourceTree = "<group>"; };
+		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
+		2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubioBeat.h; sourceTree = "<group>"; };
+		2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBlock.cpp; sourceTree = "<group>"; };
+		2AC088631BFB59BC00488E72 /* ofxAubioBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubioBlock.h; sourceTree = "<group>"; };
+		2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioMelBands.cpp; sourceTree = "<group>"; };
+		2AC088651BFB59BC00488E72 /* ofxAubioMelBands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubioMelBands.h; sourceTree = "<group>"; };
+		2AC088661BFB59BC00488E72 /* ofxAubioOnset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioOnset.cpp; sourceTree = "<group>"; };
+		2AC088671BFB59BC00488E72 /* ofxAubioOnset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubioOnset.h; sourceTree = "<group>"; };
+		2AC088681BFB59BC00488E72 /* ofxAubioPitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioPitch.cpp; sourceTree = "<group>"; };
+		2AC088691BFB59BC00488E72 /* ofxAubioPitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxAubioPitch.h; sourceTree = "<group>"; };
 		2AD7552B1BD6587A009C8C06 /* PMBaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseScene.cpp; sourceTree = "<group>"; };
 		2AD7552C1BD6587A009C8C06 /* PMBaseScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMBaseScene.hpp; sourceTree = "<group>"; };
 		2ADCED221BC4834300F7F86A /* easing_terms_of_use.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
@@ -555,6 +576,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AAB0C751BFB52C200A5D41F /* aubio in Frameworks */,
 				2A1A4FAC1BC41C9500D6E2E2 /* Carbon.framework in Frameworks */,
 				2A1A4FA71BC41C9500D6E2E2 /* Cocoa.framework in Frameworks */,
 				2A498D9B1BBEE6D100D143F6 /* libyaml.a in Frameworks */,
@@ -619,8 +641,8 @@
 			children = (
 				21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */,
 				21476D68C66406FA677D7373 /* PMRendererPaintbrush.h */,
-				21476C64C75C50AC9AD53152 /* PMBrushContainer.h */,
 				21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */,
+				21476C64C75C50AC9AD53152 /* PMBrushContainer.h */,
 			);
 			path = Paintbrush;
 			sourceTree = "<group>";
@@ -630,6 +652,8 @@
 			children = (
 				21476D535BA7C195477469B1 /* PMRendererTypography.cpp */,
 				21476FB92724004499CD3827 /* PMRendererTypography.h */,
+				2147696CA594AD8CED573E03 /* PMLetterContainer.cpp */,
+				214767216AE745FD0EEA0063 /* PMLetterContainer.h */,
 			);
 			path = Typography;
 			sourceTree = "<group>";
@@ -865,6 +889,7 @@
 		2A1A4F921BC41C9500D6E2E2 /* 3rd party frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AAB0C741BFB52C200A5D41F /* aubio */,
 				2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
@@ -1169,6 +1194,33 @@
 			path = ../../../addons/ofxXmlSettings/libs;
 			sourceTree = "<group>";
 		};
+		2AC0885D1BFB59BC00488E72 /* ofxAubio */ = {
+			isa = PBXGroup;
+			children = (
+				2AC0885E1BFB59BC00488E72 /* src */,
+			);
+			name = ofxAubio;
+			sourceTree = "<group>";
+		};
+		2AC0885E1BFB59BC00488E72 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2AC0885F1BFB59BC00488E72 /* ofxAubio.h */,
+				2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */,
+				2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */,
+				2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */,
+				2AC088631BFB59BC00488E72 /* ofxAubioBlock.h */,
+				2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */,
+				2AC088651BFB59BC00488E72 /* ofxAubioMelBands.h */,
+				2AC088661BFB59BC00488E72 /* ofxAubioOnset.cpp */,
+				2AC088671BFB59BC00488E72 /* ofxAubioOnset.h */,
+				2AC088681BFB59BC00488E72 /* ofxAubioPitch.cpp */,
+				2AC088691BFB59BC00488E72 /* ofxAubioPitch.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxAubio/src;
+			sourceTree = "<group>";
+		};
 		2ADCED1F1BC4834300F7F86A /* ofxTween */ = {
 			isa = PBXGroup;
 			children = (
@@ -1347,6 +1399,7 @@
 				2A8250571BCE5CC500EEADDF /* ofxUI */,
 				2A8250E31BCE5D6600EEADDF /* ofxXmlSettings */,
 				2A6549751BEA84B900F272F3 /* ofxAppUtils-PM */,
+				2AC0885D1BFB59BC00488E72 /* ofxAubio */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -1557,8 +1610,10 @@
 				2A8250DB1BCE5CC500EEADDF /* ofxUITextArea.cpp in Sources */,
 				2A8250D81BCE5CC500EEADDF /* ofxUISpectrum.cpp in Sources */,
 				2A8250E11BCE5CC500EEADDF /* ofxUIWidget.cpp in Sources */,
+				2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				2AC0886A1BFB59BC00488E72 /* ofxAubioBeat.cpp in Sources */,
 				2A8250C81BCE5CC500EEADDF /* ofxUILabel.cpp in Sources */,
 				2ADCED501BC4885700F7F86A /* PMScene1.cpp in Sources */,
 				2ADCED561BC48E7900F7F86A /* PMScene2.cpp in Sources */,
@@ -1589,8 +1644,10 @@
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				2A6549911BEA84B900F272F3 /* ofxTransformPanel.cpp in Sources */,
+				2AC0886D1BFB59BC00488E72 /* ofxAubioOnset.cpp in Sources */,
 				2A8250DF1BCE5CC500EEADDF /* ofxUIValuePlotter.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
+				2AC0886B1BFB59BC00488E72 /* ofxAubioBlock.cpp in Sources */,
 				2A8250BB1BCE5CC500EEADDF /* ofxUIButton.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
 				2A8250BA1BCE5CC500EEADDF /* ofxUIBiLabelSlider.cpp in Sources */,
@@ -1604,6 +1661,7 @@
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				2A8250C61BCE5CC500EEADDF /* ofxUIImageSlider.cpp in Sources */,
 				2ADCED451BC4834300F7F86A /* ofxEasingQuad.cpp in Sources */,
+				2AC0886E1BFB59BC00488E72 /* ofxAubioPitch.cpp in Sources */,
 				7ADB04AF67C568EAFAEBA546 /* ofxKinectExtras.cpp in Sources */,
 				2A8250D01BCE5CC500EEADDF /* ofxUIRadio.cpp in Sources */,
 				686B0DF6249B52E1A85B39EC /* ofxKinect.cpp in Sources */,
@@ -1667,6 +1725,7 @@
 				21476D9840A4C65D1A2D8089 /* PMBrushContainer.mm in Sources */,
 				21476AF18555D7854FD53E24 /* PMRendererTypography.cpp in Sources */,
 				21476136EA2BE70554D5B79C /* PMRendererColor.cpp in Sources */,
+				21476A3F17ADE620A7C92A13 /* PMLetterContainer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1970,7 +2029,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAudioAnalyzer-PM/libs/essentia/include/";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
