@@ -112,7 +112,6 @@
 		2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250E81BCE5D6600EEADDF /* tinyxml.cpp */; };
 		2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */; };
 		2A8250EF1BCE5D6600EEADDF /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */; };
-		2AAB0C751BFB52C200A5D41F /* aubio in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AAB0C741BFB52C200A5D41F /* aubio */; };
 		2AC0886A1BFB59BC00488E72 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */; };
 		2AC0886B1BFB59BC00488E72 /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */; };
 		2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */; };
@@ -141,6 +140,7 @@
 		7ADB04AF67C568EAFAEBA546 /* ofxKinectExtras.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01438542609FC64F1EC60EEB /* ofxKinectExtras.cpp */; };
 		837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F2C6477A769C03A56D1401 /* ofxSlider.cpp */; };
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
+		9FD1B81A1BFBB7DE00A8218E /* aubio in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD1B8191BFBB7DE00A8218E /* aubio */; };
 		ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD37876A11E46E4D7069B3 /* cameras.c */; };
 		B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
 		B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 802251BAF1B35B1D67B32FD0 /* ofxSliderGroup.cpp */; };
@@ -481,7 +481,6 @@
 		2A8250E91BCE5D6600EEADDF /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		2AAB0C741BFB52C200A5D41F /* aubio */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = aubio; path = "../../ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework/aubio.framework/aubio"; sourceTree = "<group>"; };
 		2AC0885F1BFB59BC00488E72 /* ofxAubio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubio.h; sourceTree = "<group>"; };
 		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
 		2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioBeat.h; sourceTree = "<group>"; };
@@ -546,6 +545,7 @@
 		8B25248CC7F2228B1CEF2EB1 /* libusb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = libusb.h; path = "../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h"; sourceTree = SOURCE_ROOT; };
 		907C5B5E104864A2D3A25745 /* ofxToggle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxToggle.cpp; path = ../../../addons/ofxGui/src/ofxToggle.cpp; sourceTree = SOURCE_ROOT; };
 		9604B925D32EE39065747725 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBaseGui.cpp; path = ../../../addons/ofxGui/src/ofxBaseGui.cpp; sourceTree = SOURCE_ROOT; };
+		9FD1B8191BFBB7DE00A8218E /* aubio */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = aubio; path = "../../ofxAubio/scripts/example_aubioDemo/aubio-0.4.2.darwin_framework/aubio.framework/aubio"; sourceTree = "<group>"; };
 		A3528DDFF05B00283552455D /* keep_alive.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = keep_alive.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/keep_alive.c; sourceTree = SOURCE_ROOT; };
 		B4A0A006318C06E07DDF19D6 /* usb_libusb10.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = usb_libusb10.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
@@ -576,7 +576,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AAB0C751BFB52C200A5D41F /* aubio in Frameworks */,
 				2A1A4FAC1BC41C9500D6E2E2 /* Carbon.framework in Frameworks */,
 				2A1A4FA71BC41C9500D6E2E2 /* Cocoa.framework in Frameworks */,
 				2A498D9B1BBEE6D100D143F6 /* libyaml.a in Frameworks */,
@@ -601,6 +600,7 @@
 				2A1A4FB11BC41C9500D6E2E2 /* QuickTime.framework in Frameworks */,
 				2A1A4FA41BC41C9500D6E2E2 /* GLUT.framework in Frameworks */,
 				2A1A4FAD1BC41C9500D6E2E2 /* CoreAudio.framework in Frameworks */,
+				9FD1B81A1BFBB7DE00A8218E /* aubio in Frameworks */,
 				2A1A4FB01BC41C9500D6E2E2 /* OpenGL.framework in Frameworks */,
 				2A498D931BBEE67300D143F6 /* libfftw3f.a in Frameworks */,
 			);
@@ -889,7 +889,7 @@
 		2A1A4F921BC41C9500D6E2E2 /* 3rd party frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2AAB0C741BFB52C200A5D41F /* aubio */,
+				9FD1B8191BFBB7DE00A8218E /* aubio */,
 				2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
