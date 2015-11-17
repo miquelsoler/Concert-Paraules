@@ -4,7 +4,7 @@
     "Max MIDI Note": 70.0
   },
   "Energy": {
-    "Min Energy": 0.0,
+    "Min Energy": 0.01,
     "Max Energy": 1.0
   },
   "Silence": {
