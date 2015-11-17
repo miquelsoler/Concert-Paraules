@@ -5,7 +5,7 @@
   },
   "Energy": {
     "Min Energy": 0.01,
-    "Max Energy": 1.0
+    "Max Energy": 0.3
   },
   "Silence": {
     "Enabled": true,
