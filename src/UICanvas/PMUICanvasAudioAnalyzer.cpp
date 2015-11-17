@@ -15,8 +15,8 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
     settings = &PMSettingsManagerAudioAnalyzers::getInstance();
 
-    pitchMinFreq = settings->getMaxPitchFreq();
-    pitchMaxFreq = settings->getMinPitchFreq();
+    pitchMinMidiNote = settings->getMaxPitchMidiNote();
+    pitchMaxMidiNote = settings->getMinPitchMidiNote();
 
     silenceOn = false;
 
@@ -34,12 +34,8 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         {
             addLabel("PITCH");
 
-            // Min/max pitch freqs
-            pitchRangedSlider = addRangeSlider("Freq (min/max)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &pitchMinFreq, &pitchMaxFreq, 300, 10);
-            pitchRangedSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
-
             // Current freq value
-            pitchSlider = addSlider("Freq (current)", settings->getMinPitchFreq(), settings->getMaxPitchFreq(), &pitchCurrentFreq, 300, 10);
+            pitchSlider = addSlider("Midi note", settings->getMinPitchMidiNote(), settings->getMaxPitchMidiNote(), &pitchCurrentMidiNote, 300, 10);
             pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
 
             addSpacer();
@@ -97,15 +93,15 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 {
     if (pitchParams.audioInputIndex != audioInputIndex) return;
 
-    if ((pitchParams.freq > settings->getMinPitchFreq()) && (pitchParams.freq < pitchMinFreq)) {
-        pitchMinFreq = pitchParams.freq;
+    if ((pitchParams.midiNote > settings->getMinPitchMidiNote()) && (pitchParams.midiNote < pitchMinMidiNote)) {
+        pitchMinMidiNote = pitchParams.midiNote;
     }
 
-    if (pitchParams.freq > pitchMaxFreq) {
-        pitchMaxFreq = pitchParams.freq;
+    if (pitchParams.midiNote > pitchMaxMidiNote) {
+        pitchMaxMidiNote = pitchParams.midiNote;
     }
 
-    pitchCurrentFreq = pitchParams.freq;
+    pitchCurrentMidiNote = pitchParams.midiNote;
 }
 
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)

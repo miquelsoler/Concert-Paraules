@@ -1,7 +1,7 @@
 {
   "Pitch": {
-    "Min Frequency": 100.0,
-    "Max Frequency": 400.0
+    "Min MIDI Note": 40.0,
+    "Max MIDI Note": 70.0
   },
   "Energy": {
     "Min Energy": 0.0,
@@ -21,6 +21,6 @@
     "Alpha": 0.1
   },
   "Smoothing": {
-    "Delta": 0.05
+    "Delta": 0.01
   }
 }

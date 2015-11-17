@@ -216,7 +216,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     float yMin = 1.0f;
     float yMax = 0.0f;
 
-    float y = ofMap(pitchParams.freq, audioAnalyzersSettings->getMinPitchFreq(), audioAnalyzersSettings->getMaxPitchFreq(), yMin, yMax, true);
+    float y = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), yMin, yMax, true);
 
     switch(renderer->getType())
     {

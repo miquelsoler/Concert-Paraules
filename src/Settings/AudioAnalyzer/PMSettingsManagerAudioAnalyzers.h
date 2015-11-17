@@ -20,8 +20,8 @@ public:
     PMSettingsManagerAudioAnalyzers();
     void createJSONSettings() {};
 
-    float getMinPitchFreq();
-    float getMaxPitchFreq();
+    float getMinPitchMidiNote();
+    float getMaxPitchMidiNote();
 
     float getMinEnergy();
     float getMaxEnergy();

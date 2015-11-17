@@ -22,7 +22,7 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-    shouldPaint.assign(numInputs, false); // Init all elements with false;
+    shouldPaint.assign(numInputs, true); // Init all elements with false;
 
 //    ofSetBackgroundAuto(false);
 }

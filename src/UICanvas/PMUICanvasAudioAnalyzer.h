@@ -32,10 +32,9 @@ private:
 
     void pitchChanged(pitchParams &pitchParams);
 
-    ofxUIRangeSlider    *pitchRangedSlider;
     ofxUISlider         *pitchSlider;
-    float               pitchMinFreq, pitchMaxFreq;
-    float               pitchCurrentFreq;
+    float               pitchMinMidiNote, pitchMaxMidiNote;
+    float pitchCurrentMidiNote;
 
     // Energy -----------------------------------
 

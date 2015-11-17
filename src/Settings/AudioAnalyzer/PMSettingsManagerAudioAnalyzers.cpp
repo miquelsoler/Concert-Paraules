@@ -7,8 +7,8 @@
 static const string FILENAME = "settings/audioAnalyzer.json";
 
 static const string STR_PITCH                   = "Pitch";
-static const string STR_PITCH_MINFREQ           = "Min Frequency";
-static const string STR_PITCH_MAXFREQ           = "Max Frequency";
+static const string STR_PITCH_MINMIDINOTE       = "Min MIDI Note";
+static const string STR_PITCH_MAXMIDINOTE       = "Max MIDI Note";
 static const string STR_ENERGY                  = "Energy";
 static const string STR_ENERGY_MIN              = "Min Energy";
 static const string STR_ENERGY_MAX              = "Max Energy";
@@ -38,12 +38,12 @@ PMSettingsManagerAudioAnalyzers::PMSettingsManagerAudioAnalyzers() : PMSettingsM
     }
 }
 
-float PMSettingsManagerAudioAnalyzers::getMinPitchFreq() {
-    return json[STR_PITCH][STR_PITCH_MINFREQ].asFloat();
+float PMSettingsManagerAudioAnalyzers::getMinPitchMidiNote() {
+    return json[STR_PITCH][STR_PITCH_MINMIDINOTE].asFloat();
 }
 
-float PMSettingsManagerAudioAnalyzers::getMaxPitchFreq() {
-    return json[STR_PITCH][STR_PITCH_MAXFREQ].asFloat();
+float PMSettingsManagerAudioAnalyzers::getMaxPitchMidiNote() {
+    return json[STR_PITCH][STR_PITCH_MAXMIDINOTE].asFloat();
 }
 
 float PMSettingsManagerAudioAnalyzers::getMinEnergy() {
