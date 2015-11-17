@@ -112,7 +112,7 @@
 		2A8250ED1BCE5D6600EEADDF /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250E81BCE5D6600EEADDF /* tinyxml.cpp */; };
 		2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */; };
 		2A8250EF1BCE5D6600EEADDF /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */; };
-		2A87DC741BFBCBA500475021 /* aubio in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A87DC731BFBCBA500475021 /* aubio */; };
+		2A87DC761BFBCD6400475021 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A87DC751BFBCD6400475021 /* aubio.framework */; };
 		2AC0886A1BFB59BC00488E72 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */; };
 		2AC0886B1BFB59BC00488E72 /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */; };
 		2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */; };
@@ -481,7 +481,7 @@
 		2A8250E91BCE5D6600EEADDF /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		2A87DC731BFBCBA500475021 /* aubio */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = aubio; path = "../../ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework/aubio"; sourceTree = "<group>"; };
+		2A87DC751BFBCD6400475021 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aubio.framework; sourceTree = "<group>"; };
 		2AC0885F1BFB59BC00488E72 /* ofxAubio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubio.h; sourceTree = "<group>"; };
 		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
 		2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioBeat.h; sourceTree = "<group>"; };
@@ -595,12 +595,12 @@
 				2A1A4FAA1BC41C9500D6E2E2 /* ApplicationServices.framework in Frameworks */,
 				2A1A4FA51BC41C9500D6E2E2 /* Accelerate.framework in Frameworks */,
 				2A1A4FA91BC41C9500D6E2E2 /* AGL.framework in Frameworks */,
+				2A87DC761BFBCD6400475021 /* aubio.framework in Frameworks */,
 				2A1A4FAE1BC41C9500D6E2E2 /* CoreFoundation.framework in Frameworks */,
 				2A1A4FB31BC41C9500D6E2E2 /* QTKit.framework in Frameworks */,
 				2A1A4FB11BC41C9500D6E2E2 /* QuickTime.framework in Frameworks */,
 				2A1A4FA41BC41C9500D6E2E2 /* GLUT.framework in Frameworks */,
 				2A1A4FAD1BC41C9500D6E2E2 /* CoreAudio.framework in Frameworks */,
-				2A87DC741BFBCBA500475021 /* aubio in Frameworks */,
 				2A1A4FB01BC41C9500D6E2E2 /* OpenGL.framework in Frameworks */,
 				2A498D931BBEE67300D143F6 /* libfftw3f.a in Frameworks */,
 			);
@@ -889,7 +889,7 @@
 		2A1A4F921BC41C9500D6E2E2 /* 3rd party frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2A87DC731BFBCBA500475021 /* aubio */,
+				2A87DC751BFBCD6400475021 /* aubio.framework */,
 				2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */,
 			);
 			name = "3rd party frameworks";
@@ -1887,6 +1887,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"\"$(SRCROOT)/../../../libs/glut/lib/osx\"",
+					"\"$(SRCROOT)/../../../addons/ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1966,6 +1968,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"\"$(SRCROOT)/../../../libs/glut/lib/osx\"",
+					"\"$(SRCROOT)/../../../addons/ofxAubio/example_aubioDemo/aubio-0.4.2.darwin_framework",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
