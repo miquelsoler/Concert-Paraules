@@ -396,7 +396,7 @@ void PMDeviceAudioAnalyzer::updateSilenceTime(int channel)
         silenceParams.silenceTime = 0;
         ofNotifyEvent(eventSilenceStateChanged, silenceParams, this);
     }
-    cout<<timeOfSilence<<endl;
+//    cout<<timeOfSilence<<endl;
 }
 
 void PMDeviceAudioAnalyzer::detectedEndSilence(int channel)
