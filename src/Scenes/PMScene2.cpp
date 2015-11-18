@@ -243,7 +243,10 @@ void PMScene2::energyChanged(energyParams &energyParams)
             double eulerIdentity = M_E;
             linearSize = powf(linearSize, float(1.0/eulerIdentity));
 
-            float size = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax);
+            float size = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
+
+            // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
+            if (isnan(size)) size = 0;
 
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
             paintbrushRenderer->setSize(energyParams.audioInputIndex, size);
