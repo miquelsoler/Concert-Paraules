@@ -234,14 +234,18 @@ void PMScene2::energyChanged(energyParams &energyParams)
     float normalizedSizeMin = 0.25f;
     float normalizedSizeMax = 1.0f;
 
-    float size = ofMap(energyParams.energy,
-            audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(),
-            normalizedSizeMin, normalizedSizeMax, true);
-
     switch(renderer->getType())
     {
-        case RENDERERTYPE_PAINTBRUSH: {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *) renderer;
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
+            float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
+            double eulerIdentity = M_E;
+            linearSize = powf(linearSize, float(1.0/eulerIdentity));
+
+            float size = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax);
+
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
             paintbrushRenderer->setSize(energyParams.audioInputIndex, size);
             break;
         }
