@@ -94,6 +94,7 @@ void PMScene2::setup()
                     ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
                     ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
                     ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+                    ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
 
                     audioInputIndex++;
@@ -273,16 +274,16 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            if (!silenceParams.isSilent)
-            {
-                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
-                break;
-            }
+//            if (!silenceParams.isSilent)
+//            {
+//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
+//            }
+            break;
         }
         default: break;
     }
-    renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
+//    renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
 }
 
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
@@ -291,16 +292,18 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            if (!silenceParams.isSilent)
+            if (!pauseParams.isPaused)
             {
+                cout << "Paint!" << endl;
                 PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
                 paintbrushRenderer->changeBaseAngle(pauseParams.audioInputIndex);
+
                 break;
             }
         }
         default: break;
     }
-    renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isSilent);
+    renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isPaused);
 }
 
 void PMScene2::onsetDetected(onsetParams &onsetParams)
