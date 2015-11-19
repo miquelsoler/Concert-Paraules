@@ -184,7 +184,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     freqBandsParams.deviceID = deviceID;
     freqBandsParams.audioInputIndex = audioInputIndex;
     
-    cout<<input<<endl;
+//    cout<<input<<endl;
 
     for (unsigned int i =0; i <numUsedChannels; ++i)
     {
