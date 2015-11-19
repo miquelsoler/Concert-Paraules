@@ -207,19 +207,19 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         if (wasSilent != isSilent) // Changes in silence (ON>OFF or OFF>ON)
         {
             wasSilent = isSilent;
-            if(isSilent){
+            if (isSilent)
                 detectedSilence(channel);
-            }else{
+            else
                 detectedEndSilence(channel);
-            }
         }
         
         
-        if(isInSilence[channel])
+        if (isInSilence[channel])
             updateSilenceTime(channel);
 
         if (!isSilent)
         {
+//            cout << "!isSilent" << endl;
             // Pitch
             {
                 if (currentMidiNote)
@@ -451,7 +451,7 @@ void PMDeviceAudioAnalyzer::checkShtSound(int channel)
         shtParams.channel=channel;
         shtParams.time=timeOfSht;
         ofNotifyEvent(eventShtHappened, shtParams, this);
-        cout<<"-------------------SHT-----------------"<<endl;
+//        cout<<"-------------------SHT-----------------"<<endl;
     }
     
 }
