@@ -15,7 +15,7 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels)
     channels=_channels;
     pixelBufferBack.allocate(fbo->getWidth()*fbo->getHeight()*3,GL_DYNAMIC_READ);
     pixelBufferFront.allocate(fbo->getWidth()*fbo->getHeight()*3,GL_DYNAMIC_READ);
-    //    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
+    //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
     
     fileName = "testMovie";
     fileExt = ".mov"; // ffmpeg uses the extension to determine the container type. run 'ffmpeg -formats' to see supported formats
@@ -108,7 +108,12 @@ void PMRecorder::discardRecording()
 {
     bRecording = false;
     vidRecorder.close();
-    //TODO erase last clip.
+    //TODO delete last clip.
+}
+
+bool PMRecorder::isRecording()
+{
+    return bRecording;
 }
 
 void PMRecorder::recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args){

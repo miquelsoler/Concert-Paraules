@@ -67,15 +67,8 @@ void PMDeviceAudioAnalyzer::setup(unsigned int _audioInputIndex, PMDAA_ChannelMo
     useSilence = _useSilence;
     wasSilent = false;
     silenceTimeTreshold=silenceQueueLength;
-    pauseTimeTreshold=1000;
     isInSilence.resize((unsigned long)numUsedChannels);
-    isInPause.resize((unsigned long)numUsedChannels);
-    silenceBeginTime.resize((unsigned long) numUsedChannels);
-
-    //sht
-    shtTimeTreshold=150;
-    isShtSounding.resize((unsigned long) numUsedChannels);
-    shtBeginTime.resize((unsigned long)numUsedChannels);
+    beginSilenceTime.resize((unsigned long) numUsedChannels);
 
     // Onsets
     onsetsThreshold = _onsetsThreshold;
@@ -168,10 +161,6 @@ void PMDeviceAudioAnalyzer::clear()
 void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
     int numUsedChannels = (channelMode == PMDAA_CHANNEL_MONO) ? 1 : inChannels;
-    
-//    for (int i=0; i<bufferSize*nChannels; i++){
-//        input[i]*=5;
-//    }
 
     // Init of audio event params struct
     pitchParams pitchParams;
@@ -189,7 +178,6 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     freqBandsParams freqBandsParams;
     freqBandsParams.deviceID = deviceID;
     freqBandsParams.audioInputIndex = audioInputIndex;
-    
 
     for (unsigned int i =0; i <numUsedChannels; ++i)
     {
@@ -205,8 +193,12 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         float currentMidiNote = vAubioPitches[i]->latestPitch;
         float currentPitchConfidence = vAubioPitches[i]->pitchConfidence;
         float modifiedSmoothingDelta=smoothingDelta*ofMap(currentPitchConfidence, 0.5, 1, 0, 1, true);
+<<<<<<< HEAD
+=======
+//        cout<<modifiedSmoothingDelta<<endl;
+>>>>>>> 9717986ad66f288f7f300b941eb444d562069a33
 //        bool isSilent = (currentMidiNote == 0);
-        bool isSilent = (getEnergy(i) < 0.001);
+        bool isSilent = (getEnergy(i) < 0.05);
 
         // Silence
         if (wasSilent != isSilent) // Changes in silence (ON>OFF or OFF>ON)
@@ -219,7 +211,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
             }
         }
         
-//        cout<<"-----------------------"<<isInPause[channel]<<endl;
+        
         if(isInSilence[channel])
             updateSilenceTime(channel);
 
@@ -244,7 +236,6 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
                         pitchParams.confidence = vAubioPitches[i]->pitchConfidence;
                         ofNotifyEvent(eventPitchChanged, pitchParams, this);
                     }
-                    oldMidiNotesValues[i]=currentMidiNote;
                 }
             }
 
@@ -254,11 +245,6 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
                 energyParams.energy = getEnergy(channel);
                 ofNotifyEvent(eventEnergyChanged, energyParams, this);
             }
-            
-            // ssshhhht
-            checkShtSound(channel);
-            
-            
         }
 
         bool isOnset = vAubioOnsets[i]->received();
@@ -379,25 +365,32 @@ float PMDeviceAudioAnalyzer::getEnergy(unsigned int channel)
     float *energies = vAubioMelBands[channel]->energies;
 
     float result = 0.0f;
+    float weightsum = 0.0f;
 
     for (int i=0; i<NUM_MELBANDS; i++)
     {
-        result+=energies[i];
+        //cout<<energies[i]<<"----";
+        float weight=(energies[i]);
+        result+=weight*energies[i];
+//        cout<<weight<<"......."<<result<<endl;
+        weightsum+=weight;
+//        if (energies[i] > result)
+//            result = energies[i]; //FIXME canviar l'energia predominant per un canvi d'energies
     }
-    
-    result/=NUM_MELBANDS; //Applied vector aritmetic mean https://en.wikipedia.org/wiki/Weighted_arithmetic_mean
+    //cout<<endl;
+    result/=weightsum; //Applied vector aritmetic mean https://en.wikipedia.org/wiki/Weighted_arithmetic_mean
     return result;
 }
 
 void PMDeviceAudioAnalyzer::detectedSilence(int channel)
 {
-    silenceBeginTime[channel]=ofGetElapsedTimeMillis();
+    beginSilenceTime[channel]=ofGetElapsedTimeMillis();
     isInSilence[channel]=true;
 }
 
 void PMDeviceAudioAnalyzer::updateSilenceTime(int channel)
 {
-    float timeOfSilence = ofGetElapsedTimeMillis()-silenceBeginTime[channel];
+    float timeOfSilence = ofGetElapsedTimeMillis()-beginSilenceTime[channel];
     if(timeOfSilence > silenceTimeTreshold){
         silenceParams silenceParams;
         silenceParams.deviceID = deviceID;
@@ -407,16 +400,7 @@ void PMDeviceAudioAnalyzer::updateSilenceTime(int channel)
         silenceParams.silenceTime = 0;
         ofNotifyEvent(eventSilenceStateChanged, silenceParams, this);
     }
-    if(timeOfSilence > pauseTimeTreshold){
-        pauseParams pauseParams;
-        pauseParams.deviceID = deviceID;
-        pauseParams.audioInputIndex = audioInputIndex;
-        pauseParams.channel = channel;
-        pauseParams.isPause = true;
-        pauseParams.pauseTime = 0;
-        ofNotifyEvent(eventPauseStateChanged, pauseParams, this);
-        isInPause[channel]=true;
-    }
+    cout<<timeOfSilence<<endl;
 }
 
 void PMDeviceAudioAnalyzer::detectedEndSilence(int channel)
@@ -424,59 +408,12 @@ void PMDeviceAudioAnalyzer::detectedEndSilence(int channel)
     silenceParams silenceParams;
     silenceParams.deviceID = deviceID;
     silenceParams.audioInputIndex = audioInputIndex;
-    float timeOfSilence = ofGetElapsedTimeMillis()-silenceBeginTime[channel];
+    float timeOfSilence = ofGetElapsedTimeMillis()-beginSilenceTime[channel];
     if(timeOfSilence > silenceTimeTreshold){
         silenceParams.channel = channel;
         silenceParams.isSilent = false;
         silenceParams.silenceTime = timeOfSilence;
         ofNotifyEvent(eventSilenceStateChanged, silenceParams, this);
     }
-    if(isInPause[channel]){
-        pauseParams pauseParams;
-        pauseParams.deviceID = deviceID;
-        pauseParams.audioInputIndex = audioInputIndex;
-        pauseParams.channel = channel;
-        pauseParams.isPause = true;
-        pauseParams.pauseTime = timeOfSilence;
-        ofNotifyEvent(eventPauseStateChanged, pauseParams, this);
-    }
-    isInPause[channel]=false;
     isInSilence[channel]=false;
-}
-
-void PMDeviceAudioAnalyzer::checkShtSound(int channel)
-{
-    float *melbands = vAubioMelBands[channel]->energies;
-    float lowBands=0.0f;
-    float highBands=0.0f;
-    int high_low_limit=NUM_MELBANDS*2/3;
-    for(int i=0; i<high_low_limit; i++){
-        lowBands+=melbands[i];
-    }
-    lowBands/=high_low_limit;
-    for(int i=high_low_limit; i<NUM_MELBANDS; i++){
-        highBands+=melbands[i];
-    }
-    highBands/=(NUM_MELBANDS-high_low_limit);
-    
-    
-    if(highBands > 3*lowBands && !isShtSounding[channel]){
-        shtBeginTime[channel]=ofGetElapsedTimeMillis();
-        isShtSounding[channel]=true;
-    }else if(highBands<3*lowBands){
-        isShtSounding[channel]=false;
-    }
-    
-    
-    float timeOfSht=ofGetElapsedTimeMillis()-shtBeginTime[channel];
-    if(isShtSounding[channel] &&  timeOfSht > shtTimeTreshold){
-        shtParams shtParams;
-        shtParams.deviceID=deviceID;
-        shtParams.audioInputIndex=audioInputIndex;
-        shtParams.channel=channel;
-        shtParams.time=timeOfSht;
-        ofNotifyEvent(eventShtHappened, shtParams, this);
-//        cout<<"-------------------SHT-----------------"<<endl;
-    }
-    
 }
