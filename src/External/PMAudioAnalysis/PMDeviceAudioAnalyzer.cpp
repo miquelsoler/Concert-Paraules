@@ -248,11 +248,9 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
                 energyParams.energy = getEnergy(channel);
                 ofNotifyEvent(eventEnergyChanged, energyParams, this);
             }
-            
+
             // ssshhhht
             checkShtSound(channel);
-            
-            
         }
 
         bool isOnset = vAubioOnsets[i]->received();
