@@ -10,8 +10,10 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float ANGLE_VARIATION = 20;
 static const float ANGLE_VARIATION_MAX_OFFSET = 30;
-static const float BRUSH_SPEED = 3.0;
+static const float BRUSH_SPEED = 10.0;
 static const float OFFSET_SCALE = 1.5;
+
+static const float PAINTING_MARGIN_PCT = 0.05;
 
 
 PMBrushContainer::PMBrushContainer(string filename)
@@ -36,19 +38,15 @@ void PMBrushContainer::update()
 
     int viewWidth = ofGetWidth();
     int viewHeight = ofGetHeight();
+    float margin = PAINTING_MARGIN_PCT * viewWidth;
 
-    if (x > viewWidth) x -= viewWidth;
-    if (x < 0) x += viewWidth;
-    if (y > viewHeight) y -= viewHeight;
-    if (y < 0) y += viewHeight;
+    if (x > viewWidth - margin) x -= viewWidth - 2*margin;
+    if (x < margin) x += (viewWidth - 2*margin);
+    if (y > viewHeight - margin) y -= viewHeight - 2*margin;
+    if (y < margin) y += viewHeight - 2*margin;
 
     xOffset = generalOffset * sinAngle * 100.0 * OFFSET_SCALE;
     yOffset = -generalOffset * cosAngle * 100.0 * OFFSET_SCALE;
-
-    if (baseAngle == 10)
-    {
-        cout << "Offset: (" << xOffset << ", " << yOffset << ")" << endl;
-    }
 }
 
 void PMBrushContainer::draw()
@@ -67,28 +65,28 @@ void PMBrushContainer::setOrigin(PMBrushContainerOrigin origin)
         case LEFT:
         {
             baseAngle = 0;
-            setPositionX(0);
+            setPositionX(PAINTING_MARGIN_PCT);
             setPositionY(randomNormalizedPos);
             break;
         }
         case RIGHT:
         {
             baseAngle = 180;
-            setPositionX(1);
+            setPositionX(1 - PAINTING_MARGIN_PCT);
             setPositionY(randomNormalizedPos);
             break;
         }
         case UP:
         {
             baseAngle = 270;
-            setPositionY(0);
+            setPositionY(PAINTING_MARGIN_PCT);
             setPositionX(randomNormalizedPos);
             break;
         }
         case DOWN:
         {
             baseAngle = 90;
-            setPositionY(1);
+            setPositionY(1 - PAINTING_MARGIN_PCT);
             setPositionX(randomNormalizedPos);
             break;
         }
