@@ -9,7 +9,8 @@ PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRende
     for (int i=0; i<numInputs; ++i)
     {
         PMBrushContainer *brush = new PMBrushContainer("brushes/pinzell.png");
-        brush->setPosition(0.5, 0.5);
+//        brush->setPosition(0.5, 0.5);
+        brush->setOrigin(PMBrushContainerOrigin(i % NUM_ORIGINS));
         brush->setSize(1);
         brushes.push_back(brush);
     }
@@ -23,6 +24,12 @@ void PMRendererPaintbrush::setup()
 void PMRendererPaintbrush::update()
 {
     PMBaseRenderer::update();
+
+    for (int i=0; i<numInputs; ++i)
+    {
+//        if (!shouldPaint[i]) continue;
+        brushes[i]->update();
+    }
 }
 
 void PMRendererPaintbrush::drawIntoFBO()
@@ -40,7 +47,7 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         for (int i=0; i<numInputs; ++i)
         {
-            if (!shouldPaint[i]) continue;
+//            if (!shouldPaint[i]) continue;
 
             ofSetColor(255, 0, 0, 255);
             brushes[i]->draw();
@@ -53,6 +60,11 @@ void PMRendererPaintbrush::drawIntoFBO()
     ofSetColor(255, 255, 255, 255);
 
     fbo.draw(0, 0);
+}
+
+void PMRendererPaintbrush::changeBaseAngle(unsigned int inputIndex)
+{
+    brushes[inputIndex]->changeBaseAngle();
 }
 
 void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)

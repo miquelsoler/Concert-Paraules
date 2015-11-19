@@ -21,6 +21,8 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
 
+    void changeBaseAngle(unsigned int inputIndex);
+
     void setPosition(unsigned int inputIndex, float normalizedX, float normalizedY);
     void setPositionX(unsigned int inputIndex, float normalizedX);
     void setPositionY(unsigned int inputIndex, float normalizedY);

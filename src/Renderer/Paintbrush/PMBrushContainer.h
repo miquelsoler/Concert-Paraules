@@ -7,22 +7,38 @@
 
 #include "PMBaseRenderer.h"
 
+typedef enum
+{
+    LEFT = 0,
+    RIGHT = 1,
+    UP = 2,
+    DOWN = 3,
+    NUM_ORIGINS
+} PMBrushContainerOrigin;
+
 class PMBrushContainer
 {
 public:
 
     PMBrushContainer(string filename);
 
+    void update();
+    void draw();
+
+    void setOrigin(PMBrushContainerOrigin);
+    void changeBaseAngle();
+
     void setPosition(float normalizedX, float normalizedY);
     void setPositionX(float normalizedX);
     void setPositionY(float normalizedY);
     void setSize(float normalizedSize);
 
-    void draw();
-
 private:
 
-    int x, y;
+    float baseAngle;
+    float variationAngle;
+
+    float x, y;
     int size;
 
     ofImage brush;
