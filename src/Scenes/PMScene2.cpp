@@ -11,6 +11,8 @@
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 
+#include "PMRecorder.hpp"
+
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
@@ -204,6 +206,15 @@ void PMScene2::keyReleased(int key)
             ofClear(backgroundColor);
 
             break;
+        }
+        case 'r':
+        case 'R':
+        {
+            if(PMRecorder::getInstance().isRecording()){
+               PMRecorder::getInstance().startRecording();
+            }else{
+                PMRecorder::getInstance().stopRecording();
+            }
         }
         default: break;
     }

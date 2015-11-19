@@ -32,6 +32,7 @@ public:
     void startRecording();
     void stopRecording();
     void discardRecording();
+    bool isRecording();
     
 private:
     ofxVideoRecorder    vidRecorder;
