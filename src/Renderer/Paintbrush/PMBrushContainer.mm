@@ -4,20 +4,22 @@
 
 #include "PMBrushContainer.h"
 
+#define degreesToRadians(angleDegrees) (angleDegrees * M_PI / 180.0)
+
 static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
-
-static const float ANGLE_LARGE_VARIATION = 50;
-
+static const float ANGLE_VARIATION = 20;
+static const float ANGLE_VARIATION_MAX_OFFSET = 30;
 static const float BRUSH_SPEED = 3.0;
 
-#define degreesToRadians(angleDegrees) (angleDegrees * M_PI / 180.0)
 
 PMBrushContainer::PMBrushContainer(string filename)
 {
     brush = ofImage(filename);
 
-    variationAngle = 0;
+    xOffset = 0;
+    yOffset = 0;
+    generalOffset = 0;
 
     ofSeedRandom();
 }
@@ -40,7 +42,7 @@ void PMBrushContainer::update()
 void PMBrushContainer::draw()
 {
     int halfSize = size >> 1;
-    brush.draw(x - halfSize, y - halfSize, size, size);
+    brush.draw(x - halfSize + xOffset, y - halfSize + yOffset, size, size);
 }
 
 void PMBrushContainer::setOrigin(PMBrushContainerOrigin origin)
@@ -86,10 +88,14 @@ void PMBrushContainer::changeBaseAngle()
 {
     int sign = ofSign(ofRandom(-1, 1));
     if (sign == 0) sign = 1;
-    baseAngle += sign * ANGLE_LARGE_VARIATION;
+    baseAngle += sign * (ANGLE_VARIATION + ofRandom(ANGLE_VARIATION_MAX_OFFSET));
     baseAngle = ofWrapDegrees(baseAngle, -360, 360);
 }
 
+void PMBrushContainer::setOffset(float offset)
+{
+    generalOffset = offset;
+}
 
 void PMBrushContainer::setPosition(float normalizedX, float normalizedY)
 {

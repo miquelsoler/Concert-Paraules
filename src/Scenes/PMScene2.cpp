@@ -213,15 +213,21 @@ void PMScene2::keyReleased(int key)
 
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
-    float yMin = 1.0f;
-    float yMax = 0.0f;
-
-    float y = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), yMin, yMax, true);
-
     switch(renderer->getType())
     {
-        case RENDERERTYPE_PAINTBRUSH: {
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            float minOffset = -1.0f;
+            float maxOffset = 1.0f;
+            float paintOffset = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+
+//          float yMin = 1.0f;
+//          float yMax = 0.0f;
+//          float y = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), yMin, yMax, true);
+
+
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, paintOffset);
 //            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, y);
             break;
         }

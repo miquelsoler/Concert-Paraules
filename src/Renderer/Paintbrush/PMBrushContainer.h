@@ -27,6 +27,7 @@ public:
 
     void setOrigin(PMBrushContainerOrigin);
     void changeBaseAngle();
+    void setOffset(float offset);
 
     void setPosition(float normalizedX, float normalizedY);
     void setPositionX(float normalizedX);
@@ -36,9 +37,9 @@ public:
 private:
 
     float baseAngle;
-    float variationAngle;
 
     float x, y;
+    float xOffset, yOffset, generalOffset;
     int size;
 
     ofImage brush;
