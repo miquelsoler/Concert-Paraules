@@ -1,4 +1,5 @@
-ofxGui
-ofxKinect
 ofxAudioAnalyzer
+ofxGui
 ofxJSON
+ofxKinect
+ofxVideoRecorder
