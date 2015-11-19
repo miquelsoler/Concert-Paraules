@@ -26,6 +26,7 @@
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
 		2A0360621BD4F951007E1D52 /* ofxAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A035FFF1BD4F951007E1D52 /* ofxAudioAnalyzer.cpp */; };
 		2A0EF8571BD7F3B300D40230 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */; };
+		2A1731901BFE016F00FD9554 /* ofxVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A17318E1BFE016F00FD9554 /* ofxVideoRecorder.cpp */; };
 		2A1A4FA41BC41C9500D6E2E2 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */; };
 		2A1A4FA51BC41C9500D6E2E2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F931BC41C9500D6E2E2 /* Accelerate.framework */; };
 		2A1A4FA61BC41C9500D6E2E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1A4F941BC41C9500D6E2E2 /* AppKit.framework */; };
@@ -318,6 +319,8 @@
 		2A0360611BD4F951007E1D52 /* yamlast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yamlast.h; sourceTree = "<group>"; };
 		2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMAudioAnalyzer.cpp; sourceTree = "<group>"; };
 		2A0EF8561BD7F3B300D40230 /* PMAudioAnalyzer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMAudioAnalyzer.hpp; sourceTree = "<group>"; };
+		2A17318E1BFE016F00FD9554 /* ofxVideoRecorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVideoRecorder.cpp; sourceTree = "<group>"; };
+		2A17318F1BFE016F00FD9554 /* ofxVideoRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxVideoRecorder.h; sourceTree = "<group>"; };
 		2A1A4F911BC41C9500D6E2E2 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		2A1A4F931BC41C9500D6E2E2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		2A1A4F941BC41C9500D6E2E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -889,6 +892,24 @@
 			path = tnt;
 			sourceTree = "<group>";
 		};
+		2A17318C1BFE016F00FD9554 /* ofxVideoRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				2A17318D1BFE016F00FD9554 /* src */,
+			);
+			name = ofxVideoRecorder;
+			sourceTree = "<group>";
+		};
+		2A17318D1BFE016F00FD9554 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2A17318E1BFE016F00FD9554 /* ofxVideoRecorder.cpp */,
+				2A17318F1BFE016F00FD9554 /* ofxVideoRecorder.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxVideoRecorder/src;
+			sourceTree = "<group>";
+		};
 		2A1A4F921BC41C9500D6E2E2 /* 3rd party frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1412,6 +1433,7 @@
 				2A8250E31BCE5D6600EEADDF /* ofxXmlSettings */,
 				2A6549751BEA84B900F272F3 /* ofxAppUtils-PM */,
 				2AC0885D1BFB59BC00488E72 /* ofxAubio */,
+				2A17318C1BFE016F00FD9554 /* ofxVideoRecorder */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -1638,6 +1660,7 @@
 				2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */,
 				2A8250BC1BCE5CC500EEADDF /* ofxUICanvas.cpp in Sources */,
 				2A8250C51BCE5CC500EEADDF /* ofxUIImageSampler.cpp in Sources */,
+				2A1731901BFE016F00FD9554 /* ofxVideoRecorder.cpp in Sources */,
 				2A8250D41BCE5CC500EEADDF /* ofxUIScrollableCanvas.cpp in Sources */,
 				2ADCED431BC4834300F7F86A /* ofxEasingExpo.cpp in Sources */,
 				2A8250D91BCE5CC500EEADDF /* ofxUISuperCanvas.cpp in Sources */,
