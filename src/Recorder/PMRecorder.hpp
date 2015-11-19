@@ -17,16 +17,23 @@
 
 class PMRecorder
 {
-private:
+public:
     static PMRecorder &getInstance()
     {
         static PMRecorder instance;
         return instance;
     }
     
-    void init(){};
+    void init(ofFbo *fbo, int _samplerate, int _channels);
+    void addVideoFrame();
+    void addAudioBuffer(float *input, int bufferSize, int nChannels);
+    void exit();
     
+    void startRecording();
+    void stopRecording();
+    void discardRecording();
     
+private:
     ofxVideoRecorder    vidRecorder;
     bool bRecording;
     string fileName;
@@ -34,6 +41,9 @@ private:
     
     void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args);
     
+    int sampleRate;
+    int channels;
+    ofFbo *fbo;
     ofPixels pixels;
     ofBoxPrimitive box;
     ofBufferObject pixelBufferBack, pixelBufferFront;
