@@ -28,7 +28,8 @@ void PMRendererPaintbrush::update()
 
     for (int i=0; i<numInputs; ++i)
     {
-//        if (!isActive[i]) continue;
+        if (!isActive[i]) continue;
+
         brushes[i]->update();
     }
 }
@@ -44,7 +45,7 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         for (int i=0; i<numInputs; ++i)
         {
-//            if (!isActive[i]) continue;
+            if (!isActive[i]) continue;
 
             ofSetColor(tintColor);
             brushes[i]->draw();

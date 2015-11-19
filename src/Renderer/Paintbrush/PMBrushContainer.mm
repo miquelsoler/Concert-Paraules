@@ -11,7 +11,7 @@ static const float MAX_ORIGIN = 0.8f;
 static const float ANGLE_VARIATION = 20;
 static const float ANGLE_VARIATION_MAX_OFFSET = 30;
 static const float BRUSH_SPEED = 3.0;
-static const float OFFSET_SCALE = 5.0;
+static const float OFFSET_SCALE = 1.5;
 
 
 PMBrushContainer::PMBrushContainer(string filename)
