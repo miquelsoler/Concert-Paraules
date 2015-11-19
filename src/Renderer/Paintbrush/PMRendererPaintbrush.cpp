@@ -4,11 +4,13 @@
 
 #include "PMRendererPaintbrush.h"
 
+static ofColor tintColor = ofColor(0, 0, 0, 255);
+
 PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
 {
     for (int i=0; i<numInputs; ++i)
     {
-        PMBrushContainer *brush = new PMBrushContainer("brushes/pinzell.png");
+        PMBrushContainer *brush = new PMBrushContainer("brushes/japan.png");
 //        brush->setPosition(0.5, 0.5);
         brush->setOrigin(PMBrushContainerOrigin(i % NUM_ORIGINS));
         brush->setSize(1);
@@ -36,10 +38,6 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-//        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-//        ofSetColor(255, 255, 255, 5);
-//        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-
         ofSetColor(255, 255, 255, 1);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
@@ -49,7 +47,7 @@ void PMRendererPaintbrush::drawIntoFBO()
         {
 //            if (!isActive[i]) continue;
 
-            ofSetColor(255, 0, 0, 255);
+            ofSetColor(tintColor);
             brushes[i]->draw();
         }
 
@@ -66,6 +64,12 @@ void PMRendererPaintbrush::changeBaseAngle(unsigned int inputIndex)
 {
     brushes[inputIndex]->changeBaseAngle();
 }
+
+void PMRendererPaintbrush::setOffset(unsigned int inputIndex, float offset)
+{
+    brushes[inputIndex]->setOffset(offset);
+}
+
 
 void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)
 {
