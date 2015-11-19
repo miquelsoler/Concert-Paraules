@@ -31,7 +31,7 @@ public:
     PMRendererType getType() { return type; };
 
     void setShouldPaint(unsigned int inputIndex, bool shouldPaint);
-//    ofFbo* getFbo(){return fbo;};
+    ofFbo* getFbo(){return &fbo;};
 
 protected:
 
