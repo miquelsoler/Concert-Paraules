@@ -9,8 +9,8 @@
   },
   "Silence": {
     "Enabled": true,
-    "Threshold (dB)": -30,
-    "Queue Length": 200
+    "Threshold (dB)": -45,
+    "Queue Length (ms)": 500
   },
   "Mel Bands": {
     "Enabled": true,

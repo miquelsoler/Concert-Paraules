@@ -4,14 +4,13 @@
 
 #include "PMRendererPaintbrush.h"
 
-static ofColor tintColor = ofColor(0, 0, 0, 255);
+static ofColor tintColor = ofColor(200, 200, 0, 255);
 
 PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
 {
     for (int i=0; i<numInputs; ++i)
     {
-        PMBrushContainer *brush = new PMBrushContainer("brushes/japan.png");
-//        brush->setPosition(0.5, 0.5);
+        PMBrushContainer *brush = new PMBrushContainer("brushes/pinzell2.png");
         brush->setOrigin(PMBrushContainerOrigin(i % NUM_ORIGINS));
         brush->setSize(1);
         brushes.push_back(brush);
@@ -29,7 +28,8 @@ void PMRendererPaintbrush::update()
 
     for (int i=0; i<numInputs; ++i)
     {
-//        if (!isActive[i]) continue;
+        if (!isActive[i]) continue;
+
         brushes[i]->update();
     }
 }
@@ -45,7 +45,7 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         for (int i=0; i<numInputs; ++i)
         {
-//            if (!isActive[i]) continue;
+            if (!isActive[i]) continue;
 
             ofSetColor(tintColor);
             brushes[i]->draw();

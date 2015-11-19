@@ -11,6 +11,7 @@ static const float MAX_ORIGIN = 0.8f;
 static const float ANGLE_VARIATION = 20;
 static const float ANGLE_VARIATION_MAX_OFFSET = 30;
 static const float BRUSH_SPEED = 3.0;
+static const float OFFSET_SCALE = 1.5;
 
 
 PMBrushContainer::PMBrushContainer(string filename)
@@ -27,8 +28,11 @@ PMBrushContainer::PMBrushContainer(string filename)
 void PMBrushContainer::update()
 {
     double angleInRadians = degreesToRadians(baseAngle);
-    x += BRUSH_SPEED * cos(angleInRadians);
-    y += BRUSH_SPEED * sin(angleInRadians);
+    double cosAngle = cos(angleInRadians);
+    double sinAngle = sin(angleInRadians);
+
+    x += BRUSH_SPEED * cosAngle;
+    y += BRUSH_SPEED * sinAngle;
 
     int viewWidth = ofGetWidth();
     int viewHeight = ofGetHeight();
@@ -37,6 +41,14 @@ void PMBrushContainer::update()
     if (x < 0) x += viewWidth;
     if (y > viewHeight) y -= viewHeight;
     if (y < 0) y += viewHeight;
+
+    xOffset = generalOffset * sinAngle * 100.0 * OFFSET_SCALE;
+    yOffset = -generalOffset * cosAngle * 100.0 * OFFSET_SCALE;
+
+    if (baseAngle == 10)
+    {
+        cout << "Offset: (" << xOffset << ", " << yOffset << ")" << endl;
+    }
 }
 
 void PMBrushContainer::draw()

@@ -221,14 +221,8 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             float maxOffset = 1.0f;
             float paintOffset = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
 
-//          float yMin = 1.0f;
-//          float yMax = 0.0f;
-//          float y = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), yMin, yMax, true);
-
-
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
             paintbrushRenderer->setOffset(pitchParams.audioInputIndex, paintOffset);
-//            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, y);
             break;
         }
         default: break;
@@ -237,13 +231,13 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 
 void PMScene2::energyChanged(energyParams &energyParams)
 {
-    float normalizedSizeMin = 0.25f;
-    float normalizedSizeMax = 1.0f;
-
     switch(renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
+            float normalizedSizeMin = 0.25f;
+            float normalizedSizeMax = 1.0f;
+
             // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
             float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
             double eulerIdentity = M_E;
@@ -264,6 +258,19 @@ void PMScene2::energyChanged(energyParams &energyParams)
 
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 {
+    switch (renderer->getType())
+    {
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            if (!silenceParams.isSilent)
+            {
+                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
+                break;
+            }
+        }
+        default: break;
+    }
     renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
 }
 
@@ -273,8 +280,9 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->changeBaseAngle(onsetParams.audioInputIndex);
+//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            paintbrushRenderer->changeBaseAngle(onsetParams.audioInputIndex);
+            break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
