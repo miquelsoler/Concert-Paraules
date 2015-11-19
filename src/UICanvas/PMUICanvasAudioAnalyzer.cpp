@@ -64,6 +64,17 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
         }
 
+        // Pause
+        {
+            addLabel("PAUSE");
+
+            pauseToggle = addLabelToggle("PAUSE", &pauseOn);
+            pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
+        }
+
         // Onset
         {
             addLabel("ONSET");
@@ -115,6 +126,12 @@ void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
     silenceOn = silenceParams.isSilent;
+}
+
+void PMUICanvasAudioAnalyzer::pauseStateChanged(pauseParams &pauseParams)
+{
+    if (pauseParams.audioInputIndex != audioInputIndex) return;
+    pauseOn = pauseParams.isPaused;
 }
 
 void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)

@@ -32,7 +32,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         canvasBgColor = ofColor(50, 50, 50, 200);
         guiAudioAnalyzerCreated = false;
     }
-
 }
 
 PMScene2::~PMScene2()
@@ -107,7 +106,7 @@ void PMScene2::setup()
             if (!guiAudioAnalyzerCreated)
             {
                 int initialY = 5;
-                int marginY = 280;
+                int widthY = 300;
                 audioInputIndex = 0;
                 for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
                 {
@@ -115,7 +114,7 @@ void PMScene2::setup()
                     {
                         string title = "AUDIO ANALYZER " + ofToString(audioInputIndex + 1);
                         PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
-                        guiAudioAnalyzer->init(5, initialY + (audioInputIndex * marginY));
+                        guiAudioAnalyzer->init(5, initialY + (audioInputIndex * widthY));
                         guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                         guiAudioAnalyzer->setVisible(false);
 

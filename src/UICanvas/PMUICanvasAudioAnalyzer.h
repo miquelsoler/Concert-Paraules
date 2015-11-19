@@ -50,6 +50,13 @@ private:
     ofxUILabelToggle    *silenceToggle;
     bool                silenceOn;
 
+    // Pause ------------------------------------
+
+    void pauseStateChanged(pauseParams &pauseParams);
+
+    ofxUILabelToggle    *pauseToggle;
+    bool                pauseOn;
+
     // Onset ------------------------------------
 
     void onsetStateChanged(onsetParams &onsetParams);
