@@ -274,6 +274,24 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
     renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
 }
 
+void PMScene2::pauseStateChanged(pauseParams &pauseParams)
+{
+    switch (renderer->getType())
+    {
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            if (!silenceParams.isSilent)
+            {
+                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+                paintbrushRenderer->changeBaseAngle(pauseParams.audioInputIndex);
+                break;
+            }
+        }
+        default: break;
+    }
+    renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isSilent);
+}
+
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
     switch(renderer->getType())
