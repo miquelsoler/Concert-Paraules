@@ -14,9 +14,9 @@ Before building, make sure you've already downloaded these add-ons:
 * [ofxAudioAnalyzer-PM] (https://github.com/miquelsoler/ofxAudioAnalyzer-PM)
 * [ofxJSON] (https://github.com/jefftimesten/ofxJSON)
 * [ofxTween] (https://github.com/arturoc/ofxTween)
-* [ofxUI] (https://github.com/rezaali/ofxUI)9
-* [ofxAubio] (https://github.com/aubio/ofxAubio)->FOLLOW instruction, not downloading github source!
-* [ofxVideoRecorder] (https://github.com/timscaffidi/ofxVideoRecorder
+* [ofxUI] (https://github.com/rezaali/ofxUI)
+* [ofxAubio] (https://github.com/aubio/ofxAubio) ->FOLLOW instruction, not downloading github source!
+* [ofxVideoRecorder] (https://github.com/timscaffidi/ofxVideoRecorder)
 
 These add-ons are also needed, but they are already part of openframeworks:
 * [ofxGUI](http://openframeworks.cc/documentation/ofxGui/ofxGui.html)
