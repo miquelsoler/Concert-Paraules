@@ -222,7 +222,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     {
         case RENDERERTYPE_PAINTBRUSH: {
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, y);
+//            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, y);
             break;
         }
         default: break;
@@ -263,12 +263,15 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
-    string onsetString = onsetParams.isOnset ? "YES" : "NO";
-    cout << "Onset " << onsetParams.audioInputIndex << ": " << onsetString << endl;
-
     switch(renderer->getType())
     {
-        case RENDERERTYPE_TYPOGRAPHY: {
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            paintbrushRenderer->changeBaseAngle(onsetParams.audioInputIndex);
+        }
+        case RENDERERTYPE_TYPOGRAPHY:
+        {
             PMRendererTypography *paintbrushRenderer = (PMRendererTypography *) renderer;
             paintbrushRenderer->addLetter();
             break;

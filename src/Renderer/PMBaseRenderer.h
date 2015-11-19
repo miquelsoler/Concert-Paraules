@@ -36,8 +36,8 @@ protected:
 
     PMRendererType  type;
 
-    unsigned int    numInputs;     // Number of microphones
-    vector<bool>    shouldPaint;   // Enable/disable painting per input
+    unsigned int    numInputs;  // Number of microphones
+    vector<bool>    isActive;   // Enable/disable painting per input
 
     ofFbo           fbo;
 };
