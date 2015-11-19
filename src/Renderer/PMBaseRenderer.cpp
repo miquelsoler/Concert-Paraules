@@ -22,7 +22,7 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-    shouldPaint.assign(numInputs, true); // Init all elements with false;
+    isActive.assign(numInputs, true); // Init all elements with false;
 
 //    ofSetBackgroundAuto(false);
 }
@@ -39,5 +39,5 @@ void PMBaseRenderer::draw()
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 {
-    shouldPaint[inputIndex] = _shouldPaint;
+    isActive[inputIndex] = _shouldPaint;
 }
