@@ -273,11 +273,11 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-//            if (!silenceParams.isSilent)
-//            {
-//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
-//            }
+            if (!silenceParams.isSilent)
+            {
+                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
+            }
             break;
         }
         default: break;
@@ -293,9 +293,9 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
         {
             if (!pauseParams.isPaused)
             {
-                cout << "Paint!" << endl;
-                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-                paintbrushRenderer->changeBaseAngle(pauseParams.audioInputIndex);
+//                cout << "Paint!" << endl;
+//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//                paintbrushRenderer->changeBaseAngle(pauseParams.audioInputIndex);
 
                 break;
             }
@@ -317,8 +317,6 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
-            PMRendererTypography *paintbrushRenderer = (PMRendererTypography *) renderer;
-            paintbrushRenderer->addLetter();
             break;
         }
         default: break;
