@@ -12,7 +12,7 @@ class PMLetterContainer
 {
 public:
 
-    PMLetterContainer(string fontName);
+    PMLetterContainer(string fontName, string letter);
 
     void setPosition(float normalizedX, float normalizedY);
     void setPositionX(float normalizedX);
@@ -23,10 +23,12 @@ public:
 
 private:
 
-    int x, y;
+    float x, y;
     int size;
+    float angle;
 
     ofTrueTypeFont letterFont;
+    string letter;
 };
 
 

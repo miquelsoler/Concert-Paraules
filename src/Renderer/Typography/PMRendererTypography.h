@@ -27,6 +27,8 @@ public:
 private:
 
     list<PMLetterContainer> letters;
+
+    string availableLetters;
 };
 
 

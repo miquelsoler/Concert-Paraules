@@ -10,7 +10,7 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float ANGLE_VARIATION = 20;
 static const float ANGLE_VARIATION_MAX_OFFSET = 30;
-static const float BRUSH_SPEED = 10.0;
+static const float BRUSH_SPEED = 3.0;
 static const float OFFSET_SCALE = 1.5;
 
 static const float PAINTING_MARGIN_PCT = 0.05;

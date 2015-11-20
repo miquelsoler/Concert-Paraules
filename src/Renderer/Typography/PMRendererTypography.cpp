@@ -6,17 +6,20 @@
 
 static const unsigned int MAX_LETTERS = 50;
 
-
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
+    availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 }
 
 void PMRendererTypography::setup()
 {
-//    PMBaseRenderer::setup();
-//
-//    if (!letters.empty())
-//        letters.clear();
+    PMBaseRenderer::setup();
+
+    if (!letters.empty())
+        letters.clear();
+
+    for (int i=0; i<10; ++i)
+        addLetter();
 }
 
 void PMRendererTypography::update()
@@ -28,22 +31,18 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-//////        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-//////        ofSetColor(255, 255, 255, 5);
-//////        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//
-//        ofSetColor(255, 255, 255, 1);
-//        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//
-//        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-//
-//        ofSetColor(0, 0, 0, 255);
-//
-//        list<PMLetterContainer>::iterator letterIt;
-//        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
-//            (*letterIt).draw();
-//
-//        ofDisableBlendMode();
+        ofSetColor(255, 255, 255, 1);
+        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+
+        ofSetColor(0, 0, 0, 255);
+
+        list<PMLetterContainer>::iterator letterIt;
+        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
+            (*letterIt).draw();
+
+        ofDisableBlendMode();
     }
     fbo.end();
 
@@ -54,12 +53,13 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-//    PMLetterContainer letterContainer("verdana.ttf");
-//    letterContainer.setPosition(0.5, 0.5);
-//    letterContainer.setSize(1.0);
-//
-//    letters.push_back(letterContainer);
-//
-//    if (letters.size() > MAX_LETTERS)
-//        letters.pop_front();
+    int iLetter = int(ofRandom(availableLetters.size()));
+    PMLetterContainer letterContainer("verdana.ttf", ofToString(availableLetters[iLetter]));
+    letterContainer.setPosition(ofRandom(0,1), ofRandom(0.2,0.8));
+    letterContainer.setSize(1.0);
+
+    letters.push_back(letterContainer);
+
+    if (letters.size() > MAX_LETTERS)
+        letters.pop_front();
 }
