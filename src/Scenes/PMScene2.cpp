@@ -131,7 +131,8 @@ void PMScene2::setup()
 
     renderer->setup();
     
-    //Recorder setup
+    // Recorder setup
+    
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate=aavec[0]->getSamplerate();
     int numChannels=aavec.at(0)->getNumChannels();
@@ -141,9 +142,10 @@ void PMScene2::setup()
 void PMScene2::update()
 {
     renderer->update();
+    
+    //Record actual frame
     if(PMRecorder::getInstance().isRecording()){
         PMRecorder::getInstance().addVideoFrame();
-        cout<<"ISRECORDING FRAMES"<<ofGetElapsedTimef()<<endl;
     }
 }
 
@@ -170,12 +172,12 @@ void PMScene2::updateExit()
 {
     saveSettings();
     PMBaseScene::updateExit();
+    PMRecorder::getInstance().exit();
 }
 
 void PMScene2::draw()
 {
     renderer->draw();
-    
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
@@ -221,13 +223,21 @@ void PMScene2::keyReleased(int key)
         case 'r':
         case 'R':
         {
-            PMRecorder::getInstance().startRecording();
+            if(!PMRecorder::getInstance().isRecording()){
+                //begin the recording
+                PMRecorder::getInstance().startRecording();
+            }else{
+                //stop recording
+                PMRecorder::getInstance().stopRecording();
+            }
             break;
         }
         case 'c':
         case 'C':
         {
-            PMRecorder::getInstance().stopRecording();
+            //discard recording
+            PMRecorder::getInstance().discardRecording();
+            break;
         }
         default: break;
     }
