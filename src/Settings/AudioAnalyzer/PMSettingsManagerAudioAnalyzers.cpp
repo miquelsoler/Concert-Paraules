@@ -86,7 +86,7 @@ unsigned int PMSettingsManagerAudioAnalyzers::getSilenceQueueLength() {
     return json[STR_SILENCE][STR_SILENCE_QUEUELENGTH].asUInt();
 }
 
-void PMSettingsManagerAudioAnalyzers::setSilenceThreshold(int threshold) {
+void PMSettingsManagerAudioAnalyzers::setSilenceThreshold(float threshold) {
     json[STR_SILENCE][STR_SILENCE_THRESHOLD] = threshold;
     json.save(FILENAME, true);
 }
