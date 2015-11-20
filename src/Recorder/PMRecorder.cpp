@@ -99,7 +99,8 @@ void PMRecorder::startRecording()
 {
     bRecording = !bRecording;
     if(bRecording && !vidRecorder.isInitialized()) {
-        vidRecorder.setup(fileName+ofGetTimestampString()+fileExt, ofGetWidth(), ofGetHeight(), 60, sampleRate, channels);
+        lastFileNameGenerated=fileName+ofGetTimestampString()+fileExt;
+        vidRecorder.setup(lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 60, sampleRate, channels);
         // Start recording
         vidRecorder.start();
     }
@@ -118,6 +119,9 @@ void PMRecorder::discardRecording()
     // TODO: delete last clip.
     string cmd = "rm "+ ofFilePath::getAbsolutePath("fonts/")+"../ofxarpipe0 " + ofFilePath::getAbsolutePath("fonts/")+"../ofxvrpipe0";
     system(cmd.c_str());
+    cmd = "rm "+ ofFilePath::getAbsolutePath("fonts/")+"../"+lastFileNameGenerated;
+    system(cmd.c_str());
+
     
 }
 

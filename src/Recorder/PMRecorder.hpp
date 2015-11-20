@@ -40,6 +40,8 @@ private:
     string fileName;
     string fileExt;
     
+    string lastFileNameGenerated;
+    
     void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args);
     
     int sampleRate;
