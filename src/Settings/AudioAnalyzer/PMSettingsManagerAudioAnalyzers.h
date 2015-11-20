@@ -27,7 +27,7 @@ public:
     float getMaxEnergy();
 
     bool getSilenceEnabled();
-    int getSilenceThreshold();
+    float getSilenceThreshold();
     unsigned int getSilenceQueueLength();
 
     bool getMelBandsEnabled();

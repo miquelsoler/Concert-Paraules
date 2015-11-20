@@ -14,7 +14,7 @@ static const string STR_ENERGY_MIN              = "Min Energy";
 static const string STR_ENERGY_MAX              = "Max Energy";
 static const string STR_SILENCE                 = "Silence";
 static const string STR_SILENCE_ENABLE          = "Enabled";
-static const string STR_SILENCE_THRESHOLD       = "Threshold (dB)";
+static const string STR_SILENCE_THRESHOLD       = "Threshold (ms)";
 static const string STR_SILENCE_QUEUELENGTH     = "Queue Length (ms)";
 static const string STR_MELBANDS                = "Mel Bands";
 static const string STR_MELBANDS_ENABLE         = "Enabled";
@@ -58,8 +58,8 @@ bool PMSettingsManagerAudioAnalyzers::getSilenceEnabled() {
     return json[STR_SILENCE][STR_SILENCE_ENABLE].asBool();
 }
 
-int PMSettingsManagerAudioAnalyzers::getSilenceThreshold() {
-    return json[STR_SILENCE][STR_SILENCE_THRESHOLD].asInt();
+float PMSettingsManagerAudioAnalyzers::getSilenceThreshold() {
+    return json[STR_SILENCE][STR_SILENCE_THRESHOLD].asFloat();
 }
 
 unsigned int PMSettingsManagerAudioAnalyzers::getSilenceQueueLength() {
