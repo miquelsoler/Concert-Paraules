@@ -24,7 +24,7 @@ void PMRendererPaintbrush::setup()
 
 void PMRendererPaintbrush::update()
 {
-    PMBaseRenderer::update();
+    
 
     for (int i=0; i<numInputs; ++i)
     {
@@ -32,6 +32,7 @@ void PMRendererPaintbrush::update()
 
         brushes[i]->update();
     }
+    PMBaseRenderer::update();
 }
 
 void PMRendererPaintbrush::drawIntoFBO()
@@ -54,10 +55,9 @@ void PMRendererPaintbrush::drawIntoFBO()
         ofDisableBlendMode();
     }
     fbo.end();
+    cout<<&fbo<<endl;
 
     ofSetColor(255, 255, 255, 255);
-
-    fbo.draw(0, 0);
 }
 
 void PMRendererPaintbrush::changeBaseAngle(unsigned int inputIndex)

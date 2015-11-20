@@ -29,12 +29,13 @@ void PMBaseRenderer::setup()
 
 void PMBaseRenderer::update()
 {
+    drawIntoFBO();
 }
 
 void PMBaseRenderer::draw()
 {
     ofClear(255, 255, 255, 255);
-    drawIntoFBO();
+    fbo.draw(0, 0);
 }
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
