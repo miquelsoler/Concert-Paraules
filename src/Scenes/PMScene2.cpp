@@ -141,6 +141,10 @@ void PMScene2::setup()
 void PMScene2::update()
 {
     renderer->update();
+    if(PMRecorder::getInstance().isRecording()){
+        PMRecorder::getInstance().addVideoFrame();
+        cout<<"ISRECORDING FRAMES"<<ofGetElapsedTimef()<<endl;
+    }
 }
 
 void PMScene2::updateEnter()
@@ -171,6 +175,7 @@ void PMScene2::updateExit()
 void PMScene2::draw()
 {
     renderer->draw();
+    
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
@@ -216,11 +221,12 @@ void PMScene2::keyReleased(int key)
         case 'r':
         case 'R':
         {
-            if(PMRecorder::getInstance().isRecording()){
+            if(!PMRecorder::getInstance().isRecording()){
                PMRecorder::getInstance().startRecording();
             }else{
                 PMRecorder::getInstance().stopRecording();
             }
+            break;
         }
         default: break;
     }

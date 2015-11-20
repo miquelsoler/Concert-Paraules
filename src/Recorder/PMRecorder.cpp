@@ -35,7 +35,7 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels)
     
 //    ofSetWindowShape(ofGetWidth(), ofGetHeight());
     bRecording = false;
-    ofEnableAlphaBlending();
+//    ofEnableAlphaBlending();
 }
 
 void PMRecorder::addVideoFrame()
