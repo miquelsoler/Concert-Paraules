@@ -22,21 +22,31 @@ public:
 
     float getMinPitchMidiNote();
     float getMaxPitchMidiNote();
+    void setMinPitchMidiNote(float midiNote);
+    void setMaxPitchMidiNote(float midiNote);
 
     float getMinEnergy();
     float getMaxEnergy();
+    void setMinEnergy(float minEnergy);
+    void setMaxEnergy(float maxEnergy);
 
     bool getSilenceEnabled();
-    int getSilenceThreshold();
+    float getSilenceThreshold();
     unsigned int getSilenceQueueLength();
+    void setSilenceThreshold(int threshold);
+    void setSilenceQueueLength(unsigned int length);
 
     bool getMelBandsEnabled();
     unsigned int getNumMelBands();
+    void setNumMelBands(unsigned int numBands);
 
     float getOnsetsThreshold();
     float getOnsetsAlpha();
+    void setOnsetsThreshold(float threshold);
+    void setOnsetsAlpha(float alpha);
 
     float getSmoothingDelta();
+    void setSmoothingDelta(float delta);
 };
 
 #endif //PMCONCERTPARAULES_PMSETTINGSMANAGERAUDIOANALYZER_H

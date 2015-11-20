@@ -14,7 +14,7 @@ static const string STR_ENERGY_MIN              = "Min Energy";
 static const string STR_ENERGY_MAX              = "Max Energy";
 static const string STR_SILENCE                 = "Silence";
 static const string STR_SILENCE_ENABLE          = "Enabled";
-static const string STR_SILENCE_THRESHOLD       = "Threshold (dB)";
+static const string STR_SILENCE_THRESHOLD       = "Threshold (ms)";
 static const string STR_SILENCE_QUEUELENGTH     = "Queue Length (ms)";
 static const string STR_MELBANDS                = "Mel Bands";
 static const string STR_MELBANDS_ENABLE         = "Enabled";
@@ -46,6 +46,16 @@ float PMSettingsManagerAudioAnalyzers::getMaxPitchMidiNote() {
     return json[STR_PITCH][STR_PITCH_MAXMIDINOTE].asFloat();
 }
 
+void PMSettingsManagerAudioAnalyzers::setMinPitchMidiNote(float midiNote) {
+    json[STR_PITCH][STR_PITCH_MINMIDINOTE] = midiNote;
+    json.save(FILENAME, true);
+}
+
+void PMSettingsManagerAudioAnalyzers::setMaxPitchMidiNote(float midiNote) {
+    json[STR_PITCH][STR_PITCH_MAXMIDINOTE] = midiNote;
+    json.save(FILENAME, true);
+}
+
 float PMSettingsManagerAudioAnalyzers::getMinEnergy() {
     return json[STR_ENERGY][STR_ENERGY_MIN].asFloat();
 }
@@ -54,16 +64,36 @@ float PMSettingsManagerAudioAnalyzers::getMaxEnergy() {
     return json[STR_ENERGY][STR_ENERGY_MAX].asFloat();
 }
 
+void PMSettingsManagerAudioAnalyzers::setMinEnergy(float minEnergy) {
+    json[STR_ENERGY][STR_ENERGY_MIN] = minEnergy;
+    json.save(FILENAME, true);
+}
+
+void PMSettingsManagerAudioAnalyzers::setMaxEnergy(float maxEnergy) {
+    json[STR_ENERGY][STR_ENERGY_MAX] = maxEnergy;
+    json.save(FILENAME, true);
+}
+
 bool PMSettingsManagerAudioAnalyzers::getSilenceEnabled() {
     return json[STR_SILENCE][STR_SILENCE_ENABLE].asBool();
 }
 
-int PMSettingsManagerAudioAnalyzers::getSilenceThreshold() {
-    return json[STR_SILENCE][STR_SILENCE_THRESHOLD].asInt();
+float PMSettingsManagerAudioAnalyzers::getSilenceThreshold() {
+    return json[STR_SILENCE][STR_SILENCE_THRESHOLD].asFloat();
 }
 
 unsigned int PMSettingsManagerAudioAnalyzers::getSilenceQueueLength() {
     return json[STR_SILENCE][STR_SILENCE_QUEUELENGTH].asUInt();
+}
+
+void PMSettingsManagerAudioAnalyzers::setSilenceThreshold(int threshold) {
+    json[STR_SILENCE][STR_SILENCE_THRESHOLD] = threshold;
+    json.save(FILENAME, true);
+}
+
+void PMSettingsManagerAudioAnalyzers::setSilenceQueueLength(unsigned int length) {
+    json[STR_SILENCE][STR_SILENCE_QUEUELENGTH] = length;
+    json.save(FILENAME, true);
 }
 
 bool PMSettingsManagerAudioAnalyzers::getMelBandsEnabled() {
@@ -74,6 +104,11 @@ unsigned int PMSettingsManagerAudioAnalyzers::getNumMelBands() {
     return json[STR_MELBANDS][STR_MELBANDS_NUMBANDS].asUInt();
 }
 
+void PMSettingsManagerAudioAnalyzers::setNumMelBands(unsigned int numBands) {
+    json[STR_MELBANDS][STR_MELBANDS_NUMBANDS] = numBands;
+    json.save(FILENAME, true);
+}
+
 float PMSettingsManagerAudioAnalyzers::getOnsetsThreshold() {
     return json[STR_ONSETS][STR_ONSETS_THRESHOLD].asFloat();
 }
@@ -82,7 +117,21 @@ float PMSettingsManagerAudioAnalyzers::getOnsetsAlpha() {
     return json[STR_ONSETS][STR_ONSETS_ALPHA].asFloat();
 }
 
+void PMSettingsManagerAudioAnalyzers::setOnsetsThreshold(float threshold) {
+    json[STR_ONSETS][STR_ONSETS_THRESHOLD] = threshold;
+    json.save(FILENAME, true);
+}
+
+void PMSettingsManagerAudioAnalyzers::setOnsetsAlpha(float alpha) {
+    json[STR_ONSETS][STR_ONSETS_ALPHA] = alpha;
+    json.save(FILENAME, true);
+}
+
 float PMSettingsManagerAudioAnalyzers::getSmoothingDelta() {
     return json[STR_SMOOTHING][STR_SMOOTHING_DELTA].asFloat();
 }
 
+void PMSettingsManagerAudioAnalyzers::setSmoothingDelta(float delta) {
+    json[STR_SMOOTHING][STR_SMOOTHING_DELTA] = delta;
+    json.save(FILENAME, true);
+}

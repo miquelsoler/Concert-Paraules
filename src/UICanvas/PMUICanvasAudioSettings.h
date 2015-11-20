@@ -21,6 +21,8 @@ public:
 
 private:
 
+    ofxUIToggleMatrix *presetsMatrix;
+
     float minMidiValue, maxMidiValue;
     ofxUISlider *minMidiSlider;
     ofxUISlider *maxMidiSlider;
