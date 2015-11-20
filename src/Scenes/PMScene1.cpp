@@ -72,7 +72,7 @@ void PMScene1::updateEnter()
         guiPoemSelector->loadSettings(STR_CANVAS_BASEPATH + "poem1.xml");
         guiAudioDevices->loadSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
         guiRendererSettings->loadSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
-        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
+//        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
         guiPoemSelector->setVisible(true);
         guiAudioDevices->setVisible(true);
@@ -99,7 +99,7 @@ void PMScene1::saveSettings()
     guiPoemSelector->saveSettings(STR_CANVAS_BASEPATH + "poem1.xml");
     guiAudioDevices->saveSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
     guiRendererSettings->saveSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
-    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
+//    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
     guiPoemSelector->setVisible(false);
     guiAudioDevices->setVisible(false);
