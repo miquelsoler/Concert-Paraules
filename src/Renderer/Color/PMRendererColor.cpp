@@ -23,6 +23,8 @@ void PMRendererColor::drawIntoFBO()
 {
     fbo.begin();
     {
+        ofSetColor(255,0,0);
+        ofDrawCircle(ofRandom(ofGetWidth()),ofRandom(ofGetHeight()),10);
 ////        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 ////        ofSetColor(255, 255, 255, 5);
 ////        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());

@@ -33,7 +33,7 @@ public:
     bool getSilenceEnabled();
     float getSilenceThreshold();
     unsigned int getSilenceQueueLength();
-    void setSilenceThreshold(int threshold);
+    void setSilenceThreshold(float threshold);
     void setSilenceQueueLength(unsigned int length);
 
     bool getMelBandsEnabled();

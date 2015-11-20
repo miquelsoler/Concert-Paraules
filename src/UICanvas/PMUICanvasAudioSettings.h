@@ -8,6 +8,12 @@
 #include "PMBaseUICanvas.h"
 #include "PMSettingsManagerAudioAnalyzers.h"
 
+typedef enum
+{
+    PRESET_LOAD = 0,
+    PRESET_SAVE = 1
+} PRESET_MODE;
+
 class PMUICanvasAudioSettings : public PMBaseUICanvas
 {
 public:
@@ -22,6 +28,7 @@ public:
 private:
 
     ofxUIToggleMatrix *presetsMatrix;
+    PRESET_MODE presetsMode;
 
     float minMidiValue, maxMidiValue;
     ofxUISlider *minMidiSlider;
@@ -31,9 +38,9 @@ private:
     ofxUISlider *minEnergySlider;
     ofxUISlider *maxEnergySlider;
 
-    int silenceThresholdValue;
+    float silenceThresholdValue;
     int silenceQueueValue;
-    ofxUIIntSlider *silenceThresholdSlider;
+    ofxUISlider *silenceThresholdSlider;
     ofxUIIntSlider *silenceQueueSlider;
 
     float onsetThresholdValue;
@@ -47,9 +54,14 @@ private:
     int numMelBandsValue;
     ofxUIIntSlider *numMelBandsSlider;
 
-    // Settings
-
     PMSettingsManagerAudioAnalyzers *settings;
+
+    void keyPressed(int key);
+    void keyReleased(int key);
+
+    void updateExternalSettings();
+
+    int getActivePreset();
 };
 
 
