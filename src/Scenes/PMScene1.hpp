@@ -20,8 +20,7 @@
 #include "PMUICanvasPoem.h"
 #include "PMUICanvasAudioDevices.h"
 #include "PMUICanvasRenderers.h"
-#include "PMUICanvasNavigation.h"
-
+#include "PMUICanvasAudioSettings.h"
 
 class PMScene1 : public PMBaseScene
 {
@@ -41,8 +40,9 @@ public:
 private:
 
     PMUICanvasPoem                  *guiPoemSelector;
-    PMUICanvasAudioDevices          *guiAudioSettings;
+    PMUICanvasAudioDevices          *guiAudioDevices;
     PMUICanvasRenderers             *guiRendererSettings;
+    PMUICanvasAudioSettings         *guiAudioSettings;
 
     ofColor                         canvasBgColor;
     int                             panelMargin = 5;

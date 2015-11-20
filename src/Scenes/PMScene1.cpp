@@ -28,25 +28,32 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
         guiPoemSelector->setBackgroundColor(canvasBgColor);
         guiPoemSelector->setVisible(false);
 
-        // Audio settings
-        guiAudioSettings = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_MEDIUM);
-        guiAudioSettings->init(5, 80);
-        guiAudioSettings->setBackgroundColor(canvasBgColor);
-        guiAudioSettings->setVisible(false);
+        // Audio devices
+        guiAudioDevices = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_MEDIUM);
+        guiAudioDevices->init(5, 80);
+        guiAudioDevices->setBackgroundColor(canvasBgColor);
+        guiAudioDevices->setVisible(false);
 
         // Renderer settings
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRendererSettings->init(310, 80);
+        guiRendererSettings->init(530, 5);
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
+
+        // Audio settings
+        guiAudioSettings = new PMUICanvasAudioSettings("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
+        guiAudioSettings->init(312, 80);
+        guiAudioSettings->setBackgroundColor(canvasBgColor);
+        guiAudioSettings->setVisible(false);
     }
 }
 
 PMScene1::~PMScene1()
 {
     delete guiPoemSelector;
-    delete guiAudioSettings;
+    delete guiAudioDevices;
     delete guiRendererSettings;
+    delete guiAudioSettings;
 }
 
 void PMScene1::setup()
@@ -63,12 +70,14 @@ void PMScene1::updateEnter()
     if (isEnteringFirst())
     {
         guiPoemSelector->loadSettings(STR_CANVAS_BASEPATH + "poem1.xml");
-        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
+        guiAudioDevices->loadSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
         guiRendererSettings->loadSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
+        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
         guiPoemSelector->setVisible(true);
-        guiAudioSettings->setVisible(true);
+        guiAudioDevices->setVisible(true);
         guiRendererSettings->setVisible(true);
+        guiAudioSettings->setVisible(true);
     }
 
     PMBaseScene::updateEnter();
@@ -88,10 +97,12 @@ void PMScene1::draw()
 void PMScene1::saveSettings()
 {
     guiPoemSelector->saveSettings(STR_CANVAS_BASEPATH + "poem1.xml");
-    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
+    guiAudioDevices->saveSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
     guiRendererSettings->saveSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
+    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
     guiPoemSelector->setVisible(false);
-    guiAudioSettings->setVisible(false);
+    guiAudioDevices->setVisible(false);
     guiRendererSettings->setVisible(false);
+    guiAudioSettings->setVisible(false);
 }

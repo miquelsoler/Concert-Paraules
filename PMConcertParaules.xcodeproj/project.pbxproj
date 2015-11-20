@@ -10,6 +10,7 @@
 		0F8F016776681D468C0D0949 /* audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 34FC4C582EA5ED68F36013CD /* audio.c */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
 		214760291E15390550D8A270 /* PMUICanvasAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214769686BA60A5908B495B3 /* PMUICanvasAudioAnalyzer.cpp */; };
+		214760D60A290AE850084293 /* PMUICanvasAudioSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C81BC0C34AD634A857C /* PMUICanvasAudioSettings.cpp */; };
 		21476136EA2BE70554D5B79C /* PMRendererColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476F2AF69C0517DEB5F190 /* PMRendererColor.cpp */; };
 		2147630077A5E22BFFA11F7E /* PMUICanvasPoem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */; };
 		21476431C6D692F56AE1EA6E /* PMRendererPaintbrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */; };
@@ -217,10 +218,12 @@
 		21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseUICanvas.h; sourceTree = "<group>"; };
 		21476C64C75C50AC9AD53152 /* PMBrushContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBrushContainer.h; sourceTree = "<group>"; };
 		21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PMBrushContainer.mm; sourceTree = "<group>"; };
+		21476C81BC0C34AD634A857C /* PMUICanvasAudioSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasAudioSettings.cpp; sourceTree = "<group>"; };
 		21476D535BA7C195477469B1 /* PMRendererTypography.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererTypography.cpp; sourceTree = "<group>"; };
 		21476D68C66406FA677D7373 /* PMRendererPaintbrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererPaintbrush.h; sourceTree = "<group>"; };
 		21476F2AF69C0517DEB5F190 /* PMRendererColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererColor.cpp; sourceTree = "<group>"; };
 		21476F81851DFD49A92AF8E5 /* PMUICanvasAudioAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasAudioAnalyzer.h; sourceTree = "<group>"; };
+		21476F9C5BE8EB1D3C470944 /* PMUICanvasAudioSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasAudioSettings.h; sourceTree = "<group>"; };
 		21476FB92724004499CD3827 /* PMRendererTypography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererTypography.h; sourceTree = "<group>"; };
 		21BDE665988474F1B1F4D302 /* jsoncpp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = jsoncpp.cpp; path = ../../../addons/ofxJSON/libs/jsoncpp/src/jsoncpp.cpp; sourceTree = SOURCE_ROOT; };
 		241AAF7769D555E4ECD57E17 /* cameras.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cameras.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/cameras.h; sourceTree = SOURCE_ROOT; };
@@ -638,6 +641,8 @@
 				21476648B04F0F248E7BEAD0 /* PMUICanvasNavigation.h */,
 				214769686BA60A5908B495B3 /* PMUICanvasAudioAnalyzer.cpp */,
 				21476F81851DFD49A92AF8E5 /* PMUICanvasAudioAnalyzer.h */,
+				21476C81BC0C34AD634A857C /* PMUICanvasAudioSettings.cpp */,
+				21476F9C5BE8EB1D3C470944 /* PMUICanvasAudioSettings.h */,
 			);
 			path = UICanvas;
 			sourceTree = "<group>";
@@ -1763,6 +1768,7 @@
 				9F8DA5AA1BFDFAE800600C3A /* PMRecorder.cpp in Sources */,
 				21476136EA2BE70554D5B79C /* PMRendererColor.cpp in Sources */,
 				21476A3F17ADE620A7C92A13 /* PMLetterContainer.cpp in Sources */,
+				214760D60A290AE850084293 /* PMUICanvasAudioSettings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2070,7 +2076,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxAudioAnalyzer-PM/libs/essentia/include/";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};
