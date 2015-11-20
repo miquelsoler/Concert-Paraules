@@ -32,7 +32,7 @@ void PMUICanvasAudioSettings::init(int posX, int posY, bool autosize, int width,
     silenceThresholdValue = settings->getSilenceThreshold();
     silenceQueueValue = settings->getSilenceQueueLength();
     silenceThresholdSlider = addIntSlider("Threshold (dB)", -60, -1, &silenceThresholdValue);
-    silenceQueueSlider = addIntSlider("Threshold (dB)", -60, -1, &silenceQueueValue);
+    silenceQueueSlider = addIntSlider("Queue Length", 0, 200, &silenceQueueValue);
     addSpacer();
 
     addLabel("ONSETS");
@@ -45,6 +45,7 @@ void PMUICanvasAudioSettings::init(int posX, int posY, bool autosize, int width,
     addLabel("SMOOTHING");
     smoothingDeltaValue = settings->getSmoothingDelta();
     smoothingDeltaSlider = addSlider("Delta", 0, 1, &smoothingDeltaValue);
+    smoothingDeltaSlider->setLabelPrecision(10);
     addSpacer();
 
     addLabel("MEL BANDS");
