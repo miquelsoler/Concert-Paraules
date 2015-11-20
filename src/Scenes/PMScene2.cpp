@@ -136,7 +136,7 @@ void PMScene2::setup()
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate=aavec[0]->getSamplerate();
     int numChannels=aavec.at(0)->getNumChannels();
-    PMRecorder::getInstance().init(renderer->getFbo(), sampleRate, numChannels);
+    PMRecorder::getInstance().init(renderer->getFbo(), sampleRate, numChannels, "testMovie");
 }
 
 void PMScene2::update()
