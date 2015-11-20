@@ -17,6 +17,9 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels)
     pixelBufferFront.allocate(fbo->getWidth()*fbo->getHeight()*3,GL_DYNAMIC_READ);
     //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
     
+    fboRecorderOut.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+
+    
     fileName = "testMovie";
     fileExt = ".mov"; // ffmpeg uses the extension to determine the container type. run 'ffmpeg -formats' to see supported formats
     
@@ -24,8 +27,8 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels)
     // run 'ffmpeg -codecs' to find out çwhat your implementation supports (or -formats on some older versions)
     vidRecorder.setVideoCodec("mpeg4");
     vidRecorder.setVideoBitrate("20000k");
-    //    vidRecorder.setAudioCodec("mp3");
-    //    vidRecorder.setAudioBitrate("256k");
+        vidRecorder.setAudioCodec("mp3");
+        vidRecorder.setAudioBitrate("256k");
     
     ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PMRecorder::recordingComplete);
     
@@ -40,9 +43,12 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels)
 
 void PMRecorder::addVideoFrame()
 {
+    fboRecorderOut.begin();
+    fbo->draw(0,0);
+    fboRecorderOut.end();
     if(bRecording){
         // copy the fbo texture to a buffer
-        fbo->getTexture().copyTo(pixelBufferBack);
+        fboRecorderOut.getTexture().copyTo(pixelBufferBack);
         
         // map the buffer so we can access it from the cpu
         // and wrap the memory in an ofPixels to save it
@@ -57,6 +63,7 @@ void PMRecorder::addVideoFrame()
         // copying the texture to one buffer and reading
         // back from another to avoid stalls
         swap(pixelBufferBack,pixelBufferFront);
+//        fbo->readToPixels(pixels);
         bool success = vidRecorder.addFrame(pixels);
         if (!success) {
             ofLogWarning("This frame was not added!");

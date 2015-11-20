@@ -221,12 +221,13 @@ void PMScene2::keyReleased(int key)
         case 'r':
         case 'R':
         {
-            if(!PMRecorder::getInstance().isRecording()){
-               PMRecorder::getInstance().startRecording();
-            }else{
-                PMRecorder::getInstance().stopRecording();
-            }
+            PMRecorder::getInstance().startRecording();
             break;
+        }
+        case 'c':
+        case 'C':
+        {
+            PMRecorder::getInstance().stopRecording();
         }
         default: break;
     }

@@ -45,6 +45,7 @@ private:
     int sampleRate;
     int channels;
     ofFbo *fbo;
+    ofFbo fboRecorderOut;
     ofPixels pixels;
     ofBoxPrimitive box;
     ofBufferObject pixelBufferBack, pixelBufferFront;

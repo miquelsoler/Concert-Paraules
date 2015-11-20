@@ -55,7 +55,6 @@ void PMRendererPaintbrush::drawIntoFBO()
         ofDisableBlendMode();
     }
     fbo.end();
-    cout<<&fbo<<endl;
 
     ofSetColor(255, 255, 255, 255);
 }
