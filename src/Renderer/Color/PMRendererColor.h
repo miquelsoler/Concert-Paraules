@@ -19,6 +19,15 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+    
+    ///-
+    void setPitch(float p);
+    void setEnergy(float e);
+    
+private:
+    float pitch;
+    float energy;
+    
 };
 
 

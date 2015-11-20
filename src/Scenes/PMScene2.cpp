@@ -237,17 +237,29 @@ void PMScene2::keyReleased(int key)
 
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
+    
     switch(renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
             float minOffset = -1.0f;
             float maxOffset = 1.0f;
-            float paintOffset = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
 
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, paintOffset);
+            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
             break;
+        }
+        case RENDERERTYPE_COLOR:
+        {
+            float minOffset = 0.0f;
+            float maxOffset = 1.0f;
+            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+
+            PMRendererColor *colorRenderer = (PMRendererColor *)renderer;
+            colorRenderer->setPitch(pitch);
+            break;
+            
         }
         default: break;
     }
@@ -255,26 +267,33 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 
 void PMScene2::energyChanged(energyParams &energyParams)
 {
+    // calculate Energy
+    /////////////////////
+    float normalizedSizeMin = 0.0f;
+    float normalizedSizeMax = 1.0f;
+    
+    // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
+    float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
+    double eulerIdentity = M_E;
+    // ? eloi : a mi em funciona millor en lineal // linearSize = powf(linearSize, float(1.0/eulerIdentity));
+    
+    float energy = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
+    
+    // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
+    if (isnan(energy)) energy = 0;
+
     switch(renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            float normalizedSizeMin = 0.25f;
-            float normalizedSizeMax = 1.0f;
-
-            // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
-            float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
-            double eulerIdentity = M_E;
-            linearSize = powf(linearSize, float(1.0/eulerIdentity));
-
-            float size = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
-
-            // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
-            if (isnan(size)) size = 0;
-
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->setSize(energyParams.audioInputIndex, size);
+            paintbrushRenderer->setSize(energyParams.audioInputIndex, energy);
             break;
+        }
+        case RENDERERTYPE_COLOR:
+        {
+            PMRendererColor *colorRenderer = (PMRendererColor *)renderer;
+            colorRenderer->setEnergy(energy);
         }
         default: break;
     }
