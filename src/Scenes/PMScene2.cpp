@@ -187,7 +187,7 @@ void PMScene2::draw()
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
-    PMAudioAnalyzer::getInstance().clear();
+//    PMAudioAnalyzer::getInstance().clear();
 
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
