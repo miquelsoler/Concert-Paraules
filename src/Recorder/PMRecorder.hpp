@@ -23,7 +23,7 @@ public:
         static PMRecorder instance;
         return instance;
     }
-    
+
     void init(ofFbo *fbo, int _samplerate, int _channels, string fileName, string filePath);
     void addVideoFrame();
     void addAudioBuffer(float *input, int bufferSize, int nChannels);

@@ -115,6 +115,7 @@
 		2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */; };
 		2A8250EF1BCE5D6600EEADDF /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */; };
 		2A87DC761BFBCD6400475021 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A87DC751BFBCD6400475021 /* aubio.framework */; };
+		2A9352541C00AC6C001FF954 /* PMRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A9352521C00AC6C001FF954 /* PMRecorder.cpp */; };
 		2AC0886A1BFB59BC00488E72 /* ofxAubioBeat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */; };
 		2AC0886B1BFB59BC00488E72 /* ofxAubioBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */; };
 		2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */; };
@@ -488,8 +489,8 @@
 		2A8250EA1BCE5D6600EEADDF /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		2A8250EB1BCE5D6600EEADDF /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		2A87DC751BFBCD6400475021 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aubio.framework; sourceTree = "<group>"; };
-		2ABC8EB91C00AA28006A147B /* PMRecorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PMRecorder.cpp; sourceTree = "<group>"; };
-		2ABC8EBA1C00AA28006A147B /* PMRecorder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PMRecorder.hpp; sourceTree = "<group>"; };
+		2A9352521C00AC6C001FF954 /* PMRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRecorder.cpp; sourceTree = "<group>"; };
+		2A9352531C00AC6C001FF954 /* PMRecorder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMRecorder.hpp; sourceTree = "<group>"; };
 		2AC0885F1BFB59BC00488E72 /* ofxAubio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubio.h; sourceTree = "<group>"; };
 		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
 		2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioBeat.h; sourceTree = "<group>"; };
@@ -1222,11 +1223,11 @@
 			path = ../../../addons/ofxXmlSettings/libs;
 			sourceTree = "<group>";
 		};
-		2ABC8EB81C00AA28006A147B /* Recorder */ = {
+		2A9352511C00AC6C001FF954 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
-				2ABC8EB91C00AA28006A147B /* PMRecorder.cpp */,
-				2ABC8EBA1C00AA28006A147B /* PMRecorder.hpp */,
+				2A9352521C00AC6C001FF954 /* PMRecorder.cpp */,
+				2A9352531C00AC6C001FF954 /* PMRecorder.hpp */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -1490,7 +1491,7 @@
 				2A4BBCFD1BBD926500142482 /* Defaults.h */,
 				2ADCED4D1BC4883100F7F86A /* Scenes */,
 				21476E2647D8522F3969E81C /* Renderer */,
-				2ABC8EB81C00AA28006A147B /* Recorder */,
+				2A9352511C00AC6C001FF954 /* Recorder */,
 				2A5E61AB1BE2EB480037FD79 /* Settings */,
 				214765AE440B55849C0E601A /* UICanvas */,
 				2A7BCDAC1BCD1028004840A4 /* External */,
@@ -1647,6 +1648,7 @@
 			files = (
 				2A8250E01BCE5CC500EEADDF /* ofxUIWaveform.cpp in Sources */,
 				2A8250DB1BCE5CC500EEADDF /* ofxUITextArea.cpp in Sources */,
+				2A9352541C00AC6C001FF954 /* PMRecorder.cpp in Sources */,
 				2A8250D81BCE5CC500EEADDF /* ofxUISpectrum.cpp in Sources */,
 				2A8250E11BCE5CC500EEADDF /* ofxUIWidget.cpp in Sources */,
 				2AC0886C1BFB59BC00488E72 /* ofxAubioMelBands.cpp in Sources */,
