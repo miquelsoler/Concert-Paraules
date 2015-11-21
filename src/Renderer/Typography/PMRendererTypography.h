@@ -24,9 +24,11 @@ public:
 
     void addLetter();
 
+    void keyPressed ( ofKeyEventArgs& eventArgs );
+
 private:
 
-    list<PMLetterContainer> letters;
+    list<PMLetterContainer *> letters;
 
     string availableLetters;
 };
