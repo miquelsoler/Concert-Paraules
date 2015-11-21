@@ -14,12 +14,12 @@ PMLetterContainer::PMLetterContainer(string fontName, string _letter)
             true, // full character set
             true // make contours
     );
-//    letterFont.setLineHeight(18.0f);
-//    letterFont.setLetterSpacing(1.037);
+//    letterFont->setLineHeight(18.0f);
+//    letterFont->setLetterSpacing(1.037);
 
     letter = _letter;
 
-    angle = ofRandom(360);
+    angle = ofRandom(-90, 90);
 }
 
 PMLetterContainer::~PMLetterContainer()

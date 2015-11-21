@@ -4,7 +4,7 @@
 
 #include "PMRendererTypography.h"
 
-static const unsigned int MAX_LETTERS = 2;
+static const unsigned int MAX_LETTERS = 10;
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
