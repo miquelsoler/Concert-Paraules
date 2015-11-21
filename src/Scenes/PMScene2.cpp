@@ -136,7 +136,7 @@ void PMScene2::setup()
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate=aavec[0]->getSamplerate();
     int numChannels=aavec.at(0)->getNumChannels();
-    PMRecorder::getInstance().init(renderer->getFbo(), sampleRate, numChannels, "testMovie");
+    PMRecorder::getInstance().init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts/")+"../");
 }
 
 void PMScene2::update()
@@ -172,7 +172,7 @@ void PMScene2::updateExit()
 {
     saveSettings();
     PMBaseScene::updateExit();
-    PMRecorder::getInstance().exit();
+    
 }
 
 void PMScene2::draw()
@@ -197,6 +197,7 @@ void PMScene2::saveSettings()
         (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
     }
+    PMRecorder::getInstance().exit();
 }
 
 #pragma mark - Keyboard events

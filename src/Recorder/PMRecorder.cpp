@@ -8,21 +8,21 @@
 
 #include "PMRecorder.hpp"
 
-void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileName)
+void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileName, string _filePath)
 {
     fbo=_fbo;
     sampleRate=_samplerate;
     channels=_channels;
+    fileName=_fileName;
+    filePath=_filePath;
     pixelBufferBack.allocate(fbo->getWidth()*fbo->getHeight()*3,GL_DYNAMIC_READ);
     pixelBufferFront.allocate(fbo->getWidth()*fbo->getHeight()*3,GL_DYNAMIC_READ);
     //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
     
     fboRecorderOut.allocate(fbo->getWidth(), fbo->getHeight(), GL_RGB);
 
-    
-    fileName =_fileName;
+    //CODEC information
     fileExt = ".mov"; // ffmpeg uses the extension to determine the container type. run 'ffmpeg -formats' to see supported formats
-    
     // override the default codecs if you like
     // run 'ffmpeg -codecs' to find out çwhat your implementation supports (or -formats on some older versions)
     vidRecorder.setVideoCodec("mpeg4");
@@ -117,9 +117,9 @@ void PMRecorder::discardRecording()
     bRecording = false;
     vidRecorder.close();
     // TODO: delete last clip.
-    string cmd = "rm "+ ofFilePath::getAbsolutePath("fonts/")+"../ofxarpipe0 " + ofFilePath::getAbsolutePath("fonts/")+"../ofxvrpipe0";
+    string cmd = "rm "+ filePath+"ofxarpipe0 " + filePath+"ofxvrpipe0";
     system(cmd.c_str());
-    cmd = "rm "+ ofFilePath::getAbsolutePath("fonts/")+"../"+lastFileNameGenerated;
+    cmd = "rm "+ filePath+lastFileNameGenerated;
     system(cmd.c_str());
 
     

@@ -48,9 +48,9 @@ void PMLetterContainer::draw()
     float height = letterFont.stringHeight(letter);
 
     ofPushMatrix();
-    ofTranslate(x, y);
-    ofRotate(angle);
-    ofSetColor(ofColor::black);
-    letterFont.drawStringAsShapes(letter, -width/2, height/2);
+        ofTranslate(x, y);
+        ofRotate(angle);
+        ofSetColor(ofColor::black);
+        letterFont.drawStringAsShapes(letter, -width/2, height/2);
     ofPopMatrix();
 }
