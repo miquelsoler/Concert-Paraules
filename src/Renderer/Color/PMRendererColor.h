@@ -15,7 +15,7 @@
 
 #include "PMBaseRenderer.h"
 #include "PMSettingsManagerAudioAnalyzers.h"
-
+#include "PMUICanvasColorRenderer.h"
 
 class PMRendererColor : public PMBaseRenderer
 {
@@ -32,14 +32,21 @@ public:
     void setEnergy(float e);
     
 private:
-    int mode;
-    float dimmBackground;
-    float dimmSpeed;
-    float pitch;
-    float oldPitch;
     
-    float energy;
-    float oldEnergy;
+    PMUICanvasColorRenderer* canvasColorRenderer;
+    
+    int     mode;
+    float   dimmBackground;
+    float   dimmSpeed;
+    float   pitch;
+    float   oldPitch;
+    
+    float   energy;
+    float   oldEnergy;
+    
+    int     scanWidth;
+    
+    
     
     PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
@@ -47,8 +54,9 @@ private:
     ofVec3f LAB2RGB(float CIEL,float CIEa,float CIEb);
 
     /// mode 2
-    float   scanSpeed;
     float   scanX;
+    
+    
     
     
 };

@@ -14,92 +14,13 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
     addLabelButton("Save to default",false);
+    addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
     addIntSlider("Background R",0,255,255);
     addIntSlider("Background G",0,255,255);
     addIntSlider("Background B",0,255,255);
-    addSpacer();
-    addNumberDialer("Fade Background", 0.0,1.0,&fadeBackground,4);
     
     
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
-    loadSettings(ofFilePath::getAbsolutePath("presets/")+"/baseRenderer/default.xml");
-
-
-//    settings = &PMSettingsManagerAudioAnalyzers::getInstance();
-//
-//    pitchMinMidiNote = settings->getMaxPitchMidiNote();
-//    pitchMaxMidiNote = settings->getMinPitchMidiNote();
-//
-//    silenceOn = false;
-//
-//    audioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
-//    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
-//
-//    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
-//    {
-//        if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-//
-//        ofxUILabel *deviceLabel = addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()));
-//        deviceLabel->setColorFill(titleColor);
-//
-//        // Pitch
-//        {
-//            addLabel("PITCH");
-//
-//            // Current freq value
-//            pitchSlider = addSlider("Midi note", settings->getMinPitchMidiNote(), settings->getMaxPitchMidiNote(), &pitchCurrentMidiNote, 300, 10);
-//            pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
-//
-//            addSpacer();
-//            ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
-//        }
-//
-//        // Energy
-//        {
-//            addLabel("ENERGY");
-//
-//            energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
-//            energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
-//
-//            addSpacer();
-//            ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
-//        }
-//
-//        // Silence
-//        {
-//            addLabel("SILENCE");
-//
-//            silenceToggle = addLabelToggle("SILENCE", &silenceOn);
-//            silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-//
-//            addSpacer();
-//            ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
-//        }
-//
-//        // Pause
-//        {
-//            addLabel("PAUSE");
-//
-//            pauseToggle = addLabelToggle("PAUSE", &pauseOn);
-//            pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-//
-//            addSpacer();
-//            ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
-//        }
-//
-//        // Onset
-//        {
-//            addLabel("ONSET");
-//
-//            onsetToggle = addLabelToggle("ONSET", &onsetOn);
-//            onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-//
-//            addSpacer();
-//            ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
-//        }
-//    }
-
-    if (autosize) autoSizeToFitWidgets();
 }
 
 void PMUICanvasBaseRenderer::clear()
@@ -112,26 +33,21 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
     int kind = e.getKind();
-
     
     if(name=="Background R")
     {
         ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        colorBackground.r = s->getValue();
+        guiColorBackground.r = s->getValue();
     }
     else if(name=="Background G")
     {
         ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        colorBackground.g = s->getValue();
+        guiColorBackground.g = s->getValue();
     }
     else if(name=="Background B")
     {
         ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        colorBackground.b = s->getValue();
-    }
-    else if(name=="Save to default")
-    {
-        saveSettings(ofFilePath::getAbsolutePath("presets/")+"/baseRenderer/default.xml");
+        guiColorBackground.b = s->getValue();
     }
 }
 
@@ -177,11 +93,23 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 
 float PMUICanvasBaseRenderer::getFadeBackground()
 {
-    return fadeBackground;
+    return guiFadeBackground;
 }
 
 ofColor PMUICanvasBaseRenderer::getColorBackground()
 {
-    return colorBackground;
+    return guiColorBackground;
 }
+
+void PMUICanvasBaseRenderer::savePreset()
+{
+    saveSettings(ofFilePath::getAbsolutePath("presets")+"/" +title +"/default.xml");
+    cout << "Saving Preset to : " << ofToString("presets")+"/" +title +"/default.xml)" << endl;
+}
+void PMUICanvasBaseRenderer::loadPreset()
+{
+    loadSettings(ofFilePath::getAbsolutePath("presets")+"/" +title +"/default.xml");
+    cout << "Loading Preset from : " << ofToString("presets")+"/" +title +"/default.xml)" << endl;
+}
+
 

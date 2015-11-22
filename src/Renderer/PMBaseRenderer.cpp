@@ -13,10 +13,8 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
     
     
     /// GUI
-    //guiBaseRenderer = PMUICanvasBaseRenderer::guiBaseRenderer();
-    guiBaseRenderer = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
-    guiBaseRenderer->init(100, 500, 200, 300);
-    
+//    guiBaseRenderer = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
+//    guiBaseRenderer->init(100, 500, 200, 300);
 }
 
 void PMBaseRenderer::setup()
@@ -36,6 +34,18 @@ void PMBaseRenderer::setup()
 
 void PMBaseRenderer::update()
 {
+    fbo.begin();
+    {
+        // background dimming
+        ofFloatColor fc = ofFloatColor(0.0,0.0,0.0,guiBaseRenderer->getFadeBackground());
+        //ofFloatColor fc = ofFloatColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,guiBaseRenderer->getFadeBackground());
+        ofSetColor(fc);
+
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofDrawRectangle(0,0,fbo.getWidth(),fbo.getHeight());
+    }
+    fbo.end();
+        
     drawIntoFBO();
 }
 
@@ -49,7 +59,7 @@ void PMBaseRenderer::draw()
     fbo.draw(0, 0);
     
     // draw gui of base renderer
-    guiBaseRenderer->draw();
+    //guiBaseRenderer->draw();
 }
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)

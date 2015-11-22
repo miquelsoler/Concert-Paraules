@@ -18,15 +18,21 @@ public:
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
+    virtual void savePreset();
+    virtual void loadPreset();
 
     // GETTERS
     float           getFadeBackground();
     ofColor         getColorBackground();
     
+    
 private:
 
-    float           fadeBackground;
-    ofColor         colorBackground;
+    string          rendererName;
+    float           guiFadeBackground;
+    ofColor         guiColorBackground;
+    
+
     
 };
 

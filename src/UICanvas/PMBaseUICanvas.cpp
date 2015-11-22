@@ -20,8 +20,8 @@ void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int hei
     setPosition(posX, posY);
     if (!autosize)
     {
-        setWidth(width);
-        setHeight(height);
+        //setWidth(width);
+        //setHeight(height);
     }
 }
 

@@ -106,6 +106,14 @@ PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDER
 
     audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
     dimmBackground = 0.5;
+    scanWidth = 3;
+
+    /// GUI
+    guiBaseRenderer = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
+    guiBaseRenderer->init(100, 500, 200, 300);
+    
+    
+
 }
 
 //--------------------------------------------------------------
@@ -113,8 +121,10 @@ void PMRendererColor::setup()
 {
     PMBaseRenderer::setup();
     
+    canvasColorRenderer = dynamic_cast<PMUICanvasColorRenderer *> (guiBaseRenderer);
+    
     scanX = 0.0;
-    scanSpeed = 1.0f;
+
 }
 
 //--------------------------------------------------------------
@@ -122,7 +132,9 @@ void PMRendererColor::update()
 {
     PMBaseRenderer::update();
     
-    scanX = scanX + scanSpeed;
+    //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
+    scanX = scanX + canvasColorRenderer->getScanSpeedX();
+
     if(scanX > ofGetWidth())
     {
         scanX = ofGetWidth() - scanX;
@@ -141,17 +153,8 @@ void PMRendererColor::drawIntoFBO()
         float deltaEnergy = 0.1;
         float energySmooth = (deltaEnergy)*energy + (1.0-deltaEnergy)*oldEnergy;
 
-        // background dimming
-        //ofSetColor(255, 255, 255, 1);
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-        //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
-        ofSetColor(fc);
-
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofDrawRectangle(0,0,fbo.getWidth(),fbo.getHeight());
         
-        mode = 2;
-        switch (mode)
+        switch (canvasColorRenderer->getMode())
         {
             case 1 :
             {
@@ -165,7 +168,7 @@ void PMRendererColor::drawIntoFBO()
                 // convert from lab to rgb
                 ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);
                 
-                ofSetColor(vcol.x , vcol.y , vcol.z );
+                ofSetColor(vcol.x , vcol.y , vcol.z ,255);
                 ofSetCircleResolution(128);
                 ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,(ofGetHeight()/2)*energySmooth);
                 
@@ -185,8 +188,28 @@ void PMRendererColor::drawIntoFBO()
                 // convert from lab to rgb
                 ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);//*energySmooth;
                 
-                ofSetColor(vcol.x , vcol.y , vcol.z );
-                ofDrawRectangle(scanX,fbo.getHeight()/2.0,3,(energySmooth) * ofGetHeight());
+                ofSetColor(vcol.x , vcol.y , vcol.z ,255);
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(),(energySmooth) * ofGetHeight());
+                
+                ofSetRectMode(OF_RECTMODE_CORNER);
+                
+                break;
+            }
+            case 3 :
+            {
+                ofSetRectMode(OF_RECTMODE_CENTER);
+                
+                float pitchL,pitchA,pitchB;
+                
+                pitchL = ofMap(pitchSmooth,0.0,1.0,0.0   ,100.0,true);
+                pitchA = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
+                pitchB = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
+                
+                // convert from lab to rgb
+                ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);//*energySmooth;
+                
+                ofSetColor(vcol.x , vcol.y , vcol.z ,(energySmooth)*255);
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(), ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
                 
