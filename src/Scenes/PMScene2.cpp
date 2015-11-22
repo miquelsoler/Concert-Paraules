@@ -275,6 +275,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
+            // TODO: Should move this all to <audio to sceneparams mapper>
             if (typoTimerEnabled)
             {
                 float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
@@ -363,9 +364,6 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
             typoTimerEnabled = !pauseParams.isPaused;
             if (typoTimerEnabled)
                 typoTimer = ofGetElapsedTimeMillis();
-
-//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-//            typoRenderer->addLetter();
             break;
         }
         default: break;
