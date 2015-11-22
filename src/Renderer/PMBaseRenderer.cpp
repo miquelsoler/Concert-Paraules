@@ -10,6 +10,7 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
 
     type = _type;
     numInputs = _numInputs;
+    
 }
 
 void PMBaseRenderer::setup()
@@ -18,7 +19,7 @@ void PMBaseRenderer::setup()
     {
         // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
         // so it's good to clear it before starting to draw it
-        ofClear(255, 255, 255, 0);
+        ofClear(0, 0, 0, 0);
     }
     fbo.end();
 
@@ -34,7 +35,7 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
-    ofClear(255, 255, 255, 255);
+    ofClear(0, 0, 0, 255);
     fbo.draw(0, 0);
 }
 
