@@ -11,8 +11,6 @@
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 
-#include "PMRecorder.hpp"
-
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
@@ -24,6 +22,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 #endif
 
     audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
+    recorder = &PMRecorder::getInstance();
 
     backgroundColor = ofColor::white;
 
@@ -132,20 +131,20 @@ void PMScene2::setup()
     renderer->setup();
     
     // Recorder setup
-    
+
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate=aavec[0]->getSamplerate();
     int numChannels=aavec.at(0)->getNumChannels();
-    PMRecorder::getInstance().init(renderer->getFbo(), sampleRate, numChannels);
+    recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts/")+"../");
 }
 
 void PMScene2::update()
 {
     renderer->update();
     
-    //Record actual frame
-    if(PMRecorder::getInstance().isRecording()){
-        PMRecorder::getInstance().addVideoFrame();
+    // Record current frame
+    if (recorder->isRecording()) {
+        recorder->addVideoFrame();
     }
 }
 
@@ -172,7 +171,7 @@ void PMScene2::updateExit()
 {
     saveSettings();
     PMBaseScene::updateExit();
-    PMRecorder::getInstance().exit();
+    
 }
 
 void PMScene2::draw()
@@ -187,7 +186,7 @@ void PMScene2::draw()
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
-    PMAudioAnalyzer::getInstance().clear();
+//    PMAudioAnalyzer::getInstance().clear();
 
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
@@ -197,10 +196,14 @@ void PMScene2::saveSettings()
         (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
     }
+<<<<<<< HEAD
     
     //ens carreguem el fitxer audiodevices perque no dongui pel sac
     string cmd="rm " + ofFilePath::getAbsolutePath("settings/")+"/audioDevices.json";
     system(cmd.c_str());
+=======
+    recorder->exit();
+>>>>>>> 5a64e476d6f0e3f475195f160200e5fec7c4a8e8
 }
 
 #pragma mark - Keyboard events
@@ -227,20 +230,20 @@ void PMScene2::keyReleased(int key)
         case 'r':
         case 'R':
         {
-            if(!PMRecorder::getInstance().isRecording()){
-                //begin the recording
-                PMRecorder::getInstance().startRecording();
-            }else{
-                //stop recording
-                PMRecorder::getInstance().stopRecording();
+            if (!recorder->isRecording()) {
+                // Start recording
+                recorder->startRecording();
+            } else {
+                // Stop recording
+                recorder->stopRecording();
             }
             break;
         }
         case 'c':
         case 'C':
         {
-            //discard recording
-            PMRecorder::getInstance().discardRecording();
+            // Discard recording
+            recorder->discardRecording();
             break;
         }
         default: break;
@@ -335,16 +338,11 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
     switch (renderer->getType())
     {
-        case RENDERERTYPE_PAINTBRUSH:
+        case RENDERERTYPE_TYPOGRAPHY:
         {
-            if (!pauseParams.isPaused)
-            {
-//                cout << "Paint!" << endl;
-//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//                paintbrushRenderer->changeBaseAngle(pauseParams.audioInputIndex);
-
-                break;
-            }
+//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+//            typoRenderer->addLetter();
+            break;
         }
         default: break;
     }
@@ -361,10 +359,7 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
 //            paintbrushRenderer->changeBaseAngle(onsetParams.audioInputIndex);
             break;
         }
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-            break;
-        }
+
         default: break;
     }
 }
