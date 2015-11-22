@@ -12,8 +12,8 @@
       "Silence Threshold" : 1
    },
    "Pitch" : {
-      "Max MIDI Note" : 50.73891830444336,
-      "Min MIDI Note" : 30.04926109313965
+      "Max MIDI Note" : 90.63546752929688,
+      "Min MIDI Note" : 80.64532089233398
    },
    "Silence" : {
       "Enabled" : true,

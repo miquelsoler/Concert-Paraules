@@ -91,7 +91,8 @@ void PMRecorder::exit()
 {
     ofRemoveListener(vidRecorder.outputFileCompleteEvent, this, &PMRecorder::recordingComplete);
     vidRecorder.close();
-    string cmd = "rm "+ ofFilePath::getAbsolutePath("fonts/")+"../ofxarpipe0 " + ofFilePath::getAbsolutePath("fonts/")+"../ofxvrpipe0";
+
+    string cmd = "rm "+ filePath+"ofxarpipe0 " + filePath+"ofxvrpipe0";
     system(cmd.c_str());
 }
 
