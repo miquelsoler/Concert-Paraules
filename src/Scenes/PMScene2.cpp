@@ -51,10 +51,19 @@ void PMScene2::setup()
         PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
         switch(settingsRenderer.ID)
         {
-            case RENDERERTYPE_PAINTBRUSH:   renderer = new PMRendererPaintbrush(numAudioInputs); break;
-            case RENDERERTYPE_TYPOGRAPHY:   renderer = new PMRendererTypography(numAudioInputs); break;
-            case RENDERERTYPE_COLOR:        renderer = new PMRendererColor(numAudioInputs); break;
-            default:                        break;
+            case RENDERERTYPE_PAINTBRUSH:
+                renderer = new PMRendererPaintbrush(numAudioInputs);
+                break;
+            case RENDERERTYPE_TYPOGRAPHY:
+                // TODO: Should move this all to <audio to sceneparams mapper>
+                renderer = new PMRendererTypography(numAudioInputs);
+                typoTimerEnabled = false;
+                break;
+            case RENDERERTYPE_COLOR:
+                renderer = new PMRendererColor(numAudioInputs);
+                break;
+            default:
+                break;
         }
     }
 
@@ -266,6 +275,17 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
+            if (typoTimerEnabled)
+            {
+                float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+//                cout << "Diff time: " << diffTimeMs << endl;
+                if (diffTimeMs > 200)
+                {
+                    typoTimer = ofGetElapsedTimeMillis();
+                    PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+                    typoRenderer->addLetter();
+                }
+            }
             break;
         }
         case RENDERERTYPE_COLOR:
@@ -340,8 +360,12 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
     {
         case RENDERERTYPE_TYPOGRAPHY:
         {
-            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-            typoRenderer->addLetter();
+            typoTimerEnabled = !pauseParams.isPaused;
+            if (typoTimerEnabled)
+                typoTimer = ofGetElapsedTimeMillis();
+
+//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+//            typoRenderer->addLetter();
             break;
         }
         default: break;
