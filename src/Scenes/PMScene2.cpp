@@ -196,14 +196,11 @@ void PMScene2::saveSettings()
         (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
     }
-<<<<<<< HEAD
     
     //ens carreguem el fitxer audiodevices perque no dongui pel sac
     string cmd="rm " + ofFilePath::getAbsolutePath("settings/")+"/audioDevices.json";
     system(cmd.c_str());
-=======
     recorder->exit();
->>>>>>> 5a64e476d6f0e3f475195f160200e5fec7c4a8e8
 }
 
 #pragma mark - Keyboard events
