@@ -41,9 +41,12 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
-    // set background for base renderer
-    ofColor c = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
-    ofClear(c);
+    ofClear(255, 255, 255, 255);
+    fbo.draw(0, 0);
+
+//    // set background for base renderer
+//    ofColor c = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+//    ofClear(c);
     
     // draw the fbo with contents to screen
     fbo.draw(0, 0);
