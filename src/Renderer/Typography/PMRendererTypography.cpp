@@ -53,15 +53,22 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofSetColor(255, 255, 255, 1);
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
+        //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+        ofSetColor(fc);
+
+//        ofSetColor(255, 255, 255, 1);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
         list<PMLetterContainer *>::iterator letterIt;
-        for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-            (*letterIt)->draw();
-
+        mutexLetters.lock();
+        {
+            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+                (*letterIt)->draw();
+        }
+        mutexLetters.unlock();
         ofDisableBlendMode();
     }
     fbo.end();
@@ -80,13 +87,17 @@ void PMRendererTypography::addLetter()
     letterContainer->setPosition(ofRandom(0.1, 0.9), ofRandom(0.1, 0.9));
     letterContainer->setSize(1.0);
 
-    activeLetters.push_back(letterContainer);
-
-    if (activeLetters.size() > MAX_LETTERS)
+    mutexLetters.lock();
     {
-        delete *(activeLetters.begin());
-        activeLetters.pop_front();
+        activeLetters.push_back(letterContainer);
+
+        if (activeLetters.size() > MAX_LETTERS)
+        {
+            delete *(activeLetters.begin());
+            activeLetters.pop_front();
+        }
     }
+    mutexLetters.unlock();
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
@@ -95,8 +106,7 @@ void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
         addLetter();
 }
 
-void PMRendererTypography::buildCharsetFromPoem()
-{
+void PMRendererTypography::buildCharsetFromPoem() {
     PMSettingsManagerPoem *poemSettings = &PMSettingsManagerPoem::getInstance();
 
     string strPoemFolder = poemSettings->getFolderPath();
@@ -110,25 +120,21 @@ void PMRendererTypography::buildCharsetFromPoem()
     ofBuffer::Lines lines = buffer.getLines();
     ofBuffer::Line iter = lines.begin();
 
-    while (iter != lines.end())
-    {
-        if (!(*iter).empty())
-        {
+    while (iter != lines.end()) {
+        if (!(*iter).empty()) {
             string line = (*iter);
-            cout << "LINE: " << (*iter) << endl;
             ofStringReplace(line, ",", " ");
             ofStringReplace(line, ";", " ");
+            ofStringReplace(line, ":", " ");
             ofStringReplace(line, ".", " ");
             ofStringReplace(line, "-", " ");
             ofStringReplace(line, "!", " ");
             ofStringReplace(line, "?", " ");
             ofStringReplace(line, "'", " ");
             vector<string> words = ofSplitString(line, " ", true, true);
-            for (int i=0; i<words.size(); ++i)
-            {
+            for (int i = 0; i < words.size(); ++i) {
                 string word = words[i];
-                for (int j=0; j<word.length(); ++j)
-                {
+                for (int j = 0; j < word.length(); ++j) {
                     bool found = ofIsStringInString(charset, ofToString(word[j]));
                     if (!found)
                         charset += word[j];
@@ -137,7 +143,4 @@ void PMRendererTypography::buildCharsetFromPoem()
         }
         ++iter;
     }
-
-    cout << charset << endl;
-    int a = 0;
 }

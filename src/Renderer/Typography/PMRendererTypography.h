@@ -34,6 +34,8 @@ private:
     list<PMLetterContainer *> activeLetters;
 
     void buildCharsetFromPoem();
+
+    mutex mutexLetters;
 };
 
 

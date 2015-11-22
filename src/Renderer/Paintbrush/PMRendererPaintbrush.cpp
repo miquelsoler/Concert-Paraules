@@ -24,8 +24,6 @@ void PMRendererPaintbrush::setup()
 
 void PMRendererPaintbrush::update()
 {
-    
-
     for (int i=0; i<numInputs; ++i)
     {
         if (!isActive[i]) continue;
@@ -39,7 +37,11 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofSetColor(255, 255, 255, 1);
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
+        //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+        ofSetColor(fc);
+
+//        ofSetColor(255, 255, 255, 1);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);

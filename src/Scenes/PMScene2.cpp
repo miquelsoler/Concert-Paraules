@@ -280,7 +280,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             {
                 float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
 //                cout << "Diff time: " << diffTimeMs << endl;
-                if (diffTimeMs > 50)
+                if (diffTimeMs > 1)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
                     PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
