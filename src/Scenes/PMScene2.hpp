@@ -19,6 +19,8 @@
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
 
+#include "PMRecorder.hpp"
+
 #include "PMUICanvasRenderers.h"
 #include "PMUICanvasAudioAnalyzer.h"
 
@@ -54,6 +56,8 @@ public:
 private:
 
     PMBaseRenderer                      *renderer;
+
+    PMRecorder                          *recorder;
 
     vector<PMUICanvasAudioAnalyzer *>   guiAudioAnalyzers;
     bool                                guiAudioAnalyzerCreated;

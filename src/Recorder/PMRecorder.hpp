@@ -23,8 +23,8 @@ public:
         static PMRecorder instance;
         return instance;
     }
-    
-    void init(ofFbo *fbo, int _samplerate, int _channels);
+
+    void init(ofFbo *fbo, int _samplerate, int _channels, string fileName, string filePath);
     void addVideoFrame();
     void addAudioBuffer(float *input, int bufferSize, int nChannels);
     void exit();
@@ -39,6 +39,8 @@ private:
     bool bRecording;
     string fileName;
     string fileExt;
+    string filePath; //Where the file will be created
+    string lastFileNameGenerated;
     
     void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args);
     

@@ -118,3 +118,4 @@ bin/data/settings/audioDevices.json
 bin/data/settings/poem.json
 bin/data/settings/renderers.json
 bin/data/settings/gui/*.xml
+bin/data/*.mov

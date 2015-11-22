@@ -4,19 +4,21 @@
 
 #include "PMRendererTypography.h"
 
-static const unsigned int MAX_LETTERS = 50;
-
+static const unsigned int MAX_LETTERS = 10;
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
+    availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
 }
 
 void PMRendererTypography::setup()
 {
-//    PMBaseRenderer::setup();
-//
-//    if (!letters.empty())
-//        letters.clear();
+    PMBaseRenderer::setup();
+
+    if (!letters.empty())
+        letters.clear();
 }
 
 void PMRendererTypography::update()
@@ -28,22 +30,16 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-//////        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-//////        ofSetColor(255, 255, 255, 5);
-//////        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//
-//        ofSetColor(255, 255, 255, 1);
-//        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//
-//        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-//
-//        ofSetColor(0, 0, 0, 255);
-//
-//        list<PMLetterContainer>::iterator letterIt;
-//        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
-//            (*letterIt).draw();
-//
-//        ofDisableBlendMode();
+        ofSetColor(255, 255, 255, 1);
+        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+
+        list<PMLetterContainer *>::iterator letterIt;
+        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
+            (*letterIt)->draw();
+
+        ofDisableBlendMode();
     }
     fbo.end();
 
@@ -54,12 +50,22 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-//    PMLetterContainer letterContainer("verdana.ttf");
-//    letterContainer.setPosition(0.5, 0.5);
-//    letterContainer.setSize(1.0);
-//
-//    letters.push_back(letterContainer);
-//
-//    if (letters.size() > MAX_LETTERS)
-//        letters.pop_front();
+    int iLetter = int(ofRandom(availableLetters.size()));
+    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(availableLetters[iLetter]));
+    letterContainer->setPosition(ofRandom(0,1), ofRandom(0.2,0.8));
+    letterContainer->setSize(1.0);
+
+    letters.push_back(letterContainer);
+
+    if (letters.size() > MAX_LETTERS)
+    {
+        delete *(letters.begin());
+        letters.pop_front();
+    }
+}
+
+void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
+{
+    if (eventArgs.key == 'q')
+        addLetter();
 }
