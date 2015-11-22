@@ -32,6 +32,10 @@ private:
     vector<ofTrueTypeFont *> fontCharset;
 
     list<PMLetterContainer *> activeLetters;
+
+    void buildCharsetFromPoem();
+
+    mutex mutexLetters;
 };
 
 

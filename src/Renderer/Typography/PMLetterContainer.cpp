@@ -42,12 +42,10 @@ void PMLetterContainer::setPosition(float normalizedX, float normalizedY)
 
 void PMLetterContainer::setPositionX(float normalizedX)
 {
-
 }
 
 void PMLetterContainer::setPositionY(float normalizedY)
 {
-
 }
 
 void PMLetterContainer::setSize(float normalizedSize) {
@@ -64,6 +62,6 @@ void PMLetterContainer::draw()
         ofTranslate(x, y);
         ofRotate(angle);
         ofSetColor(ofColor::black);
-        letterFont->drawStringAsShapes(letter, -width/2, height/2);
+        letterFont->drawString(letter, -width/2, height/2);
     ofPopMatrix();
 }
