@@ -264,6 +264,10 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
             break;
         }
+        case RENDERERTYPE_TYPOGRAPHY:
+        {
+            break;
+        }
         case RENDERERTYPE_COLOR:
         {
             float minOffset = 0.0f;
@@ -328,7 +332,6 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
         }
         default: break;
     }
-//    renderer->setShouldPaint(silenceParams.audioInputIndex, !silenceParams.isSilent);
 }
 
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
@@ -337,8 +340,8 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
     {
         case RENDERERTYPE_TYPOGRAPHY:
         {
-//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-//            typoRenderer->addLetter();
+            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+            typoRenderer->addLetter();
             break;
         }
         default: break;

@@ -35,7 +35,7 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
-    ofClear(0, 0, 0, 255);
+    ofClear(255, 255, 255, 255);
     fbo.draw(0, 0);
 }
 

@@ -8,7 +8,26 @@ static const unsigned int MAX_LETTERS = 10;
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
-    availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//    charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    charset = "aeiou";
+
+    string fontName = "5inq_-_Handserif.ttf";
+    string fontPath = "fonts/" + fontName;
+
+    for (int i=0; i<charset.size(); ++i)
+    {
+        ofTrueTypeFont *letterFont = new ofTrueTypeFont();
+        letterFont->load(fontPath, 80,
+                true, // antialiased
+                true, // full character set
+                true // make contours
+        );
+
+////    letterFont->setLineHeight(18.0f);
+////    letterFont->setLetterSpacing(1.037);
+
+        fontCharset.push_back(letterFont);
+    }
 
     ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
 }
@@ -17,8 +36,8 @@ void PMRendererTypography::setup()
 {
     PMBaseRenderer::setup();
 
-    if (!letters.empty())
-        letters.clear();
+    if (!activeLetters.empty())
+        activeLetters.clear();
 }
 
 void PMRendererTypography::update()
@@ -36,7 +55,7 @@ void PMRendererTypography::drawIntoFBO()
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
         list<PMLetterContainer *>::iterator letterIt;
-        for (letterIt = letters.begin(); letterIt != letters.end(); ++letterIt)
+        for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
             (*letterIt)->draw();
 
         ofDisableBlendMode();
@@ -50,17 +69,19 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-    int iLetter = int(ofRandom(availableLetters.size()));
-    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(availableLetters[iLetter]));
-    letterContainer->setPosition(ofRandom(0,1), ofRandom(0.2,0.8));
+    int iLetter = int(ofRandom(charset.size()));
+
+//    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(charset[iLetter]));
+    PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
+    letterContainer->setPosition(ofRandom(0.2, 0.8), ofRandom(0.2, 0.8));
     letterContainer->setSize(1.0);
 
-    letters.push_back(letterContainer);
+    activeLetters.push_back(letterContainer);
 
-    if (letters.size() > MAX_LETTERS)
+    if (activeLetters.size() > MAX_LETTERS)
     {
-        delete *(letters.begin());
-        letters.pop_front();
+        delete *(activeLetters.begin());
+        activeLetters.pop_front();
     }
 }
 
