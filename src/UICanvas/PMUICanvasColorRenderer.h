@@ -33,6 +33,7 @@ private:
     float       guiScanWidth;
     float       guiScanSpeedX;
     int         guiMode;
+    ofImage     gradientImage;
     
 };
 
