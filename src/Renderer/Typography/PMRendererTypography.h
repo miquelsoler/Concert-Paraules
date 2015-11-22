@@ -28,9 +28,10 @@ public:
 
 private:
 
-    list<PMLetterContainer *> letters;
+    string charset;
+    vector<ofTrueTypeFont *> fontCharset;
 
-    string availableLetters;
+    list<PMLetterContainer *> activeLetters;
 };
 
 

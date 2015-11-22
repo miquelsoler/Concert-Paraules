@@ -4,27 +4,34 @@
 
 #include "PMLetterContainer.h"
 
-PMLetterContainer::PMLetterContainer(string fontName, string _letter)
+PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
 {
-//    bool ofTrueTypeFont::load(const std::string& _filename, int _fontSize, bool _bAntiAliased, bool _bFullCharacterSet, bool _makeContours, float _simplifyAmt, int _dpi) {
-
-    letterFont = new ofTrueTypeFont();
-    letterFont->load("fonts/" + fontName, 80,
-            true, // antialiased
-            true, // full character set
-            true // make contours
-    );
-//    letterFont->setLineHeight(18.0f);
-//    letterFont->setLetterSpacing(1.037);
-
+    letterFont = font;
     letter = _letter;
-
     angle = ofRandom(-90, 90);
 }
 
+//PMLetterContainer::PMLetterContainer(string fontName, string _letter)
+//{
+////    bool ofTrueTypeFont::load(const std::string& _filename, int _fontSize, bool _bAntiAliased, bool _bFullCharacterSet, bool _makeContours, float _simplifyAmt, int _dpi) {
+//
+//    letterFont = new ofTrueTypeFont();
+//    letterFont->load("fonts/" + fontName, 80,
+//            true, // antialiased
+//            true, // full character set
+//            true // make contours
+//    );
+////    letterFont->setLineHeight(18.0f);
+////    letterFont->setLetterSpacing(1.037);
+//
+//    letter = _letter;
+//
+//    angle = ofRandom(-90, 90);
+//}
+
 PMLetterContainer::~PMLetterContainer()
 {
-    delete letterFont;
+//    delete letterFont;
 }
 
 void PMLetterContainer::setPosition(float normalizedX, float normalizedY)
