@@ -143,8 +143,10 @@ void PMRendererColor::drawIntoFBO()
 
         // background dimming
         //ofSetColor(255, 255, 255, 1);
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,0.002);
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
+        //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
         ofSetColor(fc);
+
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofDrawRectangle(0,0,fbo.getWidth(),fbo.getHeight());
         

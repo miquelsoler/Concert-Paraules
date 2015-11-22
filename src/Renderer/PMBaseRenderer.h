@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "PMUICanvasBaseRenderer.h"
 
 typedef enum
 {
@@ -41,6 +42,8 @@ protected:
     vector<bool>    isActive;   // Enable/disable painting per input
 
     ofFbo           fbo;
+
+    PMUICanvasBaseRenderer*  guiBaseRenderer;
 };
 
 

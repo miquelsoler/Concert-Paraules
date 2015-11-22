@@ -11,6 +11,12 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
     type = _type;
     numInputs = _numInputs;
     
+    
+    /// GUI
+    //guiBaseRenderer = PMUICanvasBaseRenderer::guiBaseRenderer();
+    guiBaseRenderer = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
+    guiBaseRenderer->init(100, 500, 200, 300);
+    
 }
 
 void PMBaseRenderer::setup()
@@ -35,8 +41,15 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
-    ofClear(0, 0, 0, 255);
+    // set background for base renderer
+    ofColor c = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+    ofClear(c);
+    
+    // draw the fbo with contents to screen
     fbo.draw(0, 0);
+    
+    // draw gui of base renderer
+    guiBaseRenderer->draw();
 }
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
