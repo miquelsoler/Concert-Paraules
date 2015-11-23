@@ -93,7 +93,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
             
             addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventShtHappened, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
+            ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
         }
         
         
