@@ -19,6 +19,6 @@ static const ofWindowMode   DEFAULT_WINDOW_MODE         = OF_WINDOW;
 static const int            DEFAULT_SAMPLERATE          = 44100;
 static const int            DEFAULT_BUFFERSIZE          = 512;
 
-#define WITH_BOX2D
+//#define WITH_BOX2D
 
 #endif

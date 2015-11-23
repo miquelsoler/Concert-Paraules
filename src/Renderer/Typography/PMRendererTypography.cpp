@@ -107,6 +107,7 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
+//    cout << "addLetter()" << endl;
     int iLetter = int(ofRandom(charset.size()));
 
 //    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(charset[iLetter]));
