@@ -119,6 +119,6 @@ bin/data/settings/poem.json
 bin/data/settings/renderers.json
 bin/data/settings/gui/*.xml
 bin/data/*.mov
-bin/data/presets/BRUSH_RENDERER/*.xml
-bin/data/presets/COLOR_RENDERER/*.xml
-bin/data/presets/TYPO_RENDERER/*.xml
+bin/data/presets/BRUSH_RENDERER/default.xml
+bin/data/presets/COLOR_RENDERER/default.xml
+bin/data/presets/TYPO_RENDERER/default.xml
