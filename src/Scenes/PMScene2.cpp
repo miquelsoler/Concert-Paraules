@@ -103,6 +103,7 @@ void PMScene2::setup()
                     ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
+                    ofAddListener(deviceAudioAnalyzer->eventShtHappened, this, &PMScene2::shtDetected);
 
                     audioInputIndex++;
                 }
@@ -384,4 +385,21 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
 
         default: break;
     }
+}
+
+void PMScene2::shtDetected(shtParams &shtParams)
+{
+    switch(renderer->getType())
+    {
+        case RENDERERTYPE_COLOR:
+        {
+            PMRendererColor *colorRenderer = (PMRendererColor*)renderer;
+            colorRenderer->setNeedsToBeCleared(true);
+            break;
+        }
+        default:
+            break;
+
+    }
+
 }

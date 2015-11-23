@@ -215,6 +215,18 @@ void PMRendererColor::drawIntoFBO()
                 
                 break;
             }
+            case 4 :
+            {
+                ofSetRectMode(OF_RECTMODE_CENTER);
+                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                c.a = 255.0 * energySmooth;
+                ofSetColor(c);
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(), ofGetHeight());
+                
+                ofSetRectMode(OF_RECTMODE_CORNER);
+                
+                break;
+            }
                 
                 
             default:
