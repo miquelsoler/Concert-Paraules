@@ -424,8 +424,7 @@ void PMDeviceAudioAnalyzer::checkShtSound(int channel)
         shtParams.time=timeOfSht;
         shtParams.isSht = true;
         ofNotifyEvent(eventShtHappened, shtParams, this);
-        //        cout<<"-------------------SHT-----------------"<<endl;
-        cout << "analyzing sht true" << endl;
+//        cout << "analyzing sht true" << endl;
     }
     else if(isShtSounding[channel]==false)
     {
@@ -438,6 +437,6 @@ void PMDeviceAudioAnalyzer::checkShtSound(int channel)
         shtParams.isSht = false;
         
         ofNotifyEvent(eventShtHappened, shtParams, this);
-        cout << "analyzing sht false" << endl;
+//        cout << "analyzing sht false" << endl;
     }
 }

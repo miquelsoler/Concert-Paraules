@@ -11,6 +11,9 @@
 
 #include "PMLetterContainer.h"
 #include "PMUICanvasTypoRenderer.h"
+#include "Defaults.h"
+
+#include "ofxBox2d.h"
 
 
 class PMRendererTypography : public PMBaseRenderer
@@ -28,16 +31,25 @@ public:
     void keyPressed ( ofKeyEventArgs& eventArgs );
 
 private:
+
     PMUICanvasTypoRenderer* canvasTypoRenderer;
     
-    string charset;
-    vector<ofTrueTypeFont *> fontCharset;
+    string                              charset;
+    vector<ofTrueTypeFont *>            fontCharset;
+#ifdef WITH_BOX2D
+    vector<shared_ptr<PMLetterContainer>> activeLetters;
+#else
+    list<PMLetterContainer *>           activeLetters;
+#endif
 
-    list<PMLetterContainer *> activeLetters;
+    mutex                               mutexLetters;
+
+#ifdef WITH_BOX2D
+    ofxBox2d                            box2d;
+#endif
 
     void buildCharsetFromPoem();
 
-    mutex mutexLetters;
 };
 
 

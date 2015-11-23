@@ -287,8 +287,10 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
                 if (diffTimeMs > 1)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
+#ifndef WITH_BOX2D
                     PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
                     typoRenderer->addLetter();
+#endif
                 }
             }
             break;
