@@ -30,7 +30,8 @@ void ofApp::setup()
                 settingsAA.getMinEnergy(),
                 settingsAA.getSilenceEnabled(), settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
                 settingsAA.getOnsetsThreshold(), settingsAA.getOnsetsAlpha(),
-                settingsAA.getSmoothingDelta());
+                settingsAA.getSmoothingDelta(),
+                settingsAA.getAscDescAnalysisSize());
     }
 
     // General Settings
