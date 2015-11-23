@@ -157,5 +157,5 @@ void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
 void PMUICanvasAudioAnalyzer::shtStateChanged(shtParams &_shtParams)
 {
     if (_shtParams.audioInputIndex != audioInputIndex) return;
-    shtOn = true;
+    shtOn = _shtParams.isSht;
 }
