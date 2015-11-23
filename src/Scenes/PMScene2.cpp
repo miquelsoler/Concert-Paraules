@@ -282,7 +282,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             if (typoTimerEnabled)
             {
                 float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-                if (diffTimeMs > 1)
+                if (diffTimeMs > 50)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
                     /*

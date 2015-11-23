@@ -110,8 +110,7 @@ void PMRendererTypography::addLetter()
     mutexAddLetter.lock();
     {
         int iLetter = int(ofRandom(charset.size()));
-
-        cout << "addLetter: " <<  charset[iLetter]<< endl;
+//        cout << "addLetter: " <<  charset[iLetter]<< endl;
 
         mutexActiveLetters.lock();
         {
