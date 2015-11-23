@@ -4,7 +4,7 @@
 class PMParticle{
 
 	public:
-		demoParticle(int x, int y, ofPoint prevPoint);
+		PMParticle(int x, int y, ofPoint prevPoint);
 
 		void update();
 		void draw();		
@@ -18,7 +18,6 @@ class PMParticle{
 		float uniqueVal;
 		float scale;
 		
-		particleMode mode;
     
         float bornTime;
         int alphaValue;
