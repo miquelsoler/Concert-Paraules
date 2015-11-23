@@ -6,9 +6,10 @@
 
 #include "PMSettingsManagerPoem.h"
 
-static const unsigned int MAX_LETTERS = 10;
+static const unsigned int MAX_LETTERS = 3;
 
-static const string DEFAULT_CHARSET = "?";
+//static const string DEFAULT_CHARSET = "?";
+static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
@@ -68,7 +69,11 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
+#ifdef WITH_BOX2D
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,1.0);
+#else
         ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
+#endif
         ofSetColor(fc);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
@@ -107,19 +112,6 @@ void PMRendererTypography::addLetter()
 //    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(charset[iLetter]));
 #ifdef WITH_BOX2D
     shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
-
-    float posX = ofGetWidth() / 2;
-    float posY = 50;
-
-    float normalizedPosX = posX / ofGetWidth();
-    float normalizedPosY = posY / ofGetHeight();
-
-    letterContainer.get()->setup(box2d.getWorld(), posX, posY, 100, 100);
-    letterContainer.get()->setPhysics(3.0, 0.53, 0.1);
-    letterContainer.get()->setVelocity(ofRandom(-30, 30), ofRandom(-30, 30));
-    letterContainer.get()->body->SetType(b2_dynamicBody);
-    //    p.get()->setupTheCustomData();
-    letterContainer.get()->setPosition(normalizedPosX, normalizedPosY);
 #else
     PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
     letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
@@ -189,4 +181,7 @@ void PMRendererTypography::buildCharsetFromPoem() {
         }
         ++iter;
     }
+
+    // FIXME: Charset still includes characters like �.
+    charset = DEFAULT_CHARSET;
 }

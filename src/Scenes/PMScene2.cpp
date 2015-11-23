@@ -264,7 +264,6 @@ void PMScene2::keyReleased(int key)
 
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
-    
     switch(renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:

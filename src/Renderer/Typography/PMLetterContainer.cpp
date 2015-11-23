@@ -16,6 +16,23 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
 
 #ifdef WITH_BOX2D
     box2d = _box2d;
+
+//    float posX = ofGetWidth() / 2;
+    float posX = ofRandomWidth();
+    float posY = 1;
+
+    float normalizedPosX = posX / ofGetWidth();
+    float normalizedPosY = posY / ofGetHeight();
+
+    float width = letterFont->stringWidth(letter);
+    float height = letterFont->stringHeight(letter);
+
+    setPhysics(3.0, 0.53, 0.1);
+    setup(box2d->getWorld(), posX, posY, width, height);
+    setVelocity(ofRandom(-10, 10), ofRandom(0, 30));
+
+    this->setPosition(normalizedPosX, normalizedPosY);
+    //    p.get()->setupTheCustomData();
 #endif
 }
 
@@ -27,15 +44,6 @@ void PMLetterContainer::setPosition(float normalizedX, float normalizedY)
 {
     x = ofGetWidth() * normalizedX;
     y = ofGetHeight() * normalizedY;
-
-#ifdef WITH_BOX2D
-//    float width = letterFont->stringWidth(letter);
-//    float height = letterFont->stringHeight(letter);
-//    setup(box2d->getWorld(), x, y, 100, 100);
-//    setPhysics(1.0, 0.5, 0.3);
-//    setVelocity(ofRandom(-30, 30), ofRandom(-30, 30));
-//    p.get()->setupTheCustomData();
-#endif
 }
 
 void PMLetterContainer::setPositionX(float normalizedX)
@@ -57,8 +65,13 @@ void PMLetterContainer::draw()
 
     ofSetColor(ofColor::black);
     ofPushMatrix();
+#ifdef WITH_BOX2D
+        ofTranslate(getPosition());
+        ofRotateZ(getRotation());
+#else
         ofTranslate(x, y);
         ofRotate(angle);
+#endif
         ofSetColor(ofColor::black);
         letterFont->drawString(letter, -width/2, height/2);
     ofPopMatrix();
