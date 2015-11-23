@@ -394,7 +394,7 @@ void PMScene2::shtDetected(shtParams &shtParams)
         case RENDERERTYPE_COLOR:
         {
             PMRendererColor *colorRenderer = (PMRendererColor*)renderer;
-            colorRenderer->setNeedsToBeCleared(true);
+            colorRenderer->setNeedsToBeCleared(shtParams.isSht);
             break;
         }
         default:
