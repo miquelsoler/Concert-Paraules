@@ -10,7 +10,7 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float ANGLE_VARIATION = 20;
 static const float ANGLE_VARIATION_MAX_OFFSET = 30;
-static const float BRUSH_SPEED = 3.0;
+static const float BRUSH_SPEED = 5.0;
 static const float OFFSET_SCALE = 1.5;
 
 static const float PAINTING_MARGIN_PCT = 0.05;
@@ -20,8 +20,8 @@ PMBrushContainer::PMBrushContainer(string filename)
 {
     brush = ofImage(filename);
 
-    xOffset = 0;
-    yOffset = 0;
+    xOffset = 0;//-size*(brush.getWidth()/brush.getHeight())/2;
+    yOffset = 0;//-size/2;
     generalOffset = 0;
 
     ofSeedRandom();
@@ -52,7 +52,13 @@ void PMBrushContainer::update()
 void PMBrushContainer::draw()
 {
     int halfSize = size >> 1;
-    brush.draw(x - halfSize + xOffset, y - halfSize + yOffset, size, size);
+//    ofPushMatrix();
+//        ofTranslate(x , y);
+//        ofRotate(baseAngle+90);
+//        ofTranslate(halfSize, halfSize);
+        brush.draw(x - halfSize + xOffset, y - halfSize + yOffset, size, size);
+//        brush.draw(0,0, size, size);
+//    ofPopMatrix();
 }
 
 void PMBrushContainer::setOrigin(PMBrushContainerOrigin origin)
@@ -128,4 +134,10 @@ void PMBrushContainer::setSize(float normalizedSize)
     if (normalizedSize > 1) normalizedSize = 1;
     if (normalizedSize < 0.1) normalizedSize = 0.1;
     size = int(brush.getWidth() * normalizedSize);
+}
+
+void PMBrushContainer::changeDirection(float direction)
+{
+    baseAngle += direction*10;
+    baseAngle = ofWrapDegrees(baseAngle, -360, 360);
 }

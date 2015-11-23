@@ -33,6 +33,10 @@ public:
     void setPositionX(float normalizedX);
     void setPositionY(float normalizedY);
     void setSize(float normalizedSize);
+    void changeDirection(float direction);
+    ofPoint getPosition(){return ofPoint(x, y);};
+    float getAngle(){return baseAngle;};
+    ofImage* getImage(){return &brush;}
 
 private:
 

@@ -10,6 +10,7 @@
 #include "PMBaseRenderer.h"
 #include "PMBrushContainer.h"
 #include "PMUICanvasBrushRenderer.h"
+#include "PMParticle.h"
 
 
 class PMRendererPaintbrush : public PMBaseRenderer
@@ -29,12 +30,16 @@ public:
     void setPositionX(unsigned int inputIndex, float normalizedX);
     void setPositionY(unsigned int inputIndex, float normalizedY);
     void setSize(unsigned int inputIndex, float normalizedSize);
+    void changeDirection(unsigned int inputIndex, float direction);
+    
 
 private:
 
     PMUICanvasBrushRenderer* canvasBrushRenderer;
 
     vector<PMBrushContainer *> brushes;
+    
+    deque<PMParticle> particles;
 };
 
 

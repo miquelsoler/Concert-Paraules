@@ -38,6 +38,20 @@ void PMRendererPaintbrush::update()
         brushes[i]->update();
     }
     PMBaseRenderer::update();
+    
+    if(particles.size()==0){
+        particles.push_back(PMParticle(brushes[0]->getPosition(), ofPoint(0,0), brushes[0]->getImage()));
+    }else{
+        particles.push_back(PMParticle(brushes[0]->getPosition(), particles[particles.size()-1].getPosition(), brushes[0]->getImage()));
+    }
+    
+    if(particles.at(0).isDead()){
+        particles.pop_front();
+    }
+    
+    for (int i=0; i<particles.size(); i++){
+        particles[i].update();
+    }
 }
 
 void PMRendererPaintbrush::drawIntoFBO()
@@ -72,7 +86,11 @@ void PMRendererPaintbrush::drawIntoFBO()
                     ofSetColor(tintColor);
                     brushes[i]->draw();
                 }
-                
+        
+                for (int i=0; i<particles.size(); i++){
+                    particles[i].draw();
+                }
+            
                 ofDisableBlendMode();
 //                break;
 //            default:
@@ -114,4 +132,9 @@ void PMRendererPaintbrush::setPositionY(unsigned int inputIndex, float normalize
 void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize)
 {
     brushes[inputIndex]->setSize(normalizedSize);
+}
+
+void PMRendererPaintbrush::changeDirection(unsigned int inputIndex, float direction)
+{
+    brushes[inputIndex]->changeDirection(direction);
 }

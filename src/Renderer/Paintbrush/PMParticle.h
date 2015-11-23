@@ -1,14 +1,21 @@
+//
+// Created by Eduard Frigola on 23/11/15.
+//
+
 #pragma once
 #include "ofMain.h"
 
 class PMParticle{
 
 	public:
-		PMParticle(int x, int y, ofPoint prevPoint);
+		PMParticle(ofPoint position, ofPoint prevPosition, ofImage *image);
 
 		void update();
-		void draw();		
-		
+		void draw();
+    
+    ofPoint getPosition(){return originalPos;};
+    bool isDead(){if(bornTime==0){return true;}else{return false;}};
+private:
 		ofPoint pos;
         ofPoint originalPos;
 		ofPoint vel;
@@ -21,6 +28,8 @@ class PMParticle{
     
         float bornTime;
         int alphaValue;
+    
+        ofImage *image;
 		
 		vector <ofPoint> * attractPoints;
 };

@@ -1,19 +1,25 @@
+//
+// Created by Eduard Frigola on 23/11/15.
+//
+
 #include "PMParticle.h"
 
 //------------------------------------------------------------------
-PMParticle::PMParticle(int x, int y, ofPoint prevPoint){
+PMParticle::PMParticle(ofPoint position, ofPoint prevPosition, ofImage *_image){
 	attractPoints = NULL;
-    originalPos.x=x;
-    originalPos.y=y;
-    vel=originalPos-prevPoint;
+    originalPos=position;
+    vel=originalPos-prevPosition;
+//    cout<<vel<<endl;
+    
+    image=_image;
     
     uniqueVal = ofRandom(-10000, 10000);
     
     pos.x = originalPos.x;
     pos.y = originalPos.y;
     
-    vel.x = ofRandom(-3.9, 3.9);
-    vel.y = ofRandom(-3.9, 3.9);
+    vel.x = ofRandom(-1.9, 1.9);
+    vel.y = ofRandom(-1.9, 1.9);
     
     frc   = ofPoint(0,0,0);
     
@@ -159,5 +165,6 @@ void PMParticle::draw(){
     ofSetColor(255, 63, 180, alphaValue);
 			
 	ofDrawCircle(pos.x, pos.y, scale * 4.0);
+//    image->draw(pos, scale, scale);
 }
 

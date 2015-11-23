@@ -53,6 +53,7 @@ public:
     void pauseStateChanged(pauseParams &pauseParams);
     void onsetDetected(onsetParams &onsetParams);
     void shtDetected(shtParams &shtParams);
+    void melodyDirection(melodyDirectionParams &melodyDirectionParams);
 
 private:
 
