@@ -189,6 +189,7 @@
 		7ADB04AF67C568EAFAEBA546 /* ofxKinectExtras.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01438542609FC64F1EC60EEB /* ofxKinectExtras.cpp */; };
 		837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F2C6477A769C03A56D1401 /* ofxSlider.cpp */; };
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
+		9F2A3EEF1C039F6400048315 /* PMParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A3EED1C039F6400048315 /* PMParticle.cpp */; };
 		ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD37876A11E46E4D7069B3 /* cameras.c */; };
 		B05BC2BF1C01F2A70075DE09 /* PMUICanvasBaseRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05BC2BD1C01F2A70075DE09 /* PMUICanvasBaseRenderer.cpp */; };
 		B0DFCD401C022F9400243ECF /* PMUICanvasColorRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DFCD3E1C022F9400243ECF /* PMUICanvasColorRenderer.cpp */; };
@@ -624,6 +625,8 @@
 		8B25248CC7F2228B1CEF2EB1 /* libusb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = libusb.h; path = "../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h"; sourceTree = SOURCE_ROOT; };
 		907C5B5E104864A2D3A25745 /* ofxToggle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxToggle.cpp; path = ../../../addons/ofxGui/src/ofxToggle.cpp; sourceTree = SOURCE_ROOT; };
 		9604B925D32EE39065747725 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBaseGui.cpp; path = ../../../addons/ofxGui/src/ofxBaseGui.cpp; sourceTree = SOURCE_ROOT; };
+		9F2A3EED1C039F6400048315 /* PMParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMParticle.cpp; sourceTree = "<group>"; };
+		9F2A3EEE1C039F6400048315 /* PMParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMParticle.h; sourceTree = "<group>"; };
 		A3528DDFF05B00283552455D /* keep_alive.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = keep_alive.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/keep_alive.c; sourceTree = SOURCE_ROOT; };
 		B05BC2BD1C01F2A70075DE09 /* PMUICanvasBaseRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasBaseRenderer.cpp; sourceTree = "<group>"; };
 		B05BC2BE1C01F2A70075DE09 /* PMUICanvasBaseRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasBaseRenderer.h; sourceTree = "<group>"; };
@@ -726,6 +729,8 @@
 		214767BB455B6FA83C74C4B3 /* Paintbrush */ = {
 			isa = PBXGroup;
 			children = (
+				9F2A3EED1C039F6400048315 /* PMParticle.cpp */,
+				9F2A3EEE1C039F6400048315 /* PMParticle.h */,
 				21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */,
 				21476D68C66406FA677D7373 /* PMRendererPaintbrush.h */,
 				21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */,
@@ -1786,6 +1791,7 @@
 				2A5E61BF1BE2EB480037FD79 /* PMSettingsManagerGeneral.cpp in Sources */,
 				2A8250C01BCE5CC500EEADDF /* ofxUIEventArgs.cpp in Sources */,
 				2A7BCDB01BCD10C2004840A4 /* PMDeviceAudioAnalyzer.cpp in Sources */,
+				9F2A3EEF1C039F6400048315 /* PMParticle.cpp in Sources */,
 				2AE049011C030E97009C99AF /* b2Contact.cpp in Sources */,
 				2AE0490C1C030E97009C99AF /* b2MouseJoint.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
