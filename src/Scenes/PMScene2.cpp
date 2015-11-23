@@ -282,13 +282,18 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             if (typoTimerEnabled)
             {
                 float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-                if (diffTimeMs > 1)
+                if (diffTimeMs > 50)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
-#ifndef WITH_BOX2D
-                    PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+                    /*
+                     * Eloi dixit (per a enrecordar-me):
+                     * amplitud -> tamany lletra ...
+                     * pitch -> mes o menys velocitat de lletres
+                     */
+//#ifndef WITH_BOX2D
+                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
                     typoRenderer->addLetter();
-#endif
+//#endif
                 }
             }
             break;
