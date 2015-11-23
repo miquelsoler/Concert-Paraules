@@ -84,7 +84,7 @@ void PMRendererTypography::drawIntoFBO()
 #else
         list<PMLetterContainer *>::iterator letterIt;
 #endif
-        mutexLetters.lock();
+        mutexActiveLetters.lock();
         {
 #ifdef WITH_BOX2D
             for (int i=0; i<activeLetters.size(); i++)
@@ -94,7 +94,7 @@ void PMRendererTypography::drawIntoFBO()
                 (*letterIt)->draw();
 #endif
         }
-        mutexLetters.unlock();
+        mutexActiveLetters.unlock();
 
         ofDisableBlendMode();
     }
@@ -107,32 +107,36 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-    int iLetter = int(ofRandom(charset.size()));
+    mutexAddLetter.lock();
+    {
+        int iLetter = int(ofRandom(charset.size()));
+//        cout << "addLetter: " <<  charset[iLetter]<< endl;
 
-//    PMLetterContainer *letterContainer = new PMLetterContainer("5inq_-_Handserif.ttf", ofToString(charset[iLetter]));
+        mutexActiveLetters.lock();
+        {
 #ifdef WITH_BOX2D
-    shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
 #else
-    PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
-    letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
-    letterContainer->setSize(1.0);
+            PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
+        letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
+        letterContainer->setSize(1.0);
 #endif
 
-    mutexLetters.lock();
-    {
-        activeLetters.push_back(letterContainer);
+            activeLetters.push_back(letterContainer);
 
-        if (activeLetters.size() > MAX_LETTERS)
-        {
+            if (activeLetters.size() > MAX_LETTERS)
+            {
 #ifdef WITH_BOX2D
 //            activeLetters.begin()->reset();
 #else
-            delete *(activeLetters.begin());
-            activeLetters.pop_front();
+                delete *(activeLetters.begin());
+        activeLetters.pop_front();
 #endif
+            }
         }
+        mutexActiveLetters.unlock();
     }
-    mutexLetters.unlock();
+    mutexAddLetter.unlock();
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
@@ -152,8 +156,6 @@ void PMRendererTypography::buildCharsetFromPoem() {
         charset = DEFAULT_CHARSET;
         return;
     }
-
-    string poemText = buffer.getText();
 
     charset = "";
 

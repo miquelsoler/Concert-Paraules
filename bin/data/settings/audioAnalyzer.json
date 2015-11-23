@@ -13,7 +13,8 @@
    },
    "Pitch" : {
       "Max MIDI Note" : 50.73891830444336,
-      "Min MIDI Note" : 30.04926109313965
+      "Min MIDI Note" : 30.04926109313965,
+       "Ascending Descending Analysis Size" : 20
    },
    "Silence" : {
       "Enabled" : true,

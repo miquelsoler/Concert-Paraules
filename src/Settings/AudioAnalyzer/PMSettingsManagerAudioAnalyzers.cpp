@@ -9,6 +9,7 @@ static const string FILENAME = "settings/audioAnalyzer.json";
 static const string STR_PITCH                   = "Pitch";
 static const string STR_PITCH_MINMIDINOTE       = "Min MIDI Note";
 static const string STR_PITCH_MAXMIDINOTE       = "Max MIDI Note";
+static const string STR_ASCDESCSIZE             = "Ascending Descending Analysis Size";
 static const string STR_ENERGY                  = "Energy";
 static const string STR_ENERGY_MIN              = "Min Energy";
 static const string STR_ENERGY_MAX              = "Max Energy";
@@ -134,4 +135,8 @@ float PMSettingsManagerAudioAnalyzers::getSmoothingDelta() {
 void PMSettingsManagerAudioAnalyzers::setSmoothingDelta(float delta) {
     json[STR_SMOOTHING][STR_SMOOTHING_DELTA] = delta;
     json.save(FILENAME, true);
+}
+
+int PMSettingsManagerAudioAnalyzers::getAscDescAnalysisSize() {
+    return json[STR_PITCH][STR_ASCDESCSIZE].asInt();
 }

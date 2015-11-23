@@ -282,14 +282,18 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             if (typoTimerEnabled)
             {
                 float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-//                cout << "Diff time: " << diffTimeMs << endl;
-                if (diffTimeMs > 1)
+                if (diffTimeMs > 50)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
-#ifndef WITH_BOX2D
-                    PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+                    /*
+                     * Eloi dixit (per a enrecordar-me):
+                     * amplitud -> tamany lletra ...
+                     * pitch -> mes o menys velocitat de lletres
+                     */
+//#ifndef WITH_BOX2D
+                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
                     typoRenderer->addLetter();
-#endif
+//#endif
                 }
             }
             break;
@@ -356,39 +360,24 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
             }
             break;
         }
-        default: break;
-    }
-}
-
-void PMScene2::pauseStateChanged(pauseParams &pauseParams)
-{
-    switch (renderer->getType())
-    {
         case RENDERERTYPE_TYPOGRAPHY:
         {
-            typoTimerEnabled = !pauseParams.isPaused;
+            typoTimerEnabled = !silenceParams.isSilent;
             if (typoTimerEnabled)
                 typoTimer = ofGetElapsedTimeMillis();
             break;
         }
         default: break;
     }
+}
+
+void PMScene2::pauseStateChanged(pauseParams &pauseParams)
+{
     renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isPaused);
 }
 
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
-    switch(renderer->getType())
-    {
-        case RENDERERTYPE_PAINTBRUSH:
-        {
-//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            paintbrushRenderer->changeBaseAngle(onsetParams.audioInputIndex);
-            break;
-        }
-
-        default: break;
-    }
 }
 
 void PMScene2::shtDetected(shtParams &shtParams)
