@@ -12,6 +12,7 @@ Before building, make sure you've already downloaded these add-ons:
 
 * [ofxAppUtils-PM] (https://github.com/miquelsoler/ofxAppUtils-PM)
 * [ofxAudioAnalyzer-PM] (https://github.com/miquelsoler/ofxAudioAnalyzer-PM)
+* [ofxBox2d] (https://github.com/vanderlin/ofxBox2d)
 * [ofxJSON] (https://github.com/jefftimesten/ofxJSON)
 * [ofxTween] (https://github.com/arturoc/ofxTween)
 * [ofxUI] (https://github.com/rezaali/ofxUI)
