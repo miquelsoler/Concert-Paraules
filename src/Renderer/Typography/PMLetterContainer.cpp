@@ -17,9 +17,9 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
 #ifdef WITH_BOX2D
     box2d = _box2d;
 
-    //    float posX = ofGetWidth() / 2;
-    float posX = ofRandomWidth();
-    float posY = 1;
+    float posOffset = ofGetWidth() * 0.1;
+    float posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
+    float posY = 100;
 
     float normalizedPosX = posX / ofGetWidth();
     float normalizedPosY = posY / ofGetHeight();
@@ -29,10 +29,11 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
 
     setPhysics(3.0, 0.53, 0.1);
 
-    // mutex aquí
-    if (box2d->getWorld()->IsLocked()) return;
+    // Es queda en espera mentre no pot crear el nou objecte. (WTF?)
+    while (box2d->getWorld()->IsLocked()) sleep(0.01);
+
     setup(box2d->getWorld(), posX, posY, width, height);
-    setVelocity(ofRandom(-10, 10), ofRandom(0, 30));
+    setVelocity(ofRandom(0, 0), ofRandom(10, 30));
 
     this->setPosition(normalizedPosX, normalizedPosY);
 #endif

@@ -35,7 +35,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         box2d.init();
         box2d.setGravity(0, 10);
         box2d.createBounds();
-        box2d.setFPS(60.0);
+        box2d.setFPS(60);
     }
 #endif
 
@@ -110,16 +110,16 @@ void PMRendererTypography::addLetter()
     mutexAddLetter.lock();
     {
         int iLetter = int(ofRandom(charset.size()));
-//        cout << "addLetter: " <<  charset[iLetter]<< endl;
 
         mutexActiveLetters.lock();
         {
 #ifdef WITH_BOX2D
             shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
 #else
+            letterCreated = true;
             PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
-        letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
-        letterContainer->setSize(1.0);
+            letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
+            letterContainer->setSize(1.0);
 #endif
 
             activeLetters.push_back(letterContainer);
@@ -127,10 +127,10 @@ void PMRendererTypography::addLetter()
             if (activeLetters.size() > MAX_LETTERS)
             {
 #ifdef WITH_BOX2D
-//            activeLetters.begin()->reset();
+//              activeLetters.begin()->reset();
 #else
                 delete *(activeLetters.begin());
-        activeLetters.pop_front();
+                activeLetters.pop_front();
 #endif
             }
         }
