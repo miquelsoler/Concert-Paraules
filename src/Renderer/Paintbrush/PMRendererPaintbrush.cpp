@@ -44,18 +44,18 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-        switch (canvasBrushRenderer->getMode()){
-            case 1:
-                ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-                //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
-                ofSetColor(fc);
-                
-                //        ofSetColor(255, 255, 255, 1);
-                ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-                
-                
-                break;
-            case 2:
+//        switch (canvasBrushRenderer->getMode()){
+//            case 1:
+//                ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
+//                //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+//                ofSetColor(fc);
+//                
+//                //        ofSetColor(255, 255, 255, 1);
+//                ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+//                
+//                
+//                break;
+//            case 2:
                 ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
                 //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
                 ofSetColor(fc);
@@ -70,14 +70,14 @@ void PMRendererPaintbrush::drawIntoFBO()
                     if (!isActive[i]) continue;
                     
                     ofSetColor(tintColor);
-                    brushes[i]->dr6aw();
+                    brushes[i]->draw();
                 }
                 
                 ofDisableBlendMode();
-                break;
-            default:
-                break;
-        }
+//                break;
+//            default:
+//                break;
+//        }
 
     }
     fbo.end();
