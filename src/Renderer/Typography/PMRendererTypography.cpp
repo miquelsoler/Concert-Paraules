@@ -120,17 +120,15 @@ void PMRendererTypography::buildCharsetFromPoem() {
     ofBuffer::Lines lines = buffer.getLines();
     ofBuffer::Line iter = lines.begin();
 
-    while (iter != lines.end()) {
-        if (!(*iter).empty()) {
+    while (iter != lines.end())
+    {
+        if (!(*iter).empty())
+        {
             string line = (*iter);
-            ofStringReplace(line, ",", " ");
-            ofStringReplace(line, ";", " ");
-            ofStringReplace(line, ":", " ");
-            ofStringReplace(line, ".", " ");
-            ofStringReplace(line, "-", " ");
-            ofStringReplace(line, "!", " ");
-            ofStringReplace(line, "?", " ");
-            ofStringReplace(line, "'", " ");
+            ofStringReplace(line, ",", " "); ofStringReplace(line, ";", " ");
+            ofStringReplace(line, ":", " "); ofStringReplace(line, ".", " ");
+            ofStringReplace(line, "-", " "); ofStringReplace(line, "!", " ");
+            ofStringReplace(line, "?", " "); ofStringReplace(line, "'", " ");
             vector<string> words = ofSplitString(line, " ", true, true);
             for (int i = 0; i < words.size(); ++i) {
                 string word = words[i];
