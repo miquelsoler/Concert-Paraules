@@ -103,7 +103,7 @@ void PMScene2::setup()
                     ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
-                    ofAddListener(deviceAudioAnalyzer->eventShtHappened, this, &PMScene2::shtDetected);
+                    ofAddListener(deviceAudioAnalyzer->eventShtStateChanged, this, &PMScene2::shtDetected);
 
                     audioInputIndex++;
                 }
