@@ -17,7 +17,7 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
 #ifdef WITH_BOX2D
     box2d = _box2d;
 
-//    float posX = ofGetWidth() / 2;
+    //    float posX = ofGetWidth() / 2;
     float posX = ofRandomWidth();
     float posY = 1;
 
@@ -28,11 +28,13 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
     float height = letterFont->stringHeight(letter);
 
     setPhysics(3.0, 0.53, 0.1);
+
+    // mutex aquí
+    if (box2d->getWorld()->IsLocked()) return;
     setup(box2d->getWorld(), posX, posY, width, height);
     setVelocity(ofRandom(-10, 10), ofRandom(0, 30));
 
     this->setPosition(normalizedPosX, normalizedPosY);
-    //    p.get()->setupTheCustomData();
 #endif
 }
 
