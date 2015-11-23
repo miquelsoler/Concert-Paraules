@@ -2,13 +2,13 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>319.000000000</XPosition>
-    <YPosition>7.000000000</YPosition>
+    <XPosition>1051.000000000</XPosition>
+    <YPosition>19.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>8</Kind>
     <Name>Fade Background</Name>
-    <Value>0.000000000</Value>
+    <Value>0.009000000</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -43,11 +43,11 @@
 <Widget>
     <Kind>28</Kind>
     <Name>Gradient</Name>
-    <XValue>0.029537572</XValue>
+    <XValue>0.995119512</XValue>
     <YValue>0.125000000</YValue>
-    <RColor>18</RColor>
-    <GColor>0</GColor>
-    <BColor>172</BColor>
+    <RColor>255</RColor>
+    <GColor>251</GColor>
+    <BColor>0</BColor>
     <AColor>255</AColor>
 </Widget>
 <Widget>

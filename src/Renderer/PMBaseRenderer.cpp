@@ -97,3 +97,8 @@ void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 {
     isActive[inputIndex] = _shouldPaint;
 }
+
+void PMBaseRenderer::showGUI(bool show)
+{
+    guiBaseRenderer->setVisible(show);
+}

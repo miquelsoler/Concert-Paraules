@@ -103,7 +103,6 @@ ofVec3f lab2rgb(int L,int a,int b){
 //--------------------------------------------------------------
 PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_COLOR, numInputs)
 {
-
     audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
     dimmBackground = 0.5;
     scanWidth = 3;
@@ -111,9 +110,6 @@ PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDER
     /// GUI
     guiBaseRenderer = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
     guiBaseRenderer->init(100, 500, 200, 300);
-    
-    
-
 }
 
 //--------------------------------------------------------------

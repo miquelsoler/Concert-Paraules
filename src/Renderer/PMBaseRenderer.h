@@ -39,7 +39,7 @@ public:
     PMRendererType  getType() { return type; };
     bool            getNeedsToBeCleared();
     
-    
+    void showGUI(bool show);
 
 protected:
 

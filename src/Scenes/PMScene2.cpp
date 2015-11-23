@@ -174,14 +174,17 @@ void PMScene2::updateEnter()
 
     PMAudioAnalyzer::getInstance().start();
 
+    renderer->showGUI(true);
+
     PMBaseScene::updateEnter();
 }
 
 void PMScene2::updateExit()
 {
+    renderer->showGUI(false);
+
     saveSettings();
     PMBaseScene::updateExit();
-    
 }
 
 void PMScene2::draw()
@@ -399,7 +402,5 @@ void PMScene2::shtDetected(shtParams &shtParams)
         }
         default:
             break;
-
     }
-
 }
