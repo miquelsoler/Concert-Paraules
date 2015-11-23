@@ -64,6 +64,13 @@ private:
     ofxUILabelToggle    *onsetToggle;
     bool                onsetOn;
 
+    // Sht ------------------------------------
+    
+    void shtStateChanged(shtParams &_shtParams);
+    
+    ofxUILabelToggle    *shtToggle;
+    bool                shtOn;
+
     // Settings
 
     PMSettingsManagerAudioAnalyzers *settings;

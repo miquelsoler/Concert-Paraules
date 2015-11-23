@@ -15,6 +15,11 @@ PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRende
         brush->setSize(1);
         brushes.push_back(brush);
     }
+    
+    /// GUI
+    guiBaseRenderer = new PMUICanvasBrushRenderer("BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
+    guiBaseRenderer->init(100, 500, 200, 300);
+
 }
 
 void PMRendererPaintbrush::setup()

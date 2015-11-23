@@ -9,6 +9,7 @@
 
 #include "PMBaseRenderer.h"
 #include "PMBrushContainer.h"
+#include "PMUICanvasBrushRenderer.h"
 
 
 class PMRendererPaintbrush : public PMBaseRenderer
@@ -30,6 +31,8 @@ public:
     void setSize(unsigned int inputIndex, float normalizedSize);
 
 private:
+
+    PMUICanvasBrushRenderer* canvasBrushRenderer;
 
     vector<PMBrushContainer *> brushes;
 };

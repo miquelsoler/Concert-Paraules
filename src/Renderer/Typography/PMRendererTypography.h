@@ -10,6 +10,7 @@
 #include "PMBaseRenderer.h"
 
 #include "PMLetterContainer.h"
+#include "PMUICanvasTypoRenderer.h"
 
 
 class PMRendererTypography : public PMBaseRenderer
@@ -27,7 +28,8 @@ public:
     void keyPressed ( ofKeyEventArgs& eventArgs );
 
 private:
-
+    PMUICanvasTypoRenderer* canvasTypoRenderer;
+    
     string charset;
     vector<ofTrueTypeFont *> fontCharset;
 

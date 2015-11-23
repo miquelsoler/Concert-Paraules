@@ -13,6 +13,8 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
+    setBackgroundColor(ofColor(0,20,40,128));
+    
     addLabelButton("Save to default",false);
     addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
     addIntSlider("Background R",0,255,255);

@@ -13,10 +13,17 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 {
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
+    gradientImage.load("./gradients/test4x_v1.png");
+    
     addSpacer();
-    addIntSlider("Mode",1,3,&guiMode);
+    addIntSlider("Mode",1,4,&guiMode);
+
     addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
     addSlider("Scan With",0.0,150.0,&guiScanWidth);
+
+    addImageSampler("Gradient", &gradientImage);
+    addIntSlider("Gradient Id",1,4,&gradientId);
+    numGradients = 4;
     
     if (autosize) autoSizeToFitWidgets();
 
@@ -27,7 +34,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 void PMUICanvasColorRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("BASE_RENDERER", OFX_UI_FONT_MEDIUM);
+    superInit("COLOR_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasColorRenderer::handleEvents(ofxUIEventArgs &e)
@@ -58,6 +65,20 @@ float PMUICanvasColorRenderer::getScanWidth()
     return guiScanWidth;
 }
 
+ofColor PMUICanvasColorRenderer::getGradientColor(int _id,float _p)
+{
+    ofxUIImageSampler* is = (ofxUIImageSampler*)getWidget("Gradient");
+    ofPoint p = ofPoint( _p, ((_id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2)));
+    
+    //cout << ofToString(((_id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2))) << endl;
+    is->setValue(p);
+    return is->getColor();
+}
+
+int PMUICanvasColorRenderer::getGradientId()
+{
+    return gradientId;
+}
 
 
 // SETTERS

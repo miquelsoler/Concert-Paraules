@@ -85,6 +85,19 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             addSpacer();
             ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
         }
+        // Onset
+        {
+            addLabel("SHT");
+            
+            shtToggle = addLabelToggle("SHT", &shtOn);
+            shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+            
+            addSpacer();
+            ofAddListener((*itAudioAnalyzer)->eventShtHappened, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
+        }
+        
+        
+        
     }
 
     if (autosize) autoSizeToFitWidgets();
@@ -138,4 +151,11 @@ void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
 {
     if (onsetParams.audioInputIndex != audioInputIndex) return;
     onsetOn = onsetParams.isOnset;
+}
+
+
+void PMUICanvasAudioAnalyzer::shtStateChanged(shtParams &_shtParams)
+{
+    if (_shtParams.audioInputIndex != audioInputIndex) return;
+    shtOn = true;
 }

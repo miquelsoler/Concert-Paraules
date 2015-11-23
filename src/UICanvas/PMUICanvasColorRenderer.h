@@ -24,15 +24,22 @@ public:
     float       getScanSpeedX();
     int         getMode();
     float       getScanWidth();
+    ofColor     getGradientColor(int _row,float _p);
+    int         getGradientId();
     
     // SETTERS
     void        setScanSpeedX(float _s);
     
 private:
 
+    int         guiMode;
+
     float       guiScanWidth;
     float       guiScanSpeedX;
-    int         guiMode;
+
+    ofImage     gradientImage;
+    int         gradientId;
+    int         numGradients;
     
 };
 

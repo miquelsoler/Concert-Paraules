@@ -10,6 +10,7 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
 
     type = _type;
     numInputs = _numInputs;
+    needsToBeCleared = false;
     
     
     /// GUI
@@ -51,6 +52,12 @@ void PMBaseRenderer::update()
 
 void PMBaseRenderer::draw()
 {
+    if(needsToBeCleared)
+    {
+        needsToBeCleared=false;
+        clear();
+    }
+    
 //    ofClear(255, 255, 255, 255);
 //    fbo.draw(0, 0);
 
@@ -63,6 +70,27 @@ void PMBaseRenderer::draw()
     
     // draw gui of base renderer
     //guiBaseRenderer->draw();
+}
+
+bool PMBaseRenderer::getNeedsToBeCleared()
+{
+    return needsToBeCleared;
+}
+void PMBaseRenderer::setNeedsToBeCleared(bool _b)
+{
+    needsToBeCleared = _b;
+}
+void PMBaseRenderer::clear()
+{
+    fbo.begin();
+    {
+        // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
+        // so it's good to clear it before starting to draw it
+        ofClear(0, 0, 0, 0);
+    }
+    fbo.end();
+    
+    
 }
 
 void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)

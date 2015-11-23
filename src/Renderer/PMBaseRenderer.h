@@ -26,13 +26,20 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
+    virtual void clear();
 
     virtual void drawIntoFBO() = 0;
 
-    PMRendererType getType() { return type; };
-
+    // SETTERS
     void setShouldPaint(unsigned int inputIndex, bool shouldPaint);
-    ofFbo* getFbo(){return &fbo;};
+    void setNeedsToBeCleared(bool _b);
+    
+    // GETTERS
+    ofFbo*          getFbo(){return &fbo;};
+    PMRendererType  getType() { return type; };
+    bool            getNeedsToBeCleared();
+    
+    
 
 protected:
 
@@ -44,6 +51,8 @@ protected:
     ofFbo           fbo;
 
     PMUICanvasBaseRenderer*  guiBaseRenderer;
+    
+    bool            needsToBeCleared;
 };
 
 

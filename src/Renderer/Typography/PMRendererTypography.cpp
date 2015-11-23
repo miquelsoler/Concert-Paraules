@@ -33,7 +33,15 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         fontCharset.push_back(letterFont);
     }
 
+    /// GUI
+    
+    /// GUI
+    guiBaseRenderer = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
+    guiBaseRenderer->init(100, 500, 200, 300);
+    
     ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
+    
+    
 }
 
 void PMRendererTypography::setup()

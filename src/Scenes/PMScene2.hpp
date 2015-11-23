@@ -52,6 +52,7 @@ public:
     void silenceStateChanged(silenceParams &silenceParams);
     void pauseStateChanged(pauseParams &pauseParams);
     void onsetDetected(onsetParams &onsetParams);
+    void shtDetected(shtParams &shtParams);
 
 private:
 

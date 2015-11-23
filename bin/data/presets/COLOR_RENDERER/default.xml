@@ -8,7 +8,7 @@
 <Widget>
     <Kind>8</Kind>
     <Name>Fade Background</Name>
-    <Value>0.003999999</Value>
+    <Value>0.000000000</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -28,7 +28,7 @@
 <Widget>
     <Kind>42</Kind>
     <Name>Mode</Name>
-    <Value>3</Value>
+    <Value>4</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -39,4 +39,19 @@
     <Kind>4</Kind>
     <Name>Scan With</Name>
     <Value>28.078817368</Value>
+</Widget>
+<Widget>
+    <Kind>28</Kind>
+    <Name>Gradient</Name>
+    <XValue>0.029537572</XValue>
+    <YValue>0.125000000</YValue>
+    <RColor>18</RColor>
+    <GColor>0</GColor>
+    <BColor>172</BColor>
+    <AColor>255</AColor>
+</Widget>
+<Widget>
+    <Kind>42</Kind>
+    <Name>Gradient Id</Name>
+    <Value>1</Value>
 </Widget>
