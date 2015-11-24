@@ -468,5 +468,5 @@ void PMDeviceAudioAnalyzer::checkMelodyDirection(int channel)
         melodyDirectionParams.direction=diferenceSum;
         ofNotifyEvent(eventMelodyDirection, melodyDirectionParams, this);
     }
-    cout<<diferenceSum<<endl;
+//    cout<<diferenceSum<<endl;
 }

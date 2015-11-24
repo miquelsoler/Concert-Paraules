@@ -36,6 +36,8 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
     setVelocity(ofRandom(0, 0), ofRandom(10, 30));
 
     this->setPosition(normalizedPosX, normalizedPosY);
+
+    timeCreated = ofGetElapsedTimeMillis();
 #endif
 }
 

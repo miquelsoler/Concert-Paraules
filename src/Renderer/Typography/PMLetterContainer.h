@@ -45,6 +45,7 @@ private:
 
 #ifdef WITH_BOX2D
     ofxBox2d        *box2d;
+    uint64_t        timeCreated;
 #endif
 };
 
