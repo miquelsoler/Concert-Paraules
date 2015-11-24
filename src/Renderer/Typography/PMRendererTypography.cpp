@@ -61,6 +61,16 @@ void PMRendererTypography::update()
     PMBaseRenderer::update();
 
 #ifdef WITH_BOX2D
+    uint64_t maxAge = 30000;
+    list<shared_ptr<PMLetterContainer>>::iterator letterIt;
+    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+    {
+        if ((*letterIt)->getAge() < maxAge) continue;
+
+        (*letterIt).get()->destroy();
+        activeLetters.erase(letterIt++);
+    }
+
     box2d.update();
 #endif
 }
@@ -87,8 +97,8 @@ void PMRendererTypography::drawIntoFBO()
         mutexActiveLetters.lock();
         {
 #ifdef WITH_BOX2D
-            for (int i=0; i<activeLetters.size(); i++)
-                activeLetters[i].get()->draw();
+            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+                (*letterIt).get()->draw();
 #else
             for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
                 (*letterIt)->draw();
@@ -124,15 +134,13 @@ void PMRendererTypography::addLetter()
 
             activeLetters.push_back(letterContainer);
 
+#ifndef WITH_BOX2D
             if (activeLetters.size() > MAX_LETTERS)
             {
-#ifdef WITH_BOX2D
-//              activeLetters.begin()->reset();
-#else
                 delete *(activeLetters.begin());
                 activeLetters.pop_front();
-#endif
             }
+#endif
         }
         mutexActiveLetters.unlock();
     }

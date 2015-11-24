@@ -81,3 +81,8 @@ void PMLetterContainer::draw()
         letterFont->drawString(letter, -width/2, height/2);
     ofPopMatrix();
 }
+
+uint64_t PMLetterContainer::getAge()
+{
+    return ofGetElapsedTimeMillis() - timeCreated;
+}

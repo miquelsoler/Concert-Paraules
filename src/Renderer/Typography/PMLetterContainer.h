@@ -34,6 +34,8 @@ public:
 
     void draw();
 
+    uint64_t getAge();
+
 private:
 
     float           x, y;
