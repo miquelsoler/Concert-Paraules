@@ -117,8 +117,10 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
+#ifdef WITH_BOX2D
     mutexAddLetter.lock();
     {
+#endif
         int iLetter = int(ofRandom(charset.size()));
 
         mutexActiveLetters.lock();
@@ -126,7 +128,6 @@ void PMRendererTypography::addLetter()
 #ifdef WITH_BOX2D
             shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
 #else
-            letterCreated = true;
             PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
             letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
             letterContainer->setSize(1.0);
@@ -143,8 +144,10 @@ void PMRendererTypography::addLetter()
 #endif
         }
         mutexActiveLetters.unlock();
+#ifdef WITH_BOX2D
     }
     mutexAddLetter.unlock();
+#endif
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )

@@ -34,7 +34,9 @@ public:
 
     void draw();
 
+#ifdef WITH_BOX2D
     uint64_t getAge();
+#endif
 
 private:
 

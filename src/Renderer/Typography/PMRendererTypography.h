@@ -37,9 +37,9 @@ private:
     string                                  charset;
     vector<ofTrueTypeFont *>                fontCharset;
 #ifdef WITH_BOX2D
-    list<shared_ptr<PMLetterContainer>>   activeLetters;
+    list<shared_ptr<PMLetterContainer>>     activeLetters;
 #else
-    list<PMLetterContainer *>           activeLetters;
+    list<PMLetterContainer *>               activeLetters;
 #endif
 
     mutex                                   mutexActiveLetters;

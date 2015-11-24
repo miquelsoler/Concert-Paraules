@@ -82,7 +82,9 @@ void PMLetterContainer::draw()
     ofPopMatrix();
 }
 
+#ifdef WITH_BOX2D
 uint64_t PMLetterContainer::getAge()
 {
     return ofGetElapsedTimeMillis() - timeCreated;
 }
+#endif
