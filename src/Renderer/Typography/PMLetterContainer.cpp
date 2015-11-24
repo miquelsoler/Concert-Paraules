@@ -4,17 +4,12 @@
 
 #include "PMLetterContainer.h"
 
-#ifdef WITH_BOX2D
 PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofxBox2d *_box2d) : ofxBox2dRect()
-#else
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
-#endif
 {
     letterFont = font;
     letter = _letter;
     angle = ofRandom(-90, 90);
 
-#ifdef WITH_BOX2D
     box2d = _box2d;
 
     float posOffset = ofGetWidth() * 0.1;
@@ -38,7 +33,6 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
     this->setPosition(normalizedPosX, normalizedPosY);
 
     timeCreated = ofGetElapsedTimeMillis();
-#endif
 }
 
 PMLetterContainer::~PMLetterContainer()
@@ -70,21 +64,14 @@ void PMLetterContainer::draw()
 
     ofSetColor(ofColor::black);
     ofPushMatrix();
-#ifdef WITH_BOX2D
         ofTranslate(getPosition());
         ofRotateZ(getRotation());
-#else
-        ofTranslate(x, y);
-        ofRotate(angle);
-#endif
         ofSetColor(ofColor::black);
         letterFont->drawString(letter, -width/2, height/2);
     ofPopMatrix();
 }
 
-#ifdef WITH_BOX2D
 uint64_t PMLetterContainer::getAge()
 {
     return ofGetElapsedTimeMillis() - timeCreated;
 }
-#endif

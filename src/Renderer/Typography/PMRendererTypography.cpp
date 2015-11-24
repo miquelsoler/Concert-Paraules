@@ -29,7 +29,6 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         fontCharset.push_back(letterFont);
     }
 
-#ifdef WITH_BOX2D
     // Box2D
     {
         box2d.init();
@@ -37,7 +36,6 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         box2d.createBounds();
         box2d.setFPS(60);
     }
-#endif
 
     // GUI
     {
@@ -60,7 +58,6 @@ void PMRendererTypography::update()
 {
     PMBaseRenderer::update();
 
-#ifdef WITH_BOX2D
     uint64_t maxAge = 30000;
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
@@ -72,37 +69,23 @@ void PMRendererTypography::update()
     }
 
     box2d.update();
-#endif
 }
 
 void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-#ifdef WITH_BOX2D
         ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,1.0);
-#else
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-#endif
         ofSetColor(fc);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-#ifdef WITH_BOX2D
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-#else
-        list<PMLetterContainer *>::iterator letterIt;
-#endif
         mutexActiveLetters.lock();
         {
-#ifdef WITH_BOX2D
             for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
                 (*letterIt).get()->draw();
-#else
-            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-                (*letterIt)->draw();
-#endif
         }
         mutexActiveLetters.unlock();
 
@@ -117,37 +100,18 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-#ifdef WITH_BOX2D
     mutexAddLetter.lock();
     {
-#endif
         int iLetter = int(ofRandom(charset.size()));
 
         mutexActiveLetters.lock();
         {
-#ifdef WITH_BOX2D
             shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
-#else
-            PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
-            letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
-            letterContainer->setSize(1.0);
-#endif
-
             activeLetters.push_back(letterContainer);
-
-#ifndef WITH_BOX2D
-            if (activeLetters.size() > MAX_LETTERS)
-            {
-                delete *(activeLetters.begin());
-                activeLetters.pop_front();
-            }
-#endif
         }
         mutexActiveLetters.unlock();
-#ifdef WITH_BOX2D
     }
     mutexAddLetter.unlock();
-#endif
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
