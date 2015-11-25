@@ -20,6 +20,11 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     addIntSlider("Background R",0,255,255);
     addIntSlider("Background G",0,255,255);
     addIntSlider("Background B",0,255,255);
+    addSpacer();
+    addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
+    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
+    addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
+    addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
     
     
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
@@ -115,3 +120,21 @@ void PMUICanvasBaseRenderer::loadPreset()
 }
 
 
+float PMUICanvasBaseRenderer::getDeltaPitch()
+{
+    return guiDeltaPitch;
+}
+
+float PMUICanvasBaseRenderer::getDeltaEnergy()
+{
+    return guiDeltaEnergy;
+}
+
+void PMUICanvasBaseRenderer::setSmoothPitch(float _p)
+{
+    guiSmoothPitch = _p;
+}
+void PMUICanvasBaseRenderer::setSmoothEnergy(float _e)
+{
+    guiSmoothEnergy = _e;
+}

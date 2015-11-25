@@ -14,7 +14,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 {
     buildCharsetFromPoem();
 
-    string fontName = "5inq_-_Handserif.ttf";
+    string fontName = "GaramondPremrPro.otf";
     string fontPath = "fonts/" + fontName;
 
     for (int i=0; i<charset.size(); ++i)
@@ -34,7 +34,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
     // Box2D
     {
         box2d.init();
-        box2d.setGravity(0, 10);
+        box2d.setGravity(0, 30);
         box2d.createBounds();
         box2d.setFPS(60);
     }

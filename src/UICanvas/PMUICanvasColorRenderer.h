@@ -41,6 +41,7 @@ private:
     int         gradientId;
     int         numGradients;
     
+    
 };
 
 

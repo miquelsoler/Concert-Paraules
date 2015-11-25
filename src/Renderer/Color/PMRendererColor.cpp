@@ -143,12 +143,14 @@ void PMRendererColor::drawIntoFBO()
     fbo.begin();
     {
         // SMOOTHING AUDIO SHIT
-        float deltaPitch = 0.1;
+        float deltaPitch = canvasColorRenderer->getDeltaPitch();
+        float deltaEnergy = canvasColorRenderer->getDeltaEnergy();
+
         float pitchSmooth = (deltaPitch)*pitch + (1.0-deltaPitch)*oldPitch;
-        
-        float deltaEnergy = 0.1;
         float energySmooth = (deltaEnergy)*energy + (1.0-deltaEnergy)*oldEnergy;
 
+        canvasColorRenderer->setSmoothEnergy(energySmooth);
+        canvasColorRenderer->setSmoothPitch(pitchSmooth);
         
         switch (canvasColorRenderer->getMode())
         {
@@ -163,11 +165,14 @@ void PMRendererColor::drawIntoFBO()
                 //pitchB = pow(pitchB,10);
                 // convert from lab to rgb
                 ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);
-                
                 ofSetColor(vcol.x , vcol.y , vcol.z ,255);
-                ofSetCircleResolution(128);
-                ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,(ofGetHeight()/2)*energySmooth);
                 
+                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                c.a = 255.0 * energySmooth;
+                ofSetColor(c);
+                
+                ofSetCircleResolution(256);
+                ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,(ofGetHeight()/2)*energySmooth);
                 
                 break;
             }
@@ -182,9 +187,9 @@ void PMRendererColor::drawIntoFBO()
                 pitchB = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
                 
                 // convert from lab to rgb
-                ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);//*energySmooth;
-                
-                ofSetColor(vcol.x , vcol.y , vcol.z ,255);
+                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofSetColor(c);
+
                 ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(),(energySmooth) * ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
@@ -202,9 +207,9 @@ void PMRendererColor::drawIntoFBO()
                 pitchB = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
                 
                 // convert from lab to rgb
-                ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);//*energySmooth;
-                
-                ofSetColor(vcol.x , vcol.y , vcol.z ,(energySmooth)*255);
+                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofSetColor(c);
+
                 ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(), ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
@@ -232,6 +237,7 @@ void PMRendererColor::drawIntoFBO()
         ofDisableBlendMode();
         
         //update old values
+        
         oldPitch = pitchSmooth;
         oldEnergy = energySmooth;
 
