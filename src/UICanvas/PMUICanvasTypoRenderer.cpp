@@ -29,6 +29,9 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSpacer();
     addLabel("LETTER MAX AGE");
     addIntSlider("Max Age (s)", 1, 300, &maxAge);
+    addLabel("GRAVITY");
+    addSlider("Gravity X", -50, 50, &gravityX);
+    addSlider("Gravity Y", -50, 50, &gravityY);
 
     if (autosize) autoSizeToFitWidgets();
 
@@ -52,4 +55,5 @@ void PMUICanvasTypoRenderer::handleEvents(ofxUIEventArgs &e)
     {
         savePreset();
     }
+
 }

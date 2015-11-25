@@ -27,6 +27,8 @@ public:
     float getMaxSize()      { return maxSize; };
     float getBounceFactor() { return bounceFactor; };
     int getMaxAge()         { return maxAge; };
+    float getGravityX()     { return gravityX; };
+    float getGravityY()     { return gravityY; };
 
 private:
 
@@ -37,6 +39,9 @@ private:
     float   maxSize;
     float   bounceFactor;
     int     maxAge;
+    float   gravityX;
+    float   gravityY;
+    
 };
 
 
