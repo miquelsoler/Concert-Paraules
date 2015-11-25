@@ -16,14 +16,18 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSpacer();
     addIntSlider("Mode", 1, 3, &guiMode);
     addSpacer();
-    addIntSlider("Max Font Size", 1, 200, &maxFontSize);
-    addSpacer();
+    addLabel("VELOCITY");
     addIntSlider("Min Velocity", 1, 10, &minVelocity);
     addIntSlider("Max Velocity", 10, 50, &maxVelocity);
     addSpacer();
+    addLabel("SIZE");
     addSlider("Min Size", 0.1, 1.0, &minSize);
     addSlider("Max Size", 0.1, 1.0, &maxSize);
     addSpacer();
+    addLabel("BOUNCE");
+    addSlider("Bounce Factor", 0.1, 1.0, &bounceFactor);
+    addSpacer();
+    addLabel("LETTER MAX AGE");
     addIntSlider("Max Age (s)", 1, 300, &maxAge);
 
     if (autosize) autoSizeToFitWidgets();

@@ -21,21 +21,21 @@ public:
     
     // GETTERS
     int getMode()           { return guiMode; };
-    int getMaxFontSize()    { return maxFontSize; };
     int getMinVelocity()    { return minVelocity; };
     int getMaxVelocity()    { return maxVelocity; };
     float getMinSize()      { return minSize; };
     float getMaxSize()      { return maxSize; };
+    float getBounceFactor() { return bounceFactor; };
     int getMaxAge()         { return maxAge; };
 
 private:
 
     int     guiMode;
-    int     maxFontSize;
     int     minVelocity;
     int     maxVelocity;
     float   minSize;
     float   maxSize;
+    float   bounceFactor;
     int     maxAge;
 };
 

@@ -32,7 +32,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         for (int i=0; i<charset.size(); ++i)
         {
             ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-            letterFont->load(fontPath, canvasTypoRenderer->getMaxFontSize(),
+            letterFont->load(fontPath, 200,
                              true, // antialiased
                              true, // full character set
                              true // make contours
