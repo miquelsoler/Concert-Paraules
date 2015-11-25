@@ -271,10 +271,12 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
         {
             float minOffset = -1.0f;
             float maxOffset = 1.0f;
-            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
-
-//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
+//            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+            float pitch = ofMap(pitchParams.smoothedMidiNote , audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), 1, 0, true);
+            
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
+            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, pitch);
             break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
@@ -385,6 +387,12 @@ void PMScene2::shtDetected(shtParams &shtParams)
 {
     switch(renderer->getType())
     {
+        case RENDERERTYPE_PAINTBRUSH:
+        {
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            paintbrushRenderer->vibrate(shtParams.audioInputIndex, shtParams.isSht);
+            break;
+        }
         case RENDERERTYPE_COLOR:
         {
             PMRendererColor *colorRenderer = (PMRendererColor*)renderer;
@@ -401,8 +409,8 @@ void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
     switch (renderer->getType()) {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->changeDirection(melodyDirectionParams.audioInputIndex, melodyDirectionParams.direction);
+            //PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            //paintbrushRenderer->changeDirection(melodyDirectionParams.audioInputIndex, melodyDirectionParams.direction);
             break;
         }
         default:

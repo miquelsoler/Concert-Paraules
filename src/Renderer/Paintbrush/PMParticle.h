@@ -15,6 +15,12 @@ class PMParticle{
     
     ofPoint getPosition(){return originalPos;};
     bool isDead(){if(bornTime==0){return true;}else{return false;}};
+    
+    void setVelocity(float velocity);
+    void setLife(float life);
+    void setBounceWalls(bool bouncy);
+    void setColor(ofColor _color){color=_color;};
+    
 private:
 		ofPoint pos;
         ofPoint originalPos;
@@ -29,7 +35,13 @@ private:
         float bornTime;
         int alphaValue;
     
+        float lifetime;
+    float velocity;
+    bool bounceWalls;
+    
         ofImage *image;
+    
+    ofColor color;
 		
 		vector <ofPoint> * attractPoints;
 };
