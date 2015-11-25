@@ -26,8 +26,7 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float
 
 //    void ofxBox2dBaseShape::setPhysics(float density, float bounce, float friction) {
 
-//    setPhysics(3.0, gui->getBounceFactor(), 0.1);
-    setPhysics(3.0, 0.1, 0.1);
+    setPhysics(3.0, gui->getBounceFactor(), 0.1);
 
     // Es queda en espera mentre no pot crear el nou objecte. (WTF?)
     while (box2d->getWorld()->IsLocked()) sleep(0.01);
