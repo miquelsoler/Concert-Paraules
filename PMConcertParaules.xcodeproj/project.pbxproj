@@ -700,14 +700,6 @@
 		214765AE440B55849C0E601A /* UICanvas */ = {
 			isa = PBXGroup;
 			children = (
-				B0DFCD451C027EC600243ECF /* PMUICanvasTypoRenderer.cpp */,
-				B0DFCD461C027EC600243ECF /* PMUICanvasTypoRenderer.h */,
-				B0DFCD421C0278F500243ECF /* PMUICanvasBrushRenderer.cpp */,
-				B0DFCD431C0278F500243ECF /* PMUICanvasBrushRenderer.h */,
-				B0DFCD3E1C022F9400243ECF /* PMUICanvasColorRenderer.cpp */,
-				B0DFCD3F1C022F9400243ECF /* PMUICanvasColorRenderer.h */,
-				B05BC2BD1C01F2A70075DE09 /* PMUICanvasBaseRenderer.cpp */,
-				B05BC2BE1C01F2A70075DE09 /* PMUICanvasBaseRenderer.h */,
 				2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */,
 				21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */,
 				21476AB310F6FD8679AC141A /* PMUICanvasPoem.cpp */,
@@ -722,6 +714,14 @@
 				21476F81851DFD49A92AF8E5 /* PMUICanvasAudioAnalyzer.h */,
 				21476C81BC0C34AD634A857C /* PMUICanvasAudioSettings.cpp */,
 				21476F9C5BE8EB1D3C470944 /* PMUICanvasAudioSettings.h */,
+				B05BC2BD1C01F2A70075DE09 /* PMUICanvasBaseRenderer.cpp */,
+				B05BC2BE1C01F2A70075DE09 /* PMUICanvasBaseRenderer.h */,
+				B0DFCD421C0278F500243ECF /* PMUICanvasBrushRenderer.cpp */,
+				B0DFCD431C0278F500243ECF /* PMUICanvasBrushRenderer.h */,
+				B0DFCD451C027EC600243ECF /* PMUICanvasTypoRenderer.cpp */,
+				B0DFCD461C027EC600243ECF /* PMUICanvasTypoRenderer.h */,
+				B0DFCD3E1C022F9400243ECF /* PMUICanvasColorRenderer.cpp */,
+				B0DFCD3F1C022F9400243ECF /* PMUICanvasColorRenderer.h */,
 			);
 			path = UICanvas;
 			sourceTree = "<group>";
@@ -1882,7 +1882,6 @@
 				2AE048E21C030E97009C99AF /* ofxBox2dEdge.cpp in Sources */,
 				2A5E61C11BE2EB480037FD79 /* PMSettingsManagerPoem.cpp in Sources */,
 				2A8250D21BCE5CC500EEADDF /* ofxUIRectangle.cpp in Sources */,
-				B0DFCD471C027EC600243ECF /* PMUICanvasTypoRenderer.cpp in Sources */,
 				2A8250BE1BCE5CC500EEADDF /* ofxUIDragableLabelButton.cpp in Sources */,
 				2A8250D31BCE5CC500EEADDF /* ofxUIRotarySlider.cpp in Sources */,
 				2AE048EC1C030E97009C99AF /* b2DynamicTree.cpp in Sources */,
@@ -1893,6 +1892,7 @@
 				2A65498E1BEA84B900F272F3 /* ofxScene.cpp in Sources */,
 				FCC16AB16073FF0581F50ED7 /* loader.c in Sources */,
 				2A5E61C01BE2EB480037FD79 /* PMSettingsManager.cpp in Sources */,
+				B0DFCD471C027EC600243ECF /* PMUICanvasTypoRenderer.cpp in Sources */,
 				D31F5C1B140C59B2AF1533A8 /* registration.c in Sources */,
 				2A8250B71BCE5CC500EEADDF /* ofxUI2DGraph.cpp in Sources */,
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,

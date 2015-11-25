@@ -35,7 +35,7 @@ public:
 
 private:
 
-    PMUICanvasTypoRenderer* canvasTypoRenderer;
+    PMUICanvasTypoRenderer*                 canvasTypoRenderer;
     
     string                                  charset;
     vector<ofTrueTypeFont *>                fontCharset;

@@ -4,7 +4,7 @@
 
 #include "PMLetterContainer.h"
 
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float _letterSize, float letterVelocity, ofxBox2d *_box2d)
+PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float _letterSize, float letterVelocity, ofxBox2d *_box2d, PMUICanvasTypoRenderer* gui)
 {
     letterFont = font;
     letter = _letter;
@@ -19,47 +19,28 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float
     float normalizedPosX = posX / ofGetWidth();
     float normalizedPosY = posY / ofGetHeight();
 
-    letterSize = _letterSize;
+    letterSize = ofMap(_letterSize, 0.1, 1.0, gui->getMinSize(), gui->getMaxSize(), true);
 
     float width = letterFont->stringWidth(letter) * letterSize;
     float height = letterFont->stringHeight(letter) * letterSize;
 
-    setPhysics(3.0, 0.53, 0.1);
+//    void ofxBox2dBaseShape::setPhysics(float density, float bounce, float friction) {
+
+    setPhysics(3.0, gui->getBounceFactor(), 0.1);
 
     // Es queda en espera mentre no pot crear el nou objecte. (WTF?)
     while (box2d->getWorld()->IsLocked()) sleep(0.01);
 
     setup(box2d->getWorld(), posX, posY, width, height);
-    float minYVelocity = 10.0;
-    float maxYVelocity = 50.0;
-    float velocity = ofMap(letterVelocity, 0.01, 1.0, minYVelocity, maxYVelocity, true);
-    setVelocity(0, velocity);
-
-    this->setPosition(normalizedPosX, normalizedPosY);
+    
+    float yVelocity = ofMap(letterVelocity, 0.01, 1.0, gui->getMinVelocity(), gui->getMaxVelocity(), true);
+    setVelocity(0, yVelocity);
 
     timeCreated = ofGetElapsedTimeMillis();
 }
 
 PMLetterContainer::~PMLetterContainer()
 {
-}
-
-void PMLetterContainer::setPosition(float normalizedX, float normalizedY)
-{
-    x = ofGetWidth() * normalizedX;
-    y = ofGetHeight() * normalizedY;
-}
-
-void PMLetterContainer::setPositionX(float normalizedX)
-{
-}
-
-void PMLetterContainer::setPositionY(float normalizedY)
-{
-}
-
-void PMLetterContainer::setSize(float normalizedSize) {
-
 }
 
 void PMLetterContainer::draw()
