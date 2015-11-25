@@ -42,7 +42,7 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
 
         // Audio settings
         guiAudioSettings = new PMUICanvasAudioSettings("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
-        guiAudioSettings->init(312, 80);
+        guiAudioSettings->init(240,5);
         guiAudioSettings->setBackgroundColor(canvasBgColor);
         guiAudioSettings->setVisible(false);
     }

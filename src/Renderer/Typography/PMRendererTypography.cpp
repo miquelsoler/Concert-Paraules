@@ -47,7 +47,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
     // Box2D
     {
         box2d.init();
-        box2d.setGravity(0, 10);
+        box2d.setGravity(canvasTypoRenderer->getGravityX(), canvasTypoRenderer->getGravityY());
         box2d.createBounds();
         box2d.setFPS(60);
     }
@@ -74,6 +74,8 @@ void PMRendererTypography::update()
         (*letterIt).get()->destroy();
         activeLetters.erase(letterIt++);
     }
+    
+    box2d.setGravity(canvasTypoRenderer->getGravityX(), canvasTypoRenderer->getGravityY());
 
     box2d.update();
 }

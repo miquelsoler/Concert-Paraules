@@ -31,7 +31,7 @@ public:
     void setPositionY(unsigned int inputIndex, float normalizedY);
     void setSize(unsigned int inputIndex, float normalizedSize);
     void changeDirection(unsigned int inputIndex, float direction);
-    
+    void vibrate(unsigned int inputIndex, float hasToVibrate);
 
 private:
 

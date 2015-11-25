@@ -267,6 +267,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     switch(renderer->getType())
     {
+<<<<<<< HEAD
         case RENDERERTYPE_PAINTBRUSH:
         {
             float minOffset = -1.0f;
@@ -279,6 +280,18 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, pitch);
             break;
         }
+=======
+//        case RENDERERTYPE_PAINTBRUSH:
+//        {
+//            float minOffset = -1.0f;
+//            float maxOffset = 1.0f;
+//            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+//
+////            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+////            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
+//            break;
+//        }
+>>>>>>> 57942b29bda6147c35f30b6d146841c2a6d1cfc1
         case RENDERERTYPE_TYPOGRAPHY:
         {
             // TODO: Should move this all to <audio to sceneparams mapper>
