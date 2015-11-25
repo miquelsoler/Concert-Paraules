@@ -4,7 +4,7 @@
 
 #include "PMRendererPaintbrush.h"
 
-static ofColor tintColor = ofColor(200, 200, 0, 255);
+//static ofColor tintColor = ofColor(200, 200, 0, 255);
 
 PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
 {
@@ -35,6 +35,8 @@ void PMRendererPaintbrush::update()
         if (!isActive[i]) continue;
 
         brushes[i]->update();
+        brushes[i]->setBounceWalls(canvasBrushRenderer->getBouncyWalls());
+        brushes[i]->setColor(canvasBrushRenderer->getBrushColor());
     }
     PMBaseRenderer::update();
     
@@ -50,6 +52,10 @@ void PMRendererPaintbrush::update()
     
     for (int i=0; i<particles.size(); i++){
         particles[i].update();
+        particles[i].setVelocity(canvasBrushRenderer->getParticleVelocity());
+        particles[i].setLife(canvasBrushRenderer->getParticleLife());
+        particles[i].setBounceWalls(canvasBrushRenderer->getBouncyWalls());
+        particles[i].setColor(canvasBrushRenderer->getBrushColor());
     }
 }
 
@@ -76,13 +82,13 @@ void PMRendererPaintbrush::drawIntoFBO()
                 //        ofSetColor(255, 255, 255, 1);
                 ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
                 
-                ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+                ofEnableBlendMode(OF_BLENDMODE_ADD);
                 
                 for (int i=0; i<numInputs; ++i)
                 {
                     if (!isActive[i]) continue;
                     
-                    ofSetColor(tintColor);
+//                    ofSetColor(tintColor);
                     brushes[i]->draw();
                 }
         
@@ -136,4 +142,13 @@ void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize
 void PMRendererPaintbrush::changeDirection(unsigned int inputIndex, float direction)
 {
     brushes[inputIndex]->changeDirection(direction);
+}
+
+void PMRendererPaintbrush::vibrate(unsigned int inputIndex, float hasToVibrate)
+{
+    if(hasToVibrate){
+        for (int i=0; i<particles.size(); i++){
+            particles[i].setVelocity(ofRandom(canvasBrushRenderer->getParticleVelocity()-0.5, canvasBrushRenderer->getParticleVelocity()));
+        }
+    }
 }

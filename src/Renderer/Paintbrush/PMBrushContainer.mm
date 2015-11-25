@@ -13,7 +13,7 @@ static const float ANGLE_VARIATION_MAX_OFFSET = 30;
 static const float BRUSH_SPEED = 5.0;
 static const float OFFSET_SCALE = 1.5;
 
-static const float PAINTING_MARGIN_PCT = 0.05;
+static const float PAINTING_MARGIN_PCT = 0.00;
 
 
 PMBrushContainer::PMBrushContainer(string filename)
@@ -23,8 +23,10 @@ PMBrushContainer::PMBrushContainer(string filename)
     xOffset = 0;//-size*(brush.getWidth()/brush.getHeight())/2;
     yOffset = 0;//-size/2;
     generalOffset = 0;
-
+    bounceWalls=false;
+    
     ofSeedRandom();
+    
 }
 
 void PMBrushContainer::update()
@@ -39,11 +41,19 @@ void PMBrushContainer::update()
     int viewWidth = ofGetWidth();
     int viewHeight = ofGetHeight();
     float margin = PAINTING_MARGIN_PCT * viewWidth;
-
-    if (x > viewWidth - margin) x -= viewWidth - 2*margin;
-    if (x < margin) x += (viewWidth - 2*margin);
-    if (y > viewHeight - margin) y -= viewHeight - 2*margin;
-    if (y < margin) y += viewHeight - 2*margin;
+    
+    if(bounceWalls){
+        if (x > viewWidth - margin) baseAngle+=90;
+        if (x < margin) baseAngle-=90;
+        if (y > viewHeight - margin) baseAngle+=90;
+        if (y < margin) baseAngle-=90;
+    }else{
+        if (x > viewWidth - margin) x -= viewWidth - 2*margin;
+        if (x < margin) x += (viewWidth - 2*margin);
+        if (y > viewHeight - margin) y -= viewHeight - 2*margin;
+        if (y < margin) y += viewHeight - 2*margin;
+    }
+//    cout<<baseAngle<<endl;
 
     xOffset = generalOffset * sinAngle * 100.0 * OFFSET_SCALE;
     yOffset = -generalOffset * cosAngle * 100.0 * OFFSET_SCALE;
@@ -52,6 +62,7 @@ void PMBrushContainer::update()
 void PMBrushContainer::draw()
 {
     int halfSize = size >> 1;
+    ofSetColor(color);
 //    ofPushMatrix();
 //        ofTranslate(x , y);
 //        ofRotate(baseAngle+90);
@@ -138,6 +149,8 @@ void PMBrushContainer::setSize(float normalizedSize)
 
 void PMBrushContainer::changeDirection(float direction)
 {
-    baseAngle += direction*10;
+    cout<<direction<<endl;
+    baseAngle += direction*0.5;
     baseAngle = ofWrapDegrees(baseAngle, -360, 360);
 }
+

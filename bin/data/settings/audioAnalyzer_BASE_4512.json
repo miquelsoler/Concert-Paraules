@@ -1,6 +1,6 @@
 {
    "Energy" : {
-      "Max Energy" : 2.167487621307373,
+      "Max Energy" : 0.4926108196377754,
       "Min Energy" : 0.009999999776482582
    },
    "Mel Bands" : {
@@ -12,9 +12,9 @@
       "Silence Threshold" : 0.09852216392755508
    },
    "Pitch" : {
-      "Ascending Descending Analysis Size" : 20,
-      "Max MIDI Note" : 90.64039611816406,
-      "Min MIDI Note" : 80.78817749023438
+      "Max MIDI Note" : 70.73891830444336,
+      "Min MIDI Note" : 60.04926109313965,
+       "Ascending Descending Analysis Size" : 20
    },
    "Silence" : {
       "Enabled" : true,
@@ -22,7 +22,7 @@
       "Threshold (ms)" : 0.009999999776482582
    },
    "Smoothing" : {
-      "Delta" : 0.006926108289510012
+      "Delta" : 0.009852216579020023
    }
 }
 

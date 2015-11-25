@@ -37,6 +37,8 @@ public:
     ofPoint getPosition(){return ofPoint(x, y);};
     float getAngle(){return baseAngle;};
     ofImage* getImage(){return &brush;}
+    void setBounceWalls(bool bounce){bounceWalls=bounce;};
+    void setColor(ofColor _color){color=_color;};
 
 private:
 
@@ -45,8 +47,11 @@ private:
     float x, y;
     float xOffset, yOffset, generalOffset;
     int size;
+    
+    bool bounceWalls;
 
     ofImage brush;
+        ofColor color;
 };
 
 

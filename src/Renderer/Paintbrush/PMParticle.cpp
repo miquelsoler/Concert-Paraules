@@ -8,18 +8,26 @@
 PMParticle::PMParticle(ofPoint position, ofPoint prevPosition, ofImage *_image){
 	attractPoints = NULL;
     originalPos=position;
-    vel=originalPos-prevPosition;
+//    vel=originalPos-prevPosition;
 //    cout<<vel<<endl;
+//    vel.x=-originalPos.x+prevPosition.x;
+//    vel.y=originalPos.y-prevPosition.y;
     
     image=_image;
     
     uniqueVal = ofRandom(-10000, 10000);
     
+    lifetime=5;
+    
     pos.x = originalPos.x;
     pos.y = originalPos.y;
     
-    vel.x = ofRandom(-1.9, 1.9);
-    vel.y = ofRandom(-1.9, 1.9);
+//    vel.x = ofRandom(-0.9, 0.9);
+//    vel.y = ofRandom(-0.9, 0.9);
+    velocity=0.9;
+    
+    vel.x = ofRandom(-velocity, velocity);
+    vel.y = ofRandom(-velocity, velocity);
     
     frc   = ofPoint(0,0,0);
     
@@ -35,11 +43,12 @@ void PMParticle::update(){
     
     
     alphaValue=(int)(ofGetElapsedTimeMillis()-bornTime);
-    alphaValue/=5;
+    alphaValue/=lifetime;
     alphaValue=255-alphaValue;
     if(alphaValue<=0){
         bornTime=0.0f;
     }
+    vel *= drag;
     pos += vel;
 
 
@@ -162,9 +171,28 @@ void PMParticle::update(){
 //------------------------------------------------------------------
 void PMParticle::draw(){
 
-    ofSetColor(255, 63, 180, alphaValue);
+//    ofSetColor(255, 63, 180, alphaValue);
+    ofSetColor(color, alphaValue);
 			
 	ofDrawCircle(pos.x, pos.y, scale * 4.0);
 //    image->draw(pos, scale, scale);
 }
 
+void PMParticle::setVelocity(float _velocity)
+{
+    if(_velocity!=velocity){
+        velocity=_velocity;
+        vel.x = ofRandom(-velocity, velocity);
+        vel.y = ofRandom(-velocity, velocity);
+    }
+}
+
+void PMParticle::setLife(float life)
+{
+    lifetime=life;
+}
+
+void PMParticle::setBounceWalls(bool bouncy)
+{
+    bounceWalls=bouncy;
+}

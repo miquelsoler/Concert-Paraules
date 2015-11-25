@@ -21,10 +21,21 @@ public:
     
     // GETTERS
     int         getMode();
+    float       getParticleLife(){return particleLife;};
+    float       getParticleVelocity(){return particleVelocity;};
+    bool        getBouncyWalls(){return bounceWalls;};
+    ofColor     getBrushColor(){return paintColor;};
     
 private:
 
     int         guiMode;
+    float         particleLife;
+    float         particleVelocity;
+    bool          bounceWalls;
+    float        directionFactor;
+    
+    ofColor     paintColor;
+    
 };
 
 

@@ -14,7 +14,17 @@ void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width,
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
     
     addSpacer();
+    addSpacer();
     addIntSlider("Mode",1,3,&guiMode);
+    addSpacer();
+    addIntSlider("Brush R",0,255,255);
+    addIntSlider("Brush G",0,255,255);
+    addIntSlider("Brush B",0,255,255);
+    addSpacer();
+    addSlider("Particle live", 0, 10, &particleLife);
+    addSlider("Particle velocity", 0, 5, &particleVelocity);
+    addToggle("Bouncy Walls", &bounceWalls);
+    addSlider("Change Direction Curve", 0, 100, &directionFactor);
     if (autosize) autoSizeToFitWidgets();
     loadPreset();
 
@@ -36,6 +46,20 @@ void PMUICanvasBrushRenderer::handleEvents(ofxUIEventArgs &e)
     if(name=="Save to default")
     {
         savePreset();
+    }else if(name=="Brush R")
+    {
+        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+        paintColor.r = s->getValue();
+    }
+    else if(name=="Brush G")
+    {
+        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+        paintColor.g = s->getValue();
+    }
+    else if(name=="Brush B")
+    {
+        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+        paintColor.b = s->getValue();
     }
 }
 
