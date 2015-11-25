@@ -24,8 +24,6 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float
     float width = letterFont->stringWidth(letter) * letterSize;
     float height = letterFont->stringHeight(letter) * letterSize;
 
-//    void ofxBox2dBaseShape::setPhysics(float density, float bounce, float friction) {
-
     setPhysics(3.0, gui->getBounceFactor(), 0.1);
 
     // Es queda en espera mentre no pot crear el nou objecte. (WTF?)
