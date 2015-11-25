@@ -267,16 +267,16 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     switch(renderer->getType())
     {
-        case RENDERERTYPE_PAINTBRUSH:
-        {
-            float minOffset = -1.0f;
-            float maxOffset = 1.0f;
-            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
-
-//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
-            break;
-        }
+//        case RENDERERTYPE_PAINTBRUSH:
+//        {
+//            float minOffset = -1.0f;
+//            float maxOffset = 1.0f;
+//            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+//
+////            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+////            paintbrushRenderer->setOffset(pitchParams.audioInputIndex, pitch);
+//            break;
+//        }
         case RENDERERTYPE_TYPOGRAPHY:
         {
             // TODO: Should move this all to <audio to sceneparams mapper>
@@ -291,10 +291,14 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
                      * amplitud -> tamany lletra ...
                      * pitch -> mes o menys velocitat de lletres
                      */
-//#ifndef WITH_BOX2D
+
+                    float minVelocity = 0.01;
+                    float maxVelocity = 1.0;
+                    float velocityY = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minVelocity, maxVelocity, true);
+
                     PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
+                    typoRenderer->setYVelocity(velocityY);
                     typoRenderer->addLetter();
-//#endif
                 }
             }
             break;
@@ -318,7 +322,7 @@ void PMScene2::energyChanged(energyParams &energyParams)
 {
     // calculate Energy
     /////////////////////
-    float normalizedSizeMin = 0.0f;
+    float normalizedSizeMin = 0.01f;
     float normalizedSizeMax = 1.0f;
     
     // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
@@ -327,7 +331,7 @@ void PMScene2::energyChanged(energyParams &energyParams)
     // ? eloi : a mi em funciona millor en lineal // linearSize = powf(linearSize, float(1.0/eulerIdentity));
     
     float energy = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
-    
+
     // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
     if (isnan(energy)) energy = 0;
 
@@ -337,6 +341,14 @@ void PMScene2::energyChanged(energyParams &energyParams)
         {
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
             paintbrushRenderer->setSize(energyParams.audioInputIndex, energy);
+            break;
+        }
+        case RENDERERTYPE_TYPOGRAPHY:
+        {
+            // Peta
+            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+            float normalizedSize = energy;
+            typoRenderer->setLetterSize(normalizedSize);
             break;
         }
         case RENDERERTYPE_COLOR:

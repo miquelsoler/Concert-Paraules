@@ -14,7 +14,7 @@ class PMLetterContainer : public ofxBox2dRect
 {
 public:
 
-    PMLetterContainer(string letter, ofTrueTypeFont *font, ofxBox2d *box2d);
+    PMLetterContainer(string letter, ofTrueTypeFont *font, float letterSize, float letterVelocity, ofxBox2d *box2d);
     ~PMLetterContainer();
 
     void setPosition(float normalizedX, float normalizedY);
@@ -32,10 +32,12 @@ private:
     int             size;
     float           angle;
 
+    ofxBox2d        *box2d;
+
     ofTrueTypeFont  *letterFont;
     string          letter;
+    float           letterSize;
 
-    ofxBox2d        *box2d;
     uint64_t        timeCreated;
 };
 

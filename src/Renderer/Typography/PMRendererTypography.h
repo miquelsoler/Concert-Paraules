@@ -28,6 +28,9 @@ public:
 
     void addLetter();
 
+    void setLetterSize(float normalizedSize);
+    void setYVelocity(float normalizedVelocity);
+
     void keyPressed ( ofKeyEventArgs& eventArgs );
 
 private:
@@ -37,6 +40,9 @@ private:
     string                                  charset;
     vector<ofTrueTypeFont *>                fontCharset;
     list<shared_ptr<PMLetterContainer>>     activeLetters;
+
+    float                                   letterSize;
+    float                                   letterYVelocity;
 
     mutex                                   mutexActiveLetters;
 

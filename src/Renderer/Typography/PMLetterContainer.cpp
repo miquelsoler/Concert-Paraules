@@ -4,7 +4,7 @@
 
 #include "PMLetterContainer.h"
 
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofxBox2d *_box2d) : ofxBox2dRect()
+PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float _letterSize, float letterVelocity, ofxBox2d *_box2d)
 {
     letterFont = font;
     letter = _letter;
@@ -14,13 +14,15 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofxBo
 
     float posOffset = ofGetWidth() * 0.1;
     float posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
-    float posY = 100;
+    float posY = 1;
 
     float normalizedPosX = posX / ofGetWidth();
     float normalizedPosY = posY / ofGetHeight();
 
-    float width = letterFont->stringWidth(letter);
-    float height = letterFont->stringHeight(letter);
+    letterSize = _letterSize;
+
+    float width = letterFont->stringWidth(letter) * letterSize;
+    float height = letterFont->stringHeight(letter) * letterSize;
 
     setPhysics(3.0, 0.53, 0.1);
 
@@ -28,7 +30,10 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofxBo
     while (box2d->getWorld()->IsLocked()) sleep(0.01);
 
     setup(box2d->getWorld(), posX, posY, width, height);
-    setVelocity(ofRandom(0, 0), ofRandom(10, 30));
+    float minYVelocity = 10.0;
+    float maxYVelocity = 50.0;
+    float velocity = ofMap(letterVelocity, 0.01, 1.0, minYVelocity, maxYVelocity, true);
+    setVelocity(0, velocity);
 
     this->setPosition(normalizedPosX, normalizedPosY);
 
@@ -64,10 +69,13 @@ void PMLetterContainer::draw()
 
     ofSetColor(ofColor::black);
     ofPushMatrix();
+    {
         ofTranslate(getPosition());
         ofRotateZ(getRotation());
+        ofScale(letterSize, letterSize);
         ofSetColor(ofColor::black);
         letterFont->drawString(letter, -width/2, height/2);
+    }
     ofPopMatrix();
 }
 

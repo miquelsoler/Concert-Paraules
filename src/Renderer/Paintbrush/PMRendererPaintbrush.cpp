@@ -19,7 +19,6 @@ PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRende
     /// GUI
     guiBaseRenderer = new PMUICanvasBrushRenderer("BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
     guiBaseRenderer->init(100, 500, 200, 300);
-
 }
 
 void PMRendererPaintbrush::setup()

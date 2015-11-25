@@ -6,10 +6,9 @@
 
 #include "PMSettingsManagerPoem.h"
 
-static const unsigned int MAX_LETTERS = 3;
-
 //static const string DEFAULT_CHARSET = "?";
-static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
@@ -28,6 +27,9 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         );
         fontCharset.push_back(letterFont);
     }
+
+    letterSize = 1.0;
+    letterYVelocity = 1.0;
 
     // Box2D
     {
@@ -92,10 +94,6 @@ void PMRendererTypography::drawIntoFBO()
         ofDisableBlendMode();
     }
     fbo.end();
-
-    ofSetColor(255, 255, 255, 255);
-
-//    fbo.draw(0, 0);
 }
 
 void PMRendererTypography::addLetter()
@@ -106,12 +104,26 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d));
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();
     }
     mutexAddLetter.unlock();
+}
+
+void PMRendererTypography::setLetterSize(float normalizedSize)
+{
+    letterSize = normalizedSize;
+    if (letterSize <= 0) letterSize = 0.01;
+    if (letterSize > 1) letterSize = 1.0;
+}
+
+void PMRendererTypography::setYVelocity(float normalizedVelocity)
+{
+    letterYVelocity = normalizedVelocity;
+    if (letterYVelocity < 0) letterYVelocity = 0.0;
+    if (letterYVelocity > 1) letterYVelocity = 1.0;
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
