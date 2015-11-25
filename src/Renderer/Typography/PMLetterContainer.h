@@ -9,18 +9,14 @@
 
 #include "Defaults.h"
 #include "ofxBox2d.h"
+#include "PMUICanvasTypoRenderer.h"
 
 class PMLetterContainer : public ofxBox2dRect
 {
 public:
 
-    PMLetterContainer(string letter, ofTrueTypeFont *font, float letterSize, float letterVelocity, ofxBox2d *box2d);
+    PMLetterContainer(string letter, ofTrueTypeFont *font, float letterSize, float letterVelocity, ofxBox2d *box2d, PMUICanvasTypoRenderer* gui);
     ~PMLetterContainer();
-
-    void setPosition(float normalizedX, float normalizedY);
-    void setPositionX(float normalizedX);
-    void setPositionY(float normalizedY);
-    void setSize(float normalizedSize);
 
     void draw();
 

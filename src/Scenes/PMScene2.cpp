@@ -286,11 +286,6 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
                 if (diffTimeMs > 50)
                 {
                     typoTimer = ofGetElapsedTimeMillis();
-                    /*
-                     * Eloi dixit (per a enrecordar-me):
-                     * amplitud -> tamany lletra ...
-                     * pitch -> mes o menys velocitat de lletres
-                     */
 
                     float minVelocity = 0.01;
                     float maxVelocity = 1.0;

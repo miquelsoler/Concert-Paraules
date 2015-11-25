@@ -20,7 +20,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
     for (int i=0; i<charset.size(); ++i)
     {
         ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-        letterFont->load(fontPath, 80,
+        letterFont->load(fontPath, 100,
                 true, // antialiased
                 true, // full character set
                 true // make contours
@@ -52,6 +52,7 @@ void PMRendererTypography::setup()
 {
     PMBaseRenderer::setup();
 
+    canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(guiBaseRenderer);
     if (!activeLetters.empty())
         activeLetters.clear();
 }
@@ -60,7 +61,7 @@ void PMRendererTypography::update()
 {
     PMBaseRenderer::update();
 
-    uint64_t maxAge = 30000;
+    uint64_t maxAge = canvasTypoRenderer->getMaxAge() * 1000.0f;
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
     {
@@ -104,7 +105,7 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();

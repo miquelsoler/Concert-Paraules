@@ -20,11 +20,21 @@ public:
     virtual void handleEvents(ofxUIEventArgs &e);
     
     // GETTERS
-    int         getMode();
-    
+    int getMode()           { return guiMode; };
+    int getMinVelocity()    { return minVelocity; };
+    int getMaxVelocity()    { return maxVelocity; };
+    float getMinSize()      { return minSize; };
+    float getMaxSize()      { return maxSize; };
+    int getMaxAge()         { return maxAge; };
+
 private:
 
-    int         guiMode;
+    int     guiMode;
+    int     minVelocity;
+    int     maxVelocity;
+    float   minSize;
+    float   maxSize;
+    int     maxAge;
 };
 
 
