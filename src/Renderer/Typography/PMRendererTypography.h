@@ -28,26 +28,26 @@ public:
 
     void addLetter();
 
+    void setLetterSize(float normalizedSize);
+    void setYVelocity(float normalizedVelocity);
+
     void keyPressed ( ofKeyEventArgs& eventArgs );
 
 private:
 
-    PMUICanvasTypoRenderer* canvasTypoRenderer;
+    PMUICanvasTypoRenderer*                 canvasTypoRenderer;
     
     string                                  charset;
     vector<ofTrueTypeFont *>                fontCharset;
-#ifdef WITH_BOX2D
-    vector<shared_ptr<PMLetterContainer>>   activeLetters;
-#else
-    list<PMLetterContainer *>           activeLetters;
-#endif
+    list<shared_ptr<PMLetterContainer>>     activeLetters;
+
+    float                                   letterSize;
+    float                                   letterYVelocity;
 
     mutex                                   mutexActiveLetters;
 
-#ifdef WITH_BOX2D
     ofxBox2d                                box2d;
     mutex                                   mutexAddLetter;
-#endif
 
     void buildCharsetFromPoem();
 

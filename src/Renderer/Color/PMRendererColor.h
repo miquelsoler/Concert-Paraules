@@ -46,8 +46,6 @@ private:
     
     int     scanWidth;
     
-    
-    
     PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
     /// mode 1

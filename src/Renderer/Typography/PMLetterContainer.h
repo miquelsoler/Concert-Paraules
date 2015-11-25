@@ -8,31 +8,19 @@
 #include "PMBaseRenderer.h"
 
 #include "Defaults.h"
-#ifdef WITH_BOX2D
-#   include "ofxBox2d.h"
-#endif
+#include "ofxBox2d.h"
+#include "PMUICanvasTypoRenderer.h"
 
-#ifdef WITH_BOX2D
 class PMLetterContainer : public ofxBox2dRect
-#else
-class PMLetterContainer
-#endif
 {
 public:
 
-#ifdef WITH_BOX2D
-    PMLetterContainer(string letter, ofTrueTypeFont *font, ofxBox2d *box2d);
-#else
-    PMLetterContainer(string letter, ofTrueTypeFont *font);
-#endif
+    PMLetterContainer(string letter, ofTrueTypeFont *font, float letterSize, float letterVelocity, ofxBox2d *box2d, PMUICanvasTypoRenderer* gui);
     ~PMLetterContainer();
 
-    void setPosition(float normalizedX, float normalizedY);
-    void setPositionX(float normalizedX);
-    void setPositionY(float normalizedY);
-    void setSize(float normalizedSize);
-
     void draw();
+
+    uint64_t getAge();
 
 private:
 
@@ -40,12 +28,13 @@ private:
     int             size;
     float           angle;
 
+    ofxBox2d        *box2d;
+
     ofTrueTypeFont  *letterFont;
     string          letter;
+    float           letterSize;
 
-#ifdef WITH_BOX2D
-    ofxBox2d        *box2d;
-#endif
+    uint64_t        timeCreated;
 };
 
 

@@ -4,61 +4,43 @@
 
 #include "PMLetterContainer.h"
 
-#ifdef WITH_BOX2D
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofxBox2d *_box2d) : ofxBox2dRect()
-#else
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font)
-#endif
+PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float _letterSize, float letterVelocity, ofxBox2d *_box2d, PMUICanvasTypoRenderer* gui)
 {
     letterFont = font;
     letter = _letter;
     angle = ofRandom(-90, 90);
 
-#ifdef WITH_BOX2D
     box2d = _box2d;
 
     float posOffset = ofGetWidth() * 0.1;
     float posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
-    float posY = 100;
+    float posY = 1;
 
     float normalizedPosX = posX / ofGetWidth();
     float normalizedPosY = posY / ofGetHeight();
 
-    float width = letterFont->stringWidth(letter);
-    float height = letterFont->stringHeight(letter);
+    letterSize = ofMap(_letterSize, 0.1, 1.0, gui->getMinSize(), gui->getMaxSize(), true);
 
-    setPhysics(3.0, 0.53, 0.1);
+    float width = letterFont->stringWidth(letter) * letterSize;
+    float height = letterFont->stringHeight(letter) * letterSize;
+
+//    void ofxBox2dBaseShape::setPhysics(float density, float bounce, float friction) {
+
+    setPhysics(3.0, gui->getBounceFactor(), 0.1);
 
     // Es queda en espera mentre no pot crear el nou objecte. (WTF?)
     while (box2d->getWorld()->IsLocked()) sleep(0.01);
 
     setup(box2d->getWorld(), posX, posY, width, height);
-    setVelocity(ofRandom(0, 0), ofRandom(10, 30));
+    
+    float yVelocity = ofMap(letterVelocity, 0.01, 1.0, gui->getMinVelocity(), gui->getMaxVelocity(), true);
+    setVelocity(0, yVelocity);
 
-    this->setPosition(normalizedPosX, normalizedPosY);
-#endif
+    timeCreated = ofGetElapsedTimeMillis();
 }
 
 PMLetterContainer::~PMLetterContainer()
 {
-}
-
-void PMLetterContainer::setPosition(float normalizedX, float normalizedY)
-{
-    x = ofGetWidth() * normalizedX;
-    y = ofGetHeight() * normalizedY;
-}
-
-void PMLetterContainer::setPositionX(float normalizedX)
-{
-}
-
-void PMLetterContainer::setPositionY(float normalizedY)
-{
-}
-
-void PMLetterContainer::setSize(float normalizedSize) {
-
 }
 
 void PMLetterContainer::draw()
@@ -68,14 +50,17 @@ void PMLetterContainer::draw()
 
     ofSetColor(ofColor::black);
     ofPushMatrix();
-#ifdef WITH_BOX2D
+    {
         ofTranslate(getPosition());
         ofRotateZ(getRotation());
-#else
-        ofTranslate(x, y);
-        ofRotate(angle);
-#endif
+        ofScale(letterSize, letterSize);
         ofSetColor(ofColor::black);
         letterFont->drawString(letter, -width/2, height/2);
+    }
     ofPopMatrix();
+}
+
+uint64_t PMLetterContainer::getAge()
+{
+    return ofGetElapsedTimeMillis() - timeCreated;
 }

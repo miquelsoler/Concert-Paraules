@@ -6,38 +6,13 @@
 
 #include "PMSettingsManagerPoem.h"
 
-static const unsigned int MAX_LETTERS = 3;
-
 //static const string DEFAULT_CHARSET = "?";
-static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
     buildCharsetFromPoem();
-
-    string fontName = "5inq_-_Handserif.ttf";
-    string fontPath = "fonts/" + fontName;
-
-    for (int i=0; i<charset.size(); ++i)
-    {
-        ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-        letterFont->load(fontPath, 80,
-                true, // antialiased
-                true, // full character set
-                true // make contours
-        );
-        fontCharset.push_back(letterFont);
-    }
-
-#ifdef WITH_BOX2D
-    // Box2D
-    {
-        box2d.init();
-        box2d.setGravity(0, 10);
-        box2d.createBounds();
-        box2d.setFPS(60);
-    }
-#endif
 
     // GUI
     {
@@ -45,6 +20,36 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         guiBaseRenderer->init(100, 500, 200, 300);
 
         ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
+
+        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(guiBaseRenderer);
+    }
+
+    // Font preload
+    {
+        string fontName = "5inq_-_Handserif.ttf";
+        string fontPath = "fonts/" + fontName;
+
+        for (int i=0; i<charset.size(); ++i)
+        {
+            ofTrueTypeFont *letterFont = new ofTrueTypeFont();
+            letterFont->load(fontPath, 200,
+                             true, // antialiased
+                             true, // full character set
+                             true // make contours
+                             );
+            fontCharset.push_back(letterFont);
+        }
+    }
+
+    letterSize = 1.0;
+    letterYVelocity = 1.0;
+
+    // Box2D
+    {
+        box2d.init();
+        box2d.setGravity(0, 10);
+        box2d.createBounds();
+        box2d.setFPS(60);
     }
 }
 
@@ -60,49 +65,40 @@ void PMRendererTypography::update()
 {
     PMBaseRenderer::update();
 
-#ifdef WITH_BOX2D
+    uint64_t maxAge = canvasTypoRenderer->getMaxAge() * 1000.0f;
+    list<shared_ptr<PMLetterContainer>>::iterator letterIt;
+    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+    {
+        if ((*letterIt)->getAge() < maxAge) continue;
+
+        (*letterIt).get()->destroy();
+        activeLetters.erase(letterIt++);
+    }
+
     box2d.update();
-#endif
 }
 
 void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-#ifdef WITH_BOX2D
         ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,1.0);
-#else
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-#endif
         ofSetColor(fc);
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 
-#ifdef WITH_BOX2D
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-#else
-        list<PMLetterContainer *>::iterator letterIt;
-#endif
         mutexActiveLetters.lock();
         {
-#ifdef WITH_BOX2D
-            for (int i=0; i<activeLetters.size(); i++)
-                activeLetters[i].get()->draw();
-#else
             for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-                (*letterIt)->draw();
-#endif
+                (*letterIt).get()->draw();
         }
         mutexActiveLetters.unlock();
 
         ofDisableBlendMode();
     }
     fbo.end();
-
-    ofSetColor(255, 255, 255, 255);
-
-//    fbo.draw(0, 0);
 }
 
 void PMRendererTypography::addLetter()
@@ -113,30 +109,26 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-#ifdef WITH_BOX2D
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], &box2d));
-#else
-            letterCreated = true;
-            PMLetterContainer *letterContainer = new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter]);
-            letterContainer->setPosition(ofRandom(0.05, 0.95), ofRandom(0.05, 0.95));
-            letterContainer->setSize(1.0);
-#endif
-
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
             activeLetters.push_back(letterContainer);
-
-            if (activeLetters.size() > MAX_LETTERS)
-            {
-#ifdef WITH_BOX2D
-//              activeLetters.begin()->reset();
-#else
-                delete *(activeLetters.begin());
-                activeLetters.pop_front();
-#endif
-            }
         }
         mutexActiveLetters.unlock();
     }
     mutexAddLetter.unlock();
+}
+
+void PMRendererTypography::setLetterSize(float normalizedSize)
+{
+    letterSize = normalizedSize;
+    if (letterSize <= 0) letterSize = 0.01;
+    if (letterSize > 1) letterSize = 1.0;
+}
+
+void PMRendererTypography::setYVelocity(float normalizedVelocity)
+{
+    letterYVelocity = normalizedVelocity;
+    if (letterYVelocity < 0) letterYVelocity = 0.0;
+    if (letterYVelocity > 1) letterYVelocity = 1.0;
 }
 
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )

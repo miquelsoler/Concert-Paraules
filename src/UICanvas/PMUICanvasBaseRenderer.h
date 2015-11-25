@@ -24,14 +24,27 @@ public:
     // GETTERS
     float           getFadeBackground();
     ofColor         getColorBackground();
+    float           getDeltaPitch();
+    float           getDeltaEnergy();
     
+    // SETTERS
+    void            setSmoothPitch(float _p);
+    void            setSmoothEnergy(float _e);
     
 private:
 
     string          rendererName;
+    
     float           guiFadeBackground;
     ofColor         guiColorBackground;
+
+    // Pitch & Energy
+    float           guiSmoothPitch;
+    float           guiSmoothEnergy;
     
+    float           guiDeltaPitch;
+    float           guiDeltaEnergy;
+
 
     
 };
