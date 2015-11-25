@@ -21,6 +21,7 @@ public:
     
     // GETTERS
     int getMode()           { return guiMode; };
+    int getMaxFontSize()    { return maxFontSize; };
     int getMinVelocity()    { return minVelocity; };
     int getMaxVelocity()    { return maxVelocity; };
     float getMinSize()      { return minSize; };
@@ -30,6 +31,7 @@ public:
 private:
 
     int     guiMode;
+    int     maxFontSize;
     int     minVelocity;
     int     maxVelocity;
     float   minSize;

@@ -14,18 +14,31 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 {
     buildCharsetFromPoem();
 
-    string fontName = "5inq_-_Handserif.ttf";
-    string fontPath = "fonts/" + fontName;
-
-    for (int i=0; i<charset.size(); ++i)
+    // GUI
     {
-        ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-        letterFont->load(fontPath, 100,
-                true, // antialiased
-                true, // full character set
-                true // make contours
-        );
-        fontCharset.push_back(letterFont);
+        guiBaseRenderer = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
+        guiBaseRenderer->init(100, 500, 200, 300);
+
+        ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
+
+        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(guiBaseRenderer);
+    }
+
+    // Font preload
+    {
+        string fontName = "5inq_-_Handserif.ttf";
+        string fontPath = "fonts/" + fontName;
+
+        for (int i=0; i<charset.size(); ++i)
+        {
+            ofTrueTypeFont *letterFont = new ofTrueTypeFont();
+            letterFont->load(fontPath, canvasTypoRenderer->getMaxFontSize(),
+                             true, // antialiased
+                             true, // full character set
+                             true // make contours
+                             );
+            fontCharset.push_back(letterFont);
+        }
     }
 
     letterSize = 1.0;
@@ -38,21 +51,12 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         box2d.createBounds();
         box2d.setFPS(60);
     }
-
-    // GUI
-    {
-        guiBaseRenderer = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
-        guiBaseRenderer->init(100, 500, 200, 300);
-
-        ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
-    }
 }
 
 void PMRendererTypography::setup()
 {
     PMBaseRenderer::setup();
 
-    canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(guiBaseRenderer);
     if (!activeLetters.empty())
         activeLetters.clear();
 }
