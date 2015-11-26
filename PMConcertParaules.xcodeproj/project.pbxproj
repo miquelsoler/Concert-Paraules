@@ -701,13 +701,13 @@
 			isa = PBXGroup;
 			children = (
 				2147675FFD540EEA09E4401D /* PMUICanvasBaseRenderer.cpp */,
-				214761E589F1F5B69C04A39A /* PMUICanvasColorRenderer.h */,
 				2147646CCA7EC743380D9323 /* PMUICanvasBaseRenderer.h */,
 				21476EAA38FB4C6E0159248E /* PMUICanvasColorRenderer.cpp */,
-				21476BA2454FD7F82CCA4E08 /* PMUICanvasBrushRenderer.h */,
+				214761E589F1F5B69C04A39A /* PMUICanvasColorRenderer.h */,
 				21476CB87550A12AD2A89C57 /* PMUICanvasBrushRenderer.cpp */,
-				2147620BC689E988F97CC454 /* PMUICanvasTypoRenderer.h */,
+				21476BA2454FD7F82CCA4E08 /* PMUICanvasBrushRenderer.h */,
 				214760A99C0E0EF6B1B00482 /* PMUICanvasTypoRenderer.cpp */,
+				2147620BC689E988F97CC454 /* PMUICanvasTypoRenderer.h */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -2266,7 +2266,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

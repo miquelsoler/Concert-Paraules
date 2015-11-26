@@ -12,7 +12,7 @@ class PMUICanvasTypoRenderer : public PMUICanvasBaseRenderer
 {
 public:
 
-    PMUICanvasTypoRenderer(string title, int headerFontSize);
+    PMUICanvasTypoRenderer(PMUIRendererType type, string title, int headerFontSize);
 
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();

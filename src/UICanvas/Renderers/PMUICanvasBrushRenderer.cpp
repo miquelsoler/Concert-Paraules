@@ -4,9 +4,8 @@
 
 #include "PMUICanvasBrushRenderer.h"
 
-PMUICanvasBrushRenderer::PMUICanvasBrushRenderer(string title, int headerFontSize) : PMUICanvasBaseRenderer(title, headerFontSize)
+PMUICanvasBrushRenderer::PMUICanvasBrushRenderer(PMUIRendererType type, string title, int headerFontSize) : PMUICanvasBaseRenderer(type, title, headerFontSize)
 {
-
 }
 
 void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width, int height)

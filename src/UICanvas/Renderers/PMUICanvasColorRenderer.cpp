@@ -4,9 +4,8 @@
 
 #include "PMUICanvasColorRenderer.h"
 
-PMUICanvasColorRenderer::PMUICanvasColorRenderer(string title, int headerFontSize) : PMUICanvasBaseRenderer(title, headerFontSize)
+PMUICanvasColorRenderer::PMUICanvasColorRenderer(PMUIRendererType type, string title, int headerFontSize) : PMUICanvasBaseRenderer(type, title, headerFontSize)
 {
-
 }
 
 void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width, int height)

@@ -4,9 +4,8 @@
 
 #include "PMUICanvasTypoRenderer.h"
 
-PMUICanvasTypoRenderer::PMUICanvasTypoRenderer(string title, int headerFontSize) : PMUICanvasBaseRenderer(title, headerFontSize)
+PMUICanvasTypoRenderer::PMUICanvasTypoRenderer(PMUIRendererType type, string title, int headerFontSize) : PMUICanvasBaseRenderer(type, title, headerFontSize)
 {
-
 }
 
 void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, int height)

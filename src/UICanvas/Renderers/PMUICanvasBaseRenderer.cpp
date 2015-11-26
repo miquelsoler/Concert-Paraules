@@ -4,9 +4,18 @@
 
 #include "PMUICanvasBaseRenderer.h"
 
-PMUICanvasBaseRenderer::PMUICanvasBaseRenderer(string title, int headerFontSize) : PMBaseUICanvas(title, headerFontSize)
-{
+static const unsigned int PRESETSMATRIX_NUMROWS = 1;
+static const unsigned int PRESETSMATRIX_NUMCOLS = 6;
 
+static const string STR_PRESETS = "PRESETS";
+static const string STR_PRESETS_INFO = "Click to LOAD | Shift+Click to SAVE";
+
+static const string STR_CANVAS_BASEPATH = "presets/";
+
+
+PMUICanvasBaseRenderer::PMUICanvasBaseRenderer(PMUIRendererType _type, string title, int headerFontSize) : PMBaseUICanvas(title, headerFontSize)
+{
+    type = _type;
 }
 
 void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, int height)
@@ -14,7 +23,13 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
     setBackgroundColor(ofColor(0,20,40,128));
-    
+
+    addLabel(STR_PRESETS);
+    setGlobalButtonDimension(32);
+    presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS);
+    presetsMatrix->setAllowMultiple(false);
+    addSpacer();
+
     addLabelButton("Save to default",false);
     addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
     addIntSlider("Background R",0,255,255);
@@ -25,9 +40,10 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
     addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
     addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
-    
-    
+
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
+
+    presetsMode = RENDERER_PRESET_LOAD;
 }
 
 void PMUICanvasBaseRenderer::clear()
@@ -39,21 +55,42 @@ void PMUICanvasBaseRenderer::clear()
 void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
-    
-    if(name=="Background R")
+
+    if (ofIsStringInString(name, STR_PRESETS))
     {
-        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        guiColorBackground.r = s->getValue();
+        // Preset load/save
+        int presetNumber = getActivePreset();
+        if (presetNumber == -1) return;
+
+        string presetFilename = "audioSettings" + ofToString(presetNumber) + ".xml";
+
+        switch(presetsMode)
+        {
+            case RENDERER_PRESET_LOAD:
+                loadSettings(STR_CANVAS_BASEPATH + presetFilename);
+                break;
+            case RENDERER_PRESET_SAVE:
+                saveSettings(STR_CANVAS_BASEPATH + presetFilename);
+                break;
+        }
     }
-    else if(name=="Background G")
+    else
     {
-        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        guiColorBackground.g = s->getValue();
-    }
-    else if(name=="Background B")
-    {
-        ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-        guiColorBackground.b = s->getValue();
+        if(name == "Background R")
+        {
+            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+            guiColorBackground.r = s->getValue();
+        }
+        else if(name == "Background G")
+        {
+            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+            guiColorBackground.g = s->getValue();
+        }
+        else if(name == "Background B")
+        {
+            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
+            guiColorBackground.b = s->getValue();
+        }
     }
 }
 
@@ -136,4 +173,21 @@ void PMUICanvasBaseRenderer::setSmoothPitch(float _p)
 void PMUICanvasBaseRenderer::setSmoothEnergy(float _e)
 {
     guiSmoothEnergy = _e;
+}
+
+int PMUICanvasBaseRenderer::getActivePreset()
+{
+    bool found = false;
+    unsigned int col = 0, row = 0;
+    for (unsigned int i=0; i<PRESETSMATRIX_NUMCOLS && !found; ++i) {
+        col = i;
+        for (unsigned int j=0; j<PRESETSMATRIX_NUMROWS && !found; ++j) {
+            row = j;
+            found = presetsMatrix->getState(j, i);
+        }
+    }
+
+    if (!found) return -1;
+
+    return (row * PRESETSMATRIX_NUMCOLS) + col;
 }

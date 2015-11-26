@@ -108,7 +108,7 @@ PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDER
     scanWidth = 3;
 
     /// GUI
-    gui = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
+    gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_COLOR, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
     gui->init(100, 500, 200, 300);
     
     // NEW STUFF

@@ -16,7 +16,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 
     // GUI
     {
-        gui = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
+        gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
 
         ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
