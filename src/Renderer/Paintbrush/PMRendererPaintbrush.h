@@ -35,10 +35,7 @@ public:
 
 private:
 
-//    PMUICanvasBrushRenderer* canvasBrushRenderer;
-
     vector<PMBrushContainer *> brushes;
-    
     deque<PMParticle> particles;
 };
 

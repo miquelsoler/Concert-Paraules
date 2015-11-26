@@ -35,8 +35,6 @@ public:
 
 private:
 
-    PMUICanvasTypoRenderer*                 canvasTypoRenderer;
-    
     string                                  charset;
     vector<ofTrueTypeFont *>                fontCharset;
     list<shared_ptr<PMLetterContainer>>     activeLetters;

@@ -21,7 +21,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 
         ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
 
-        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(gui);
+//        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(gui);
     }
 
     // Font preload
@@ -56,8 +56,10 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 
     // Box2D
     {
+        PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
+
         box2d.init();
-        box2d.setGravity(canvasTypoRenderer->getGravityX(), canvasTypoRenderer->getGravityY());
+        box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
         box2d.createBounds();
         box2d.setFPS(60);
     }
@@ -75,7 +77,9 @@ void PMRendererTypography::update()
 {
     PMBaseRenderer::update();
 
-    uint64_t maxAge = canvasTypoRenderer->getMaxAge() * 1000.0f;
+    PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
+
+    uint64_t maxAge = myGUI->getMaxAge() * 1000.0f;
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
     {
@@ -85,7 +89,7 @@ void PMRendererTypography::update()
         activeLetters.erase(letterIt++);
     }
     
-    box2d.setGravity(canvasTypoRenderer->getGravityX(), canvasTypoRenderer->getGravityY());
+    box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
 
     box2d.update();
 }
@@ -121,8 +125,9 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[0], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
+            PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
+//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, myGUI));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[0], letterSize, letterYVelocity, &box2d, myGUI));
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();
@@ -188,8 +193,6 @@ void PMRendererTypography::buildCharsetFromPoem() {
                         charset += ofToString(*it);
                 }
             }
-
-            int a = 0;
         }
         ++iter;
     }
