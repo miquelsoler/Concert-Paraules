@@ -7,8 +7,8 @@
 #include "PMSettingsManagerPoem.h"
 
 //static const string DEFAULT_CHARSET = "?";
-//static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-static const string DEFAULT_CHARSET = "aeiouAEIOU";
+static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
 PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
 {
@@ -161,6 +161,7 @@ void PMRendererTypography::buildCharsetFromPoem() {
         if (!(*iter).empty())
         {
             string line = (*iter);
+//            cout << line << endl;
             ofStringReplace(line, ",", " "); ofStringReplace(line, ";", " ");
             ofStringReplace(line, ":", " "); ofStringReplace(line, ".", " ");
             ofStringReplace(line, "-", " "); ofStringReplace(line, "!", " ");
@@ -168,12 +169,16 @@ void PMRendererTypography::buildCharsetFromPoem() {
             vector<string> words = ofSplitString(line, " ", true, true);
             for (int i = 0; i < words.size(); ++i) {
                 string word = words[i];
-                for (int j = 0; j < word.length(); ++j) {
-                    bool found = ofIsStringInString(charset, ofToString(word[j]));
+                string::iterator it;
+                for (it = word.begin(); it != word.end(); ++it) {
+//                for (int j = 0; j < word.length(); ++j) {
+                    bool found = ofIsStringInString(charset, ofToString(*it));
                     if (!found)
-                        charset += word[j];
+                        charset += ofToString(*it);
                 }
             }
+
+            int a = 0;
         }
         ++iter;
     }
