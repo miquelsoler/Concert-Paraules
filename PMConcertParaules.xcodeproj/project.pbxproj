@@ -25,7 +25,7 @@
 		21476B98530422D39E95932C /* PMUICanvasPoem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 214763B03160CE58C1269ED3 /* PMUICanvasPoem.cpp */; };
 		21476C03F3159FCA3C12AA34 /* PMUICanvasAudioDevices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476EC00FDDF925C58938BA /* PMUICanvasAudioDevices.cpp */; };
 		21476CAD585FD81EA2FF6F70 /* PMUICanvasAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147696C46646BFD41AA7B75 /* PMUICanvasAudioAnalyzer.cpp */; };
-		21476D9840A4C65D1A2D8089 /* PMBrushContainer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */; };
+		21476D9840A4C65D1A2D8089 /* PMBrushContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.cpp */; };
 		21476F9BD440BBB91D5A320F /* PMBaseUICanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */; };
 		21A059755481CC0BF969FD2D /* keep_alive.c in Sources */ = {isa = PBXBuildFile; fileRef = A3528DDFF05B00283552455D /* keep_alive.c */; };
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
@@ -274,7 +274,7 @@
 		21476BA2454FD7F82CCA4E08 /* PMUICanvasBrushRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasBrushRenderer.h; sourceTree = "<group>"; };
 		21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseUICanvas.h; sourceTree = "<group>"; };
 		21476C64C75C50AC9AD53152 /* PMBrushContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBrushContainer.h; sourceTree = "<group>"; };
-		21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PMBrushContainer.mm; sourceTree = "<group>"; };
+		21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBrushContainer.cpp; sourceTree = "<group>"; };
 		21476CB87550A12AD2A89C57 /* PMUICanvasBrushRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasBrushRenderer.cpp; sourceTree = "<group>"; };
 		21476D196397DEF54E6819D8 /* PMUICanvasRenderers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasRenderers.h; sourceTree = "<group>"; };
 		21476D535BA7C195477469B1 /* PMRendererTypography.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererTypography.cpp; sourceTree = "<group>"; };
@@ -747,7 +747,7 @@
 			children = (
 				21476AC8B8140E710FA97F11 /* PMRendererPaintbrush.cpp */,
 				21476D68C66406FA677D7373 /* PMRendererPaintbrush.h */,
-				21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.mm */,
+				21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.cpp */,
 				21476C64C75C50AC9AD53152 /* PMBrushContainer.h */,
 				9F2A3EED1C039F6400048315 /* PMParticle.cpp */,
 				9F2A3EEE1C039F6400048315 /* PMParticle.h */,
@@ -1937,7 +1937,7 @@
 				21476431C6D692F56AE1EA6E /* PMRendererPaintbrush.cpp in Sources */,
 				2AE049041C030E97009C99AF /* b2EdgeAndPolygonContact.cpp in Sources */,
 				2AE048EF1C030E97009C99AF /* b2CircleShape.cpp in Sources */,
-				21476D9840A4C65D1A2D8089 /* PMBrushContainer.mm in Sources */,
+				21476D9840A4C65D1A2D8089 /* PMBrushContainer.cpp in Sources */,
 				21476AF18555D7854FD53E24 /* PMRendererTypography.cpp in Sources */,
 				21476136EA2BE70554D5B79C /* PMRendererColor.cpp in Sources */,
 				2AE049111C030E97009C99AF /* b2WeldJoint.cpp in Sources */,
@@ -2274,7 +2274,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};
