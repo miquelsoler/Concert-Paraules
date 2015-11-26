@@ -64,16 +64,10 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 
     if (ofIsStringInString(name, STR_PRESETS))
     {
-        // Preset load/save
-        int presetNumber = getActivePreset();
-        if (presetNumber == -1) return;
-
-        string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
-
         switch(presetsMode)
         {
-            case RENDERER_PRESET_LOAD: loadSettings(presetPath); break;
-            case RENDERER_PRESET_SAVE: saveSettings(presetPath); break;
+            case RENDERER_PRESET_LOAD: loadPreset(getActivePreset()); break;
+            case RENDERER_PRESET_SAVE: savePreset(getActivePreset()); break;
         }
     }
     else
@@ -169,6 +163,12 @@ void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
 {
     string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
+}
+
+void PMUICanvasBaseRenderer::savePreset(int presetNumber)
+{
+    string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
+    saveSettings(presetPath);
 }
 
 int PMUICanvasBaseRenderer::getActivePreset()
