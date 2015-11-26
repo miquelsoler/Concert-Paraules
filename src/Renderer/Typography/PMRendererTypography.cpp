@@ -26,7 +26,7 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 
     // Font preload
     {
-        string fontName = "5inq_-_Handserif.ttf";
+        string fontName = "GaramondPremrPro.otf";
         string fontPath = "fonts/" + fontName;
 
         for (int i=0; i<charset.size(); ++i)

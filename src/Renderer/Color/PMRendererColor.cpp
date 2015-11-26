@@ -110,6 +110,11 @@ PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDER
     /// GUI
     guiBaseRenderer = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
     guiBaseRenderer->init(100, 500, 200, 300);
+    
+    // NEW STUFF
+    drawingHorizontal = true;
+    drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
+    drawingPos = ofRandomuf()*ofGetHeight();
 }
 
 //--------------------------------------------------------------
@@ -117,6 +122,8 @@ void PMRendererColor::setup()
 {
     PMBaseRenderer::setup();
     
+    ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
+
     canvasColorRenderer = dynamic_cast<PMUICanvasColorRenderer *> (guiBaseRenderer);
     
     scanX = 0.0;
@@ -129,11 +136,64 @@ void PMRendererColor::update()
     PMBaseRenderer::update();
     
     //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
-    scanX = scanX + canvasColorRenderer->getScanSpeedX();
-
-    if(scanX > ofGetWidth())
+    scanX = scanX + int(canvasColorRenderer->getScanSpeedX()) + int(canvasColorRenderer->getScanWidth()) -1 ;
+    
+    if(drawingHorizontal)
     {
-        scanX = ofGetWidth() - scanX;
+        if(scanX > ofGetWidth())
+        {
+            scanX = 0;
+            float luck = ofRandomf();
+            bool doTurn;
+            if(luck>=0.0) doTurn = true;
+            else doTurn = false;
+            
+            
+            if (doTurn)
+            {
+                cout << "do TURN" << endl;
+                drawingHorizontal=false;
+                // change direction
+                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
+                drawingPos = ofRandomuf()*ofGetWidth();
+            }
+            else
+            {
+                // change direction
+                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
+                drawingPos = ofRandomuf()*ofGetHeight();
+            }
+            
+        }
+    }
+    else
+    {
+        // we're drawing vertical
+        if(scanX > ofGetHeight())
+        {
+            scanX = 0;
+            
+            bool doTurn;
+            if(ofRandomf()>=0.0) doTurn = true;
+            else doTurn = false;
+            
+            if (doTurn)
+            {
+                // change direction
+                drawingHorizontal = true;
+                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
+                drawingPos = ofRandomuf()*ofGetHeight();
+            }
+            else
+            {
+                // change direction
+                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
+                drawingPos = ofRandomuf()*ofGetWidth();
+            }
+
+            
+
+        }
     }
 }
 
@@ -228,8 +288,28 @@ void PMRendererColor::drawIntoFBO()
                 
                 break;
             }
+            case 5 :
+            {
+                // color
+                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofSetColor(c);
                 
+                // shape
+                ofSetRectMode(OF_RECTMODE_CENTER);
+                if(drawingHorizontal)
+                {
+                    ofDrawRectangle(scanX,drawingPos,canvasColorRenderer->getScanWidth(), drawingHeight);
+                }
+                else
+                {
+                    ofDrawRectangle(drawingPos,scanX,drawingHeight,canvasColorRenderer->getScanWidth());
+                }
+                ofSetRectMode(OF_RECTMODE_CORNER);
                 
+                cout << "scanX : " << scanX << " // pos " << drawingPos << "Height " << drawingHeight << endl;
+                
+                break;
+            }
             default:
                 break;
         }
@@ -258,5 +338,16 @@ void PMRendererColor::setEnergy(float e)
 {
     energy = e;
 }
+
+
+void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
+{
+    cout << eventArgs.key << endl;
+
+    if (eventArgs.key == 'q')
+    {
+    }
+}
+
 
 

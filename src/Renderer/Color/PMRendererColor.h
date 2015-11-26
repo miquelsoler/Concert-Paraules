@@ -27,6 +27,8 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
     
+    void keyPressed ( ofKeyEventArgs& eventArgs );
+
     ///-
     void setPitch(float p);
     void setEnergy(float e);
@@ -53,6 +55,11 @@ private:
 
     /// mode 2
     float   scanX;
+    
+    /// NEW STUFF
+    bool        drawingHorizontal;
+    float       drawingHeight;
+    float       drawingPos;
     
     
     

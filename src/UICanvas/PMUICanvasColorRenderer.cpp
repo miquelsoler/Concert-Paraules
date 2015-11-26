@@ -16,7 +16,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     gradientImage.load("./gradients/test4x_v1.png");
     
     addSpacer();
-    addIntSlider("Mode",1,4,&guiMode);
+    addIntSlider("Mode",1,10,&guiMode);
 
     addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
     addSlider("Scan With",0.0,150.0,&guiScanWidth);
