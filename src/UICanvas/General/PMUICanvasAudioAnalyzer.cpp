@@ -95,9 +95,6 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             addSpacer();
             ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
         }
-        
-        
-        
     }
 
     if (autosize) autoSizeToFitWidgets();

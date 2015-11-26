@@ -22,12 +22,16 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
 
+    setTriggerWidgetsUponLoad(false);
+
     setBackgroundColor(ofColor(0,20,40,128));
 
     addLabel(STR_PRESETS);
+    addLabel(STR_PRESETS_INFO, OFX_UI_FONT_SMALL);
     setGlobalButtonDimension(32);
     presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS);
     presetsMatrix->setAllowMultiple(false);
+    presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
     addSpacer();
 
     addLabelButton("Save to default",false);
@@ -62,16 +66,12 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
         int presetNumber = getActivePreset();
         if (presetNumber == -1) return;
 
-        string presetFilename = "audioSettings" + ofToString(presetNumber) + ".xml";
+        string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
 
         switch(presetsMode)
         {
-            case RENDERER_PRESET_LOAD:
-                loadSettings(STR_CANVAS_BASEPATH + presetFilename);
-                break;
-            case RENDERER_PRESET_SAVE:
-                saveSettings(STR_CANVAS_BASEPATH + presetFilename);
-                break;
+            case RENDERER_PRESET_LOAD: loadSettings(presetPath); break;
+            case RENDERER_PRESET_SAVE: saveSettings(presetPath); break;
         }
     }
     else
@@ -190,4 +190,16 @@ int PMUICanvasBaseRenderer::getActivePreset()
     if (!found) return -1;
 
     return (row * PRESETSMATRIX_NUMCOLS) + col;
+}
+
+void PMUICanvasBaseRenderer::keyPressed(int key)
+{
+    if (key != OF_KEY_SHIFT) return;
+    presetsMode = RENDERER_PRESET_SAVE;
+}
+
+void PMUICanvasBaseRenderer::keyReleased(int key)
+{
+    if (key != OF_KEY_SHIFT) return;
+    presetsMode = RENDERER_PRESET_LOAD;
 }

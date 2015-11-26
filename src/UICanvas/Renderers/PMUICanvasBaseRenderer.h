@@ -61,6 +61,9 @@ private:
     float                   guiDeltaPitch;
     float                   guiDeltaEnergy;
 
+    void            keyPressed(int key);
+    void            keyReleased(int key);
+
     int             getActivePreset();
 };
 
