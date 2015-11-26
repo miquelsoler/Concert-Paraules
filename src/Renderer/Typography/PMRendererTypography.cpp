@@ -20,8 +20,6 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         gui->init(100, 500, 200, 300);
 
         ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
-
-//        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(gui);
     }
 
     // Font preload

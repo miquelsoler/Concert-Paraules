@@ -124,19 +124,19 @@ void PMRendererColor::setup()
     
     ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
 
-    canvasColorRenderer = dynamic_cast<PMUICanvasColorRenderer *> (gui);
-    
     scanX = 0.0;
-
 }
 
 //--------------------------------------------------------------
 void PMRendererColor::update()
 {
     PMBaseRenderer::update();
-    
+
+    PMUICanvasColorRenderer *myGUI = (PMUICanvasColorRenderer *)gui;
+
+
     //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
-    scanX = scanX + int(canvasColorRenderer->getScanSpeedX()) + int(canvasColorRenderer->getScanWidth()) -1 ;
+    scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
     
     if(drawingHorizontal)
     {
@@ -200,19 +200,21 @@ void PMRendererColor::update()
 //--------------------------------------------------------------
 void PMRendererColor::drawIntoFBO()
 {
+    PMUICanvasColorRenderer *myGUI = (PMUICanvasColorRenderer *)gui;
+
     fbo.begin();
     {
         // SMOOTHING AUDIO SHIT
-        float deltaPitch = canvasColorRenderer->getDeltaPitch();
-        float deltaEnergy = canvasColorRenderer->getDeltaEnergy();
+        float deltaPitch = myGUI->getDeltaPitch();
+        float deltaEnergy = myGUI->getDeltaEnergy();
 
         float pitchSmooth = (deltaPitch)*pitch + (1.0-deltaPitch)*oldPitch;
         float energySmooth = (deltaEnergy)*energy + (1.0-deltaEnergy)*oldEnergy;
 
-        canvasColorRenderer->setSmoothEnergy(energySmooth);
-        canvasColorRenderer->setSmoothPitch(pitchSmooth);
+        myGUI->setSmoothEnergy(energySmooth);
+        myGUI->setSmoothPitch(pitchSmooth);
         
-        switch (canvasColorRenderer->getMode())
+        switch (myGUI->getMode())
         {
             case 1 :
             {
@@ -227,7 +229,7 @@ void PMRendererColor::drawIntoFBO()
                 ofVec3f vcol = lab2rgb(pitchL,pitchA,pitchB);
                 ofSetColor(vcol.x , vcol.y , vcol.z ,255);
                 
-                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofColor c = myGUI->getGradientColor(myGUI->getGradientId(),pitchSmooth);
                 c.a = 255.0 * energySmooth;
                 ofSetColor(c);
                 
@@ -247,10 +249,10 @@ void PMRendererColor::drawIntoFBO()
                 pitchB = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
                 
                 // convert from lab to rgb
-                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofColor c = myGUI->getGradientColor(myGUI->getGradientId(),pitchSmooth);
                 ofSetColor(c);
 
-                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(),(energySmooth) * ofGetHeight());
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,myGUI->getScanWidth(),(energySmooth) * ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
                 
@@ -267,10 +269,10 @@ void PMRendererColor::drawIntoFBO()
                 pitchB = ofMap(pitchSmooth,0.0,0.5,-128.0,128.0,true);
                 
                 // convert from lab to rgb
-                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofColor c = myGUI->getGradientColor(myGUI->getGradientId(),pitchSmooth);
                 ofSetColor(c);
 
-                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(), ofGetHeight());
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,myGUI->getScanWidth(), ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
                 
@@ -279,10 +281,10 @@ void PMRendererColor::drawIntoFBO()
             case 4 :
             {
                 ofSetRectMode(OF_RECTMODE_CENTER);
-                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofColor c = myGUI->getGradientColor(myGUI->getGradientId(),pitchSmooth);
                 c.a = 255.0 * energySmooth;
                 ofSetColor(c);
-                ofDrawRectangle(scanX,fbo.getHeight()/2.0,canvasColorRenderer->getScanWidth(), ofGetHeight());
+                ofDrawRectangle(scanX,fbo.getHeight()/2.0,myGUI->getScanWidth(), ofGetHeight());
                 
                 ofSetRectMode(OF_RECTMODE_CORNER);
                 
@@ -291,22 +293,22 @@ void PMRendererColor::drawIntoFBO()
             case 5 :
             {
                 // color
-                ofColor c = canvasColorRenderer->getGradientColor(canvasColorRenderer->getGradientId(),pitchSmooth);
+                ofColor c = myGUI->getGradientColor(myGUI->getGradientId(),pitchSmooth);
                 ofSetColor(c);
                 
                 // shape
                 ofSetRectMode(OF_RECTMODE_CENTER);
                 if(drawingHorizontal)
                 {
-                    ofDrawRectangle(scanX,drawingPos,canvasColorRenderer->getScanWidth(), drawingHeight);
+                    ofDrawRectangle(scanX,drawingPos,myGUI->getScanWidth(), drawingHeight);
                 }
                 else
                 {
-                    ofDrawRectangle(drawingPos,scanX,drawingHeight,canvasColorRenderer->getScanWidth());
+                    ofDrawRectangle(drawingPos,scanX,drawingHeight,myGUI->getScanWidth());
                 }
                 ofSetRectMode(OF_RECTMODE_CORNER);
                 
-                cout << "scanX : " << scanX << " // pos " << drawingPos << "Height " << drawingHeight << endl;
+//                cout << "scanX : " << scanX << " // pos " << drawingPos << "Height " << drawingHeight << endl;
                 
                 break;
             }

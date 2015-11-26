@@ -35,8 +35,6 @@ public:
     
 private:
     
-    PMUICanvasColorRenderer* canvasColorRenderer;
-    
     int     mode;
     float   dimmBackground;
     float   dimmSpeed;
