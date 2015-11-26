@@ -27,26 +27,12 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         string fontName = "GaramondPremrPro.otf";
         string fontPath = "fonts/" + fontName;
 
-//        for (int i=0; i<charset.size(); ++i)
-//        {
-//            ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-//            letterFont->load(fontPath, 200,
-//                             true, // antialiased
-//                             true, // full character set
-//                             true // make contours
-//                             );
-//            fontCharset.push_back(letterFont);
-//        }
-        for (int i=0; i<1; ++i)
-        {
-            ofTrueTypeFont *letterFont = new ofTrueTypeFont();
-            letterFont->load(fontPath, 200,
-                    true, // antialiased
-                    true, // full character set
-                    true // make contours
-            );
-            fontCharset.push_back(letterFont);
-        }
+        font = new ofTrueTypeFont();
+        font->load(fontPath, 200,
+                true, // antialiased
+                true, // full character set
+                true // make contours
+        );
     }
 
     letterSize = 1.0;
@@ -124,8 +110,8 @@ void PMRendererTypography::addLetter()
         mutexActiveLetters.lock();
         {
             PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
-//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, myGUI));
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[0], letterSize, letterYVelocity, &box2d, myGUI));
+//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();

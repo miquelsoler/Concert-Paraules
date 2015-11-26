@@ -36,7 +36,7 @@ public:
 private:
 
     string                                  charset;
-    vector<ofTrueTypeFont *>                fontCharset;
+    ofTrueTypeFont *                        font;
     list<shared_ptr<PMLetterContainer>>     activeLetters;
 
     float                                   letterSize;
@@ -48,7 +48,6 @@ private:
     mutex                                   mutexAddLetter;
 
     void buildCharsetFromPoem();
-
 };
 
 
