@@ -16,12 +16,12 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
 
     // GUI
     {
-        guiBaseRenderer = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
-        guiBaseRenderer->init(100, 500, 200, 300);
+        gui = new PMUICanvasTypoRenderer("TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
+        gui->init(100, 500, 200, 300);
 
         ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
 
-        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(guiBaseRenderer);
+        canvasTypoRenderer = dynamic_cast<PMUICanvasTypoRenderer *>(gui);
     }
 
     // Font preload
@@ -29,14 +29,24 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         string fontName = "GaramondPremrPro.otf";
         string fontPath = "fonts/" + fontName;
 
-        for (int i=0; i<charset.size(); ++i)
+//        for (int i=0; i<charset.size(); ++i)
+//        {
+//            ofTrueTypeFont *letterFont = new ofTrueTypeFont();
+//            letterFont->load(fontPath, 200,
+//                             true, // antialiased
+//                             true, // full character set
+//                             true // make contours
+//                             );
+//            fontCharset.push_back(letterFont);
+//        }
+        for (int i=0; i<1; ++i)
         {
             ofTrueTypeFont *letterFont = new ofTrueTypeFont();
             letterFont->load(fontPath, 200,
-                             true, // antialiased
-                             true, // full character set
-                             true // make contours
-                             );
+                    true, // antialiased
+                    true, // full character set
+                    true // make contours
+            );
             fontCharset.push_back(letterFont);
         }
     }
@@ -111,7 +121,8 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
+//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[iLetter], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
+            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), fontCharset[0], letterSize, letterYVelocity, &box2d, canvasTypoRenderer));
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();

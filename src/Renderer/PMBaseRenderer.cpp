@@ -14,8 +14,8 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
     
     
     /// GUI
-//    guiBaseRenderer = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
-//    guiBaseRenderer->init(100, 500, 200, 300);
+//    gui = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
+//    gui->init(100, 500, 200, 300);
 }
 
 void PMBaseRenderer::setup()
@@ -38,8 +38,8 @@ void PMBaseRenderer::update()
     fbo.begin();
     {
         // background dimming
-        ofFloatColor fc = ofFloatColor(0.0,0.0,0.0,guiBaseRenderer->getFadeBackground());
-        //ofFloatColor fc = ofFloatColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,guiBaseRenderer->getFadeBackground());
+        ofFloatColor fc = ofFloatColor(0.0,0.0,0.0, gui->getFadeBackground());
+        //ofFloatColor fc = ofFloatColor(gui->getColorBackground().r,gui->getColorBackground().g,gui->getColorBackground().b,gui->getFadeBackground());
         ofSetColor(fc);
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -62,14 +62,14 @@ void PMBaseRenderer::draw()
 //    fbo.draw(0, 0);
 
     // set background for base renderer
-    ofColor c = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
+    ofColor c = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b,255);
     ofClear(c);
     
     // draw the fbo with contents to screen
     fbo.draw(0, 0);
     
     // draw gui of base renderer
-    //guiBaseRenderer->draw();
+    //gui->draw();
 }
 
 bool PMBaseRenderer::getNeedsToBeCleared()
@@ -100,5 +100,5 @@ void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 
 void PMBaseRenderer::showGUI(bool show)
 {
-    guiBaseRenderer->setVisible(show);
+    gui->setVisible(show);
 }

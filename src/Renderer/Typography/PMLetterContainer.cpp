@@ -16,8 +16,8 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float
     float posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
     float posY = 1;
 
-    float normalizedPosX = posX / ofGetWidth();
-    float normalizedPosY = posY / ofGetHeight();
+//    float normalizedPosX = posX / ofGetWidth();
+//    float normalizedPosY = posY / ofGetHeight();
 
     letterSize = ofMap(_letterSize, 0.1, 1.0, gui->getMinSize(), gui->getMaxSize(), true);
 

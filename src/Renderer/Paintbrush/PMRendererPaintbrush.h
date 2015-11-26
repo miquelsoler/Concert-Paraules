@@ -35,7 +35,7 @@ public:
 
 private:
 
-    PMUICanvasBrushRenderer* canvasBrushRenderer;
+//    PMUICanvasBrushRenderer* canvasBrushRenderer;
 
     vector<PMBrushContainer *> brushes;
     

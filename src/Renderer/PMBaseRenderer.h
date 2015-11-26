@@ -43,16 +43,16 @@ public:
 
 protected:
 
-    PMRendererType  type;
+    PMRendererType          type;
 
-    unsigned int    numInputs;  // Number of microphones
-    vector<bool>    isActive;   // Enable/disable painting per input
+    unsigned int            numInputs;  // Number of microphones
+    vector<bool>            isActive;   // Enable/disable painting per input
 
-    ofFbo           fbo;
+    ofFbo                   fbo;
 
-    PMUICanvasBaseRenderer*  guiBaseRenderer;
+    PMUICanvasBaseRenderer* gui;
     
-    bool            needsToBeCleared;
+    bool                    needsToBeCleared;
 };
 
 

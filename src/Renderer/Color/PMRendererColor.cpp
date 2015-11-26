@@ -108,8 +108,8 @@ PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDER
     scanWidth = 3;
 
     /// GUI
-    guiBaseRenderer = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
-    guiBaseRenderer->init(100, 500, 200, 300);
+    gui = new PMUICanvasColorRenderer("COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
+    gui->init(100, 500, 200, 300);
     
     // NEW STUFF
     drawingHorizontal = true;
@@ -124,7 +124,7 @@ void PMRendererColor::setup()
     
     ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
 
-    canvasColorRenderer = dynamic_cast<PMUICanvasColorRenderer *> (guiBaseRenderer);
+    canvasColorRenderer = dynamic_cast<PMUICanvasColorRenderer *> (gui);
     
     scanX = 0.0;
 

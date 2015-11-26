@@ -28,7 +28,6 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     if (autosize) autoSizeToFitWidgets();
 
     loadPreset();
-
 }
 
 void PMUICanvasColorRenderer::clear()
@@ -42,8 +41,8 @@ void PMUICanvasColorRenderer::handleEvents(ofxUIEventArgs &e)
     PMUICanvasBaseRenderer::handleEvents(e);
     
     string name = e.getName();
-    int kind = e.getKind();
-    
+//    int kind = e.getKind();
+
     if(name=="Save to default")
     {
         savePreset();

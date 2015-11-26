@@ -17,26 +17,26 @@ PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRende
     }
     
     /// GUI
-    guiBaseRenderer = new PMUICanvasBrushRenderer("BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
-    guiBaseRenderer->init(100, 500, 200, 300);
+    gui = new PMUICanvasBrushRenderer("BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
+    gui->init(100, 500, 200, 300);
 }
 
 void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
-    
-     canvasBrushRenderer = dynamic_cast<PMUICanvasBrushRenderer *> (guiBaseRenderer);
 }
 
 void PMRendererPaintbrush::update()
 {
+    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
+
     for (int i=0; i<numInputs; ++i)
     {
         if (!isActive[i]) continue;
 
         brushes[i]->update();
-        brushes[i]->setBounceWalls(canvasBrushRenderer->getBouncyWalls());
-        brushes[i]->setColor(canvasBrushRenderer->getBrushColor());
+        brushes[i]->setBounceWalls(myGUI->getBouncyWalls());
+        brushes[i]->setColor(myGUI->getBrushColor());
     }
     PMBaseRenderer::update();
     
@@ -52,10 +52,10 @@ void PMRendererPaintbrush::update()
     
     for (int i=0; i<particles.size(); i++){
         particles[i].update();
-        particles[i].setVelocity(canvasBrushRenderer->getParticleVelocity());
-        particles[i].setLife(canvasBrushRenderer->getParticleLife());
-        particles[i].setBounceWalls(canvasBrushRenderer->getBouncyWalls());
-        particles[i].setColor(canvasBrushRenderer->getBrushColor());
+        particles[i].setVelocity(myGUI->getParticleVelocity());
+        particles[i].setLife(myGUI->getParticleLife());
+        particles[i].setBounceWalls(myGUI->getBouncyWalls());
+        particles[i].setColor(myGUI->getBrushColor());
     }
 }
 
@@ -63,45 +63,26 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-//        switch (canvasBrushRenderer->getMode()){
-//            case 1:
-//                ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-//                //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
-//                ofSetColor(fc);
-//                
-//                //        ofSetColor(255, 255, 255, 1);
-//                ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//                
-//                
-//                break;
-//            case 2:
-                ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,guiBaseRenderer->getFadeBackground());
-                //ofColor fc = ofColor(guiBaseRenderer->getColorBackground().r,guiBaseRenderer->getColorBackground().g,guiBaseRenderer->getColorBackground().b,255);
-                ofSetColor(fc);
-                
-                //        ofSetColor(255, 255, 255, 1);
-                ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-                
-                ofEnableBlendMode(OF_BLENDMODE_ADD);
-                
-                for (int i=0; i<numInputs; ++i)
-                {
-                    if (!isActive[i]) continue;
-                    
-//                    ofSetColor(tintColor);
-                    brushes[i]->draw();
-                }
-        
-                for (int i=0; i<particles.size(); i++){
-                    particles[i].draw();
-                }
-            
-                ofDisableBlendMode();
-//                break;
-//            default:
-//                break;
-//        }
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0, gui->getFadeBackground());
+        ofSetColor(fc);
 
+        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+
+        for (int i=0; i<numInputs; ++i)
+        {
+            if (!isActive[i]) continue;
+
+//                    ofSetColor(tintColor);
+            brushes[i]->draw();
+        }
+
+        for (int i=0; i<particles.size(); i++){
+            particles[i].draw();
+        }
+
+        ofDisableBlendMode();
     }
     fbo.end();
 
@@ -148,7 +129,9 @@ void PMRendererPaintbrush::vibrate(unsigned int inputIndex, float hasToVibrate)
 {
     if(hasToVibrate){
         for (int i=0; i<particles.size(); i++){
-            particles[i].setVelocity(ofRandom(canvasBrushRenderer->getParticleVelocity()-0.5, canvasBrushRenderer->getParticleVelocity()));
+            PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
+
+            particles[i].setVelocity(ofRandom(myGUI->getParticleVelocity()-0.5, myGUI->getParticleVelocity()));
         }
     }
 }

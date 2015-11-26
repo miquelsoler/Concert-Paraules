@@ -39,7 +39,6 @@ void PMUICanvasBaseRenderer::clear()
 void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
-    int kind = e.getKind();
     
     if(name=="Background R")
     {
