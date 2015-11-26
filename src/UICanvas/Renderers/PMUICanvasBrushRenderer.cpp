@@ -25,8 +25,8 @@ void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width,
     addToggle("Bouncy Walls", &bounceWalls);
     addSlider("Change Direction Curve", 0, 100, &directionFactor);
     if (autosize) autoSizeToFitWidgets();
-    loadPreset();
 
+    loadPreset(0);
 }
 
 void PMUICanvasBrushRenderer::clear()
@@ -40,12 +40,8 @@ void PMUICanvasBrushRenderer::handleEvents(ofxUIEventArgs &e)
     PMUICanvasBaseRenderer::handleEvents(e);
     
     string name = e.getName();
-    int kind = e.getKind();
-    
-    if(name=="Save to default")
-    {
-        savePreset();
-    }else if(name=="Brush R")
+
+    if(name=="Brush R")
     {
         ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
         paintColor.r = s->getValue();

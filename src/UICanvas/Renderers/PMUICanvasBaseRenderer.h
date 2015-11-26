@@ -30,8 +30,6 @@ public:
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
-    virtual void savePreset();
-    virtual void loadPreset();
 
     // GETTERS
     float           getFadeBackground();
@@ -42,7 +40,11 @@ public:
     // SETTERS
     void            setSmoothPitch(float _p);
     void            setSmoothEnergy(float _e);
-    
+
+protected:
+
+    void            loadPreset(int presetNumber = 0);
+
 private:
 
     PMUIRendererType        type;

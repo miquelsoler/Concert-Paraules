@@ -13,8 +13,6 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
     
     addSpacer();
-    addIntSlider("Mode", 1, 3, &guiMode);
-    addSpacer();
     addLabel("VELOCITY");
     addIntSlider("Min Velocity", 1, 10, &minVelocity);
     addIntSlider("Max Velocity", 10, 50, &maxVelocity);
@@ -28,13 +26,14 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSpacer();
     addLabel("LETTER MAX AGE");
     addIntSlider("Max Age (s)", 1, 300, &maxAge);
+    addSpacer();
     addLabel("GRAVITY");
     addSlider("Gravity X", -50, 50, &gravityX);
     addSlider("Gravity Y", -50, 50, &gravityY);
 
     if (autosize) autoSizeToFitWidgets();
 
-    loadPreset();
+    loadPreset(0);
 }
 
 void PMUICanvasTypoRenderer::clear()
@@ -48,11 +47,4 @@ void PMUICanvasTypoRenderer::handleEvents(ofxUIEventArgs &e)
     PMUICanvasBaseRenderer::handleEvents(e);
     
     string name = e.getName();
-    int kind = e.getKind();
-    
-    if(name=="Save to default")
-    {
-        savePreset();
-    }
-
 }

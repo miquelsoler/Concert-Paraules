@@ -33,16 +33,18 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     presetsMatrix->setAllowMultiple(false);
     presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
     addSpacer();
-
-    addLabelButton("Save to default",false);
+    addLabel("BACKGROUND");
     addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
     addIntSlider("Background R",0,255,255);
     addIntSlider("Background G",0,255,255);
     addIntSlider("Background B",0,255,255);
     addSpacer();
+    addLabel("ENERGY");
     addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
-    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
     addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
+    addSpacer();
+    addLabel("PITCH");
+    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
     addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
 
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
@@ -144,18 +146,6 @@ ofColor PMUICanvasBaseRenderer::getColorBackground()
     return guiColorBackground;
 }
 
-void PMUICanvasBaseRenderer::savePreset()
-{
-    saveSettings(ofFilePath::getAbsolutePath("presets")+"/" +title +"/default.xml");
-    cout << "Saving Preset to : " << ofToString("presets")+"/" +title +"/default.xml)" << endl;
-}
-void PMUICanvasBaseRenderer::loadPreset()
-{
-    loadSettings(ofFilePath::getAbsolutePath("presets")+"/" +title +"/default.xml");
-    cout << "Loading Preset from : " << ofToString("presets")+"/" +title +"/default.xml)" << endl;
-}
-
-
 float PMUICanvasBaseRenderer::getDeltaPitch()
 {
     return guiDeltaPitch;
@@ -173,6 +163,12 @@ void PMUICanvasBaseRenderer::setSmoothPitch(float _p)
 void PMUICanvasBaseRenderer::setSmoothEnergy(float _e)
 {
     guiSmoothEnergy = _e;
+}
+
+void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
+{
+    string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
+    loadSettings(presetPath);
 }
 
 int PMUICanvasBaseRenderer::getActivePreset()
