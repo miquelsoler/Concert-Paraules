@@ -84,11 +84,8 @@ void PMRendererTypography::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0,1.0);
-        ofSetColor(fc);
-        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
+        ofClear(fc);
 
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
         mutexActiveLetters.lock();
@@ -97,8 +94,6 @@ void PMRendererTypography::drawIntoFBO()
                 (*letterIt).get()->draw();
         }
         mutexActiveLetters.unlock();
-
-        ofDisableBlendMode();
     }
     fbo.end();
 }
