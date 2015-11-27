@@ -50,7 +50,6 @@ bool PMSettingsManagerAudioDevices::load(string filename)
 
 void PMSettingsManagerAudioDevices::createJSONSettings()
 {
-    // TODO: Does it work?
     if (fileExists(FILENAME))
     {
         ofFile file(filename);

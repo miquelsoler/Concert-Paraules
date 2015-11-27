@@ -356,10 +356,12 @@ void PMScene2::energyChanged(energyParams &energyParams)
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
+            // FIXME: A l'Eloi li peta.
             // Peta
-//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-//            float normalizedSize = energy;
-//            typoRenderer->setLetterSize(normalizedSize);
+            // Miquel: ... a mi no ...
+            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+            float normalizedSize = energy;
+            typoRenderer->setLetterSize(normalizedSize);
             break;
         }
         default: break;
@@ -429,7 +431,8 @@ void PMScene2::shtDetected(shtParams &shtParams)
 //--------------------------------------------------------------------------------------------------
 void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
 {
-    switch (renderer->getType()) {
+    switch (renderer->getType())
+    {
         case RENDERERTYPE_PAINTBRUSH:
         {
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;

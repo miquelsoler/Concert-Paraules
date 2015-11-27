@@ -171,6 +171,16 @@ void PMUICanvasBaseRenderer::keyPressed(int key)
 //--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::keyReleased(int key)
 {
-    if (key != OF_KEY_SHIFT) return;
-    presetsMode = RENDERER_PRESET_LOAD;
+    if (key == OF_KEY_SHIFT) {
+        presetsMode = RENDERER_PRESET_LOAD;
+        return;
+    }
+
+    int firstAsciiCode = (int)'1';
+    int lastAsciiCode = (int)'9';
+
+    if ((key < firstAsciiCode) || (key > lastAsciiCode))
+        return;
+
+    loadPreset(key - firstAsciiCode);
 }

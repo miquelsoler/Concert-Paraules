@@ -49,7 +49,6 @@ public:
     virtual void silenceStateChanged(silenceParams &silenceParams);
     virtual void pauseStateChanged(pauseParams &pauseParams);
 
-
 protected:
 
     PMRendererType          type;

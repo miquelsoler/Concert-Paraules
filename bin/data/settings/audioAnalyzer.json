@@ -1,7 +1,7 @@
 {
    "Energy" : {
-      "Max Energy" : 0.1477832496166229,
-      "Min Energy" : 0.009999999776482582
+      "Max Energy" : 0.2955664992332458,
+      "Min Energy" : 0.04926108196377754
    },
    "Mel Bands" : {
       "Enabled" : true,
@@ -14,7 +14,7 @@
    "Pitch" : {
       "Ascending Descending Analysis Size" : 20,
       "Max MIDI Note" : 60.59113311767578,
-      "Min MIDI Note" : 56.65024566650391
+      "Min MIDI Note" : 34.97537231445312
    },
    "Silence" : {
       "Enabled" : true,

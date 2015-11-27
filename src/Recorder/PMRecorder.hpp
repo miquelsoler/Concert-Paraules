@@ -28,22 +28,22 @@ public:
     void addVideoFrame();
     void addAudioBuffer(float *input, int bufferSize, int nChannels);
     void exit();
-    
+
     void startRecording();
     void stopRecording();
     void discardRecording();
     bool isRecording();
-    
+
 private:
-    ofxVideoRecorder    vidRecorder;
+    ofxVideoRecorder vidRecorder;
     bool bRecording;
     string fileName;
     string fileExt;
     string filePath; //Where the file will be created
     string lastFileNameGenerated;
-    
-    void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args);
-    
+
+    void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs &args);
+
     int sampleRate;
     int channels;
     ofFbo *fbo;

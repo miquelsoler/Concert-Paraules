@@ -30,8 +30,6 @@ void PMBaseRenderer::setup()
     fbo.end();
 
     isActive.assign(numInputs, true); // Init all elements with false; FIXME: is it to false or true?
-
-//    ofSetBackgroundAuto(false);
 }
 
 void PMBaseRenderer::update()
