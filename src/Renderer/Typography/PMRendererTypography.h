@@ -20,7 +20,7 @@ class PMRendererTypography : public PMBaseRenderer
 {
 public:
 
-    PMRendererTypography(unsigned int numInputs);
+    PMRendererTypography();
 
     virtual void setup();
     virtual void update();

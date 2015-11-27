@@ -23,7 +23,7 @@ class PMBaseRenderer
 {
 public:
 
-    PMBaseRenderer(PMRendererType type, unsigned int numInputs);
+    PMBaseRenderer(PMRendererType type);
 
     virtual void setup();
     virtual void update();
@@ -33,7 +33,8 @@ public:
     virtual void drawIntoFBO() = 0;
 
     // SETTERS
-    void setShouldPaint(unsigned int inputIndex, bool shouldPaint);
+    void setEnabled(bool _enabled) { enabled = _enabled; };
+    void setPaused(bool _paused) { paused = _paused; };
     void setNeedsToBeCleared(bool _b);
     
     // GETTERS
@@ -53,8 +54,8 @@ protected:
 
     PMRendererType          type;
 
-    unsigned int            numInputs;  // Number of microphones
-    vector<bool>            isActive;   // Enable/disable painting per input
+    bool                    enabled;    // Manual enabled/disable of renderer
+    bool                    paused;     // During a pause/silence, ignore audio events
 
     ofFbo                   fbo;
 

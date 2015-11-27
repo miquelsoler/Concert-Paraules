@@ -7,16 +7,13 @@
 //static ofColor tintColor = ofColor(200, 200, 0, 255);
 
 //------------------------------------------------------------------------------------------
-PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
+//PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
+PMRendererPaintbrush::PMRendererPaintbrush() : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH)
 {
-    for (int i=0; i<numInputs; ++i)
-    {
-        PMBrushContainer *brush = new PMBrushContainer("brushes/pinzell2.png");
-        brush->setOrigin(PMBrushContainerOrigin(i % NUM_ORIGINS));
-        brush->setSize(1);
-        brushes.push_back(brush);
-    }
-    
+    brush = new PMBrushContainer("brushes/pinzell2.png");
+    brush->setOrigin(PMBrushContainerOrigin(LEFT));
+    brush->setSize(1);
+
     /// GUI
     gui = new PMUICanvasBrushRenderer(UI_RENDERERTYPE_PAINTBRUSH, "BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
     gui->init(100, 500, 200, 300);
@@ -31,34 +28,33 @@ void PMRendererPaintbrush::setup()
 //------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::update()
 {
-    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
+    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *) gui;
 
-    for (int i=0; i<numInputs; ++i)
+    if (enabled)
     {
-        if (!isActive[i]) continue;
+        brush->update();
+        brush->setBounceWalls(myGUI->getBouncyWalls());
+        brush->setColor(myGUI->getBrushColor());
 
-        brushes[i]->update();
-        brushes[i]->setBounceWalls(myGUI->getBouncyWalls());
-        brushes[i]->setColor(myGUI->getBrushColor());
-    }
-    PMBaseRenderer::update();
-    
-    if(particles.size()==0){
-        particles.push_back(PMParticle(brushes[0]->getPosition(), ofPoint(0,0), brushes[0]->getImage()));
-    }else{
-        particles.push_back(PMParticle(brushes[0]->getPosition(), particles[particles.size()-1].getPosition(), brushes[0]->getImage()));
-    }
-    
-    if(particles.at(0).isDead()){
-        particles.pop_front();
-    }
-    
-    for (int i=0; i<particles.size(); i++){
-        particles[i].update();
-        particles[i].setVelocity(myGUI->getParticleVelocity());
-        particles[i].setLife(myGUI->getParticleLife());
-        particles[i].setBounceWalls(myGUI->getBouncyWalls());
-        particles[i].setColor(myGUI->getBrushColor());
+        PMBaseRenderer::update();
+
+        if (particles.size() == 0) {
+            particles.push_back(PMParticle(brush->getPosition(), ofPoint(0, 0), brush->getImage()));
+        } else {
+            particles.push_back(PMParticle(brush->getPosition(), particles[particles.size() - 1].getPosition(), brush->getImage()));
+        }
+
+        if (particles.at(0).isDead()) {
+            particles.pop_front();
+        }
+
+        for (int i = 0; i < particles.size(); i++) {
+            particles[i].update();
+            particles[i].setVelocity(myGUI->getParticleVelocity());
+            particles[i].setLife(myGUI->getParticleLife());
+            particles[i].setBounceWalls(myGUI->getBouncyWalls());
+            particles[i].setColor(myGUI->getBrushColor());
+        }
     }
 }
 
@@ -74,13 +70,8 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         ofEnableBlendMode(OF_BLENDMODE_ADD);
 
-        for (int i=0; i<numInputs; ++i)
-        {
-            if (!isActive[i]) continue;
-
-//                    ofSetColor(tintColor);
-            brushes[i]->draw();
-        }
+        if (enabled)
+            brush->draw();
 
         for (int i=0; i<particles.size(); i++){
             particles[i].draw();
@@ -94,50 +85,50 @@ void PMRendererPaintbrush::drawIntoFBO()
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::changeBaseAngle(unsigned int inputIndex)
+void PMRendererPaintbrush::changeBaseAngle()
 {
-    brushes[inputIndex]->changeBaseAngle();
+    brush->changeBaseAngle();
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::setOffset(unsigned int inputIndex, float offset)
+void PMRendererPaintbrush::setOffset(float offset)
 {
-    brushes[inputIndex]->setOffset(offset);
+    brush->setOffset(offset);
 }
 
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)
+void PMRendererPaintbrush::setPosition(float normalizedX, float normalizedY)
 {
-    brushes[inputIndex]->setPosition(normalizedX, normalizedY);
+    brush->setPosition(normalizedX, normalizedY);
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::setPositionX(unsigned int inputIndex, float normalizedX)
+void PMRendererPaintbrush::setPositionX(float normalizedX)
 {
-    brushes[inputIndex]->setPositionX(normalizedX);
+    brush->setPositionX(normalizedX);
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::setPositionY(unsigned int inputIndex, float normalizedY)
+void PMRendererPaintbrush::setPositionY(float normalizedY)
 {
-    brushes[inputIndex]->setPositionY(normalizedY);
+    brush->setPositionY(normalizedY);
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize)
+void PMRendererPaintbrush::setSize(float normalizedSize)
 {
-    //brushes[inputIndex]->setSize(normalizedSize);
+    //brush->setSize(normalizedSize);
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::changeDirection(unsigned int inputIndex, float direction)
+void PMRendererPaintbrush::changeDirection(float direction)
 {
-    brushes[inputIndex]->changeDirection(direction);
+    brush->changeDirection(direction);
 }
 
 //------------------------------------------------------------------------------------------
-void PMRendererPaintbrush::vibrate(unsigned int inputIndex, float hasToVibrate)
+void PMRendererPaintbrush::vibrate(float hasToVibrate)
 {
     if(hasToVibrate){
         for (int i=0; i<particles.size(); i++){
@@ -155,7 +146,7 @@ void PMRendererPaintbrush::pitchChanged(pitchParams pitchParams)
     
     //            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
     //            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
-    setPositionY(pitchParams.audioInputIndex,gui->getSmoothedPitch());
+    setPositionY(gui->getSmoothedPitch());
 
 }
 
@@ -165,6 +156,6 @@ void PMRendererPaintbrush::energyChanged(energyParams energyParams)
     PMBaseRenderer::energyChanged(energyParams);
     
     PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)gui;
-    paintbrushRenderer->setSize(energyParams.audioInputIndex,gui->getSmoothedEnergy());
+    paintbrushRenderer->setSize(gui->getSmoothedEnergy());
 }
 

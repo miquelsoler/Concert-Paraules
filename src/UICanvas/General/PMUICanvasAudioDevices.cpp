@@ -87,7 +87,7 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
         channelID = (unsigned int)(toggle->getID());
         settings->enableAudioDeviceChannel(deviceID, channelID, toggleValue);
 
-        // If channel is enabled, enable its device if it wasn't
+        // If channel is enabled, enabled its device if it wasn't
         if (toggleValue)
         {
             ofxUIToggle *deviceToggle = (ofxUIToggle *)(toggle->getParent()->getParent());

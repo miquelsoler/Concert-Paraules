@@ -21,7 +21,7 @@ class PMRendererColor : public PMBaseRenderer
 {
 public:
 
-    PMRendererColor(unsigned int numInputs);
+    PMRendererColor();
 
     virtual void setup();
     virtual void update();
@@ -46,10 +46,6 @@ private:
     bool        drawingHorizontal;
     float       drawingHeight;
     float       drawingPos;
-    
-    
-    
-    
 };
 
 

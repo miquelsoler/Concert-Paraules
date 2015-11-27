@@ -101,7 +101,7 @@ ofVec3f lab2rgb(int L,int a,int b){
 
 
 //--------------------------------------------------------------
-PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_COLOR, numInputs)
+PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 {
     audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
 //    dimmBackground = 0.5;
@@ -327,8 +327,6 @@ void PMRendererColor::drawIntoFBO()
 //--------------------------------------------------------------------------------
 void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
 {
-    cout << eventArgs.key << endl;
-
     if (eventArgs.key == 'q')
     {
     }

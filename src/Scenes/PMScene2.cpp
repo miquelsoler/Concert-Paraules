@@ -50,19 +50,17 @@ void PMScene2::setup()
 {
     // Create Renderer
     {
-        unsigned int numAudioInputs = (unsigned int)(PMSettingsManagerAudioDevices::getInstance().getEnabledAudioDevices()->size());
         PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
         switch(settingsRenderer.ID)
         {
             case RENDERERTYPE_PAINTBRUSH:
-                renderer = new PMRendererPaintbrush(numAudioInputs);
+                renderer = new PMRendererPaintbrush();
                 break;
             case RENDERERTYPE_TYPOGRAPHY:
-                // TODO: Should move this all to <audio to sceneparams mapper>
-                renderer = new PMRendererTypography(numAudioInputs);
+                renderer = new PMRendererTypography();
                 break;
             case RENDERERTYPE_COLOR:
-                renderer = new PMRendererColor(numAudioInputs);
+                renderer = new PMRendererColor();
                 break;
             default:
                 break;
@@ -289,15 +287,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
         {
             PMRendererPaintbrush* p = (PMRendererPaintbrush*)renderer;
             p->pitchChanged(pitchParams);
-            
-//            float minOffset = -1.0f;
-//            float maxOffset = 1.0f;
-////            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
-//            float pitch = ofMap(pitchParams.midiNote , 0,127, 1, 0, true);
-//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            //            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
-//            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, pitch);
-//            break;
+            break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
@@ -348,12 +338,6 @@ void PMScene2::energyChanged(energyParams &energyParams)
 
     switch(renderer->getType())
     {
-        case RENDERERTYPE_PAINTBRUSH:
-        {
-//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            paintbrushRenderer->setSize(energyParams.audioInputIndex, energy);
-            break;
-        }
         case RENDERERTYPE_TYPOGRAPHY:
         {
             // FIXME: A l'Eloi li peta.
@@ -380,7 +364,7 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
             if (!silenceParams.isSilent)
             {
                 PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
+                paintbrushRenderer->changeBaseAngle();
             }
             break;
         }
@@ -398,7 +382,7 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 //--------------------------------------------------------------------------------------------------
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
-    renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isPaused);
+    renderer->setEnabled(!pauseParams.isPaused);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -414,7 +398,7 @@ void PMScene2::shtDetected(shtParams &shtParams)
         case RENDERERTYPE_PAINTBRUSH:
         {
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->vibrate(shtParams.audioInputIndex, shtParams.isSht);
+            paintbrushRenderer->vibrate(shtParams.isSht);
             break;
         }
         case RENDERERTYPE_COLOR:
@@ -436,7 +420,7 @@ void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
         case RENDERERTYPE_PAINTBRUSH:
         {
             PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->changeDirection(melodyDirectionParams.audioInputIndex, melodyDirectionParams.direction);
+            paintbrushRenderer->changeDirection(melodyDirectionParams.direction);
             break;
         }
         default:

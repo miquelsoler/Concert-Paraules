@@ -10,7 +10,7 @@
 static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 //static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
-PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY, numInputs)
+PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY)
 {
     buildCharsetFromPoem();
 
@@ -187,21 +187,24 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 {
     PMBaseRenderer::pitchChanged(pitchParams);
     
-                if (typoTimerEnabled)
-                {
-                    float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-                    if (diffTimeMs > 50)
-                    {
-                        typoTimer = ofGetElapsedTimeMillis();
-    
-                        float minVelocity = 0.01;
-                        float maxVelocity = 1.0;
-                        float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
-    
-                        setYVelocity(velocityY);
-                        addLetter();
-                    }
-                }
+    if (typoTimerEnabled)
+    {
+        float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+        if (diffTimeMs > 50)
+        {
+            typoTimer = ofGetElapsedTimeMillis();
+
+            float minVelocity = 0.01;
+            float maxVelocity = 1.0;
+            float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
+
+//            cout << "Smoothed pitch: " << gui->getSmoothedPitch() << endl;
+//            cout << "Velocity Y: " << velocityY << endl;
+
+            setYVelocity(velocityY);
+            addLetter();
+        }
+    }
 }
 
 //------------------------------------------------------------------------------------------
@@ -220,8 +223,6 @@ void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
     typoTimerEnabled = !silenceParams.isSilent;
     if (typoTimerEnabled)
         typoTimer = ofGetElapsedTimeMillis();
-
-    
 }
 
 //------------------------------------------------------------------------------------------
