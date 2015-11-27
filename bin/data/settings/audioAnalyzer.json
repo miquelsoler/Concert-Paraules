@@ -19,7 +19,7 @@
    "Silence" : {
       "Enabled" : true,
       "Queue Length (ms)" : 50,
-      "Threshold (ms)" : 0.009999999776482582
+      "Threshold (ms)" : 4.334975242614746
    },
    "Smoothing" : {
       "Delta" : 0.009852216579020023

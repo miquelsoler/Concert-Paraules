@@ -29,13 +29,13 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-    enabled = false;
+    enabled = true;
 //    enabled.assign(numInputs, false); // Init all elements with false; FIXME: is it to false or true?
 }
 
 void PMBaseRenderer::update()
 {
-    cout << "Is active? " << enabled << endl;
+//    cout << "Is active? " << enabled << endl;
     fbo.begin();
     {
         // background dimming
