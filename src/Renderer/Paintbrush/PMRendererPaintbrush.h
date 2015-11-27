@@ -17,28 +17,30 @@ class PMRendererPaintbrush : public PMBaseRenderer
 {
 public:
 
-    PMRendererPaintbrush(unsigned int numInputs);
+//    PMRendererPaintbrush(unsigned int numInputs);
+    PMRendererPaintbrush();
 
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
 
-    void changeBaseAngle(unsigned int inputIndex);
-    void setOffset(unsigned int inputIndex, float offset);
+    void changeBaseAngle();
+    void setOffset(float offset);
 
-    void setPosition(unsigned int inputIndex, float normalizedX, float normalizedY);
-    void setPositionX(unsigned int inputIndex, float normalizedX);
-    void setPositionY(unsigned int inputIndex, float normalizedY);
-    void setSize(unsigned int inputIndex, float normalizedSize);
-    void changeDirection(unsigned int inputIndex, float direction);
-    void vibrate(unsigned int inputIndex, float hasToVibrate);
+    void setPosition(float normalizedX, float normalizedY);
+    void setPositionX(float normalizedX);
+    void setPositionY(float normalizedY);
+    void setSize(float normalizedSize);
+    void changeDirection(float direction);
+    void vibrate(float hasToVibrate);
 
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
 
 private:
 
-    vector<PMBrushContainer *> brushes;
+//    vector<PMBrushContainer *> brushes;
+    PMBrushContainer *brush;
     deque<PMParticle> particles;
 };
 

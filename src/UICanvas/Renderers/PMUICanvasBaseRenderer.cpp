@@ -88,7 +88,6 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
     {
         if(name == "Energy Range")
         {
-
         }
     }
 }

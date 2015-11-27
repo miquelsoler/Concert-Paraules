@@ -53,7 +53,6 @@ void PMBrushContainer::update()
         if (y > viewHeight - margin) y -= viewHeight - 2*margin;
         if (y < margin) y += viewHeight - 2*margin;
     }
-//    cout<<baseAngle<<endl;
 
     xOffset = generalOffset * sinAngle * 100.0 * OFFSET_SCALE;
     yOffset = -generalOffset * cosAngle * 100.0 * OFFSET_SCALE;
@@ -149,7 +148,7 @@ void PMBrushContainer::setSize(float normalizedSize)
 
 void PMBrushContainer::changeDirection(float direction)
 {
-    cout<<direction<<endl;
+//    cout<<direction<<endl;
     baseAngle += direction*0.5;
     baseAngle = ofWrapDegrees(baseAngle, -360, 360);
 }

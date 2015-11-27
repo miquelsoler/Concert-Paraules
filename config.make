@@ -21,7 +21,7 @@
 ################################################################################
 # PROJECT SPECIFIC CHECKS
 #   This is a project defined section to create internal makefile flags to 
-#   conditionally enable or disable the addition of various features within 
+#   conditionally enable or disable the addition of various features within
 #   this makefile.  For instance, if you want to make changes based on whether
 #   GTK is installed, one might test that here and create a variable to check. 
 ################################################################################
