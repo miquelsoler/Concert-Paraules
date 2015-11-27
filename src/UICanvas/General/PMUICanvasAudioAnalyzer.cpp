@@ -80,7 +80,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
             addLabel("SILENCE");
 
             addSlider("Silence Threshold",0.0,1.0,&silenceThreshold);
-            addSlider("Silence Queue Length(ms)",0.0,1000.0,&silenceQueueLength);
+            addSlider("Silence Length (ms)",0.0,1000.0,&silenceQueueLength);
             silenceToggle = addLabelToggle("SILENCE", &silenceOn);
             silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
             addSpacer();
@@ -91,7 +91,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         {
             addLabel("PAUSE");
 
-            addSlider("Pause Queue Length(ms)",0.0,10000.0,&pauseQueueLength);
+            addSlider("Pause Length (ms)",0.0,10000.0,&pauseQueueLength);
             pauseToggle = addLabelToggle("PAUSE", &pauseOn);
             pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
 
@@ -137,7 +137,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
     string name = e.getName();
  
     
-    cout << "analyzer handling ui event :: " << name << " parent : " << e.getParent()->getName() << endl;
+    //cout << "analyzer handling ui event :: " << name << " parent : " << e.getParent()->getName() << endl;
     
     if (name.find("PRESETS")!=-1)
     {
@@ -153,6 +153,24 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             // load
             loadPreset(activePreset);
         }
+    }
+    else if(name=="Silence Threshold")
+    {
+        //void setSilenceThreshold(float _f) {silenceThreshold=_f;};
+        cout << "analyzer : setting SILENCE thershold" << endl;
+
+    }
+    else if(name == "Silence Length (ms)")
+    {
+        //void setSilenceQueueLength(float _f) {silenceTimeTreshold=_f;};
+        cout << "analyzer : setting SILENCE thershols" << endl;
+        
+    }
+    else if(name == "Pause Length (ms)")
+    {
+        //void setPauseTimeTreshold(float _f) {pauseTimeTreshold=_f;};
+        cout << "analyzer : setting PAUSE thershols" << endl;
+
     }
 }
 
