@@ -65,7 +65,7 @@ void PMRendererTypography::update()
 
     PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
-    uint64_t maxAge = myGUI->getMaxAge() * 1000.0f;
+    uint64_t maxAge = myGUI->getMaxAge() * uint64_t(1000);
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
     {
