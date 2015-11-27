@@ -35,7 +35,6 @@ void PMBaseRenderer::setup()
 
 void PMBaseRenderer::update()
 {
-    cout << "Is active? " << enabled << endl;
     fbo.begin();
     {
         // background dimming

@@ -102,7 +102,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         // Onset
         {
             addLabel("ONSET");
-
+            addSlider("Onset Threshold",0.0,1.0,&silenceThreshold);
             onsetToggle = addLabelToggle("ONSET", &onsetOn);
             onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
 
@@ -156,22 +156,41 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
     }
     else if(name=="Silence Threshold")
     {
-        //void setSilenceThreshold(float _f) {silenceThreshold=_f;};
-        cout << "analyzer : setting SILENCE thershold" << endl;
-
+        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+        for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+        {
+            if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+            (*itAudioAnalyzer)->setSilenceThreshold(e.getFloat());
+        }
     }
     else if(name == "Silence Length (ms)")
     {
-        //void setSilenceQueueLength(float _f) {silenceTimeTreshold=_f;};
-        cout << "analyzer : setting SILENCE thershols" << endl;
-        
+        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+        for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+        {
+            if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+            (*itAudioAnalyzer)->setSilenceQueueLength(e.getFloat());
+        }
     }
     else if(name == "Pause Length (ms)")
     {
-        //void setPauseTimeTreshold(float _f) {pauseTimeTreshold=_f;};
-        cout << "analyzer : setting PAUSE thershols" << endl;
-
+        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+        for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+        {
+            if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+            (*itAudioAnalyzer)->setPauseTimeTreshold(e.getFloat());
+        }
     }
+    else if(name == "Onset Threshold")
+    {
+        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+        for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+        {
+            if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+            (*itAudioAnalyzer)->setOnsetsThreshold(e.getFloat());
+        }
+    }
+    
 }
 
 //--------------------------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ void ofApp::setup()
                 settingsAA.getMinPitchMidiNote(), settingsAA.getMaxPitchMidiNote(),
                 settingsAA.getMinEnergy(),
                 settingsAA.getSilenceEnabled(), settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
-                settingsAA.getOnsetsThreshold(), settingsAA.getOnsetsAlpha(),
+                settingsAA.getOnsetsThreshold(),
                 settingsAA.getSmoothingDelta(),
                 settingsAA.getAscDescAnalysisSize());
     }
