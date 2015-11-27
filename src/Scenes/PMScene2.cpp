@@ -218,10 +218,12 @@ void PMScene2::saveSettings()
         (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
     }
-    
-    //ens carreguem el fitxer audiodevices perque no dongui pel sac
-    string cmd="rm " + ofFilePath::getAbsolutePath("settings/")+"/audioDevices.json";
-    system(cmd.c_str());
+
+    // FIXME: Això de carregar-se'l des del codi, és mala pràctica, i a més no funciona bé. És suficient amb afegir-lo al .gitignore, i ja està fet.
+//    //ens carreguem el fitxer audiodevices perque no dongui pel sac
+//    string cmd="rm " + ofFilePath::getAbsolutePath("settings/")+"/audioDevices.json";
+//    system(cmd.c_str());
+
     recorder->exit();
 }
 
