@@ -69,7 +69,10 @@ private:
     //----------------
     int             guiMode;
     float           guiFadeBackground;
-    ofColor         guiColorBackground;
+    int             guiColorBgRed;
+    int             guiColorBgGreen;
+    int             guiColorBgBlue;
+//    ofColor         guiColorBackground;
 
     // Pitch
     float           guiSmoothPitch;

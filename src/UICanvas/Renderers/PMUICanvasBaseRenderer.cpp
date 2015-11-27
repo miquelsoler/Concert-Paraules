@@ -40,17 +40,20 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     presetsMatrix->setAllowMultiple(false);
     presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
     addSpacer();
+
     addLabel("BACKGROUND");
     addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
-    addIntSlider("Background R",0,255,255);
-    addIntSlider("Background G",0,255,255);
-    addIntSlider("Background B",0,255,255);
+    addIntSlider("Background R", 0, 255, &guiColorBgRed);
+    addIntSlider("Background G", 0, 255, &guiColorBgGreen);
+    addIntSlider("Background B", 0, 255, &guiColorBgBlue);
     addSpacer();
+
     addLabel("ENERGY");
     addRangeSlider("Energy Min-Max",0.0,1.0,&guiEnergyMin,&guiEnergyMax);
     addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
     addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
     addSpacer();
+
     addLabel("PITCH");
     addRangeSlider("Pitch Min-Max",0.0,127.0,&guiPitchMin,&guiPitchMax);
     addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
@@ -83,24 +86,9 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
     }
     else
     {
-        if(name == "Background R")
+        if(name == "Energy Range")
         {
-            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-            guiColorBackground.r = s->getValue();
-        }
-        else if(name == "Background G")
-        {
-            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-            guiColorBackground.g = s->getValue();
-        }
-        else if(name == "Background B")
-        {
-            ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
-            guiColorBackground.b = s->getValue();
-        }
-        else if(name == "Energy Range")
-        {
-            
+
         }
     }
 }
@@ -115,7 +103,7 @@ float PMUICanvasBaseRenderer::getFadeBackground()
 //--------------------------------------------------------------------------------------------------
 ofColor PMUICanvasBaseRenderer::getColorBackground()
 {
-    return guiColorBackground;
+    return ofColor(guiColorBgRed, guiColorBgGreen, guiColorBgBlue);
 }
 
 //--------------------------------------------------------------------------------------------------
