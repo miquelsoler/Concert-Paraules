@@ -122,3 +122,4 @@ bin/data/*.mov
 bin/data/presets/BRUSH_RENDERER/*.xml
 bin/data/presets/COLOR_RENDERER/*.xml
 bin/data/presets/TYPO_RENDERER/*.xml
+bin/data/presets/AUDIO_ANALYZER/*.xml
