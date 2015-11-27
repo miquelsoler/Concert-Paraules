@@ -132,9 +132,6 @@ void PMBaseRenderer::energyChanged(energyParams energyParams)
 void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
 {
     isSilent = silenceParams.isSilent;
-    if(isSilent) cout << "ññññññññññññññññoooooooooooooiiiiiioooooooooooooooññññññññññññññ" << endl;
-    
-
 }
 
 void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)

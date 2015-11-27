@@ -13,6 +13,8 @@ void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int hei
     setColorBack(bgColor);
     getCanvasTitle()->setColorFill(titleColor);
 
+    setTriggerWidgetsUponLoad(false);
+
     addSpacer();
 
     autosize = _autosize;

@@ -9,7 +9,7 @@
 
 #include "PMAudioInParams.h"
 #include "PMAudioAnalyzer.hpp"
-#include "PMSettingsManagerAudioAnalyzers.h"
+//#include "PMSettingsManagerAudioAnalyzers.h"
 
 class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
 {
@@ -22,11 +22,22 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
+protected:
+    
+    void            loadPreset(int presetNumber = 0);
+    void            savePreset(int presetNumber = 0);
+
 private:
 
     unsigned int audioInputIndex;
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
+
+    // Matrix --------------------------------
+    
+    ofxUIToggleMatrix       *presetsMatrix;
+    int                     getActivePreset();
+    bool                    savingPreset;
 
     // Pitch ------------------------------------
 
@@ -49,13 +60,16 @@ private:
 
     ofxUILabelToggle    *silenceToggle;
     bool                silenceOn;
-
+    float               silenceThreshold;
+    float               silenceQueueLength;
+    
     // Pause ------------------------------------
 
     void pauseStateChanged(pauseParams &pauseParams);
 
     ofxUILabelToggle    *pauseToggle;
     bool                pauseOn;
+    float               pauseQueueLength;
 
     // Onset ------------------------------------
 
@@ -70,10 +84,13 @@ private:
     
     ofxUILabelToggle    *shtToggle;
     bool                shtOn;
+    
+    void            keyPressed(int key);
+    void            keyReleased(int key);
 
     // Settings
 
-    PMSettingsManagerAudioAnalyzers *settings;
+    //PMSettingsManagerAudioAnalyzers *settings;
 };
 
 

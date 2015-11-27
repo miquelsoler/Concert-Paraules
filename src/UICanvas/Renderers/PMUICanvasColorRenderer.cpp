@@ -80,45 +80,5 @@ void PMUICanvasColorRenderer::setScanSpeedX(float _s)
 }
 
 
-//void PMUICanvasBaseRenderer::pitchChanged(pitchParams &pitchParams)
-//{
-//    if (pitchParams.audioInputIndex != audioInputIndex) return;
-//
-//    if ((pitchParams.midiNote > settings->getMinPitchMidiNote()) && (pitchParams.midiNote < pitchMinMidiNote)) {
-//        pitchMinMidiNote = pitchParams.midiNote;
-//    }
-//
-//    if (pitchParams.midiNote > pitchMaxMidiNote) {
-//        pitchMaxMidiNote = pitchParams.midiNote;
-//    }
-//
-//    pitchCurrentMidiNote = pitchParams.midiNote;
-//}
-//
-//void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
-//{
-//    if (energyParams.audioInputIndex != audioInputIndex) return;
-//    energyCurrent = energyParams.energy;
-//}
-//
-//
-//void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
-//{
-//    if (silenceParams.audioInputIndex != audioInputIndex) return;
-//    silenceOn = silenceParams.isSilent;
-//}
-//
-//void PMUICanvasAudioAnalyzer::pauseStateChanged(pauseParams &pauseParams)
-//{
-//    if (pauseParams.audioInputIndex != audioInputIndex) return;
-//    pauseOn = pauseParams.isPaused;
-//}
-//
-//void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
-//{
-//    if (onsetParams.audioInputIndex != audioInputIndex) return;
-//    onsetOn = onsetParams.isOnset;
-//}
-
 
 
