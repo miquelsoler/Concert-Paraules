@@ -104,7 +104,7 @@ ofVec3f lab2rgb(int L,int a,int b){
 PMRendererColor::PMRendererColor(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_COLOR, numInputs)
 {
     audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
-    dimmBackground = 0.5;
+//    dimmBackground = 0.5;
     scanWidth = 3;
 
     /// GUI
@@ -151,7 +151,6 @@ void PMRendererColor::update()
             
             if (doTurn)
             {
-                cout << "do TURN" << endl;
                 drawingHorizontal=false;
                 // change direction
                 drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
@@ -204,15 +203,8 @@ void PMRendererColor::drawIntoFBO()
 
     fbo.begin();
     {
-        // SMOOTHING AUDIO SHIT
-        float deltaPitch = myGUI->getDeltaPitch();
-        float deltaEnergy = myGUI->getDeltaEnergy();
-
-        float pitchSmooth = (deltaPitch)*pitch + (1.0-deltaPitch)*oldPitch;
-        float energySmooth = (deltaEnergy)*energy + (1.0-deltaEnergy)*oldEnergy;
-
-        myGUI->setSmoothEnergy(energySmooth);
-        myGUI->setSmoothPitch(pitchSmooth);
+        float pitchSmooth = gui->getSmoothedPitch();
+        float energySmooth = gui->getSmoothedEnergy();
         
         switch (myGUI->getMode())
         {
@@ -315,13 +307,14 @@ void PMRendererColor::drawIntoFBO()
             default:
                 break;
         }
-
+        
+        
         ofDisableBlendMode();
         
         //update old values
         
-        oldPitch = pitchSmooth;
-        oldEnergy = energySmooth;
+        //oldPitch = pitchSmooth;
+        //oldEnergy = energySmooth;
 
     }
     fbo.end();
@@ -331,17 +324,7 @@ void PMRendererColor::drawIntoFBO()
     ofScale(0.75,0.75,0.75);
     fbo.draw(0, 0);
 }
-
-void PMRendererColor::setPitch(float p)
-{
-    pitch = p;
-}
-void PMRendererColor::setEnergy(float e)
-{
-    energy = e;
-}
-
-
+//--------------------------------------------------------------------------------
 void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
 {
     cout << eventArgs.key << endl;

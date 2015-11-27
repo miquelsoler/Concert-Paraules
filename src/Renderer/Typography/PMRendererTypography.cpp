@@ -47,6 +47,8 @@ PMRendererTypography::PMRendererTypography(unsigned int numInputs) : PMBaseRende
         box2d.createBounds();
         box2d.setFPS(60);
     }
+    
+    typoTimerEnabled = false;
 }
 
 void PMRendererTypography::setup()
@@ -184,3 +186,55 @@ void PMRendererTypography::buildCharsetFromPoem() {
     // FIXME: Charset still includes characters like �.
     charset = DEFAULT_CHARSET;
 }
+
+//------------------------------------------------------------------------------------------
+void PMRendererTypography::pitchChanged(pitchParams pitchParams)
+{
+    PMBaseRenderer::pitchChanged(pitchParams);
+    
+                if (typoTimerEnabled)
+                {
+                    float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+                    if (diffTimeMs > 50)
+                    {
+                        typoTimer = ofGetElapsedTimeMillis();
+    
+                        float minVelocity = 0.01;
+                        float maxVelocity = 1.0;
+                        float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
+    
+                        setYVelocity(velocityY);
+                        addLetter();
+                    }
+                }
+}
+
+//------------------------------------------------------------------------------------------
+void PMRendererTypography::energyChanged(energyParams energyParams)
+{
+    PMBaseRenderer::energyChanged(energyParams);
+    
+    setLetterSize(gui->getSmoothedEnergy());
+}
+
+//------------------------------------------------------------------------------------------
+void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
+{
+//    PMBaseRenderer::silenceStateChanged(silenceParams);
+    
+    typoTimerEnabled = !silenceParams.isSilent;
+    if (typoTimerEnabled)
+        typoTimer = ofGetElapsedTimeMillis();
+
+    
+}
+
+//------------------------------------------------------------------------------------------
+void PMRendererTypography::pauseStateChanged(pauseParams &pauseParams)
+{
+    PMBaseRenderer::pauseStateChanged(pauseParams);
+
+    
+}
+
+

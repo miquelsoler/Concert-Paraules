@@ -13,6 +13,7 @@
 
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
+//--------------------------------------------------------------------------------------------------
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
 #ifdef OF_DEBUG
@@ -33,6 +34,7 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     }
 }
 
+//--------------------------------------------------------------------------------------------------
 PMScene2::~PMScene2()
 {
     for (int i=0; i<guiAudioAnalyzers.size(); ++i)
@@ -43,6 +45,7 @@ PMScene2::~PMScene2()
     guiAudioAnalyzers.clear();
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::setup()
 {
     // Create Renderer
@@ -57,7 +60,6 @@ void PMScene2::setup()
             case RENDERERTYPE_TYPOGRAPHY:
                 // TODO: Should move this all to <audio to sceneparams mapper>
                 renderer = new PMRendererTypography(numAudioInputs);
-                typoTimerEnabled = false;
                 break;
             case RENDERERTYPE_COLOR:
                 renderer = new PMRendererColor(numAudioInputs);
@@ -100,6 +102,7 @@ void PMScene2::setup()
 
                     ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
                     ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
+                    
                     ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
@@ -149,6 +152,7 @@ void PMScene2::setup()
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::update()
 {
     renderer->update();
@@ -159,6 +163,7 @@ void PMScene2::update()
     }
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::updateEnter()
 {
     if (isEnteringFirst())
@@ -180,6 +185,7 @@ void PMScene2::updateEnter()
     PMBaseScene::updateEnter();
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::updateExit()
 {
     renderer->showGUI(false);
@@ -188,6 +194,7 @@ void PMScene2::updateExit()
     PMBaseScene::updateExit();
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::draw()
 {
     renderer->draw();
@@ -197,6 +204,7 @@ void PMScene2::draw()
 #endif
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
@@ -219,6 +227,7 @@ void PMScene2::saveSettings()
 
 #pragma mark - Keyboard events
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::keyReleased(int key)
 {
     PMBaseScene::keyReleased(key);
@@ -261,62 +270,65 @@ void PMScene2::keyReleased(int key)
     }
 }
 
-#pragma mark - Audio Events
 
+//--------------------------------------------------------------------------------------------------
+#pragma mark - Audio Events
+//--------------------------------------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------------------------------------
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
+    renderer->pitchChanged(pitchParams);
+    
     switch(renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            float minOffset = -1.0f;
-            float maxOffset = 1.0f;
-//            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
-            float pitch = ofMap(pitchParams.smoothedMidiNote , audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), 1, 0, true);
+            PMRendererPaintbrush* p = (PMRendererPaintbrush*)renderer;
+            p->pitchChanged(pitchParams);
             
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
-            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, pitch);
-            break;
+//            float minOffset = -1.0f;
+//            float maxOffset = 1.0f;
+////            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+//            float pitch = ofMap(pitchParams.midiNote , 0,127, 1, 0, true);
+//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            //            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
+//            paintbrushRenderer->setPositionY(pitchParams.audioInputIndex, pitch);
+//            break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
             // TODO: Should move this all to <audio to sceneparams mapper>
-            if (typoTimerEnabled)
-            {
-                float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-                if (diffTimeMs > 50)
-                {
-                    typoTimer = ofGetElapsedTimeMillis();
-
-                    float minVelocity = 0.01;
-                    float maxVelocity = 1.0;
-                    float velocityY = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minVelocity, maxVelocity, true);
-
-                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
-                    typoRenderer->setYVelocity(velocityY);
-                    typoRenderer->addLetter();
-                }
-            }
+//            if (typoTimerEnabled)
+//            {
+//                float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+//                if (diffTimeMs > 50)
+//                {
+//                    typoTimer = ofGetElapsedTimeMillis();
+//
+//                    float minVelocity = 0.01;
+//                    float maxVelocity = 1.0;
+//                    float velocityY = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minVelocity, maxVelocity, true);
+//
+//                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
+//                    typoRenderer->setYVelocity(velocityY);
+//                    typoRenderer->addLetter();
+//                }
+//            }
             break;
-        }
-        case RENDERERTYPE_COLOR:
-        {
-            float minOffset = 0.0f;
-            float maxOffset = 1.0f;
-            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
-
-            PMRendererColor *colorRenderer = (PMRendererColor *)renderer;
-            colorRenderer->setPitch(pitch);
-            break;
-            
         }
         default: break;
     }
+ 
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::energyChanged(energyParams &energyParams)
 {
+    renderer->energyChanged(energyParams);
+    
+    
     // calculate Energy
     /////////////////////
     float normalizedSizeMin = 0.01f;
@@ -336,60 +348,61 @@ void PMScene2::energyChanged(energyParams &energyParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->setSize(energyParams.audioInputIndex, energy);
+//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            paintbrushRenderer->setSize(energyParams.audioInputIndex, energy);
             break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
             // Peta
-            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-            float normalizedSize = energy;
-            typoRenderer->setLetterSize(normalizedSize);
+//            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
+//            float normalizedSize = energy;
+//            typoRenderer->setLetterSize(normalizedSize);
             break;
-        }
-        case RENDERERTYPE_COLOR:
-        {
-            PMRendererColor *colorRenderer = (PMRendererColor *)renderer;
-            colorRenderer->setEnergy(energy);
         }
         default: break;
     }
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 {
+    renderer->silenceStateChanged(silenceParams);
+    
     switch (renderer->getType())
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
             if (!silenceParams.isSilent)
             {
-//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-//                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
+                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+                paintbrushRenderer->changeBaseAngle(silenceParams.audioInputIndex);
             }
             break;
         }
         case RENDERERTYPE_TYPOGRAPHY:
         {
-            typoTimerEnabled = !silenceParams.isSilent;
-            if (typoTimerEnabled)
-                typoTimer = ofGetElapsedTimeMillis();
-            break;
+//            typoTimerEnabled = !silenceParams.isSilent;
+//            if (typoTimerEnabled)
+//                typoTimer = ofGetElapsedTimeMillis();
+//            break;
         }
         default: break;
     }
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
     renderer->setShouldPaint(pauseParams.audioInputIndex, !pauseParams.isPaused);
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::shtDetected(shtParams &shtParams)
 {
     switch(renderer->getType())
@@ -411,13 +424,14 @@ void PMScene2::shtDetected(shtParams &shtParams)
     }
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
 {
     switch (renderer->getType()) {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            //PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            //paintbrushRenderer->changeDirection(melodyDirectionParams.audioInputIndex, melodyDirectionParams.direction);
+            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+            paintbrushRenderer->changeDirection(melodyDirectionParams.audioInputIndex, melodyDirectionParams.direction);
             break;
         }
         default:

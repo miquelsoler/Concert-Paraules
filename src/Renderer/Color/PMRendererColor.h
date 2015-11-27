@@ -29,20 +29,8 @@ public:
     
     void keyPressed ( ofKeyEventArgs& eventArgs );
 
-    ///-
-    void setPitch(float p);
-    void setEnergy(float e);
-    
 private:
     
-    int     mode;
-    float   dimmBackground;
-    float   dimmSpeed;
-    float   pitch;
-    float   oldPitch;
-    
-    float   energy;
-    float   oldEnergy;
     
     int     scanWidth;
     

@@ -13,11 +13,13 @@ static const string STR_PRESETS_INFO = "Click to LOAD | Shift+Click to SAVE";
 static const string STR_CANVAS_BASEPATH = "presets/";
 
 
+//--------------------------------------------------------------------------------------------------
 PMUICanvasBaseRenderer::PMUICanvasBaseRenderer(PMUIRendererType _type, string title, int headerFontSize) : PMBaseUICanvas(title, headerFontSize)
 {
     type = _type;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
@@ -26,6 +28,11 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 
     setBackgroundColor(ofColor(0,20,40,128));
 
+    guiPitchMin = 7;
+    guiPitchMax = 96;
+    guiEnergyMin = 0.1;
+    guiEnergyMax = 0.9;
+    
     addLabel(STR_PRESETS);
     addLabel(STR_PRESETS_INFO, OFX_UI_FONT_SMALL);
     setGlobalButtonDimension(32);
@@ -40,24 +47,28 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     addIntSlider("Background B",0,255,255);
     addSpacer();
     addLabel("ENERGY");
-    addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
+    addRangeSlider("Energy Min-Max",0.0,1.0,&guiEnergyMin,&guiEnergyMax);
     addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
+    addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
     addSpacer();
     addLabel("PITCH");
-    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
+    addRangeSlider("Pitch Min-Max",0.0,127.0,&guiPitchMin,&guiPitchMax);
     addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
+    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
 
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
 
     presetsMode = RENDERER_PRESET_LOAD;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
     superInit("BASE RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
@@ -87,90 +98,64 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
             ofxUIIntSlider *s = (ofxUIIntSlider *) e.widget;
             guiColorBackground.b = s->getValue();
         }
+        else if(name == "Energy Range")
+        {
+            
+        }
     }
 }
 
-//void PMUICanvasBaseRenderer::pitchChanged(pitchParams &pitchParams)
-//{
-//    if (pitchParams.audioInputIndex != audioInputIndex) return;
-//
-//    if ((pitchParams.midiNote > settings->getMinPitchMidiNote()) && (pitchParams.midiNote < pitchMinMidiNote)) {
-//        pitchMinMidiNote = pitchParams.midiNote;
-//    }
-//
-//    if (pitchParams.midiNote > pitchMaxMidiNote) {
-//        pitchMaxMidiNote = pitchParams.midiNote;
-//    }
-//
-//    pitchCurrentMidiNote = pitchParams.midiNote;
-//}
-//
-//void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
-//{
-//    if (energyParams.audioInputIndex != audioInputIndex) return;
-//    energyCurrent = energyParams.energy;
-//}
-//
-//
-//void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
-//{
-//    if (silenceParams.audioInputIndex != audioInputIndex) return;
-//    silenceOn = silenceParams.isSilent;
-//}
-//
-//void PMUICanvasAudioAnalyzer::pauseStateChanged(pauseParams &pauseParams)
-//{
-//    if (pauseParams.audioInputIndex != audioInputIndex) return;
-//    pauseOn = pauseParams.isPaused;
-//}
-//
-//void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
-//{
-//    if (onsetParams.audioInputIndex != audioInputIndex) return;
-//    onsetOn = onsetParams.isOnset;
-//}
 
+//--------------------------------------------------------------------------------------------------
 float PMUICanvasBaseRenderer::getFadeBackground()
 {
     return guiFadeBackground;
 }
 
+//--------------------------------------------------------------------------------------------------
 ofColor PMUICanvasBaseRenderer::getColorBackground()
 {
     return guiColorBackground;
 }
 
+//--------------------------------------------------------------------------------------------------
 float PMUICanvasBaseRenderer::getDeltaPitch()
 {
     return guiDeltaPitch;
 }
 
+//--------------------------------------------------------------------------------------------------
 float PMUICanvasBaseRenderer::getDeltaEnergy()
 {
     return guiDeltaEnergy;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::setSmoothPitch(float _p)
 {
     guiSmoothPitch = _p;
 }
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::setSmoothEnergy(float _e)
 {
     guiSmoothEnergy = _e;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
 {
     string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::savePreset(int presetNumber)
 {
     string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
     saveSettings(presetPath);
 }
 
+//--------------------------------------------------------------------------------------------------
 int PMUICanvasBaseRenderer::getActivePreset()
 {
     bool found = false;
@@ -188,12 +173,14 @@ int PMUICanvasBaseRenderer::getActivePreset()
     return (row * PRESETSMATRIX_NUMCOLS) + col;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::keyPressed(int key)
 {
     if (key != OF_KEY_SHIFT) return;
     presetsMode = RENDERER_PRESET_SAVE;
 }
 
+//--------------------------------------------------------------------------------------------------
 void PMUICanvasBaseRenderer::keyReleased(int key)
 {
     if (key != OF_KEY_SHIFT) return;

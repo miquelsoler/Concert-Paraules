@@ -9,6 +9,8 @@
 
 #include "ofMain.h"
 #include "PMUICanvasBaseRenderer.h"
+#include "PMAudioAnalyzer.hpp"
+
 
 typedef enum
 {
@@ -40,6 +42,13 @@ public:
     bool            getNeedsToBeCleared();
     
     void showGUI(bool show);
+    
+    // changed ...
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+    virtual void silenceStateChanged(silenceParams &silenceParams);
+    virtual void pauseStateChanged(pauseParams &pauseParams);
+
 
 protected:
 
@@ -53,6 +62,13 @@ protected:
     PMUICanvasBaseRenderer* gui;
     
     bool                    needsToBeCleared;
+    
+    // audio smoothing
+    float                   oldPitch;
+    float                   oldEnergy;
+    
+    bool                    isSilent;
+    bool                    isPaused;
 };
 
 

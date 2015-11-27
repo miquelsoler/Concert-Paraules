@@ -72,9 +72,9 @@ private:
 
     vector<PMSettingsDevice>            *enabledAudioDevices;
 
-    // TODO: Should move this all to <audio to sceneparams mapper>
-    float                               typoTimer;
-    bool                                typoTimerEnabled;
+//    // TODO: Should move this all to <audio to sceneparams mapper>
+//    float                               typoTimer;
+//    bool                                typoTimerEnabled;
 };
 
 #endif /* PMScene2_hpp */

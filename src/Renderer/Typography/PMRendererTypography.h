@@ -32,6 +32,12 @@ public:
     void setYVelocity(float normalizedVelocity);
 
     void keyPressed ( ofKeyEventArgs& eventArgs );
+    
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+    virtual void silenceStateChanged(silenceParams &silenceParams);
+    virtual void pauseStateChanged(pauseParams &pauseParams);
+
 
 private:
 
@@ -48,6 +54,10 @@ private:
     mutex                                   mutexAddLetter;
 
     void buildCharsetFromPoem();
+    
+    float                               typoTimer;
+    bool                                typoTimerEnabled;
+
 };
 
 

@@ -33,6 +33,9 @@ public:
     void changeDirection(unsigned int inputIndex, float direction);
     void vibrate(unsigned int inputIndex, float hasToVibrate);
 
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+
 private:
 
     vector<PMBrushContainer *> brushes;

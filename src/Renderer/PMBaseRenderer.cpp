@@ -11,7 +11,8 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type, unsigned int _numInputs)
     type = _type;
     numInputs = _numInputs;
     needsToBeCleared = false;
-    
+    isSilent = false;
+    isPaused = false;
     
     /// GUI
 //    gui = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
@@ -101,4 +102,42 @@ void PMBaseRenderer::setShouldPaint(unsigned int inputIndex, bool _shouldPaint)
 void PMBaseRenderer::showGUI(bool show)
 {
     gui->setVisible(show);
+}
+
+
+void PMBaseRenderer::pitchChanged(pitchParams pitchParams)
+{
+    float deltaPitch = gui->getDeltaPitch();
+    float currentPitch = pitchParams.midiNote;
+    float smoothedPitch = (deltaPitch)*currentPitch + (1.0-deltaPitch)*oldPitch;
+    
+    gui->setSmoothPitch(ofMap(smoothedPitch,gui->getPitchMin(),gui->getPitchMax(),0.0,1.0,true));
+    
+    oldPitch = smoothedPitch;
+
+}
+
+void PMBaseRenderer::energyChanged(energyParams energyParams)
+{
+    float deltaEnergy = gui->getDeltaEnergy();
+    float currentEnergy = energyParams.energy;
+    float smoothedEnergy = (deltaEnergy)*currentEnergy + (1.0-deltaEnergy)*oldEnergy;
+    
+    gui->setSmoothEnergy(ofMap(smoothedEnergy,gui->getEnergyMin(),gui->getEnergyMax(),0.0,1.0,true));
+    
+    oldEnergy = smoothedEnergy;
+    
+}
+
+void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
+{
+    isSilent = silenceParams.isSilent;
+    if(isSilent) cout << "ññññññññññññññññoooooooooooooiiiiiioooooooooooooooññññññññññññññ" << endl;
+    
+
+}
+
+void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)
+{
+    isPaused = pauseParams.isPaused;
 }

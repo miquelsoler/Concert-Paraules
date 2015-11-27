@@ -36,10 +36,21 @@ public:
     ofColor         getColorBackground();
     float           getDeltaPitch();
     float           getDeltaEnergy();
+    float           getEnergyMin() {return guiEnergyMin;};
+    float           getEnergyMax() {return guiEnergyMax;};
+    float           getPitchMin() {return guiPitchMin;};
+    float           getPitchMax() {return guiPitchMax;};
+    float           getSmoothedPitch() {return guiSmoothPitch;};
+    float           getSmoothedEnergy() {return guiSmoothEnergy;};
+    
     
     // SETTERS
     void            setSmoothPitch(float _p);
     void            setSmoothEnergy(float _e);
+    void            setPitchMin(float f) {guiPitchMin = f;};
+    void            setPitchMax(float f) {guiPitchMax = f;};
+    void            setEnergyMin(float f) {guiEnergyMin = f;};
+    void            setEnergyMax(float f) {guiEnergyMax = f;};
 
 protected:
 
@@ -54,19 +65,28 @@ private:
     ofxUIToggleMatrix       *presetsMatrix;
     RENDERER_PRESET_MODE    presetsMode;
 
-    float                   guiFadeBackground;
-    ofColor                 guiColorBackground;
+    // GUI VARS
+    //----------------
+    int             guiMode;
+    float           guiFadeBackground;
+    ofColor         guiColorBackground;
 
-    // Pitch & Energy
-    float                   guiSmoothPitch;
-    float                   guiSmoothEnergy;
+    // Pitch
+    float           guiSmoothPitch;
+    float           guiDeltaPitch;
+    float           guiPitchMin;
+    float           guiPitchMax;
     
-    float                   guiDeltaPitch;
-    float                   guiDeltaEnergy;
+    // Energy
+    float           guiDeltaEnergy;
+    float           guiSmoothEnergy;
+    float           guiEnergyMin;
+    float           guiEnergyMax;
 
+    // --- 
+    
     void            keyPressed(int key);
     void            keyReleased(int key);
-
     int             getActivePreset();
 };
 

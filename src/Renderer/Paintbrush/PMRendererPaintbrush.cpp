@@ -6,6 +6,7 @@
 
 //static ofColor tintColor = ofColor(200, 200, 0, 255);
 
+//------------------------------------------------------------------------------------------
 PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
 {
     for (int i=0; i<numInputs; ++i)
@@ -21,11 +22,13 @@ PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRende
     gui->init(100, 500, 200, 300);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setup()
 {
     PMBaseRenderer::setup();
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::update()
 {
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
@@ -59,6 +62,7 @@ void PMRendererPaintbrush::update()
     }
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
@@ -89,42 +93,50 @@ void PMRendererPaintbrush::drawIntoFBO()
     ofSetColor(255, 255, 255, 255);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::changeBaseAngle(unsigned int inputIndex)
 {
     brushes[inputIndex]->changeBaseAngle();
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setOffset(unsigned int inputIndex, float offset)
 {
     brushes[inputIndex]->setOffset(offset);
 }
 
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setPosition(unsigned int inputIndex, float normalizedX, float normalizedY)
 {
     brushes[inputIndex]->setPosition(normalizedX, normalizedY);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setPositionX(unsigned int inputIndex, float normalizedX)
 {
     brushes[inputIndex]->setPositionX(normalizedX);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setPositionY(unsigned int inputIndex, float normalizedY)
 {
     brushes[inputIndex]->setPositionY(normalizedY);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setSize(unsigned int inputIndex, float normalizedSize)
 {
-    brushes[inputIndex]->setSize(normalizedSize);
+    //brushes[inputIndex]->setSize(normalizedSize);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::changeDirection(unsigned int inputIndex, float direction)
 {
     brushes[inputIndex]->changeDirection(direction);
 }
 
+//------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::vibrate(unsigned int inputIndex, float hasToVibrate)
 {
     if(hasToVibrate){
@@ -135,3 +147,24 @@ void PMRendererPaintbrush::vibrate(unsigned int inputIndex, float hasToVibrate)
         }
     }
 }
+
+//------------------------------------------------------------------------------------------
+void PMRendererPaintbrush::pitchChanged(pitchParams pitchParams)
+{
+    PMBaseRenderer::pitchChanged(pitchParams);
+    
+    //            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
+    //            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
+    setPositionY(pitchParams.audioInputIndex,gui->getSmoothedPitch());
+
+}
+
+//------------------------------------------------------------------------------------------
+void PMRendererPaintbrush::energyChanged(energyParams energyParams)
+{
+    PMBaseRenderer::energyChanged(energyParams);
+    
+    PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)gui;
+    paintbrushRenderer->setSize(energyParams.audioInputIndex,gui->getSmoothedEnergy());
+}
+
