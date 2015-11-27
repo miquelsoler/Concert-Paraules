@@ -9,7 +9,7 @@
    },
    "Onsets" : {
       "Alpha" : 0.09852216392755508,
-      "Silence Threshold" : 1.871921062469482
+      "Silence Threshold" : 10
    },
    "Pitch" : {
       "Ascending Descending Analysis Size" : 20,
@@ -22,7 +22,7 @@
       "Threshold (ms)" : 4.334975242614746
    },
    "Smoothing" : {
-      "Delta" : 0.009852216579020023
+      "Delta" : 0.6305418610572815
    }
 }
 
