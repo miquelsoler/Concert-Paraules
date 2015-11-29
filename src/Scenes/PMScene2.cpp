@@ -109,36 +109,6 @@ void PMScene2::setup()
                 ofAddListener(deviceAudioAnalyzer->eventMelodyDirection, this, &PMScene2::melodyDirection);
 
                 audioInputIndex++;
-
-/*
-                for (unsigned int i=0; i<numChannels; i++)
-                {
-                    PMSettingsDeviceChannel channel = (*itDevice).channels[i];
-
-                    if (!channel.enabled) continue;
-
-                    int deviceId = (*itDevice).ID;
-                    int inChannels = (*itDevice).inChannels;
-                    int outChannels = (*itDevice).outChannels;
-                    unsigned int channelNumber = channel.ID;
-
-                    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex, deviceId,
-                            inChannels, outChannels,
-                            DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
-                            channelNumber);
-
-                    ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
-                    ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
-
-                    ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
-                    ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
-                    ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
-                    ofAddListener(deviceAudioAnalyzer->eventShtStateChanged, this, &PMScene2::shtDetected);
-                    ofAddListener(deviceAudioAnalyzer->eventMelodyDirection, this, &PMScene2::melodyDirection);
-
-                    audioInputIndex++;
-                }
-*/
             }
         }
 
@@ -175,7 +145,7 @@ void PMScene2::setup()
     // Recorder setup
 
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
-    int sampleRate=aavec[0]->getSamplerate();
+    int sampleRate=aavec[0]->getSampleRate();
     int numChannels=aavec.at(0)->getNumChannels();
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
 }

@@ -35,8 +35,16 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
     {
         if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
 
-        ofxUILabel *deviceLabel = addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channel: " + ofToString((*itAudioAnalyzer)->getChannelNumber()));
-//        deviceLabel->setColorFill(titleColor);
+        string strChannelNumbers;
+        vector<unsigned int> channelNumbers = (*itAudioAnalyzer)->getChannelNumbers();
+        for (int i=0; i<channelNumbers.size(); ++i)
+        {
+            strChannelNumbers += ofToString(channelNumbers[i]);
+            if (i < channelNumbers.size() - 1)
+                strChannelNumbers += ",";
+        }
+
+        addLabel("Device: " + ofToString((*itAudioAnalyzer)->getDeviceID()) + " Channels: " + strChannelNumbers);
         addSpacer();
 
         // Presets
@@ -47,78 +55,50 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         
         ofAddListener(newGUIEvent, this, &PMUICanvasAudioAnalyzer::handleEvents);
 
-        
         addSpacer();
 
-        // Pitch
-        {
-            addLabel("PITCH");
+        addLabel("PITCH");
+        // Current freq value
+//        pitchSlider = addSlider("Midi note", settings->getMinPitchMidiNote(), settings->getMaxPitchMidiNote(), &pitchCurrentMidiNote, 300, 10);
+        pitchSlider = addSlider("Midi note", 0, 127, &pitchCurrentMidiNote);
+        pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
-            // Current freq value
-//            pitchSlider = addSlider("Midi note", settings->getMinPitchMidiNote(), settings->getMaxPitchMidiNote(), &pitchCurrentMidiNote, 300, 10);
-            pitchSlider = addSlider("Midi note", 0, 127, &pitchCurrentMidiNote);
-            pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addLabel("ENERGY");
+//        energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
+        energySilder = addSlider("Energy", 0.0, 1.0, &energyCurrent);
+        energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
 
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
-        }
+        addLabel("SILENCE");
+        addSlider("Silence Threshold",0.0,0.5,&silenceThreshold);
+        addSlider("Silence Length (ms)",0.0,1000.0,&silenceQueueLength);
+        silenceToggle = addLabelToggle("SILENCE", &silenceOn);
+        silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
 
-        // Energy
-        {
-            addLabel("ENERGY");
+        addLabel("PAUSE");
+        addSlider("Pause Length (ms)",0.0,10000.0,&pauseQueueLength);
+        pauseToggle = addLabelToggle("PAUSE", &pauseOn);
+        pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
-//            energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
-            energySilder = addSlider("Energy", 0.0, 1.0, &energyCurrent);
-            energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addLabel("ONSET");
+        addSlider("Onset Threshold",0.0,1.0,&silenceThreshold);
+        onsetToggle = addLabelToggle("ONSET", &onsetOn);
+        onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
 
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
-        }
-
-        // Silence
-        {
-            addLabel("SILENCE");
-
-            addSlider("Silence Threshold",0.0,0.5,&silenceThreshold);
-            addSlider("Silence Length (ms)",0.0,1000.0,&silenceQueueLength);
-            silenceToggle = addLabelToggle("SILENCE", &silenceOn);
-            silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
-        }
-
-        // Pause
-        {
-            addLabel("PAUSE");
-
-            addSlider("Pause Length (ms)",0.0,10000.0,&pauseQueueLength);
-            pauseToggle = addLabelToggle("PAUSE", &pauseOn);
-            pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
-        }
-
-        // Onset
-        {
-            addLabel("ONSET");
-            addSlider("Onset Threshold",0.0,1.0,&silenceThreshold);
-            onsetToggle = addLabelToggle("ONSET", &onsetOn);
-            onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
-        }
-        // Onset
-        {
-            addLabel("SHT");
-            
-            shtToggle = addLabelToggle("SHT", &shtOn);
-            shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
-            
-            addSpacer();
-            ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
-        }
+        addLabel("SHT");
+        shtToggle = addLabelToggle("SHT", &shtOn);
+        shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSpacer();
+        ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
     }
 
     if (autosize) autoSizeToFitWidgets();
@@ -135,22 +115,14 @@ void PMUICanvasAudioAnalyzer::clear()
 void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
- 
-    
-    //cout << "analyzer handling ui event :: " << name << " parent : " << e.getParent()->getName() << endl;
-    
+
     if (name.find("PRESETS")!=-1)
     {
         int activePreset = getActivePreset();
 
-        if(savingPreset)
-        {
-            // save
+        if (savingPreset) {
             savePreset(activePreset);
-        }
-        else
-        {
-            // load
+        } else {
             loadPreset(activePreset);
         }
     }
