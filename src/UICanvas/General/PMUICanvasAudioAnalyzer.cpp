@@ -79,7 +79,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         {
             addLabel("SILENCE");
 
-            addSlider("Silence Threshold",0.0,1.0,&silenceThreshold);
+            addSlider("Silence Threshold",0.0,0.5,&silenceThreshold);
             addSlider("Silence Length (ms)",0.0,1000.0,&silenceQueueLength);
             silenceToggle = addLabelToggle("SILENCE", &silenceOn);
             silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
@@ -224,6 +224,7 @@ void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
     silenceOn = silenceParams.isSilent;
+    cout << "Silent is " << silenceOn << "En.Curr : " << energyCurrent << "Silence Thr , Length  :  " << silenceThreshold << " , " << silenceQueueLength << endl;
 }
 
 //--------------------------------------------------------------------------------------------------
