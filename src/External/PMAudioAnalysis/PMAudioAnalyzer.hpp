@@ -17,25 +17,19 @@ class PMAudioAnalyzer
 {
 public:
 
-    /**
-     * getInstance()
-     * Returns singleton instance
-     */
     static PMAudioAnalyzer &getInstance()
     {
         static PMAudioAnalyzer instance;
         return instance;
     }
 
-    void init(float minPitchFreq, float maxPitchFreq,
-            float energyThreshold,
-            bool useSilence, float silenceThreshold, unsigned int silenceQueueLength,
+    void init(float silenceThreshold, unsigned int silenceQueueLength,
             float onsetsThreshold,
             float smoothingDelta, int ascDescAnalysisSize);
 
-    PMDeviceAudioAnalyzer * addDeviceAudioAnalyzer(unsigned int audioInputIndex, int deviceID, int inChannels, int outChannels,
+    PMDeviceAudioAnalyzer *addDeviceAnalyzer(unsigned int audioInputIndex, int deviceID, int inChannels, int outChannels,
             int sampleRate, int bufferSize,
-            PMDAA_ChannelMode channelMode, unsigned int channelNumber);
+            PMDAA_ChannelMode channelMode, vector<unsigned int> channelNumbers);
 
     vector<PMDeviceAudioAnalyzer *> *getAudioAnalyzers();
 
@@ -48,14 +42,8 @@ public:
     
     float   getMidiNote();
     float   getEnergy();
+
 private:
-
-    // Pitch
-    //float           minPitchMidiNote;
-    //float           maxPitchMidiNote;
-
-    // Energy
-    float           energyThreshold;
 
     // Silence
     bool            useSilence;

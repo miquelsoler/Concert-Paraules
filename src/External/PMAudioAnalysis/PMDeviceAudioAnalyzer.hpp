@@ -25,28 +25,15 @@ typedef enum {
 class PMDeviceAudioAnalyzer : public ofBaseSoundInput {
 public:
 
-    /**
-     * PMDeviceAudioAnalyzer(...)
-     * Constructor just sets sound stream attributes. Calling it doesn't start the sound stream analysis.
-     */
     PMDeviceAudioAnalyzer(int deviceID, int inChannels, int outChannels, int sampleRate, int bufferSize);
-
     PMDeviceAudioAnalyzer() {};
-
     ~PMDeviceAudioAnalyzer();
 
-    /**
-     * setup:
-     * - channelMode: mono or multichannel
-     * - channelNumber: 0..N (ignored when in multichannel mode)
-     * - useMelBands: true if it needs obtaining mel bands
-     * - numMelBands: number of mel bands (ignored when useMelBands=false)
-     */
-    void setup(unsigned int audioInputIndex, PMDAA_ChannelMode channelMode, unsigned int channelNumber,
-            float energyThreshold,
-            bool useSilence, float silenceThreshold, unsigned int silenceQueueLength,
+    void setup(unsigned int audioInputIndex, PMDAA_ChannelMode channelMode, vector<unsigned int> channelNumbers,
+            float silenceThreshold, unsigned int silenceQueueLength,
             float onsetsThreshold,
-            float smoothingDelta, int ascDescAnalysisSize);
+            float smoothingDelta,
+            int ascDescAnalysisSize);
 
     void start();
     void stop();
@@ -89,17 +76,14 @@ private:
 
     // Channel mode
     PMDAA_ChannelMode channelMode;
+    vector<unsigned int> channelNumbers;
     int channelNumber;
 
     // Pitch
     float minPitchMidiNote;
     float maxPitchMidiNote;
 
-    // Energy
-    float energyThreshold;
-
     // Silence
-    bool useSilence;
     bool wasSilent;
     float silenceThreshold;
 

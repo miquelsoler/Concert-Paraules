@@ -6,6 +6,7 @@
 
 static const int MAX_CHANNELS_COLS = 8;
 
+
 void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
@@ -40,7 +41,6 @@ void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, 
             for (int iChannel=0; iChannel < device.channels.size(); ++iChannel)
             {
                 bool isChannelEnabled = device.channels[iChannel].enabled;
-
                 ofxUIToggle *currentToggle = channelToggles[iChannel];
                 currentToggle->setID(iChannel);
                 currentToggle->setValue(isChannelEnabled);
@@ -56,7 +56,6 @@ void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, 
     ofAddListener(newGUIEvent, this, &PMUICanvasAudioDevices::handleEvents);
 }
 
-
 void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
 {
     if (e.widget->getKind() != OFX_UI_WIDGET_TOGGLE) return;
@@ -70,14 +69,13 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
     {
         // It's a device toggle
 
-        deviceID = (unsigned int)(toggle->getID());
-        settings->enableAudioDevice(deviceID, toggleValue);
-
-        // If device is disabled, disable all of its channels
-        if (!toggleValue)
+        if (!toggleValue) {
+            // Device is disabled -> disable all of its channels
             disableAllChannelsForDevice(toggle);
-
-        settings->write();
+        } else {
+            // Device is enabled -> disable all the other devices and its channels
+            disableAllDevicesExcept(toggle);
+        }
     }
     else
     {
@@ -87,22 +85,17 @@ void PMUICanvasAudioDevices::handleEvents(ofxUIEventArgs &e)
         channelID = (unsigned int)(toggle->getID());
         settings->enableAudioDeviceChannel(deviceID, channelID, toggleValue);
 
-        // If channel is enabled, enabled its device if it wasn't
-        if (toggleValue)
-        {
-            ofxUIToggle *deviceToggle = (ofxUIToggle *)(toggle->getParent()->getParent());
-            deviceToggle->setValue(true);
-            settings->enableAudioDevice(deviceID,true);
-        }
-
-        // If channel is disabled and all of them are, disable its device
-        if (!toggleValue)
-        {
+        if (toggleValue) {
+            // If channel is enabled, enabled its device if it wasn't
+            disableAllDevicesExcept((ofxUIToggle *)(toggle->getParent()->getParent()));
+            settings->enableAudioDevice(deviceID, true);
+        } else {
+            // If channel is disabled and all of them are, disable its device
             disableDeviceIfNoChannels(toggle);
         }
-
-        settings->write();
     }
+
+    settings->write();
 }
 
 void PMUICanvasAudioDevices::disableAllChannelsForDevice(ofxUIToggle *deviceToggle)
@@ -146,4 +139,33 @@ void PMUICanvasAudioDevices::disableDeviceIfNoChannels(ofxUIToggle *channelToggl
 
         settings->enableAudioDevice((unsigned int)(deviceToggle->getID()), false);
     }
+}
+
+void PMUICanvasAudioDevices::disableAllDevicesExcept(ofxUIToggle *deviceToggle)
+{
+    vector<ofxUIWidget *> allWidgets = getWidgets();
+    for (int i = 0; i < allWidgets.size(); ++i)
+    {
+        ofxUIWidget *widget = allWidgets[i];
+        if (widget->getParent()->getKind() != OFX_UI_WIDGET_TOGGLEMATRIX) continue;
+
+        ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(widget->getParent());
+        ofxUIToggle *currentDeviceToggle = dynamic_cast<ofxUIToggle *>(toggleMatrix->getParent());
+        int currentDeviceId = currentDeviceToggle->getID();
+
+        if (currentDeviceId != deviceToggle->getID())
+        {
+            // Disable current device
+            currentDeviceToggle->setValue(false);
+            settings->enableAudioDevice(currentDeviceId, false);
+
+            // Disable all channels for the current device
+            toggleMatrix->setAllToggles(false, false);
+            vector <ofxUIToggle *> channelToggles = toggleMatrix->getToggles();
+            for (int j=0; j<channelToggles.size(); ++j)
+                settings->enableAudioDeviceChannel(currentDeviceId, channelToggles[j]->getID(), false);
+        }
+    }
+
+    deviceToggle->setValue(true);
 }

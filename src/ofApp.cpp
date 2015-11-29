@@ -26,9 +26,7 @@ void ofApp::setup()
         PMSettingsManagerAudioAnalyzers settingsAA = PMSettingsManagerAudioAnalyzers::getInstance();
 
         PMAudioAnalyzer::getInstance().init(
-                settingsAA.getMinPitchMidiNote(), settingsAA.getMaxPitchMidiNote(),
-                settingsAA.getMinEnergy(),
-                settingsAA.getSilenceEnabled(), settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
+                settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
                 settingsAA.getOnsetsThreshold(),
                 settingsAA.getSmoothingDelta(),
                 settingsAA.getAscDescAnalysisSize());
@@ -129,19 +127,6 @@ void ofApp::keyReleased(int key)
         case 'P':
         {
             showFPS = !showFPS;
-            break;
-        }
-        // Start/stop audio analysis
-        case 'k':
-        case 'K':
-        {
-            PMAudioAnalyzer::getInstance().start();
-            break;
-        }
-        case 'l':
-        case 'L':
-        {
-            PMAudioAnalyzer::getInstance().stop();
             break;
         }
         default:
