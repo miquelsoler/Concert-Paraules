@@ -67,7 +67,7 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
     {
         Json::Value jsonDevice;
         jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
-        jsonDevice[STR_DEVICE_ENABLED] = (i==0);
+        jsonDevice[STR_DEVICE_ENABLED] = false;
         jsonDevice[STR_DEVICE_NAME] = devices[i].name;
         jsonDevice[STR_DEVICE_INCHANNELS] = devices[i].inputChannels;
         jsonDevice[STR_DEVICE_OUTCHANNELS] = devices[i].outputChannels;
@@ -77,7 +77,7 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
         {
             Json::Value jsonDeviceChannel;
             jsonDeviceChannel[STR_CHANNEL_ID] = j;
-            jsonDeviceChannel[STR_CHANNEL_ENABLED] = ((i==0) && (j==0));
+            jsonDeviceChannel[STR_CHANNEL_ENABLED] = false;
 
             jsonDevice[STR_CHANNELS].append(jsonDeviceChannel);
         }
@@ -225,4 +225,3 @@ unsigned int PMSettingsManagerAudioDevices::getNumEnabledChannelsForDevice(PMSet
 
     return counter;
 }
-

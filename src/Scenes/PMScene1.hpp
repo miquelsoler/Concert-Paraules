@@ -13,9 +13,6 @@
 
 #include <stdio.h>
 #include "PMBaseScene.hpp"
-#include "PMSettingsManagerPoem.h"
-#include "PMSettingsManagerAudioDevices.h"
-#include "PMSettingsManagerRenderers.h"
 
 #include "PMUICanvasPoem.h"
 #include "PMUICanvasAudioDevices.h"

@@ -26,6 +26,7 @@ private:
 
     void disableAllChannelsForDevice(ofxUIToggle *deviceToggle);
     void disableDeviceIfNoChannels(ofxUIToggle *channelToggle);
+    void disableAllDevicesExcept(ofxUIToggle *deviceToggle);
 
     ofColor deviceLabelColor = ofColor(255, 255, 200);
     PMSettingsManagerAudioDevices *settings;

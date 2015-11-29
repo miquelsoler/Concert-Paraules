@@ -129,19 +129,6 @@ void ofApp::keyReleased(int key)
             showFPS = !showFPS;
             break;
         }
-        // Start/stop audio analysis
-        case 'k':
-        case 'K':
-        {
-            PMAudioAnalyzer::getInstance().start();
-            break;
-        }
-        case 'l':
-        case 'L':
-        {
-            PMAudioAnalyzer::getInstance().stop();
-            break;
-        }
         default:
             break;
     }
