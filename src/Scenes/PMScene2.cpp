@@ -82,6 +82,35 @@ void PMScene2::setup()
                 if (!(*itDevice).enabled) continue;
                 unsigned int numChannels = (unsigned int)((*itDevice).channels.size());
 
+                vector<unsigned int> enabledChannelNumbers;
+
+                for (unsigned int i=0; i<numChannels; i++)
+                {
+                    PMSettingsDeviceChannel channel = (*itDevice).channels[i];
+                    if (!channel.enabled) continue;
+
+                    enabledChannelNumbers.push_back(channel.ID);
+                }
+
+                int deviceId = (*itDevice).ID;
+                int inChannels = (*itDevice).inChannels;
+                int outChannels = (*itDevice).outChannels;
+
+                PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex, deviceId,
+                    inChannels, outChannels, DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE, PMDAA_CHANNEL_MULTI, enabledChannelNumbers);
+
+                ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
+                ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
+
+                ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+                ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
+                ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
+                ofAddListener(deviceAudioAnalyzer->eventShtStateChanged, this, &PMScene2::shtDetected);
+                ofAddListener(deviceAudioAnalyzer->eventMelodyDirection, this, &PMScene2::melodyDirection);
+
+                audioInputIndex++;
+
+/*
                 for (unsigned int i=0; i<numChannels; i++)
                 {
                     PMSettingsDeviceChannel channel = (*itDevice).channels[i];
@@ -93,14 +122,14 @@ void PMScene2::setup()
                     int outChannels = (*itDevice).outChannels;
                     unsigned int channelNumber = channel.ID;
 
-                    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAudioAnalyzer(audioInputIndex, deviceId,
+                    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex, deviceId,
                             inChannels, outChannels,
                             DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE,
-                            PMDAA_CHANNEL_MONO, channelNumber);
+                            channelNumber);
 
                     ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
                     ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
-                    
+
                     ofAddListener(deviceAudioAnalyzer->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
                     ofAddListener(deviceAudioAnalyzer->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
@@ -109,6 +138,7 @@ void PMScene2::setup()
 
                     audioInputIndex++;
                 }
+*/
             }
         }
 
@@ -121,8 +151,8 @@ void PMScene2::setup()
                 audioInputIndex = 0;
                 for (itDevice = enabledAudioDevices->begin(); itDevice != enabledAudioDevices->end(); ++itDevice)
                 {
-                    for (int i = 0; i < (*itDevice).channels.size(); ++i)
-                    {
+//                    for (int i = 0; i < (*itDevice).channels.size(); ++i)
+//                    {
                         string title = "AUDIO ANALYZER " + ofToString(audioInputIndex + 1);
                         PMUICanvasAudioAnalyzer *guiAudioAnalyzer = new PMUICanvasAudioAnalyzer(title, OFX_UI_FONT_MEDIUM, audioInputIndex);
                         guiAudioAnalyzer->init(5, initialY + (audioInputIndex * widthY));
@@ -132,7 +162,7 @@ void PMScene2::setup()
                         guiAudioAnalyzers.push_back(guiAudioAnalyzer);
 
                         audioInputIndex++;
-                    }
+//                    }
                 }
             }
 
