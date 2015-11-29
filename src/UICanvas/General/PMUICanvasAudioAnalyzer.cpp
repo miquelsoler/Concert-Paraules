@@ -224,7 +224,7 @@ void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
     silenceOn = silenceParams.isSilent;
-    cout << "Silent is " << silenceOn << "En.Curr : " << energyCurrent << "Silence Thr , Length  :  " << silenceThreshold << " , " << silenceQueueLength << endl;
+//    cout << "Silent is " << silenceOn << "En.Curr : " << energyCurrent << "Silence Thr , Length  :  " << silenceThreshold << " , " << silenceQueueLength << endl;
 }
 
 //--------------------------------------------------------------------------------------------------
