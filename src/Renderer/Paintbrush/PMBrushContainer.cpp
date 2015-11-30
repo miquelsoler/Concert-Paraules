@@ -66,7 +66,8 @@ void PMBrushContainer::draw()
 //        ofTranslate(x , y);
 //        ofRotate(baseAngle+90);
 //        ofTranslate(halfSize, halfSize);
-        brush.draw(x - halfSize + xOffset, y - halfSize + yOffset, size, size);
+    /// HACK 
+        brush.draw(x - halfSize + xOffset, y - halfSize + yOffset, 50, 50);
 //        brush.draw(0,0, size, size);
 //    ofPopMatrix();
 }
@@ -142,7 +143,7 @@ void PMBrushContainer::setPositionY(float normalizedY)
 void PMBrushContainer::setSize(float normalizedSize)
 {
     if (normalizedSize > 1) normalizedSize = 1;
-    if (normalizedSize < 0.1) normalizedSize = 0.1;
+    if (normalizedSize < 0.001) normalizedSize = 0.001;
     size = int(brush.getWidth() * normalizedSize);
 }
 

@@ -107,14 +107,20 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 //    dimmBackground = 0.5;
     scanWidth = 3;
 
-    /// GUI
-    gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_COLOR, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
-    gui->init(100, 500, 200, 300);
+    // GUI
+    {
+        gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
+        gui->init(100, 500, 200, 300);
+        
+    }
     
     // NEW STUFF
     drawingHorizontal = true;
     drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
     drawingPos = ofRandomuf()*ofGetHeight();
+
+    myGUI = (PMUICanvasColorRenderer *)gui;
+    ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
 }
 
 //--------------------------------------------------------------
@@ -124,7 +130,75 @@ void PMRendererColor::setup()
     
     ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
 
-    scanX = 0.0;
+    startNewBand();
+}
+
+//--------------------------------------------------------------
+void PMRendererColor::startNewBand()
+{
+    scanX = 0;
+
+    // always change orientation
+    drawingHorizontal=!drawingHorizontal;
+        
+    float newProbabilityFull = ofRandomuf();
+    float newProbabilityHalf = ofRandomuf();
+    bool newIsFull;
+    bool newIsHalf;
+    int whichFullBand;
+    int resolution;
+
+    // we a creating a full new band ... so height is maximum it can depending on resolution and orientation
+    if(drawingHorizontal)
+    {
+        resolution = myGUI->getResolutionY();
+        drawingHeight = int(fbo.getHeight()/resolution);
+        cout << " NEW IS ----- HORIZONTAL !!" << endl;
+    }
+    else
+    {
+        resolution = myGUI->getResolutionX();
+        drawingHeight = int(fbo.getWidth()/resolution);
+        cout << " NEW IS ||||||| VERTICAL !! " << myGUI->getResolutionX() << endl;
+    }
+    
+    // which full band position to draw next
+    whichFullBand = int(ceil( ofRandom(0,resolution ) ) );
+
+    // ARE WE IN A FULL BAND MODE ?
+    if(newProbabilityFull>(1.0-myGUI->getFullProbability())) newIsFull=true;
+    else newIsFull=false;
+    
+    drawingPos = (whichFullBand-1) * drawingHeight;
+    
+    if(newIsFull)
+    {
+        // do nothing
+        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
+        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+    }
+    else
+    {
+        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
+        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+        // it's not a full band so we use half of it's width
+        drawingHeight = drawingHeight/2;
+
+        // ... so we want to know which half is it going (+/-)
+        if(newProbabilityHalf>(1.0-myGUI->getHalfProbability())) newIsHalf=true;
+        else newIsHalf=false;
+        
+        // FIRST OR SECOND BAND ?
+        if(newIsHalf)
+        {
+            // do nothing
+        }
+        else
+        {
+            drawingPos = drawingPos + drawingHeight;
+        }
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -132,36 +206,43 @@ void PMRendererColor::update()
 {
     PMBaseRenderer::update();
 
-    PMUICanvasColorRenderer *myGUI = (PMUICanvasColorRenderer *)gui;
-
-
+    
+    
     //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
     scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
     
     if(drawingHorizontal)
-    {
+    {        
         if(scanX > ofGetWidth())
         {
-            scanX = 0;
-            float luck = ofRandomf();
-            bool doTurn;
-            if(luck>=0.0) doTurn = true;
-            else doTurn = false;
+            startNewBand();
+//cout << "scanX : " << scanX << " // pos " << drawingPos << " // Height " << drawingHeight << endl;
+            // we're at the end of the screen ! go back !!
+//            scanX = 0;
+//            float luck = ofRandomf();
+//            bool doTurn;
+//            if(luck>=0.0) doTurn = true;
+//            else doTurn = false;
+//            bool doTurn=true;
+//            
+//            
+//            if (doTurn)
+//            {
+//                drawingHorizontal=false;
+//                // change direction
+//                //drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
+//                drawingPos = ofRandomuf()*ofGetWidth();
+//                
+//                startNewBand();
+//            }
+//            else
+//            {
+//                // change direction
+//                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
+//                drawingPos = ofRandomuf()*ofGetHeight();
+//            }
+//            
             
-            
-            if (doTurn)
-            {
-                drawingHorizontal=false;
-                // change direction
-                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
-                drawingPos = ofRandomuf()*ofGetWidth();
-            }
-            else
-            {
-                // change direction
-                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
-                drawingPos = ofRandomuf()*ofGetHeight();
-            }
             
         }
     }
@@ -170,27 +251,30 @@ void PMRendererColor::update()
         // we're drawing vertical
         if(scanX > ofGetHeight())
         {
-            scanX = 0;
-            
-            bool doTurn;
-            if(ofRandomf()>=0.0) doTurn = true;
-            else doTurn = false;
-            
-            if (doTurn)
-            {
-                // change direction
-                drawingHorizontal = true;
-                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
-                drawingPos = ofRandomuf()*ofGetHeight();
-            }
-            else
-            {
-                // change direction
-                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
-                drawingPos = ofRandomuf()*ofGetWidth();
-            }
-
-            
+            startNewBand();
+//            cout << "scanX : " << scanX << " // pos " << drawingPos << " // Height " << drawingHeight << endl;
+//
+//            scanX = 0;
+//            
+//            bool doTurn;
+//            if(ofRandomf()>=0.0) doTurn = true;
+//            else doTurn = false;
+//            
+//            if (doTurn)
+//            {
+//                // change direction
+//                drawingHorizontal = true;
+//                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
+//                drawingPos = ofRandomuf()*ofGetHeight();
+//            }
+//            else
+//            {
+//                // change direction
+//                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
+//                drawingPos = ofRandomuf()*ofGetWidth();
+//            }
+//
+//            
 
         }
     }
@@ -289,18 +373,23 @@ void PMRendererColor::drawIntoFBO()
                 ofSetColor(c);
                 
                 // shape
-                ofSetRectMode(OF_RECTMODE_CENTER);
-                if(drawingHorizontal)
+                if(!isSilent)
                 {
-                    ofDrawRectangle(scanX,drawingPos,myGUI->getScanWidth(), drawingHeight);
+                    ofSetRectMode(OF_RECTMODE_CORNER);
+                    if(drawingHorizontal)
+                    {
+                        ofDrawRectangle(scanX,drawingPos,myGUI->getScanWidth(), drawingHeight);
+//                        cout << "Drawing Horizontal!!";
+                    }
+                    else
+                    {
+                        ofDrawRectangle(drawingPos,scanX,drawingHeight,myGUI->getScanWidth());
+//                        cout << "Drawing Vertical!!";
+                    }
+                    ofSetRectMode(OF_RECTMODE_CORNER);
                 }
-                else
-                {
-                    ofDrawRectangle(drawingPos,scanX,drawingHeight,myGUI->getScanWidth());
-                }
-                ofSetRectMode(OF_RECTMODE_CORNER);
                 
-//                cout << "scanX : " << scanX << " // pos " << drawingPos << "Height " << drawingHeight << endl;
+//                cout << "scanX : " << scanX << " // pos " << drawingPos << " // Height " << drawingHeight << endl;
                 
                 break;
             }

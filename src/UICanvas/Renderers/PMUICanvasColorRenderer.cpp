@@ -16,13 +16,23 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     
     addSpacer();
     addIntSlider("Mode",1,10,&guiMode);
-
-    addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
-    addSlider("Scan With",0.0,150.0,&guiScanWidth);
-
+    addSpacer();
+    addLabel("COLOR");
     addImageSampler("Gradient", &gradientImage);
     addIntSlider("Gradient Id",1,4,&gradientId);
     numGradients = 4;
+
+    addSpacer();
+    addLabel("GRID");
+    addIntSlider("Resolution X",1,64,&guiResolutionX);
+    addIntSlider("Resolution Y",1,64,&guiResolutionY);
+    addSlider("Full Probability",0.0,1.0,&guiFullProbability);
+    addSlider("Half Probability -/+(",0.0,1.0,&guiHalfProbability);
+    
+    addSpacer();
+    addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
+    addSlider("Scan With",0.0,150.0,&guiScanWidth);
+
     
     if (autosize) autoSizeToFitWidgets();
 
@@ -78,7 +88,6 @@ void PMUICanvasColorRenderer::setScanSpeedX(float _s)
 {
     guiScanSpeedX = _s;
 }
-
 
 
 

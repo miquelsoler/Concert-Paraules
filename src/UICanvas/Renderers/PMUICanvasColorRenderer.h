@@ -27,6 +27,11 @@ public:
     ofColor     getGradientColor(int _row,float _p);
     int         getGradientId();
     
+    int         getResolutionX(){return guiResolutionX;};
+    int         getResolutionY(){return guiResolutionY;};
+    float       getFullProbability(){return guiFullProbability;};
+    float       getHalfProbability(){return guiHalfProbability;};
+    
     // SETTERS
     void        setScanSpeedX(float _s);
     
@@ -37,9 +42,16 @@ private:
     float       guiScanWidth;
     float       guiScanSpeedX;
 
+    /// GUI COLOR
     ofImage     gradientImage;
     int         gradientId;
     int         numGradients;
+    
+    /// GUI GRID
+    int         guiResolutionX;
+    int         guiResolutionY;
+    float       guiFullProbability;
+    float       guiHalfProbability;
     
     
 };

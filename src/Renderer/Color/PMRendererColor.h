@@ -34,6 +34,7 @@ private:
     
     int     scanWidth;
     
+    PMUICanvasColorRenderer *myGUI;
     PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
     /// mode 1
@@ -43,9 +44,14 @@ private:
     float   scanX;
     
     /// NEW STUFF
+    
+    // GRID
     bool        drawingHorizontal;
-    float       drawingHeight;
+    int         drawingHeight;
     float       drawingPos;
+
+    void        startNewBand();
+    
 };
 
 
