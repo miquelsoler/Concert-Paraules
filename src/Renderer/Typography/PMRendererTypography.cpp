@@ -104,6 +104,7 @@ void PMRendererTypography::addLetter()
     {
         int iLetter = int(ofRandom(charset.size()));
 
+        cout << "letter size : " << letterSize << endl;
         mutexActiveLetters.lock();
         {
             PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
@@ -121,6 +122,9 @@ void PMRendererTypography::setLetterSize(float normalizedSize)
     letterSize = normalizedSize;
     if (letterSize <= 0) letterSize = 0.01;
     if (letterSize > 1) letterSize = 1.0;
+    
+    cout << "letter size 2 : " << letterSize << endl;
+
 }
 
 void PMRendererTypography::setYVelocity(float normalizedVelocity)

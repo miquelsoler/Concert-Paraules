@@ -74,7 +74,7 @@ void PMRendererPaintbrush::drawIntoFBO()
             brush->draw();
 
         for (int i=0; i<particles.size(); i++){
-            particles[i].draw();
+            //particles[i].draw();
         }
 
         ofDisableBlendMode();
@@ -118,7 +118,7 @@ void PMRendererPaintbrush::setPositionY(float normalizedY)
 //------------------------------------------------------------------------------------------
 void PMRendererPaintbrush::setSize(float normalizedSize)
 {
-    //brush->setSize(normalizedSize);
+    brush->setSize(normalizedSize);
 }
 
 //------------------------------------------------------------------------------------------
@@ -156,6 +156,6 @@ void PMRendererPaintbrush::energyChanged(energyParams energyParams)
     PMBaseRenderer::energyChanged(energyParams);
     
     PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)gui;
-    paintbrushRenderer->setSize(gui->getSmoothedEnergy());
+    paintbrushRenderer->setSize(0.001);
 }
 
