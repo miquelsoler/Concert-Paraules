@@ -97,7 +97,7 @@ void PMScene2::setup()
                 int outChannels = (*itDevice).outChannels;
 
                 PMDeviceAudioAnalyzer *deviceAudioAnalyzer = PMAudioAnalyzer::getInstance().addDeviceAnalyzer(audioInputIndex, deviceId,
-                    inChannels, outChannels, DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE, PMDAA_CHANNEL_MULTI, enabledChannelNumbers);
+                    inChannels, outChannels, DEFAULT_SAMPLERATE, DEFAULT_BUFFERSIZE, enabledChannelNumbers);
 
                 ofAddListener(deviceAudioAnalyzer->eventPitchChanged, this, &PMScene2::pitchChanged);
                 ofAddListener(deviceAudioAnalyzer->eventEnergyChanged, this, &PMScene2::energyChanged);
