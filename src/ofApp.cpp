@@ -28,7 +28,6 @@ void ofApp::setup()
         PMAudioAnalyzer::getInstance().init(
                 settingsAA.getSilenceThreshold(), settingsAA.getSilenceQueueLength(),
                 settingsAA.getOnsetsThreshold(),
-                settingsAA.getSmoothingDelta(),
                 settingsAA.getAscDescAnalysisSize());
     }
 
