@@ -100,6 +100,12 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
+    if (box2d.getWorld()->IsLocked())
+    {
+        cout << "Letter not added" << endl;
+        return;
+    }
+
     mutexAddLetter.lock();
     {
         int iLetter = int(ofRandom(charset.size()));
@@ -108,7 +114,6 @@ void PMRendererTypography::addLetter()
         mutexActiveLetters.lock();
         {
             PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
-//            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
             shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
             activeLetters.push_back(letterContainer);
         }

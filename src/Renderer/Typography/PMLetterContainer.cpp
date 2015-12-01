@@ -53,7 +53,7 @@ void PMLetterContainer::draw()
         ofRotateZ(getRotation());
         ofScale(letterSize, letterSize);
         ofSetColor(ofColor::black);
-        letterFont->drawString(letter, -width/2, height/2);
+        letterFont->drawStringAsShapes(letter, -width/2, height/2);
     }
     ofPopMatrix();
 }

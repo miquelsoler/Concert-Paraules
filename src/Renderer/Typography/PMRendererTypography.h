@@ -57,7 +57,6 @@ private:
     
     float                               typoTimer;
     bool                                typoTimerEnabled;
-
 };
 
 
