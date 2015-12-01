@@ -153,13 +153,13 @@ void PMRendererColor::startNewBand()
     {
         resolution = myGUI->getResolutionY();
         drawingHeight = int(fbo.getHeight()/resolution);
-        cout << " NEW IS ----- HORIZONTAL !!" << endl;
+//        cout << " NEW IS ----- HORIZONTAL !!" << endl;
     }
     else
     {
         resolution = myGUI->getResolutionX();
         drawingHeight = int(fbo.getWidth()/resolution);
-        cout << " NEW IS ||||||| VERTICAL !! " << myGUI->getResolutionX() << endl;
+//        cout << " NEW IS ||||||| VERTICAL !! " << myGUI->getResolutionX() << endl;
     }
     
     // which full band position to draw next
@@ -173,14 +173,14 @@ void PMRendererColor::startNewBand()
     
     if(newIsFull)
     {
-        // do nothing
-        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
-        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+          // do nothing
+//        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
+//        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
     }
     else
     {
-        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
-        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+//        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
+//        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
         // it's not a full band so we use half of it's width
         drawingHeight = drawingHeight/2;
 
