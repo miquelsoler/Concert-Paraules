@@ -57,6 +57,10 @@ private:
     
     float                               typoTimer;
     bool                                typoTimerEnabled;
+
+    bool somethingInContact;
+    void contactStart(ofxBox2dContactArgs &e);
+    void contactEnd(ofxBox2dContactArgs &e);
 };
 
 

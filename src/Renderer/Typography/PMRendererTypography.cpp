@@ -43,9 +43,14 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
         PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
         box2d.init();
+        box2d.enableEvents();
         box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
         box2d.createBounds();
         box2d.setFPS(60);
+
+        // register the listener so that we get the events
+        ofAddListener(box2d.contactStartEvents, this, &PMRendererTypography::contactStart);
+        ofAddListener(box2d.contactEndEvents, this, &PMRendererTypography::contactEnd);
     }
     
     typoTimerEnabled = false;
@@ -100,17 +105,12 @@ void PMRendererTypography::drawIntoFBO()
 
 void PMRendererTypography::addLetter()
 {
-    if (box2d.getWorld()->IsLocked())
-    {
-        cout << "Letter not added" << endl;
-        return;
-    }
+    if (somethingInContact) return;
 
     mutexAddLetter.lock();
     {
         int iLetter = int(ofRandom(charset.size()));
 
-//        cout << "letter size : " << letterSize << endl;
         mutexActiveLetters.lock();
         {
             PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
@@ -199,7 +199,7 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
     if (typoTimerEnabled)
     {
         float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-        if (diffTimeMs > 50)
+        if (diffTimeMs > 25)
         {
             typoTimer = ofGetElapsedTimeMillis();
 
@@ -238,8 +238,16 @@ void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
 void PMRendererTypography::pauseStateChanged(pauseParams &pauseParams)
 {
     PMBaseRenderer::pauseStateChanged(pauseParams);
-
-    
 }
 
+void PMRendererTypography::contactStart(ofxBox2dContactArgs &e)
+{
+    somethingInContact = true;
+}
+
+void PMRendererTypography::contactEnd(ofxBox2dContactArgs &e)
+{
+    somethingInContact = false;
+
+}
 
