@@ -13,7 +13,6 @@
 
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
-//--------------------------------------------------------------------------------------------------
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
 #ifdef OF_DEBUG
@@ -33,7 +32,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 PMScene2::~PMScene2()
 {
     for (int i=0; i<guiAudioAnalyzers.size(); ++i)
@@ -44,7 +42,6 @@ PMScene2::~PMScene2()
     guiAudioAnalyzers.clear();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::setup()
 {
     // Create Renderer
@@ -149,7 +146,6 @@ void PMScene2::setup()
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::update()
 {
     renderer->update();
@@ -160,7 +156,6 @@ void PMScene2::update()
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::updateEnter()
 {
     if (isEnteringFirst())
@@ -182,7 +177,6 @@ void PMScene2::updateEnter()
     PMBaseScene::updateEnter();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::updateExit()
 {
     renderer->showGUI(false);
@@ -191,17 +185,16 @@ void PMScene2::updateExit()
     PMBaseScene::updateExit();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::draw()
 {
     renderer->draw();
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
+    ofDrawBitmapString("Renderer state: " + ofToString(renderer->getState()), 15, ofGetHeight() - 60);
 #endif
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
@@ -226,7 +219,6 @@ void PMScene2::saveSettings()
 
 #pragma mark - Keyboard events
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::keyReleased(int key)
 {
     PMBaseScene::keyReleased(key);
@@ -246,6 +238,11 @@ void PMScene2::keyReleased(int key)
 
             ofClear(backgroundColor);
 
+            break;
+        }
+        case ' ':
+        {
+            renderer->switchStateOnOff();
             break;
         }
         case 'r':
@@ -272,12 +269,8 @@ void PMScene2::keyReleased(int key)
 }
 
 
-//--------------------------------------------------------------------------------------------------
 #pragma mark - Audio Events
-//--------------------------------------------------------------------------------------------------
 
-
-//--------------------------------------------------------------------------------------------------
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     renderer->pitchChanged(pitchParams);
@@ -295,7 +288,6 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
  
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::energyChanged(energyParams &energyParams)
 {
     renderer->energyChanged(energyParams);
@@ -326,18 +318,21 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
-    renderer->setEnabled(!pauseParams.isPaused);
+    if (pauseParams.isPaused)
+        renderer->setState(RENDERERSTATE_PAUSED);
+    else
+    {
+        if (renderer->getState() == RENDERERSTATE_PAUSED)
+            renderer->setState(RENDERERSTATE_ON);
+    }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::shtDetected(shtParams &shtParams)
 {
     switch(renderer->getType())
@@ -359,7 +354,6 @@ void PMScene2::shtDetected(shtParams &shtParams)
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
 {
     switch (renderer->getType())

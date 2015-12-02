@@ -30,31 +30,30 @@ void PMRendererPaintbrush::update()
 {
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *) gui;
 
-    if (enabled)
-    {
-        brush->update();
-        brush->setBounceWalls(myGUI->getBouncyWalls());
-        brush->setColor(myGUI->getBrushColor());
+    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
 
-        PMBaseRenderer::update();
+    brush->update();
+    brush->setBounceWalls(myGUI->getBouncyWalls());
+    brush->setColor(myGUI->getBrushColor());
 
-        if (particles.size() == 0) {
-            particles.push_back(PMParticle(brush->getPosition(), ofPoint(0, 0), brush->getImage()));
-        } else {
-            particles.push_back(PMParticle(brush->getPosition(), particles[particles.size() - 1].getPosition(), brush->getImage()));
-        }
+    PMBaseRenderer::update();
 
-        if (particles.at(0).isDead()) {
-            particles.pop_front();
-        }
+    if (particles.size() == 0) {
+        particles.push_back(PMParticle(brush->getPosition(), ofPoint(0, 0), brush->getImage()));
+    } else {
+        particles.push_back(PMParticle(brush->getPosition(), particles[particles.size() - 1].getPosition(), brush->getImage()));
+    }
 
-        for (int i = 0; i < particles.size(); i++) {
-            particles[i].update();
-            particles[i].setVelocity(myGUI->getParticleVelocity());
-            particles[i].setLife(myGUI->getParticleLife());
-            particles[i].setBounceWalls(myGUI->getBouncyWalls());
-            particles[i].setColor(myGUI->getBrushColor());
-        }
+    if (particles.at(0).isDead()) {
+        particles.pop_front();
+    }
+
+    for (int i = 0; i < particles.size(); i++) {
+        particles[i].update();
+        particles[i].setVelocity(myGUI->getParticleVelocity());
+        particles[i].setLife(myGUI->getParticleLife());
+        particles[i].setBounceWalls(myGUI->getBouncyWalls());
+        particles[i].setColor(myGUI->getBrushColor());
     }
 }
 
@@ -70,8 +69,7 @@ void PMRendererPaintbrush::drawIntoFBO()
 
         ofEnableBlendMode(OF_BLENDMODE_ADD);
 
-        if (enabled)
-            brush->draw();
+        if (state == RENDERERSTATE_ON) brush->draw();
 
         for (int i=0; i<particles.size(); i++){
             //particles[i].draw();

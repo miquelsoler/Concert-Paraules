@@ -197,7 +197,6 @@ void PMRendererColor::startNewBand()
             drawingPos = drawingPos + drawingHeight;
         }
     }
-
 }
 
 //--------------------------------------------------------------
@@ -205,8 +204,8 @@ void PMRendererColor::update()
 {
     PMBaseRenderer::update();
 
-    
-    
+    if (state != RENDERERSTATE_ON) return;
+
     //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
     scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
     
@@ -240,9 +239,6 @@ void PMRendererColor::update()
 //                drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
 //                drawingPos = ofRandomuf()*ofGetHeight();
 //            }
-//            
-            
-            
         }
     }
     else
@@ -272,9 +268,6 @@ void PMRendererColor::update()
 //                drawingHeight = 50 + (ofRandomuf()*ofGetWidth()/4);
 //                drawingPos = ofRandomuf()*ofGetWidth();
 //            }
-//
-//            
-
         }
     }
 }
@@ -282,6 +275,8 @@ void PMRendererColor::update()
 //--------------------------------------------------------------
 void PMRendererColor::drawIntoFBO()
 {
+    if (state != RENDERERSTATE_ON) return;
+
     PMUICanvasColorRenderer *myGUI = (PMUICanvasColorRenderer *)gui;
 
     fbo.begin();
@@ -395,15 +390,13 @@ void PMRendererColor::drawIntoFBO()
             default:
                 break;
         }
-        
-        
+
         ofDisableBlendMode();
         
         //update old values
         
         //oldPitch = pitchSmooth;
         //oldEnergy = energySmooth;
-
     }
     fbo.end();
 
@@ -419,6 +412,3 @@ void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
     {
     }
 }
-
-
-

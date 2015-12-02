@@ -19,6 +19,13 @@ typedef enum
     RENDERERTYPE_COLOR = 2
 } PMRendererType;
 
+typedef enum
+{
+    RENDERERSTATE_ON = 0,       // Listening to audio events and rendering
+    RENDERERSTATE_PAUSED = 1,   // Listening to audio events but not rendering
+    RENDERERSTATE_OFF = 2       // Screen is cleared and nothing is rendered
+} PMRendererState;
+
 class PMBaseRenderer
 {
 public:
@@ -33,14 +40,15 @@ public:
     virtual void drawIntoFBO() = 0;
 
     // SETTERS
-    void setEnabled(bool _enabled) { enabled = _enabled; };
-    void setPaused(bool _paused) { paused = _paused; };
-    void setNeedsToBeCleared(bool _b);
+    void setState(PMRendererState newState);
+    void switchStateOnOff();
+    void setNeedsToBeCleared(bool _needsToBeCleared) { needsToBeCleared = _needsToBeCleared; };
     
     // GETTERS
-    ofFbo*          getFbo(){return &fbo;};
+    ofFbo*          getFbo() { return &fbo; };
+    PMRendererState getState() { return state; };
     PMRendererType  getType() { return type; };
-    bool            getNeedsToBeCleared();
+    bool            getNeedsToBeCleared() { return needsToBeCleared; };
     
     void showGUI(bool show);
     
@@ -53,9 +61,7 @@ public:
 protected:
 
     PMRendererType          type;
-
-    bool                    enabled;    // Manual enabled/disable of renderer
-    bool                    paused;     // During a pause/silence, ignore audio events
+    PMRendererState         state;
 
     ofFbo                   fbo;
 
@@ -68,7 +74,6 @@ protected:
     float                   oldEnergy;
     
     bool                    isSilent;
-    bool                    isPaused;
 };
 
 
