@@ -14,7 +14,6 @@
 #pragma once
 
 #include "PMBaseRenderer.h"
-#include "PMSettingsManagerAudioAnalyzers.h"
 #include "PMUICanvasColorRenderer.h"
 
 class PMRendererColor : public PMBaseRenderer
@@ -35,7 +34,6 @@ private:
     int     scanWidth;
     
     PMUICanvasColorRenderer *myGUI;
-    PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
     /// mode 1
     ofVec3f LAB2RGB(float CIEL,float CIEa,float CIEb);

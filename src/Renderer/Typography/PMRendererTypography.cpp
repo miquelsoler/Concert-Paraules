@@ -132,8 +132,9 @@ void PMRendererTypography::addLetter()
 void PMRendererTypography::setLetterSize(float normalizedSize)
 {
     letterSize = normalizedSize;
-    if (letterSize <= 0) letterSize = 0.01;
-    if (letterSize > 1) letterSize = 1.0;
+
+    if (letterSize <= 0.0f) letterSize = 0.01;
+    if (letterSize > 1.0f) letterSize = 1.0;
 }
 
 void PMRendererTypography::setYVelocity(float normalizedVelocity)
@@ -219,14 +220,13 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
-    
     setLetterSize(gui->getSmoothedEnergy());
 }
 
 //------------------------------------------------------------------------------------------
 void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
 {
-//    PMBaseRenderer::silenceStateChanged(silenceParams);
+    PMBaseRenderer::silenceStateChanged(silenceParams);
     
     typoTimerEnabled = !silenceParams.isSilent;
     if (typoTimerEnabled)

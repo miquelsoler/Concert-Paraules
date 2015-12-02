@@ -1,28 +1,28 @@
 {
    "Energy" : {
-      "Max Energy" : 0.2955664992332458,
+      "Max Energy" : 0,
       "Min Energy" : 0.04926108196377754
    },
    "Mel Bands" : {
       "Enabled" : true,
-      "Number of Bands" : 4
+      "Number of Bands" : 1
    },
    "Onsets" : {
-      "Alpha" : 0.09852216392755508,
-      "Silence Threshold" : 1.871921062469482
+      "Alpha" : 0,
+      "Silence Threshold" : 0
    },
    "Pitch" : {
       "Ascending Descending Analysis Size" : 20,
-      "Max MIDI Note" : 60.59113311767578,
-      "Min MIDI Note" : 34.97537231445312
+      "Max MIDI Note" : 0,
+      "Min MIDI Note" : 0
    },
    "Silence" : {
       "Enabled" : true,
-      "Queue Length (ms)" : 50,
+      "Queue Length (ms)" : 0,
       "Threshold (ms)" : 0.009999999776482582
    },
    "Smoothing" : {
-      "Delta" : 0.009852216579020023
+      "Delta" : 0
    }
 }
 

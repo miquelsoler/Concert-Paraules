@@ -22,7 +22,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     showGUI = PMSettingsManagerGeneral::getInstance().getReleaseShowGUIScene2();
 #endif
 
-    audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
     recorder = &PMRecorder::getInstance();
 
     backgroundColor = ofColor::white;
@@ -289,27 +288,6 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             p->pitchChanged(pitchParams);
             break;
         }
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-            // TODO: Should move this all to <audio to sceneparams mapper>
-//            if (typoTimerEnabled)
-//            {
-//                float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-//                if (diffTimeMs > 50)
-//                {
-//                    typoTimer = ofGetElapsedTimeMillis();
-//
-//                    float minVelocity = 0.01;
-//                    float maxVelocity = 1.0;
-//                    float velocityY = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minVelocity, maxVelocity, true);
-//
-//                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
-//                    typoRenderer->setYVelocity(velocityY);
-//                    typoRenderer->addLetter();
-//                }
-//            }
-            break;
-        }
         default: break;
     }
  
@@ -320,33 +298,8 @@ void PMScene2::energyChanged(energyParams &energyParams)
 {
     renderer->energyChanged(energyParams);
 
-    // calculate Energy
-    /////////////////////
-    float normalizedSizeMin = 0.01f;
-    float normalizedSizeMax = 1.0f;
-    
-    // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
-    float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
-    double eulerIdentity = M_E;
-    // ? eloi : a mi em funciona millor en lineal // linearSize = powf(linearSize, float(1.0/eulerIdentity));
-    
-    float energy = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
-
-    // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
-    if (isnan(energy)) energy = 0;
-
     switch(renderer->getType())
     {
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-            // FIXME: A l'Eloi li peta.
-            // Peta
-            // Miquel: ... a mi no ...
-            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-            float normalizedSize = energy;
-            typoRenderer->setLetterSize(normalizedSize);
-            break;
-        }
         default: break;
     }
 }
@@ -366,13 +319,6 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
                 paintbrushRenderer->changeBaseAngle();
             }
             break;
-        }
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-//            typoTimerEnabled = !silenceParams.isSilent;
-//            if (typoTimerEnabled)
-//                typoTimer = ofGetElapsedTimeMillis();
-//            break;
         }
         default: break;
     }

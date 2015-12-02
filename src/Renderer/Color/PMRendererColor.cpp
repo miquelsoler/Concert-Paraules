@@ -103,7 +103,6 @@ ofVec3f lab2rgb(int L,int a,int b){
 //--------------------------------------------------------------
 PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 {
-    audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
 //    dimmBackground = 0.5;
     scanWidth = 3;
 
