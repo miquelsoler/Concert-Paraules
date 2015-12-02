@@ -10,6 +10,9 @@
 static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 //static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
+static const float MILLISECONDS_NEXT_LETTER = 50;
+
+
 PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY)
 {
     buildCharsetFromPoem();
@@ -62,6 +65,8 @@ void PMRendererTypography::setup()
 
     if (!activeLetters.empty())
         activeLetters.clear();
+
+    somethingInContact = false;
 }
 
 void PMRendererTypography::update()
@@ -114,7 +119,9 @@ void PMRendererTypography::addLetter()
         mutexActiveLetters.lock();
         {
             PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
-            shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
+            shared_ptr<PMLetterContainer> letterContainer =
+                    shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
+
             activeLetters.push_back(letterContainer);
         }
         mutexActiveLetters.unlock();
@@ -125,11 +132,9 @@ void PMRendererTypography::addLetter()
 void PMRendererTypography::setLetterSize(float normalizedSize)
 {
     letterSize = normalizedSize;
-    if (letterSize <= 0) letterSize = 0.01;
-    if (letterSize > 1) letterSize = 1.0;
-    
-//    cout << "letter size 2 : " << letterSize << endl;
 
+    if (letterSize <= 0.0f) letterSize = 0.01;
+    if (letterSize > 1.0f) letterSize = 1.0;
 }
 
 void PMRendererTypography::setYVelocity(float normalizedVelocity)
@@ -145,7 +150,8 @@ void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
         addLetter();
 }
 
-void PMRendererTypography::buildCharsetFromPoem() {
+void PMRendererTypography::buildCharsetFromPoem()
+{
     PMSettingsManagerPoem *poemSettings = &PMSettingsManagerPoem::getInstance();
 
     string strPoemFolder = poemSettings->getFolderPath();
@@ -167,7 +173,6 @@ void PMRendererTypography::buildCharsetFromPoem() {
         if (!(*iter).empty())
         {
             string line = (*iter);
-//            cout << line << endl;
             ofStringReplace(line, ",", " "); ofStringReplace(line, ";", " ");
             ofStringReplace(line, ":", " "); ofStringReplace(line, ".", " ");
             ofStringReplace(line, "-", " "); ofStringReplace(line, "!", " ");
@@ -177,7 +182,6 @@ void PMRendererTypography::buildCharsetFromPoem() {
                 string word = words[i];
                 string::iterator it;
                 for (it = word.begin(); it != word.end(); ++it) {
-//                for (int j = 0; j < word.length(); ++j) {
                     bool found = ofIsStringInString(charset, ofToString(*it));
                     if (!found)
                         charset += ofToString(*it);
@@ -199,17 +203,13 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
     if (typoTimerEnabled)
     {
         float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-        if (diffTimeMs > 25)
+        if (diffTimeMs > MILLISECONDS_NEXT_LETTER)
         {
             typoTimer = ofGetElapsedTimeMillis();
 
             float minVelocity = 0.01;
             float maxVelocity = 1.0;
             float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
-
-//            cout << "Smoothed pitch: " << gui->getSmoothedPitch() << endl;
-//            cout << "Velocity Y: " << velocityY << endl;
-
             setYVelocity(velocityY);
             addLetter();
         }
@@ -220,14 +220,13 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
-    
     setLetterSize(gui->getSmoothedEnergy());
 }
 
 //------------------------------------------------------------------------------------------
 void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
 {
-//    PMBaseRenderer::silenceStateChanged(silenceParams);
+    PMBaseRenderer::silenceStateChanged(silenceParams);
     
     typoTimerEnabled = !silenceParams.isSilent;
     if (typoTimerEnabled)
@@ -248,6 +247,4 @@ void PMRendererTypography::contactStart(ofxBox2dContactArgs &e)
 void PMRendererTypography::contactEnd(ofxBox2dContactArgs &e)
 {
     somethingInContact = false;
-
 }
-

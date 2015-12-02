@@ -40,11 +40,11 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
 
-        // Audio settings
-        guiAudioSettings = new PMUICanvasAudioSettings("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
-        guiAudioSettings->init(240,5);
-        guiAudioSettings->setBackgroundColor(canvasBgColor);
-        guiAudioSettings->setVisible(false);
+//        // Audio settings
+//        guiAudioSettings = new PMUICanvasAudioSettings("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
+//        guiAudioSettings->init(240,5);
+//        guiAudioSettings->setBackgroundColor(canvasBgColor);
+//        guiAudioSettings->setVisible(false);
     }
 }
 
@@ -53,7 +53,7 @@ PMScene1::~PMScene1()
     delete guiPoemSelector;
     delete guiAudioDevices;
     delete guiRendererSettings;
-    delete guiAudioSettings;
+//    delete guiAudioSettings;
 }
 
 void PMScene1::setup()
@@ -72,12 +72,12 @@ void PMScene1::updateEnter()
         guiPoemSelector->loadSettings(STR_CANVAS_BASEPATH + "poem1.xml");
         guiAudioDevices->loadSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
         guiRendererSettings->loadSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
-        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
+//        guiAudioSettings->loadSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
         guiPoemSelector->setVisible(true);
         guiAudioDevices->setVisible(true);
         guiRendererSettings->setVisible(true);
-        guiAudioSettings->setVisible(true);
+//        guiAudioSettings->setVisible(true);
     }
 
     PMBaseScene::updateEnter();
@@ -99,10 +99,10 @@ void PMScene1::saveSettings()
     guiPoemSelector->saveSettings(STR_CANVAS_BASEPATH + "poem1.xml");
     guiAudioDevices->saveSettings(STR_CANVAS_BASEPATH + "audioDevices1.xml");
     guiRendererSettings->saveSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
-    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
+//    guiAudioSettings->saveSettings(STR_CANVAS_BASEPATH + "audioSettings1.xml");
 
     guiPoemSelector->setVisible(false);
     guiAudioDevices->setVisible(false);
     guiRendererSettings->setVisible(false);
-    guiAudioSettings->setVisible(false);
+//    guiAudioSettings->setVisible(false);
 }

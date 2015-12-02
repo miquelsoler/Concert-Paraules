@@ -9,14 +9,8 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type)
     fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
 
     type = _type;
-//    numInputs = _numInputs;
     needsToBeCleared = false;
     isSilent = false;
-    isPaused = false;
-
-    /// GUI
-//    gui = new PMUICanvasBaseRenderer("GUI BASE RENDERER",OFX_UI_FONT_MEDIUM);
-//    gui->init(100, 500, 200, 300);
 }
 
 void PMBaseRenderer::setup()
@@ -29,13 +23,12 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-    enabled = true;
-//    enabled.assign(numInputs, false); // Init all elements with false; FIXME: is it to false or true?
+//    enabled = false;
+    state = RENDERERSTATE_OFF;
 }
 
 void PMBaseRenderer::update()
 {
-//    cout << "Is active? " << enabled << endl;
     fbo.begin();
     {
         // background dimming
@@ -58,28 +51,58 @@ void PMBaseRenderer::draw()
         clear();
     }
 
-//    ofClear(255, 255, 255, 255);
-//    fbo.draw(0, 0);
-
     // set background for base renderer
     ofColor c = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 255);
     ofClear(c);
 
+    // Skip FBO drawing if renderer is off
+    if (state == RENDERERSTATE_OFF) return;
+
     // draw the fbo with contents to screen
     fbo.draw(0, 0);
-
-    // draw gui of base renderer
-    //gui->draw();
 }
 
-bool PMBaseRenderer::getNeedsToBeCleared()
+void PMBaseRenderer::setState(PMRendererState newState)
 {
-    return needsToBeCleared;
+    if (newState == state) return;
+
+//    cout << "[STATE] Previous:" << state;
+
+    switch(state) // Different behavior according to current state and new state
+    {
+        case RENDERERSTATE_ON: {
+            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
+            state = newState;
+            break;
+        }
+        case RENDERERSTATE_PAUSED: {
+            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
+            if (newState == RENDERERSTATE_ON) setNeedsToBeCleared(false);
+            state = newState;
+            break;
+        }
+        case RENDERERSTATE_OFF: {
+            if (newState == RENDERERSTATE_ON)
+                state = newState;
+            break;
+        }
+    }
+
+//    cout << " New:" << state << endl;
 }
 
-void PMBaseRenderer::setNeedsToBeCleared(bool _b)
+void PMBaseRenderer::switchStateOnOff()
 {
-    needsToBeCleared = _b;
+    switch(state)
+    {
+        case RENDERERSTATE_ON:
+        case RENDERERSTATE_PAUSED:
+            setState(RENDERERSTATE_OFF);
+            break;
+        case RENDERERSTATE_OFF:
+            setState(RENDERERSTATE_ON);
+            break;
+    }
 }
 
 void PMBaseRenderer::clear()
@@ -93,8 +116,6 @@ void PMBaseRenderer::clear()
         ofClear(0, 0, 0, 0);
     }
     fbo.end();
-
-
 }
 
 void PMBaseRenderer::showGUI(bool show)
@@ -112,7 +133,6 @@ void PMBaseRenderer::pitchChanged(pitchParams pitchParams)
     gui->setSmoothPitch(ofMap(smoothedPitch, gui->getPitchMin(), gui->getPitchMax(), 0.0, 1.0, true));
 
     oldPitch = smoothedPitch;
-
 }
 
 void PMBaseRenderer::energyChanged(energyParams energyParams)
@@ -124,7 +144,6 @@ void PMBaseRenderer::energyChanged(energyParams energyParams)
     gui->setSmoothEnergy(ofMap(smoothedEnergy, gui->getEnergyMin(), gui->getEnergyMax(), 0.0, 1.0, true));
 
     oldEnergy = smoothedEnergy;
-
 }
 
 void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
@@ -134,5 +153,8 @@ void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
 
 void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)
 {
-    isPaused = pauseParams.isPaused;
+    if (pauseParams.isPaused)
+        setState(RENDERERSTATE_PAUSED);
+    else
+        setState(RENDERERSTATE_ON);
 }

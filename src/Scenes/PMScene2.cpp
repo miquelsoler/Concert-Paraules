@@ -13,7 +13,6 @@
 
 static const string STR_CANVAS_BASEPATH = "settings/gui/";
 
-//--------------------------------------------------------------------------------------------------
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
 #ifdef OF_DEBUG
@@ -22,7 +21,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     showGUI = PMSettingsManagerGeneral::getInstance().getReleaseShowGUIScene2();
 #endif
 
-    audioAnalyzersSettings = &PMSettingsManagerAudioAnalyzers::getInstance();
     recorder = &PMRecorder::getInstance();
 
     backgroundColor = ofColor::white;
@@ -34,7 +32,6 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 PMScene2::~PMScene2()
 {
     for (int i=0; i<guiAudioAnalyzers.size(); ++i)
@@ -45,7 +42,6 @@ PMScene2::~PMScene2()
     guiAudioAnalyzers.clear();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::setup()
 {
     // Create Renderer
@@ -150,7 +146,6 @@ void PMScene2::setup()
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::update()
 {
     renderer->update();
@@ -161,7 +156,6 @@ void PMScene2::update()
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::updateEnter()
 {
     if (isEnteringFirst())
@@ -178,12 +172,11 @@ void PMScene2::updateEnter()
 
     PMAudioAnalyzer::getInstance().start();
 
-    renderer->showGUI(true);
+    renderer->showGUI(showGUI);
 
     PMBaseScene::updateEnter();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::updateExit()
 {
     renderer->showGUI(false);
@@ -192,17 +185,16 @@ void PMScene2::updateExit()
     PMBaseScene::updateExit();
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::draw()
 {
     renderer->draw();
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
+    ofDrawBitmapString("Renderer state: " + ofToString(renderer->getState()), 15, ofGetHeight() - 60);
 #endif
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::saveSettings()
 {
     PMAudioAnalyzer::getInstance().stop();
@@ -227,7 +219,6 @@ void PMScene2::saveSettings()
 
 #pragma mark - Keyboard events
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::keyReleased(int key)
 {
     PMBaseScene::keyReleased(key);
@@ -243,8 +234,15 @@ void PMScene2::keyReleased(int key)
             for(it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
                 (*it)->setVisible(showGUI);
 
+            renderer->showGUI(showGUI);
+
             ofClear(backgroundColor);
 
+            break;
+        }
+        case ' ':
+        {
+            renderer->switchStateOnOff();
             break;
         }
         case 'r':
@@ -271,12 +269,8 @@ void PMScene2::keyReleased(int key)
 }
 
 
-//--------------------------------------------------------------------------------------------------
 #pragma mark - Audio Events
-//--------------------------------------------------------------------------------------------------
 
-
-//--------------------------------------------------------------------------------------------------
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     renderer->pitchChanged(pitchParams);
@@ -289,65 +283,17 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
             p->pitchChanged(pitchParams);
             break;
         }
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-            // TODO: Should move this all to <audio to sceneparams mapper>
-//            if (typoTimerEnabled)
-//            {
-//                float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-//                if (diffTimeMs > 50)
-//                {
-//                    typoTimer = ofGetElapsedTimeMillis();
-//
-//                    float minVelocity = 0.01;
-//                    float maxVelocity = 1.0;
-//                    float velocityY = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minVelocity, maxVelocity, true);
-//
-//                    PMRendererTypography *typoRenderer = dynamic_cast<PMRendererTypography *>(renderer);
-//                    typoRenderer->setYVelocity(velocityY);
-//                    typoRenderer->addLetter();
-//                }
-//            }
-            break;
-        }
         default: break;
     }
  
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::energyChanged(energyParams &energyParams)
 {
     renderer->energyChanged(energyParams);
-    
-    
-    // calculate Energy
-    /////////////////////
-    float normalizedSizeMin = 0.01f;
-    float normalizedSizeMax = 1.0f;
-    
-    // Non-linear ofMap, based on http://forum.openframeworks.cc/t/non-linear-ofmap/13508/2
-    float linearSize = ofMap(energyParams.energy, audioAnalyzersSettings->getMinEnergy(), audioAnalyzersSettings->getMaxEnergy(), 0, 1, true);
-    double eulerIdentity = M_E;
-    // ? eloi : a mi em funciona millor en lineal // linearSize = powf(linearSize, float(1.0/eulerIdentity));
-    
-    float energy = ofMap(linearSize, 0, 1, normalizedSizeMin, normalizedSizeMax, true);
-
-    // FIXME: In case size is NaN, set it to zero. PMDeviceAudioAnalyzer::getEnergy should never return NaN (because weightsum is 0).
-    if (isnan(energy)) energy = 0;
 
     switch(renderer->getType())
     {
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-            // FIXME: A l'Eloi li peta.
-            // Peta
-            // Miquel: ... a mi no ...
-            PMRendererTypography *typoRenderer = (PMRendererTypography *)renderer;
-            float normalizedSize = energy;
-            typoRenderer->setLetterSize(normalizedSize);
-            break;
-        }
         default: break;
     }
 }
@@ -368,29 +314,25 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
             }
             break;
         }
-        case RENDERERTYPE_TYPOGRAPHY:
-        {
-//            typoTimerEnabled = !silenceParams.isSilent;
-//            if (typoTimerEnabled)
-//                typoTimer = ofGetElapsedTimeMillis();
-//            break;
-        }
         default: break;
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
-    renderer->setEnabled(!pauseParams.isPaused);
+    if (pauseParams.isPaused)
+        renderer->setState(RENDERERSTATE_PAUSED);
+    else
+    {
+        if (renderer->getState() == RENDERERSTATE_PAUSED)
+            renderer->setState(RENDERERSTATE_ON);
+    }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::onsetDetected(onsetParams &onsetParams)
 {
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::shtDetected(shtParams &shtParams)
 {
     switch(renderer->getType())
@@ -412,7 +354,6 @@ void PMScene2::shtDetected(shtParams &shtParams)
     }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
 {
     switch (renderer->getType())

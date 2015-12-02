@@ -26,7 +26,6 @@
 
 #include "PMAudioAnalyzer.hpp"
 
-#include "PMSettingsManagerAudioAnalyzers.h"
 #include "PMSettingsManagerAudioDevices.h"
 
 
@@ -67,8 +66,6 @@ private:
     ofColor                             canvasBgColor;
 
     bool                                showGUI;
-
-    PMSettingsManagerAudioAnalyzers     *audioAnalyzersSettings;
 
     vector<PMSettingsDevice>            *enabledAudioDevices;
 };
