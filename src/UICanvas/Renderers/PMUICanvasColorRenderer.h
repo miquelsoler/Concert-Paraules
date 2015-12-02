@@ -31,6 +31,8 @@ public:
     int         getResolutionY(){return guiResolutionY;};
     float       getFullProbability(){return guiFullProbability;};
     float       getHalfProbability(){return guiHalfProbability;};
+    float       getHorizVertProbability(){return guiHorizontalVerticalProbability;};
+    float       getStopOnSilence(){return guiStopOnSilence;};
     
     // SETTERS
     void        setScanSpeedX(float _s);
@@ -41,7 +43,8 @@ private:
 
     float       guiScanWidth;
     float       guiScanSpeedX;
-
+    bool        guiStopOnSilence;
+    
     /// GUI COLOR
     ofImage     gradientImage;
     int         gradientId;
@@ -52,6 +55,8 @@ private:
     int         guiResolutionY;
     float       guiFullProbability;
     float       guiHalfProbability;
+    float       guiHorizontalVerticalProbability;
+    
     
     
 };

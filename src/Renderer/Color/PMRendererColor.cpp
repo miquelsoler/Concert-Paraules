@@ -138,16 +138,27 @@ void PMRendererColor::startNewBand()
 {
     scanX = 0;
 
-    // always change orientation
-    drawingHorizontal=!drawingHorizontal;
-        
+    
     float newProbabilityFull = ofRandomuf();
     float newProbabilityHalf = ofRandomuf();
+    float newProbabilityHorizVert = ofRandomuf();
+    
     bool newIsFull;
     bool newIsHalf;
     int whichFullBand;
     int resolution;
+    
+    // Horizontal / Vertical orientation
+    if(newProbabilityHorizVert < myGUI->getHorizVertProbability())
+    {
+        drawingHorizontal = false;
+    }
+    else
+    {
+        drawingHorizontal = true;
+    }
 
+    
     // we a creating a full new band ... so height is maximum it can depending on resolution and orientation
     if(drawingHorizontal)
     {
@@ -208,9 +219,24 @@ void PMRendererColor::update()
 
     
     
-    //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
-    scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
-    
+    //ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
+    if((!myGUI->getStopOnSilence()))
+    {
+        // STOP ON SILENCE = FALSE
+        scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
+    }
+    else
+    {
+        // STOP ON SILENCE = TRUE
+        if( !isSilent )
+        {
+            scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
+        }
+        else
+        {
+            
+        }
+    }
     if(drawingHorizontal)
     {        
         if(scanX > ofGetWidth())
@@ -373,7 +399,7 @@ void PMRendererColor::drawIntoFBO()
                 ofSetColor(c);
                 
                 // shape
-                if(!isSilent)
+                if((!isSilent))
                 {
                     ofSetRectMode(OF_RECTMODE_CORNER);
                     if(drawingHorizontal)
