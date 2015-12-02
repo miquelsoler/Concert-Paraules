@@ -213,6 +213,8 @@ void PMRendererColor::startNewBand()
 //--------------------------------------------------------------
 void PMRendererColor::update()
 {
+    if (state != RENDERERSTATE_ON) return;
+    
     PMBaseRenderer::update();
 
     
