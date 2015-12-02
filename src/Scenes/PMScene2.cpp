@@ -177,7 +177,7 @@ void PMScene2::updateEnter()
 
     PMAudioAnalyzer::getInstance().start();
 
-    renderer->showGUI(true);
+    renderer->showGUI(showGUI);
 
     PMBaseScene::updateEnter();
 }
@@ -241,6 +241,8 @@ void PMScene2::keyReleased(int key)
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for(it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
                 (*it)->setVisible(showGUI);
+
+            renderer->showGUI(showGUI);
 
             ofClear(backgroundColor);
 
