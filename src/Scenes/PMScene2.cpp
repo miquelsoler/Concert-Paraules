@@ -319,8 +319,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
 void PMScene2::energyChanged(energyParams &energyParams)
 {
     renderer->energyChanged(energyParams);
-    
-    
+
     // calculate Energy
     /////////////////////
     float normalizedSizeMin = 0.01f;
