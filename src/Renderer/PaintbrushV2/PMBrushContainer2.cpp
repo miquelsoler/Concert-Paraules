@@ -113,10 +113,10 @@ void PMBrushContainer2::setOrigin(PMBrushContainerOrigin origin)
         }
     }
 
-    cout << "--------------------------------" << endl;
-    cout << "setOrigin " << origin << endl;
-    cout << "Pos: " << x << ", " << y << endl;
-    cout << "--------------------------------" << endl;
+//    cout << "--------------------------------" << endl;
+//    cout << "setOrigin " << origin << endl;
+//    cout << "Pos: " << x << ", " << y << endl;
+//    cout << "--------------------------------" << endl;
 }
 
 void PMBrushContainer2::setPosition(float normalizedX, float normalizedY)
