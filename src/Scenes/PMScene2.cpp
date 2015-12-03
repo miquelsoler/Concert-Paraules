@@ -152,7 +152,7 @@ void PMScene2::update()
     
     // Record current frame
     if (recorder->isRecording()) {
-        recorder->addVideoFrame();
+        recorder->addVideoFrame(renderer->getBackgroundColor());
     }
 }
 

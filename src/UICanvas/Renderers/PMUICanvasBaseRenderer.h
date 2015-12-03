@@ -42,7 +42,7 @@ public:
     float           getPitchMax() {return guiPitchMax;};
     float           getSmoothedPitch() {return guiSmoothPitch;};
     float           getSmoothedEnergy() {return guiSmoothEnergy;};
-    
+    ofColor         getBackgroundColor(){return ofColor(guiColorBgRed,guiColorBgGreen,guiColorBgBlue,255);};
     
     // SETTERS
     void            setSmoothPitch(float _p);

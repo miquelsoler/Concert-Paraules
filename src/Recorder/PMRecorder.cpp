@@ -39,12 +39,12 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     bRecording = false;
 }
 
-void PMRecorder::addVideoFrame()
+void PMRecorder::addVideoFrame(ofColor backColor)
 {
     //Draw main fbo to auxiliary fbo
     fboRecorderOut.begin();
+    ofClear(backColor);
     ofSetColor(255);
-    ofClear(0, 255);
     fbo->draw(0, 0);
     fboRecorderOut.end();
 
