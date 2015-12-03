@@ -67,6 +67,8 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         addLabel("ENERGY");
 //        energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
+        
+        energyGainSlider = addSlider("Gain",1.0,10.0,&energyGainCurrent);
         energySilder = addSlider("Energy", 0.0, 1.0, &energyCurrent);
         energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
@@ -187,7 +189,7 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 {
     if (energyParams.audioInputIndex != audioInputIndex) return;
-    energyCurrent = energyParams.energy;
+    energyCurrent = energyGainCurrent * energyParams.energy;
 }
 
 
