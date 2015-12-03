@@ -50,7 +50,7 @@ void PMScene2::setup()
         switch(settingsRenderer.ID)
         {
             case RENDERERTYPE_PAINTBRUSH:
-                renderer = new PMRendererPaintbrush();
+                renderer = new PMRendererPaintbrush2();
                 break;
             case RENDERERTYPE_TYPOGRAPHY:
                 renderer = new PMRendererTypography();
@@ -279,7 +279,7 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush* p = (PMRendererPaintbrush*)renderer;
+            PMRendererPaintbrush2* p = (PMRendererPaintbrush2*)renderer;
             p->pitchChanged(pitchParams);
             break;
         }
@@ -309,8 +309,8 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
         {
             if (!silenceParams.isSilent)
             {
-                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-                paintbrushRenderer->changeBaseAngle();
+//                PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush2 *)renderer;
+//                paintbrushRenderer->changeBaseAngle();
             }
             break;
         }
@@ -339,8 +339,8 @@ void PMScene2::shtDetected(shtParams &shtParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->vibrate(shtParams.isSht);
+//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            paintbrushRenderer->vibrate(shtParams.isSht);
             break;
         }
         case RENDERERTYPE_COLOR:
@@ -360,8 +360,8 @@ void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
     {
         case RENDERERTYPE_PAINTBRUSH:
         {
-            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
-            paintbrushRenderer->changeDirection(melodyDirectionParams.direction);
+//            PMRendererPaintbrush *paintbrushRenderer = (PMRendererPaintbrush *)renderer;
+//            paintbrushRenderer->changeDirection(melodyDirectionParams.direction);
             break;
         }
         default:

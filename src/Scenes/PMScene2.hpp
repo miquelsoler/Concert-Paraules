@@ -15,7 +15,8 @@
 
 #include "PMBaseScene.hpp"
 
-#include "PMRendererPaintbrush.h"
+//#include "PMRendererPaintbrush.h"
+#include "PMRendererPaintbrush2.h"
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
 

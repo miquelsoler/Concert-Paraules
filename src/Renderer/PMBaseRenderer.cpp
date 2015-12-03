@@ -23,7 +23,6 @@ void PMBaseRenderer::setup()
     }
     fbo.end();
 
-//    enabled = false;
     state = RENDERERSTATE_OFF;
 }
 
