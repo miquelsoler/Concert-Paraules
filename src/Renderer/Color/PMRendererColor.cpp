@@ -403,7 +403,8 @@ void PMRendererColor::drawIntoFBO()
     ofSetColor(255, 255, 255, 255);
     
     ofScale(0.75,0.75,0.75);
-    fbo.draw(0, 0);
+// Miquel: commented because it's already done in PMBaseRenderer::draw()
+//    fbo.draw(0, 0);
 }
 //--------------------------------------------------------------------------------
 void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )

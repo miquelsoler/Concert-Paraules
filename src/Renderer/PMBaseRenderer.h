@@ -35,7 +35,6 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-    virtual void clear();
 
     virtual void drawIntoFBO() = 0;
 
@@ -59,6 +58,8 @@ public:
     virtual void pauseStateChanged(pauseParams &pauseParams);
 
 protected:
+
+    virtual void clear();
 
     PMRendererType          type;
     PMRendererState         state;

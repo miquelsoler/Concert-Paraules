@@ -21,6 +21,7 @@ public:
     void draw();
 
     uint64_t getAge();
+    void setNeedsToBeRemoved();
 
 private:
 

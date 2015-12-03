@@ -73,6 +73,10 @@ void PMRendererTypography::update()
 {
     PMBaseRenderer::update();
 
+    box2d.update();
+
+    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+
     PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
     uint64_t maxAge = myGUI->getMaxAge() * uint64_t(1000);
@@ -86,12 +90,12 @@ void PMRendererTypography::update()
     }
     
     box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
-
-    box2d.update();
 }
 
 void PMRendererTypography::drawIntoFBO()
 {
+    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+
     fbo.begin();
     {
         ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
@@ -195,11 +199,12 @@ void PMRendererTypography::buildCharsetFromPoem()
     charset = DEFAULT_CHARSET;
 }
 
-//------------------------------------------------------------------------------------------
 void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 {
     PMBaseRenderer::pitchChanged(pitchParams);
-    
+
+    if (state != RENDERERSTATE_ON) return;
+
     if (typoTimerEnabled)
     {
         float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
@@ -216,14 +221,12 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
     }
 }
 
-//------------------------------------------------------------------------------------------
 void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
     setLetterSize(gui->getSmoothedEnergy());
 }
 
-//------------------------------------------------------------------------------------------
 void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
 {
     PMBaseRenderer::silenceStateChanged(silenceParams);
@@ -231,12 +234,6 @@ void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
     typoTimerEnabled = !silenceParams.isSilent;
     if (typoTimerEnabled)
         typoTimer = ofGetElapsedTimeMillis();
-}
-
-//------------------------------------------------------------------------------------------
-void PMRendererTypography::pauseStateChanged(pauseParams &pauseParams)
-{
-    PMBaseRenderer::pauseStateChanged(pauseParams);
 }
 
 void PMRendererTypography::contactStart(ofxBox2dContactArgs &e)
@@ -247,4 +244,17 @@ void PMRendererTypography::contactStart(ofxBox2dContactArgs &e)
 void PMRendererTypography::contactEnd(ofxBox2dContactArgs &e)
 {
     somethingInContact = false;
+}
+
+void PMRendererTypography::clear()
+{
+    PMBaseRenderer::clear();
+
+    list<shared_ptr<PMLetterContainer>>::iterator letterIt;
+    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+    {
+        (*letterIt).get()->setNeedsToBeRemoved();
+        (*letterIt).get()->destroy();
+        activeLetters.erase(letterIt++);
+    }
 }

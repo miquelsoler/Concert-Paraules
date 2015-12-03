@@ -66,7 +66,7 @@ void PMBaseRenderer::setState(PMRendererState newState)
 {
     if (newState == state) return;
 
-//    cout << "[STATE] Previous:" << state;
+    cout << "[STATE] Previous:" << state;
 
     switch(state) // Different behavior according to current state and new state
     {
@@ -88,7 +88,7 @@ void PMBaseRenderer::setState(PMRendererState newState)
         }
     }
 
-//    cout << " New:" << state << endl;
+    cout << " New:" << state << endl;
 }
 
 void PMBaseRenderer::switchStateOnOff()

@@ -36,8 +36,10 @@ public:
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
-    virtual void pauseStateChanged(pauseParams &pauseParams);
 
+protected:
+
+    virtual void clear();
 
 private:
 
