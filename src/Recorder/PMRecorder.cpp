@@ -17,6 +17,8 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     filePath = _filePath;
     pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
     pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
+    // TODO: Path Miquel
+//    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg")); // use this is you have ffmpeg installed in your data folder
     //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
 
 //    He hagut de fer aquest canvi per a que em funcioni. El que tinc a /usr/local/bin és versió 2.8 i no em funciona.
