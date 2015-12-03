@@ -213,10 +213,9 @@ void PMRendererColor::startNewBand()
 //--------------------------------------------------------------
 void PMRendererColor::update()
 {
-    if (state != RENDERERSTATE_ON) return;
-    
     PMBaseRenderer::update();
 
+<<<<<<< HEAD
     
     
     //ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
@@ -237,6 +236,13 @@ void PMRendererColor::update()
             
         }
     }
+=======
+    if (state != RENDERERSTATE_ON) return;
+
+    //    ofxUIToggleMatrix *toggleMatrix = dynamic_cast<ofxUIToggleMatrix *>(channelToggles);
+    scanX = scanX + int(myGUI->getScanSpeedX()) + int(myGUI->getScanWidth()) -1 ;
+    
+>>>>>>> a1f3404c821065aca223ea983d0d03f21267e606
     if(drawingHorizontal)
     {        
         if(scanX > ofGetWidth())
@@ -431,8 +437,7 @@ void PMRendererColor::drawIntoFBO()
     ofSetColor(255, 255, 255, 255);
     
     ofScale(0.75,0.75,0.75);
-// Miquel: commented because it's already done in PMBaseRenderer::draw()
-//    fbo.draw(0, 0);
+    fbo.draw(0, 0);
 }
 //--------------------------------------------------------------------------------
 void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )

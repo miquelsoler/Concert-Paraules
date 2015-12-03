@@ -14,6 +14,8 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 
     gradientImage.load("./gradients/test4x_v1.png");
     
+    guiHorizontalVerticalProbability = 0.5;
+    
     addSpacer();
     addIntSlider("Mode",1,10,&guiMode);
     addSpacer();
@@ -28,8 +30,9 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     addIntSlider("Resolution Y",1,64,&guiResolutionY);
     addSlider("Full Probability",0.0,1.0,&guiFullProbability);
     addSlider("Half Probability -/+(",0.0,1.0,&guiHalfProbability);
-    
+    addSlider("Horiz./Vertical Probability",0.0,1.0,&guiHorizontalVerticalProbability);
     addSpacer();
+    addToggle("Stop on Silence?",&guiStopOnSilence);
     addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
     addSlider("Scan With",0.0,150.0,&guiScanWidth);
 

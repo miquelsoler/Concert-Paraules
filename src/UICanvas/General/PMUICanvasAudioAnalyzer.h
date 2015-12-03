@@ -51,6 +51,8 @@ private:
 
     void energyChanged(energyParams &energyParams);
 
+    ofxUISlider         *energyGainSlider;
+    float               energyGainCurrent;
     ofxUISlider         *energySilder;
     float               energyCurrent;
 
