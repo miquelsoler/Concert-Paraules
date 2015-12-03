@@ -11,15 +11,7 @@ static const float PAINTING_MARGIN_PCT = 0.00;
 
 PMBrushContainer2::PMBrushContainer2()
 {
-    bounces = true;
-
-    // TODO: Move it to UI canvas
-    {
-        setOrigin(LEFT);
-        setMinSize(2.0);
-        setMaxSize(10.0);
-        setSize(1);
-    }
+    setSize(1);
 }
 
 void PMBrushContainer2::update()

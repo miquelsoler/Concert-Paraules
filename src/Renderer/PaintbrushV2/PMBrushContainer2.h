@@ -6,6 +6,7 @@
 #define PMCONCERTPARAULES_PMBRUSHCONTAINER2_H
 
 #include "PMBaseRenderer.h"
+#include "PMUICanvasBrushRenderer.h"
 
 typedef enum
 {

@@ -28,6 +28,7 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 
     setBackgroundColor(ofColor(0,20,40,128));
 
+    guiFadeBackground = 0.01;
     guiPitchMin = 7;
     guiPitchMax = 96;
     guiEnergyMin = 0.1;

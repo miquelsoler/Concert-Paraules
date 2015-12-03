@@ -20,16 +20,21 @@ public:
     virtual void handleEvents(ofxUIEventArgs &e);
     
     // GETTERS
-    int         getMode();
+    int         getMode()               { return mode; };
     ofColor     getBrushColor();
-    float       getParticleLife() { return particleLife; };
-    float       getParticleVelocity() { return particleVelocity; };
-    bool        getBouncyWalls() { return bounceWalls; };
+    int         getBrushOrigin()        { return brushOrigin; };
+    float       getMinBrushSize()       { return minBrushSize; };
+    float       getMaxBrushSize()       { return maxBrushSize; };
+    float       getParticleLife()       { return particleLife; };
+    float       getParticleVelocity()   { return particleVelocity; };
+    bool        getBouncyWalls()        { return bounceWalls; };
 
 private:
 
-    int     guiMode;
+    int     mode;
     int     brushR, brushG, brushB;
+    int     brushOrigin;
+    float   minBrushSize, maxBrushSize;
     float   particleLife;
     float   particleVelocity;
     bool    bounceWalls;

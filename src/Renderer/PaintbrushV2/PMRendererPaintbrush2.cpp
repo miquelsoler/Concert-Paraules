@@ -8,10 +8,10 @@
 
 PMRendererPaintbrush2::PMRendererPaintbrush2() : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH)
 {
-    brush = new PMBrushContainer2();
-
     gui = new PMUICanvasBrushRenderer(UI_RENDERERTYPE_PAINTBRUSH, "BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
-    gui->init(100, 500, 200, 300);
+    gui->init(100, 500, true);
+
+    brush = new PMBrushContainer2();
 }
 
 void PMRendererPaintbrush2::setup()
@@ -23,22 +23,23 @@ void PMRendererPaintbrush2::update()
 {
     PMBaseRenderer::update();
 
-    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
-
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *) gui;
+
+    if (state == RENDERERSTATE_OFF)
+        brush->setOrigin((PMBrushContainerOrigin)(myGUI->getBrushOrigin()));
+
+    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
 
     brush->setBounces(myGUI->getBouncyWalls());
     brush->setColor(myGUI->getBrushColor());
+    brush->setMinSize(myGUI->getMinBrushSize());
+    brush->setMaxSize(myGUI->getMaxBrushSize());
 //    brush->update();
-
-    cout << "PMRendererPaintbrush2::update()" << endl;
 }
 
 void PMRendererPaintbrush2::drawIntoFBO()
 {
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-
-    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
 
     fbo.begin();
     {
@@ -61,4 +62,7 @@ void PMRendererPaintbrush2::pitchChanged(pitchParams pitchParams)
 void PMRendererPaintbrush2::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
+
+    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
+    brush->setSize(myGUI->getSmoothedEnergy());
 }
