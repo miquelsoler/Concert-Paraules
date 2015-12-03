@@ -31,10 +31,14 @@ public:
     void setPosition(float normalizedX, float normalizedY);
     void setPositionX(float normalizedX);
     void setPositionY(float normalizedY);
-    void setSize(float normalizedSize);
 
+    void setOffset(float normalizedOffset);
+
+    void setSize(float normalizedSize);
     void setMinSize(float _minSize) { minSize = _minSize; };
     void setMaxSize(float _maxSize) { maxSize = _maxSize; };
+
+    void setSpeed(int _speed) { speed = _speed; };
 
     void setBounces(bool _bounces) { bounces = _bounces; };
     void setColor(ofColor _color) { color=_color; };
@@ -42,12 +46,18 @@ public:
 private:
 
     float x, y;
+    float oldX, oldY;
+    float offset;
     float size, minSize, maxSize;
-    float baseAngle;
+    int speed;
+
+    PMBrushContainerOrigin direction;
+    bool shouldChangeDirection;
 
     ofColor color;
     bool bounces;
 
+    void changeDirection();
 };
 
 

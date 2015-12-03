@@ -12,6 +12,7 @@ static const string STR_BRUSH_ORIGIN_LEFT   = "Left";
 static const string STR_BRUSH_ORIGIN_RIGHT  = "Right";
 static const string STR_BRUSH_ORIGIN_UP     = "Up";
 static const string STR_BRUSH_ORIGIN_DOWN   = "Down";
+static const string STR_BRUSH_SPEED         = "BRUSH SPEED";
 static const string STR_BRUSH_SIZE          = "BRUSH SIZE";
 
 
@@ -44,6 +45,10 @@ void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width,
     ofxUIRadio *radio = addRadio(STR_BRUSH_ORIGIN, originNames, OFX_UI_ORIENTATION_HORIZONTAL);
     radio->setTriggerType(OFX_UI_TRIGGER_CHANGE);
     radio->activateToggle(STR_BRUSH_ORIGIN_LEFT);
+    addSpacer();
+
+    addLabel(STR_BRUSH_SPEED);
+    addIntSlider("Speed", 1, 50, &brushSpeed);
     addSpacer();
 
     addLabel(STR_BRUSH_SIZE);

@@ -23,6 +23,7 @@ public:
     int         getMode()               { return mode; };
     ofColor     getBrushColor();
     int         getBrushOrigin()        { return brushOrigin; };
+    int         getBrushSpeed()         { return brushSpeed; };
     float       getMinBrushSize()       { return minBrushSize; };
     float       getMaxBrushSize()       { return maxBrushSize; };
     float       getParticleLife()       { return particleLife; };
@@ -34,6 +35,7 @@ private:
     int     mode;
     int     brushR, brushG, brushB;
     int     brushOrigin;
+    int     brushSpeed;
     float   minBrushSize, maxBrushSize;
     float   particleLife;
     float   particleVelocity;
