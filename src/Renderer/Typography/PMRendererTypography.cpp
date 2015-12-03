@@ -75,7 +75,7 @@ void PMRendererTypography::update()
 
     box2d.update();
 
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
     PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
@@ -83,10 +83,11 @@ void PMRendererTypography::update()
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
     {
-        if ((*letterIt)->getAge() < maxAge) continue;
-
-        (*letterIt).get()->destroy();
-        activeLetters.erase(letterIt++);
+        if (((*letterIt)->getAge() >= maxAge) || ((*letterIt)->getNeedsToBeRemoved()))
+        {
+            (*letterIt).get()->destroy();
+            activeLetters.erase(letterIt++);
+        }
     }
     
     box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
@@ -251,10 +252,7 @@ void PMRendererTypography::clear()
     PMBaseRenderer::clear();
 
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-    {
+    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt) {
         (*letterIt).get()->setNeedsToBeRemoved();
-        (*letterIt).get()->destroy();
-        activeLetters.erase(letterIt++);
     }
 }

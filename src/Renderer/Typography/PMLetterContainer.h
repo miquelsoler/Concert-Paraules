@@ -21,7 +21,8 @@ public:
     void draw();
 
     uint64_t getAge();
-    void setNeedsToBeRemoved();
+    void setNeedsToBeRemoved() { needsToBeRemoved = true; };
+    bool getNeedsToBeRemoved() { return needsToBeRemoved; };
 
 private:
 
@@ -36,6 +37,8 @@ private:
     float           letterSize;
 
     uint64_t        timeCreated;
+
+    bool            needsToBeRemoved;
 };
 
 

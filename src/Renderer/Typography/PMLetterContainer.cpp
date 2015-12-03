@@ -62,8 +62,3 @@ uint64_t PMLetterContainer::getAge()
 {
     return ofGetElapsedTimeMillis() - timeCreated;
 }
-
-void PMLetterContainer::setNeedsToBeRemoved()
-{
-    timeCreated = 0;
-}
