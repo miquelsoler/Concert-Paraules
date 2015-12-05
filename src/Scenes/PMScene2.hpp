@@ -19,6 +19,7 @@
 #include "PMRendererPaintbrush2.h"
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
+#include "PMRendererTextBox.h"
 
 #include "PMRecorder.hpp"
 
@@ -58,8 +59,12 @@ public:
 private:
 
     PMBaseRenderer                      *renderer;
+    PMRendererTextBox                   textBox;
 
     PMRecorder                          *recorder;
+    int                                 recState; // 0 : normal 1 : record textBox !!
+    float                               startTimeRecordingText;
+    float                               durationRecordingText;
 
     vector<PMUICanvasAudioAnalyzer *>   guiAudioAnalyzers;
     bool                                guiAudioAnalyzerCreated;

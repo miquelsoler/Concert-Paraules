@@ -30,6 +30,9 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
         canvasBgColor = ofColor(50, 50, 50, 200);
         guiAudioAnalyzerCreated = false;
     }
+    
+    recState = 0;
+    durationRecordingText = 4000;
 }
 
 PMScene2::~PMScene2()
@@ -144,16 +147,38 @@ void PMScene2::setup()
     int sampleRate=aavec[0]->getSampleRate();
     int numChannels=aavec.at(0)->getNumChannels();
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
+    
+    // Scroll Text Setup
+    textBox.setup();
 }
 
 void PMScene2::update()
 {
-    renderer->update();
     
-    // Record current frame
-    if (recorder->isRecording()) {
-        recorder->addVideoFrame(renderer->getBackgroundColor());
+    if(recState==0)
+    {
+        renderer->update();
+        
+        // Record current frame
+        if (recorder->isRecording()) {
+            recorder->addVideoFrame(renderer->getBackgroundColor());
+        }
     }
+    else if(recState ==1)
+    {
+        recorder->addVideoFrame(textBox.getBackgroundColor());
+
+        if(ofGetElapsedTimeMillis()-startTimeRecordingText>durationRecordingText)
+        {
+            cout << "SCENE 2 :: STOPPING RECORDING !! " << endl;
+            recorder->stopRecording();
+            recState = 0;
+        }
+    }
+    
+
+    
+    textBox.update();
 }
 
 void PMScene2::updateEnter()
@@ -187,12 +212,15 @@ void PMScene2::updateExit()
 
 void PMScene2::draw()
 {
-    renderer->draw();
+    if(recState==0) renderer->draw();
+    else textBox.draw();
+    
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
     ofDrawBitmapString("Renderer state: " + ofToString(renderer->getState()), 15, ofGetHeight() - 60);
 #endif
+    
 }
 
 void PMScene2::saveSettings()
@@ -252,8 +280,11 @@ void PMScene2::keyReleased(int key)
                 // Start recording
                 recorder->startRecording();
             } else {
-                // Stop recording
-                recorder->stopRecording();
+                
+                // Start TextBox Recording
+                recState = 1;
+                recorder->changeFbo(textBox.getFbo());
+                startTimeRecordingText = ofGetElapsedTimeMillis();
             }
             break;
         }
@@ -264,6 +295,9 @@ void PMScene2::keyReleased(int key)
             recorder->discardRecording();
             break;
         }
+        case 'p' :
+            textBox.toggleGUIVisible();
+            break;
         default: break;
     }
 }

@@ -33,6 +33,8 @@ public:
     void stopRecording();
     void discardRecording();
     bool isRecording();
+    
+    void changeFbo(ofFbo *fbo);
 
 private:
     ofxVideoRecorder vidRecorder;
