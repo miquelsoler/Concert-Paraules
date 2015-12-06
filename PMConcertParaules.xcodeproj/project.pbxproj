@@ -199,7 +199,6 @@
 		B070FA6C1C110F03000D5956 /* PMRendererTextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA6A1C110F03000D5956 /* PMRendererTextBox.cpp */; settings = {ASSET_TAGS = (); }; };
 		B070FA6F1C110F14000D5956 /* PMRendererColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA6D1C110F14000D5956 /* PMRendererColor.cpp */; settings = {ASSET_TAGS = (); }; };
 		B070FA721C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
-		B0DFBEB81C11AB7B00076552 /* ofxTrueTypeFontUC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEB31C11AB7B00076552 /* ofxTrueTypeFontUC.cpp */; settings = {ASSET_TAGS = (); }; };
 		B0DFBF0A1C11EE9400076552 /* fontstash.c in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEDB1C11EE9300076552 /* fontstash.c */; settings = {ASSET_TAGS = (); }; };
 		B0DFBF0B1C11EE9400076552 /* stb_truetype.c in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEDD1C11EE9300076552 /* stb_truetype.c */; settings = {ASSET_TAGS = (); }; };
 		B0DFBF0D1C11EE9400076552 /* ofxFontStash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEE21C11EE9300076552 /* ofxFontStash.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -655,9 +654,6 @@
 		B070FA6E1C110F14000D5956 /* PMRendererColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererColor.h; sourceTree = "<group>"; };
 		B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasTextBoxRenderer.cpp; sourceTree = "<group>"; };
 		B070FA711C1114BF000D5956 /* PMUICanvasTextBoxRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasTextBoxRenderer.h; sourceTree = "<group>"; };
-		B0DFBEA11C119B4800076552 /* ofxTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTextBox.h; sourceTree = "<group>"; };
-		B0DFBEB31C11AB7B00076552 /* ofxTrueTypeFontUC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTrueTypeFontUC.cpp; sourceTree = "<group>"; };
-		B0DFBEB41C11AB7B00076552 /* ofxTrueTypeFontUC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTrueTypeFontUC.h; sourceTree = "<group>"; };
 		B0DFBEDB1C11EE9300076552 /* fontstash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fontstash.c; sourceTree = "<group>"; };
 		B0DFBEDC1C11EE9300076552 /* fontstash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontstash.h; sourceTree = "<group>"; };
 		B0DFBEDD1C11EE9300076552 /* stb_truetype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_truetype.c; sourceTree = "<group>"; };
@@ -829,7 +825,7 @@
 		21476E2647D8522F3969E81C /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				B070FA691C110F03000D5956 /* ScrollingText */,
+				B070FA691C110F03000D5956 /* TextBox */,
 				2147637322935D592B82D3A5 /* PMBaseRenderer.cpp */,
 				2147686E219E442DCD619EED /* PMBaseRenderer.h */,
 				214767BB455B6FA83C74C4B3 /* Paintbrush */,
@@ -1604,48 +1600,14 @@
 			name = src;
 			sourceTree = "<group>";
 		};
-		B070FA691C110F03000D5956 /* ScrollingText */ = {
+		B070FA691C110F03000D5956 /* TextBox */ = {
 			isa = PBXGroup;
 			children = (
 				B070FA6A1C110F03000D5956 /* PMRendererTextBox.cpp */,
 				B070FA6B1C110F03000D5956 /* PMRendererTextBox.h */,
 			);
+			name = TextBox;
 			path = ScrollingText;
-			sourceTree = "<group>";
-		};
-		B0DFBE8E1C119B4800076552 /* ofxTextBox */ = {
-			isa = PBXGroup;
-			children = (
-				B0DFBEA01C119B4800076552 /* src */,
-			);
-			name = ofxTextBox;
-			path = ../../../addons/ofxTextBox;
-			sourceTree = "<group>";
-		};
-		B0DFBEA01C119B4800076552 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				B0DFBEA11C119B4800076552 /* ofxTextBox.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		B0DFBEA81C11AB7B00076552 /* ofxTrueTypeFontUC */ = {
-			isa = PBXGroup;
-			children = (
-				B0DFBEB21C11AB7B00076552 /* src */,
-			);
-			name = ofxTrueTypeFontUC;
-			path = ../../../addons/ofxTrueTypeFontUC;
-			sourceTree = "<group>";
-		};
-		B0DFBEB21C11AB7B00076552 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				B0DFBEB31C11AB7B00076552 /* ofxTrueTypeFontUC.cpp */,
-				B0DFBEB41C11AB7B00076552 /* ofxTrueTypeFontUC.h */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		B0DFBEC31C11EE9300076552 /* ofxFontStash */ = {
@@ -1757,8 +1719,6 @@
 			children = (
 				B0DFBEC31C11EE9300076552 /* ofxFontStash */,
 				B0DFBEE41C11EE9400076552 /* ofxUnicode */,
-				B0DFBEA81C11AB7B00076552 /* ofxTrueTypeFontUC */,
-				B0DFBE8E1C119B4800076552 /* ofxTextBox */,
 				480A780D8D0308AE4A368801 /* ofxGui */,
 				9683228C705CA3FF4F2EA945 /* ofxKinect */,
 				2865DAEF86B1907A704CA70B /* ofxJSON */,
@@ -2155,7 +2115,6 @@
 				B070FA6C1C110F03000D5956 /* PMRendererTextBox.cpp in Sources */,
 				2AE049111C030E97009C99AF /* b2WeldJoint.cpp in Sources */,
 				21476A3F17ADE620A7C92A13 /* PMLetterContainer.cpp in Sources */,
-				B0DFBEB81C11AB7B00076552 /* ofxTrueTypeFontUC.cpp in Sources */,
 				2AE048DF1C030E97009C99AF /* ofxBox2dBaseShape.cpp in Sources */,
 				214760A000EB33AFABC98D59 /* PMUICanvasBaseRenderer.cpp in Sources */,
 				214769AA5EA0794891071C4F /* PMUICanvasColorRenderer.cpp in Sources */,

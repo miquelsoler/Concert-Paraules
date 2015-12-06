@@ -15,6 +15,8 @@ PMRendererTextBox::PMRendererTextBox() : PMBaseRenderer(RENDERERTYPE_COLOR)
         
     }
     myGUI = (PMUICanvasTextBoxRenderer *)gui;
+    myGUI->setVisible(false);
+
     ofAddListener(ofEvents().keyPressed, this, &PMRendererTextBox::keyPressed);
 
     font.setup("./fonts/verdana.ttf", 1.25, 2048, false, 8, 2);
@@ -33,10 +35,12 @@ PMRendererTextBox::PMRendererTextBox() : PMBaseRenderer(RENDERERTYPE_COLOR)
 void PMRendererTextBox::setup()
 {
     PMBaseRenderer::setup();
+    
+    logoImage.load("./images/logo.png");
 
     //----------------------------
     setState(RENDERERSTATE_ON);
-    gui->setVisible(false);
+
 }
 
 
@@ -103,6 +107,16 @@ void PMRendererTextBox::drawIntoFBO()
         //oldPitch = pitchSmooth;
         //oldEnergy = energySmooth;
     }
+    
+    // drawing logos
+    int marginY = 30;;
+    ofSetColor(255);
+    ofDrawRectangle(0,ofGetHeight()-logoImage.getHeight() - marginY*2, ofGetWidth(),logoImage.getHeight()+ marginY*2);
+    
+    ofEnableAlphaBlending();
+    logoImage.draw(ofGetWidth()/2 - logoImage.getWidth()/2,ofGetHeight()-logoImage.getHeight()- marginY);
+    ofDisableAlphaBlending();
+    
     fbo.end();
 
 // Miquel: commented because it's already done in PMBaseRenderer::draw()

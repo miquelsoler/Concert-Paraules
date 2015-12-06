@@ -40,7 +40,8 @@ private:
     PMUICanvasTextBoxRenderer       *myGUI;
     vector<string>                  textToWrite;
     string                          text;
-    
+    ofImage                         logoImage;
+
 //    ofxScrollingText               *scrollText;
 //    ofxTextBox                      textBox;
     ofVec2f                         boxMargins;

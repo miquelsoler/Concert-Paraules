@@ -298,7 +298,13 @@ void PMScene2::keyReleased(int key)
         case 'p' :
             textBox.toggleGUIVisible();
             break;
+
+        case 'x' :
+            renderer->setNeedsToBeCleared(true);
+            break;
         default: break;
+        
+        
     }
 }
 
