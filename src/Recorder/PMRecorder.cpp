@@ -8,6 +8,14 @@
 
 #include "PMRecorder.hpp"
 
+void PMRecorder::changeFbo(ofFbo *_fbo)
+{
+    fbo = _fbo;
+    pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
+    pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
+    
+}
+
 void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileName, string _filePath)
 {
     fbo = _fbo;
@@ -17,6 +25,7 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     filePath = _filePath;
     pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
     pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
+
     // TODO: Path Miquel
 //    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg")); // use this is you have ffmpeg installed in your data folder
     //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
@@ -41,12 +50,12 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     bRecording = false;
 }
 
-void PMRecorder::addVideoFrame()
+void PMRecorder::addVideoFrame(ofColor backColor)
 {
     //Draw main fbo to auxiliary fbo
     fboRecorderOut.begin();
+    ofClear(backColor);
     ofSetColor(255);
-    ofClear(255, 0, 0, 255);
     fbo->draw(0, 0);
     fboRecorderOut.end();
 
@@ -68,6 +77,7 @@ void PMRecorder::addVideoFrame()
         // copying the texture to one buffer and reading
         // back from another to avoid stalls
         swap(pixelBufferBack, pixelBufferFront);
+        
         // add Frame to videoRecorder
         bool success = vidRecorder.addFrame(pixels);
         if (!success) {

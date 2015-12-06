@@ -25,7 +25,7 @@ public:
     }
 
     void init(ofFbo *fbo, int _samplerate, int _channels, string fileName, string filePath);
-    void addVideoFrame();
+    void addVideoFrame(ofColor backColor);
     void addAudioBuffer(float *input, int bufferSize, int nChannels);
     void exit();
 
@@ -33,6 +33,8 @@ public:
     void stopRecording();
     void discardRecording();
     bool isRecording();
+    
+    void changeFbo(ofFbo *fbo);
 
 private:
     ofxVideoRecorder vidRecorder;

@@ -48,6 +48,7 @@ public:
     PMRendererState getState() { return state; };
     PMRendererType  getType() { return type; };
     bool            getNeedsToBeCleared() { return needsToBeCleared; };
+    ofColor         getBackgroundColor();
     
     void showGUI(bool show);
     
