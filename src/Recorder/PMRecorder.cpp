@@ -46,7 +46,7 @@ void PMRecorder::addVideoFrame()
     //Draw main fbo to auxiliary fbo
     fboRecorderOut.begin();
     ofSetColor(255);
-    ofClear(0, 255);
+    ofClear(255, 0, 0, 255);
     fbo->draw(0, 0);
     fboRecorderOut.end();
 

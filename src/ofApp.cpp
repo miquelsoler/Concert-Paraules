@@ -92,7 +92,6 @@ void ofApp::exit()
     scene1->saveSettings();
     PMScene2 * scene2 = (PMScene2 *)(sceneManager.getScene("Scene 2"));
     scene2->saveSettings();
-//    delete audioAnalyzer;
 }
 
 void ofApp::keyReleased(int key)
