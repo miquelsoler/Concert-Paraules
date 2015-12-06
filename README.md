@@ -18,6 +18,8 @@ Before building, make sure you've already downloaded these add-ons:
 * [ofxUI] (https://github.com/rezaali/ofxUI)
 * [ofxAubio] (https://github.com/aubio/ofxAubio) ->FOLLOW instruction, not downloading github source!
 * [ofxVideoRecorder] (https://github.com/timscaffidi/ofxVideoRecorder)
+* [ofxUnicode] (https://github.com/jeonghopark/ofxUnicode)
+* [ofxFontStash] (https://github.com/armadillu/ofxFontStash)
 
 These add-ons are also needed, but they are already part of openframeworks:
 * [ofxGUI](http://openframeworks.cc/documentation/ofxGui/ofxGui.html)
