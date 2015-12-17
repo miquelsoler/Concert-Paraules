@@ -104,8 +104,6 @@ void PMRendererTypography::drawIntoFBO()
         ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
         ofClear(fc);
 
-        cout << "Ribbon draw: " << int(gui->getColorBack().r) << ", " << int(gui->getColorBackground().g) << ", " << int (gui->getColorBack().b) << endl;
-
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
         mutexActiveLetters.lock();
         {
