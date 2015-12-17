@@ -55,8 +55,6 @@ void PMRendererRibbon::drawIntoFBO()
 //        ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
 //        ofClear(fc);
 
-        cout << "Ribbon draw: " << int(gui->getColorBack().r) << ", " << int(gui->getColorBackground().g) << ", " << int (gui->getColorBack().b) << endl;
-
         for (int i=0; i<DEFAULT_NUM_PAINTERS; ++i)
             painters[i].draw();
     }
