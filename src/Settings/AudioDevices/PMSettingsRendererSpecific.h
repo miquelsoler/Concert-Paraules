@@ -20,13 +20,14 @@ public:
 
 class PMSettingsRendererTypography : public PMSettingsRendererSpecific
 {
-public:
 };
 
 class PMSettingsRendererColors : public PMSettingsRendererSpecific
 {
-public:
 };
 
+class PMSettingsRendererRibbon : public PMSettingsRendererSpecific
+{
+};
 
 #endif //PMCONCERTPARAULES_PMSETTINGSRENDERERSPECIFIC_H

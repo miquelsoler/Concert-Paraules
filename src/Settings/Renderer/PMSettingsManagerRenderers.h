@@ -10,6 +10,15 @@
 #include "PMSettingsManager.h"
 #include "PMSettingsRenderer.h"
 
+typedef enum
+{
+    PMSRENDERER_PAINTBRUSH = 0,
+    PMSRENDERER_TYPOGRAPHY = 1,
+    PMSRENDERER_COLORS = 2,
+    PMSRENDERER_RIBBON = 3
+} PMS_RendererMode;
+
+
 
 class PMSettingsManagerRenderers : public PMSettingsManager
 {
@@ -34,6 +43,8 @@ public:
 private:
 
     void buildRenderersVectorFromJSON();
+    Json::Value buildRenderer(string name, PMS_RendererMode id);
+
     vector<PMSettingsRenderer> renderersSettings;
 };
 

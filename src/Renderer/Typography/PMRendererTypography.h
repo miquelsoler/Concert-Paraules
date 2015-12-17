@@ -10,7 +10,6 @@
 #include "PMBaseRenderer.h"
 
 #include "PMLetterContainer.h"
-#include "PMUICanvasTypoRenderer.h"
 #include "Defaults.h"
 
 #include "ofxBox2d.h"

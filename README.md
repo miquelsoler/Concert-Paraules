@@ -1,6 +1,6 @@
 # Concert de les paraules
 
-# Basic requirements
+## Basic requirements
 
 * openframeworks 0.9.0 RC1 or later
 * Mac OS 10.11 (although 10.10 is supposedly supported)

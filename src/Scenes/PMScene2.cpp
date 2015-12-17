@@ -61,6 +61,9 @@ void PMScene2::setup()
             case RENDERERTYPE_COLOR:
                 renderer = new PMRendererColor();
                 break;
+            case RENDERERTYPE_RIBBON:
+                renderer = new PMRendererRibbon();
+                break;
             default:
                 break;
         }
@@ -237,11 +240,6 @@ void PMScene2::saveSettings()
         (*it)->setVisible(false);
     }
 
-    // FIXME: Això de carregar-se'l des del codi, és mala pràctica, i a més no funciona bé. És suficient amb afegir-lo al .gitignore, i ja està fet.
-//    //ens carreguem el fitxer audiodevices perque no dongui pel sac
-//    string cmd="rm " + ofFilePath::getAbsolutePath("settings/")+"/audioDevices.json";
-//    system(cmd.c_str());
-
     recorder->exit();
 }
 
@@ -407,4 +405,19 @@ void PMScene2::melodyDirection(melodyDirectionParams &melodyDirectionParams)
         default:
             break;
     }
+}
+
+void PMScene2::mouseDragged(int x, int y, int button)
+{
+    renderer->mouseDragged(x, y, button);
+}
+
+void PMScene2::mousePressed(int x, int y, int button)
+{
+    renderer->mousePressed(x, y, button);
+}
+
+void PMScene2::mouseReleased(int x, int y, int button)
+{
+    renderer->mouseReleased(x, y, button);
 }

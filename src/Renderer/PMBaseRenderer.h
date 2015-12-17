@@ -16,7 +16,8 @@ typedef enum
 {
     RENDERERTYPE_PAINTBRUSH = 0,
     RENDERERTYPE_TYPOGRAPHY = 1,
-    RENDERERTYPE_COLOR = 2
+    RENDERERTYPE_COLOR = 2,
+    RENDERERTYPE_RIBBON = 3
 } PMRendererType;
 
 typedef enum
@@ -51,12 +52,17 @@ public:
     ofColor         getBackgroundColor();
     
     void showGUI(bool show);
-    
-    // changed ...
+
+    // Audio events
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
     virtual void pauseStateChanged(pauseParams &pauseParams);
+
+    // Mouse events (only to be implemented in subclasses when really needed)
+    virtual void mouseDragged(int x, int y, int button) {};
+    virtual void mousePressed(int x, int y, int button) {};
+    virtual void mouseReleased(int x, int y, int button) {};
 
 protected:
 

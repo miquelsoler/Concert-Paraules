@@ -2,6 +2,7 @@
 // Created by Miquel Àngel Soler on 30/10/15.
 //
 
+#include <xpc/xpc.h>
 #include "PMSettingsManagerRenderers.h"
 
 static const string FILENAME = "settings/renderers.json";
@@ -15,13 +16,7 @@ static const string STR_RENDERER_SETTINGS   = "4. Settings";
 static const string STR_RENDERER_PAINTBRUSH = "Paint Brush";
 static const string STR_RENDERER_TYPOGRAPHY = "Typography";
 static const string STR_RENDERER_COLORS     = "Colors";
-
-typedef enum
-{
-    PMSRENDERER_PAINTBRUSH = 0,
-    PMSRENDERER_TYPOGRAPHY = 1,
-    PMSRENDERER_COLORS = 2
-} PMS_RendererMode;
+static const string STR_RENDERER_RIBBON     = "Ribbon";
 
 
 PMSettingsManagerRenderers::PMSettingsManagerRenderers() : PMSettingsManager()
@@ -52,33 +47,17 @@ void PMSettingsManagerRenderers::createJSONSettings()
 {
     json[STR_RENDERERS] = Json::arrayValue;
 
-    {
-        Json::Value jsonRenderer;
-        jsonRenderer.clear();
-        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_PAINTBRUSH;
-        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_PAINTBRUSH;
-        jsonRenderer[STR_RENDERER_ENABLED] = true;
-        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
-        json[STR_RENDERERS].append(jsonRenderer);
-    }
+    Json::Value jsonPaintbrush = buildRenderer(STR_RENDERER_PAINTBRUSH, PMSRENDERER_PAINTBRUSH);
+    json[STR_RENDERERS].append(jsonPaintbrush);
 
-    {
-        Json::Value jsonRenderer;
-        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_TYPOGRAPHY;
-        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_TYPOGRAPHY;
-        jsonRenderer[STR_RENDERER_ENABLED] = false;
-        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
-        json[STR_RENDERERS].append(jsonRenderer);
-    }
+    Json::Value jsonTypo = buildRenderer(STR_RENDERER_TYPOGRAPHY, PMSRENDERER_TYPOGRAPHY);
+    json[STR_RENDERERS].append(jsonTypo);
 
-    {
-        Json::Value jsonRenderer;
-        jsonRenderer[STR_RENDERER_NAME] = STR_RENDERER_COLORS;
-        jsonRenderer[STR_RENDERER_ID] = PMSRENDERER_COLORS;
-        jsonRenderer[STR_RENDERER_ENABLED] = false;
-        jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
-        json[STR_RENDERERS].append(jsonRenderer);
-    }
+    Json::Value jsonColors = buildRenderer(STR_RENDERER_COLORS, PMSRENDERER_COLORS);
+    json[STR_RENDERERS].append(jsonColors);
+
+    Json::Value jsonRibbon = buildRenderer(STR_RENDERER_RIBBON, PMSRENDERER_RIBBON);
+    json[STR_RENDERERS].append(jsonRibbon);
 
     write();
 }
@@ -117,6 +96,11 @@ void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()
                 renderer.specificSettings = rendererColors;
                 break;
             }
+            case PMSRENDERER_RIBBON:
+            {
+                PMSettingsRendererRibbon rendererRibbon;
+                renderer.specificSettings = rendererRibbon;
+            }
             default: break;
         }
 
@@ -153,4 +137,14 @@ void PMSettingsManagerRenderers::enableRenderer(unsigned int rendererID)
         bool enabled = (json[STR_RENDERERS][i][STR_RENDERER_ID].asInt() == rendererID);
         json[STR_RENDERERS][i][STR_RENDERER_ENABLED] = enabled;
     }
+}
+
+Json::Value PMSettingsManagerRenderers::buildRenderer(string name, PMS_RendererMode id)
+{
+    Json::Value jsonRenderer;
+    jsonRenderer[STR_RENDERER_NAME] = name;
+    jsonRenderer[STR_RENDERER_ID] = id;
+    jsonRenderer[STR_RENDERER_ENABLED] = false;
+    jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
+    return jsonRenderer;
 }

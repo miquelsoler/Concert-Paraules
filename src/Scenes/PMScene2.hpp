@@ -19,6 +19,7 @@
 #include "PMRendererPaintbrush2.h"
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
+#include "PMRendererRibbon.h"
 #include "PMRendererTextBox.h"
 
 #include "PMRecorder.hpp"
@@ -48,6 +49,7 @@ public:
 
     void keyReleased(int key);
 
+    // Audio events
     void pitchChanged(pitchParams &pitchParams);
     void energyChanged(energyParams &energyParams);
     void silenceStateChanged(silenceParams &silenceParams);
@@ -55,6 +57,11 @@ public:
     void onsetDetected(onsetParams &onsetParams);
     void shtDetected(shtParams &shtParams);
     void melodyDirection(melodyDirectionParams &melodyDirectionParams);
+
+    // Mouse events
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
 
 private:
 
