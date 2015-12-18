@@ -1,5 +1,5 @@
 //
-// Created by Miquel Ëngel Soler on 15/12/15.
+// Created by Miquel ï¿½ngel Soler on 15/12/15.
 //
 
 #ifndef HARMONYFOROF_PMRIBBONPAINTER_H
@@ -12,7 +12,7 @@ class PMRibbonPainter
 {
 public:
 
-    PMRibbonPainter(ofColor color, float dx, float dy, float ax, float ay, float div, float ease);
+    PMRibbonPainter(ofColor color, float dx, float dy, float ax, float ay, float div, float ease, unsigned int size);
 
     void setup();
     void update();
@@ -20,6 +20,7 @@ public:
 
     void setPosition(int x, int y);
     void setColor(ofColor color);
+    void setSize(unsigned int size);
     void clear();
 
 private:
@@ -28,6 +29,7 @@ private:
     float ax, ay;
     float div;
     float ease;
+    unsigned int size;
 
     ofPoint targetPos;
 

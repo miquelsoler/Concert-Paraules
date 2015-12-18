@@ -1,10 +1,10 @@
 //
-// Created by Miquel Ëngel Soler on 15/12/15.
+// Created by Miquel ï¿½ngel Soler on 15/12/15.
 //
 
 #include "PMRibbonPainter.h"
 
-PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _ax, float _ay, float _div, float _ease)
+PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _ax, float _ay, float _div, float _ease, unsigned int size)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
@@ -14,11 +14,11 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _ax
     ax = _ax; ay = _ay;
     div = _div;
     ease = _ease;
+    setSize(size);
 
     path.setMode(ofPath::POLYLINES);
     path.setStrokeColor(color);
     path.setFilled(false);
-    path.setStrokeWidth(1);
 
     isNewPath = true;
 }
@@ -70,6 +70,12 @@ void PMRibbonPainter::setColor(ofColor _color)
     path.setStrokeColor(color);
 }
 
+void PMRibbonPainter::setSize(unsigned int _size)
+{
+    size = _size;
+    path.setStrokeWidth(size);
+}
+
 void PMRibbonPainter::clear()
 {
     path.clear();
@@ -79,7 +85,7 @@ void PMRibbonPainter::clear()
     path.setMode(ofPath::POLYLINES);
     path.setStrokeColor(color);
     path.setFilled(false);
-    path.setStrokeWidth(1);
+    path.setStrokeWidth(size);
 
     isNewPath = true;
 }

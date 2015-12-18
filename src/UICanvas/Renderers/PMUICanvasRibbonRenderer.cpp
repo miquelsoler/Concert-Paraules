@@ -13,9 +13,12 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
 {
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
-    // Aquí va el codi específic
     addSpacer();
-    addLabel("TEST");
+    addLabel("PAINTER");
+    ofxUIIntSlider *numPaintersSlider = addIntSlider("Number of painters", 1, 100, &numPainters);
+    numPaintersSlider->setTriggerType(OFX_UI_TRIGGER_END);
+    ofxUIIntSlider *sizeSlider = addIntSlider("Stroke width", 1, 10, &strokeWidth);
+    sizeSlider->setTriggerType(OFX_UI_TRIGGER_END);
 
     if (autosize) autoSizeToFitWidgets();
 

@@ -20,11 +20,11 @@ public:
 
     void setPosition(int x, int y);
     void setColor(ofColor color);
-    void setSize(unsigned int size);
 
     void strokeStarted();
     void strokeEnded();
 
+// TODO: Remove mouse events code once audio events are working
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -36,7 +36,11 @@ private:
     ofPoint position;
     unsigned int size;
 
+    unsigned int numPainters;
+
     bool isInStroke;
+
+    void buildPainters();
 };
 
 

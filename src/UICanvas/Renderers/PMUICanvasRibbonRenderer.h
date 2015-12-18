@@ -19,6 +19,13 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
+    unsigned int getNumPainters()   { return (unsigned int)numPainters; };
+    unsigned int getStrokeWidth()   { return (unsigned int)strokeWidth; };
+
+private:
+
+    int numPainters;
+    int strokeWidth;
 };
 
 
