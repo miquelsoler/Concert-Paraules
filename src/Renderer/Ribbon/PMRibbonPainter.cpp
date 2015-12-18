@@ -15,7 +15,6 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     ease = _ease;
     setSize(size);
 
-    path.setMode(ofPath::POLYLINES);
     path.setStrokeColor(color);
     path.setFilled(false);
 
@@ -45,7 +44,7 @@ void PMRibbonPainter::draw()
 {
     if (isNewPath) return;
 
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     path.draw();
     ofDisableBlendMode();
 }
