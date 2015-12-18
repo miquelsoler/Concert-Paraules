@@ -30,13 +30,12 @@ void PMRibbonPainter::update()
 {
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
-        path.moveTo(dx, dy);
         if (isNewPath) return;
 
         dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
         dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
 
-        path.lineTo(dx, dy);
+        path.curveTo(dx, dy);
     }
 }
 
