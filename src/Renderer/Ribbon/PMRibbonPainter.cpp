@@ -6,10 +6,9 @@
 
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _ax, float _ay, float _div, float _ease, unsigned int size)
 {
+    // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
-    // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
-    color = ofColor(127,0,0);
     dx = _dx; dy = _dy;
     ax = _ax; ay = _ay;
     div = _div;

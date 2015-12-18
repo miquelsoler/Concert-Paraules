@@ -5,8 +5,6 @@
 #include "PMRendererRibbon.h"
 #include "PMUICanvasRibbonRenderer.h"
 
-const ofColor DEFAULT_RIBBON_COLOR = ofColor(1, 1, 1, 255);
-
 PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
 {
     // GUI
@@ -20,8 +18,13 @@ void PMRendererRibbon::setup()
 {
     PMBaseRenderer::setup();
     PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
+
     numPainters = myGUI->getNumPainters();
-    size = myGUI->getStrokeWidth();
+    strokeWidth = myGUI->getStrokeWidth();
+    ribbonColorR = (unsigned int)(myGUI->getRibbonColor().r);
+    ribbonColorG = (unsigned int)(myGUI->getRibbonColor().g);
+    ribbonColorB = (unsigned int)(myGUI->getRibbonColor().b);
+
     buildPainters();
 }
 
@@ -29,22 +32,36 @@ void PMRendererRibbon::update()
 {
     PMBaseRenderer::update();
 
-    PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
-
-    unsigned int guiSize = myGUI->getStrokeWidth();
-    if (guiSize != size)
+    // Updates according to GUI changes
     {
-        size = guiSize;
-        for (int i=0; i<numPainters; ++i)
-            painters[i].setSize(size);
-    }
+        PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
 
-    unsigned int guiNumPainters = myGUI->getNumPainters();
-    if (guiNumPainters != numPainters)
-    {
-        numPainters = guiNumPainters;
-        buildPainters();
-        return;
+        //
+        unsigned int guiStrokeWidth = myGUI->getStrokeWidth();
+        if (guiStrokeWidth != strokeWidth)
+        {
+            strokeWidth = guiStrokeWidth;
+            for (int i=0; i<numPainters; ++i)
+                painters[i].setSize(strokeWidth);
+        }
+
+        unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
+        unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
+        unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
+
+        if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
+        {
+            for (int i=0; i<numPainters; ++i)
+                painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
+        }
+
+        unsigned int guiNumPainters = myGUI->getNumPainters();
+        if (guiNumPainters != numPainters)
+        {
+            numPainters = guiNumPainters;
+            buildPainters();
+            return;
+        }
     }
 
     for (int i=0; i<numPainters; ++i)
@@ -73,12 +90,6 @@ void PMRendererRibbon::setPosition(int x, int y)
 {
     for (int i=0; i<numPainters; ++i)
         painters[i].setPosition(x, y);
-}
-
-void PMRendererRibbon::setColor(ofColor color)
-{
-    for (int i=0; i<numPainters; ++i)
-        painters[i].setColor(color);
 }
 
 void PMRendererRibbon::strokeStarted()
@@ -121,7 +132,8 @@ void PMRendererRibbon::buildPainters()
 
     for (int i=0; i<numPainters; ++i)
     {
-        PMRibbonPainter painter = PMRibbonPainter(DEFAULT_RIBBON_COLOR, ofGetWidth()/2, ofGetHeight()/2, 0, 0, 0.1, ofRandom(0.0f, 1.0f) * 0.2f + 0.6f, size);
+        ofColor color(ribbonColorR, ribbonColorG, ribbonColorB, 255);
+        PMRibbonPainter painter = PMRibbonPainter(color, ofGetWidth()/2, ofGetHeight()/2, 0, 0, 0.1, ofRandom(0.0f, 1.0f) * 0.2f + 0.6f, strokeWidth);
         painters.push_back(painter);
     }
 

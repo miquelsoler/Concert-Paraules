@@ -19,7 +19,7 @@ public:
 
     unsigned int getNumPainters()   { return (unsigned int)numPainters; };
     unsigned int getStrokeWidth()   { return (unsigned int)strokeWidth; };
-    ofColor getBrushColor()         { return ofColor(colorR, colorG, colorB, 255); };
+    ofColor getRibbonColor()         { return ofColor(colorR, colorG, colorB, 255); };
 
 private:
 

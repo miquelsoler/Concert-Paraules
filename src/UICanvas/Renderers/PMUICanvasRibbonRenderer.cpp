@@ -19,7 +19,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
     addIntSlider("Stroke width", 1, 10, &strokeWidth);
 
     addSpacer();
-    addLabel("BRUSH COLOR");
+    addLabel("RIBBON COLOR");
     addIntSlider("R", 0, 255, &colorR);
     addIntSlider("G", 0, 255, &colorG);
     addIntSlider("B", 0, 255, &colorB);

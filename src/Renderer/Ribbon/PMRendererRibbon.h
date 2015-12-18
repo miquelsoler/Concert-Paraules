@@ -19,7 +19,6 @@ public:
     virtual void drawIntoFBO();
 
     void setPosition(int x, int y);
-    void setColor(ofColor color);
 
     void strokeStarted();
     void strokeEnded();
@@ -36,7 +35,8 @@ private:
     ofPoint position;
 
     unsigned int numPainters;
-    unsigned int size;
+    unsigned int strokeWidth;
+    unsigned int ribbonColorR, ribbonColorG, ribbonColorB;
 
     bool isInStroke;
 
