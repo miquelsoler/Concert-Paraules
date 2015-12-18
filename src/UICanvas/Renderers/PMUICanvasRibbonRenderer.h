@@ -17,15 +17,15 @@ public:
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();
 
-    virtual void handleEvents(ofxUIEventArgs &e);
-
     unsigned int getNumPainters()   { return (unsigned int)numPainters; };
     unsigned int getStrokeWidth()   { return (unsigned int)strokeWidth; };
+    ofColor getBrushColor()         { return ofColor(colorR, colorG, colorB, 255); };
 
 private:
 
     int numPainters;
     int strokeWidth;
+    int colorR, colorG, colorB;
 };
 
 

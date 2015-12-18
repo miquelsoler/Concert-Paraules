@@ -15,10 +15,14 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
 
     addSpacer();
     addLabel("PAINTER");
-    ofxUIIntSlider *numPaintersSlider = addIntSlider("Number of painters", 1, 100, &numPainters);
-    numPaintersSlider->setTriggerType(OFX_UI_TRIGGER_END);
-    ofxUIIntSlider *sizeSlider = addIntSlider("Stroke width", 1, 10, &strokeWidth);
-    sizeSlider->setTriggerType(OFX_UI_TRIGGER_END);
+    addIntSlider("Number of painters", 1, 100, &numPainters);
+    addIntSlider("Stroke width", 1, 10, &strokeWidth);
+
+    addSpacer();
+    addLabel("BRUSH COLOR");
+    addIntSlider("R", 0, 255, &colorR);
+    addIntSlider("G", 0, 255, &colorG);
+    addIntSlider("B", 0, 255, &colorB);
 
     if (autosize) autoSizeToFitWidgets();
 
@@ -29,10 +33,4 @@ void PMUICanvasRibbonRenderer::clear()
 {
     PMUICanvasBaseRenderer::clear();
     superInit("RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
-}
-
-void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
-{
-    PMUICanvasBaseRenderer::handleEvents(e);
-    string name = e.getName();
 }

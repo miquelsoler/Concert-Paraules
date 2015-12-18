@@ -34,9 +34,9 @@ private:
     vector<PMRibbonPainter> painters;
 
     ofPoint position;
-    unsigned int size;
 
     unsigned int numPainters;
+    unsigned int size;
 
     bool isInStroke;
 

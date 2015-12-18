@@ -32,25 +32,24 @@ public:
     virtual void handleEvents(ofxUIEventArgs &e);
 
     // GETTERS
-    float           getFadeBackground();
-    ofColor         getColorBackground();
-    float           getDeltaPitch();
-    float           getDeltaEnergy();
-    float           getEnergyMin() {return guiEnergyMin;};
-    float           getEnergyMax() {return guiEnergyMax;};
-    float           getPitchMin() {return guiPitchMin;};
-    float           getPitchMax() {return guiPitchMax;};
-    float           getSmoothedPitch() {return guiSmoothPitch;};
-    float           getSmoothedEnergy() {return guiSmoothEnergy;};
-    ofColor         getBackgroundColor(){return ofColor(guiColorBgRed,guiColorBgGreen,guiColorBgBlue,255);};
-    
+    ofColor         getBackgroundColor()    { return ofColor(guiColorBgRed, guiColorBgGreen, guiColorBgBlue, 255); };
+    float           getBackgroundFade()     { return guiFadeBackground; };
+    float           getDeltaPitch()         { return guiDeltaPitch; };
+    float           getDeltaEnergy()        { return guiDeltaEnergy; };
+    float           getEnergyMin()          { return guiEnergyMin; };
+    float           getEnergyMax()          { return guiEnergyMax; };
+    float           getPitchMin()           { return guiPitchMin; };
+    float           getPitchMax()           { return guiPitchMax; };
+    float           getSmoothedPitch()      { return guiSmoothPitch; };
+    float           getSmoothedEnergy()     { return guiSmoothEnergy; };
+
     // SETTERS
-    void            setSmoothPitch(float _p);
-    void            setSmoothEnergy(float _e);
-    void            setPitchMin(float f) {guiPitchMin = f;};
-    void            setPitchMax(float f) {guiPitchMax = f;};
-    void            setEnergyMin(float f) {guiEnergyMin = f;};
-    void            setEnergyMax(float f) {guiEnergyMax = f;};
+    void            setSmoothPitch(float p)     { guiSmoothPitch = p; };
+    void            setSmoothEnergy(float e)    { guiSmoothEnergy = e; };
+    void            setPitchMin(float f)        { guiPitchMin = f; };
+    void            setPitchMax(float f)        { guiPitchMax = f; };
+    void            setEnergyMin(float f)       { guiEnergyMin = f; };
+    void            setEnergyMax(float f)       { guiEnergyMax = f; };
 
 protected:
 

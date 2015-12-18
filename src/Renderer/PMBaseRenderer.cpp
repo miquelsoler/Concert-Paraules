@@ -31,8 +31,8 @@ void PMBaseRenderer::update()
     fbo.begin();
     {
         // background dimming
-        ofFloatColor fc = ofFloatColor(0.0, 0.0, 0.0, gui->getFadeBackground());
-        //ofFloatColor fc = ofFloatColor(gui->getColorBackground().r,gui->getColorBackground().g,gui->getColorBackground().b,gui->getFadeBackground());
+        ofFloatColor fc = ofFloatColor(0.0, 0.0, 0.0, gui->getBackgroundFade());
+        //ofFloatColor fc = ofFloatColor(gui->getColorBackground().r,gui->getColorBackground().g,gui->getColorBackground().b,gui->getBackgroundFade());
         ofSetColor(fc);
 
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -51,7 +51,7 @@ void PMBaseRenderer::draw()
     }
 
     // set background for base renderer
-    ofColor c = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 255);
+    ofColor c = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 255);
     ofClear(c);
 
     // Skip FBO drawing if renderer is off

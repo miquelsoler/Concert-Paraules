@@ -101,7 +101,7 @@ void PMRendererTypography::drawIntoFBO()
 
     fbo.begin();
     {
-        ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
+        ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
         ofClear(fc);
 
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
