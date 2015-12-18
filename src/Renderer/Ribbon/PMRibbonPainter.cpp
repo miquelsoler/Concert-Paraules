@@ -4,13 +4,13 @@
 
 #include "PMRibbonPainter.h"
 
-PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _ax, float _ay, float _div, float _ease, unsigned int size)
+PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size)
 {
     // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
     dx = _dx; dy = _dy;
-    ax = _ax; ay = _ay;
+    ax = ay = 0.0f;
     div = _div;
     ease = _ease;
     setSize(size);

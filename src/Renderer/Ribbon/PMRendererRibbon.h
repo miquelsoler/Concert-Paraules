@@ -37,6 +37,7 @@ private:
     unsigned int numPainters;
     unsigned int strokeWidth;
     unsigned int ribbonColorR, ribbonColorG, ribbonColorB;
+    float divisions;
 
     bool isInStroke;
 

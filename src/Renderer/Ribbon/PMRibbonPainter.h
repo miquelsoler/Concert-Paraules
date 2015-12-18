@@ -12,7 +12,7 @@ class PMRibbonPainter
 {
 public:
 
-    PMRibbonPainter(ofColor color, float dx, float dy, float ax, float ay, float div, float ease, unsigned int size);
+    PMRibbonPainter(ofColor color, float dx, float dy, float div, float ease, unsigned int size);
 
     void setup();
     void update();

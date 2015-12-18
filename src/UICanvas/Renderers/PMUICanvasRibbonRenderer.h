@@ -17,15 +17,17 @@ public:
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();
 
-    unsigned int getNumPainters()   { return (unsigned int)numPainters; };
-    unsigned int getStrokeWidth()   { return (unsigned int)strokeWidth; };
-    ofColor getRibbonColor()         { return ofColor(colorR, colorG, colorB, 255); };
+    unsigned int    getNumPainters()    { return (unsigned int)numPainters; };
+    unsigned int    getStrokeWidth()    { return (unsigned int)strokeWidth; };
+    ofColor         getRibbonColor()    { return ofColor(colorR, colorG, colorB, 255); };
+    float           getDivisions()      { return divisions; };
 
 private:
 
     int numPainters;
     int strokeWidth;
     int colorR, colorG, colorB;
+    float divisions;
 };
 
 

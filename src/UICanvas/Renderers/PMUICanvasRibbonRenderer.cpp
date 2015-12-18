@@ -14,15 +14,16 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
     addSpacer();
-    addLabel("PAINTER");
+    addLabel("RIBBON BASIC");
     addIntSlider("Number of painters", 1, 100, &numPainters);
     addIntSlider("Stroke width", 1, 10, &strokeWidth);
+    addIntSlider("Ribbon R", 0, 255, &colorR);
+    addIntSlider("Ribbon G", 0, 255, &colorG);
+    addIntSlider("Ribbon B", 0, 255, &colorB);
 
     addSpacer();
-    addLabel("RIBBON COLOR");
-    addIntSlider("R", 0, 255, &colorR);
-    addIntSlider("G", 0, 255, &colorG);
-    addIntSlider("B", 0, 255, &colorB);
+    addLabel("RIBBON ADVANCED");
+    addSlider("Divisions", 0.01, 0.5, &divisions);
 
     if (autosize) autoSizeToFitWidgets();
 

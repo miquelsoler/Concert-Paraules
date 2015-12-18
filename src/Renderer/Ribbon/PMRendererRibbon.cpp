@@ -24,6 +24,7 @@ void PMRendererRibbon::setup()
     ribbonColorR = (unsigned int)(myGUI->getRibbonColor().r);
     ribbonColorG = (unsigned int)(myGUI->getRibbonColor().g);
     ribbonColorB = (unsigned int)(myGUI->getRibbonColor().b);
+    divisions = myGUI->getDivisions();
 
     buildPainters();
 }
@@ -32,19 +33,20 @@ void PMRendererRibbon::update()
 {
     PMBaseRenderer::update();
 
-    // Updates according to GUI changes
-    {
-        PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
+    PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
 
-        //
+    // Stroke width changed
+    {
         unsigned int guiStrokeWidth = myGUI->getStrokeWidth();
-        if (guiStrokeWidth != strokeWidth)
-        {
+        if (guiStrokeWidth != strokeWidth) {
             strokeWidth = guiStrokeWidth;
-            for (int i=0; i<numPainters; ++i)
+            for (int i = 0; i < numPainters; ++i)
                 painters[i].setSize(strokeWidth);
         }
+    }
 
+    // Ribbon color changed
+    {
         unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
         unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
         unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
@@ -54,7 +56,21 @@ void PMRendererRibbon::update()
             for (int i=0; i<numPainters; ++i)
                 painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
         }
+    }
 
+    // Number of divisions changed
+    {
+        float guiDivisions = myGUI->getDivisions();
+        if (guiDivisions != divisions)
+        {
+            divisions = guiDivisions;
+            buildPainters();
+            return;
+        }
+    }
+
+    // Number of painters changed
+    {
         unsigned int guiNumPainters = myGUI->getNumPainters();
         if (guiNumPainters != numPainters)
         {
@@ -130,10 +146,14 @@ void PMRendererRibbon::buildPainters()
 {
     painters.clear();
 
+    ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);
+    float dx = ofGetWidth() / 2;
+    float dy = ofGetHeight() / 2;
+
     for (int i=0; i<numPainters; ++i)
     {
-        ofColor color(ribbonColorR, ribbonColorG, ribbonColorB, 255);
-        PMRibbonPainter painter = PMRibbonPainter(color, ofGetWidth()/2, ofGetHeight()/2, 0, 0, 0.1, ofRandom(0.0f, 1.0f) * 0.2f + 0.6f, strokeWidth);
+        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
+        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth);
         painters.push_back(painter);
     }
 
