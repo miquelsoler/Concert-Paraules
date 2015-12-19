@@ -3,7 +3,7 @@ ofxAudioAnalyzer-PM
 ofxBox2d
 ofxJSON
 ofxTween
-ofxUi
+ofxUI
 ofxAubio
 ofxVideoRecorder
 ofxUnicode
