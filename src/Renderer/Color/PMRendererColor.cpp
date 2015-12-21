@@ -137,77 +137,90 @@ void PMRendererColor::startNewBand()
 {
     scanX = 0;
 
+    bool beRandom = myGUI->getIsRandom();
     
-    float newProbabilityFull = ofRandomuf();
-    float newProbabilityHalf = ofRandomuf();
-    float newProbabilityHorizVert = ofRandomuf();
-    
-    bool newIsFull;
-    bool newIsHalf;
-    int whichFullBand;
-    int resolution;
-    
-    // Horizontal / Vertical orientation
-    if(newProbabilityHorizVert < myGUI->getHorizVertProbability())
+    if(beRandom)
     {
-        drawingHorizontal = false;
-    }
-    else
-    {
-        drawingHorizontal = true;
-    }
-
-    
-    // we a creating a full new band ... so height is maximum it can depending on resolution and orientation
-    if(drawingHorizontal)
-    {
-        resolution = myGUI->getResolutionY();
-        drawingHeight = int(fbo.getHeight()/resolution);
-//        cout << " NEW IS ----- HORIZONTAL !!" << endl;
-    }
-    else
-    {
-        resolution = myGUI->getResolutionX();
-        drawingHeight = int(fbo.getWidth()/resolution);
-//        cout << " NEW IS ||||||| VERTICAL !! " << myGUI->getResolutionX() << endl;
-    }
-    
-    // which full band position to draw next
-    whichFullBand = int(ceil( ofRandom(0,resolution ) ) );
-
-    // ARE WE IN A FULL BAND MODE ?
-    if(newProbabilityFull>(1.0-myGUI->getFullProbability())) newIsFull=true;
-    else newIsFull=false;
-    
-    drawingPos = (whichFullBand-1) * drawingHeight;
-    
-    if(newIsFull)
-    {
-          // do nothing
-//        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
-//        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
-    }
-    else
-    {
-//        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
-//        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
-        // it's not a full band so we use half of it's width
-        drawingHeight = drawingHeight/2;
-
-        // ... so we want to know which half is it going (+/-)
-        if(newProbabilityHalf>(1.0-myGUI->getHalfProbability())) newIsHalf=true;
-        else newIsHalf=false;
+        // IS RANDOM = WE DRAW BASED ON PROBABILITYS
+        float newProbabilityFull = ofRandomuf();
+        float newProbabilityHalf = ofRandomuf();
+        float newProbabilityHorizVert = ofRandomuf();
         
-        // FIRST OR SECOND BAND ?
-        if(newIsHalf)
+        bool newIsFull;
+        bool newIsHalf;
+        int whichFullBand;
+        int resolution;
+        
+        // Horizontal / Vertical orientation
+        if(newProbabilityHorizVert < myGUI->getHorizVertProbability())
         {
-            // do nothing
+            drawingHorizontal = false;
         }
         else
         {
-            drawingPos = drawingPos + drawingHeight;
+            drawingHorizontal = true;
         }
+        
+        
+        // we a creating a full new band ... so height is maximum it can depending on resolution and orientation
+        if(drawingHorizontal)
+        {
+            resolution = myGUI->getResolutionY();
+            drawingHeight = int(fbo.getHeight()/resolution);
+            //        cout << " NEW IS ----- HORIZONTAL !!" << endl;
+        }
+        else
+        {
+            resolution = myGUI->getResolutionX();
+            drawingHeight = int(fbo.getWidth()/resolution);
+            //        cout << " NEW IS ||||||| VERTICAL !! " << myGUI->getResolutionX() << endl;
+        }
+        
+        // which full band position to draw next
+        whichFullBand = int(ceil( ofRandom(0,resolution ) ) );
+        
+        // ARE WE IN A FULL BAND MODE ?
+        if(newProbabilityFull>(1.0-myGUI->getFullProbability())) newIsFull=true;
+        else newIsFull=false;
+        
+        drawingPos = (whichFullBand-1) * drawingHeight;
+        
+        if(newIsFull)
+        {
+            // do nothing
+            //        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
+            //        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+        }
+        else
+        {
+            //        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
+            //        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
+            // it's not a full band so we use half of it's width
+            drawingHeight = drawingHeight/2;
+            
+            // ... so we want to know which half is it going (+/-)
+            if(newProbabilityHalf>(1.0-myGUI->getHalfProbability())) newIsHalf=true;
+            else newIsHalf=false;
+            
+            // FIRST OR SECOND BAND ?
+            if(newIsHalf)
+            {
+                // do nothing
+            }
+            else
+            {
+                drawingPos = drawingPos + drawingHeight;
+            }
+        }
+       
     }
+    else
+    {
+        // NOT RANDOM ... SO SEQUENTIAL !!
+        
+        
+    }
+    
 }
 
 //--------------------------------------------------------------

@@ -15,6 +15,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     gradientImage.load("./gradients/test4x_v1.png");
     
     guiHorizontalVerticalProbability = 0.5;
+    guiRandomOrSequential = false;
     
     addSpacer();
     addIntSlider("Mode",1,10,&guiMode);
@@ -26,6 +27,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 
     addSpacer();
     addLabel("GRID");
+    addToggle("Random ?",&guiRandomOrSequential);
     addIntSlider("Resolution X",1,64,&guiResolutionX);
     addIntSlider("Resolution Y",1,64,&guiResolutionY);
     addSlider("Full Probability",0.0,1.0,&guiFullProbability);

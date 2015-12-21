@@ -33,6 +33,7 @@ public:
     float       getHalfProbability(){return guiHalfProbability;};
     float       getHorizVertProbability(){return guiHorizontalVerticalProbability;};
     float       getStopOnSilence(){return guiStopOnSilence;};
+    bool        getIsRandom(){return guiRandomOrSequential;};
     
     // SETTERS
     void        setScanSpeedX(float _s);
@@ -51,6 +52,7 @@ private:
     int         numGradients;
     
     /// GUI GRID
+    bool        guiRandomOrSequential;
     int         guiResolutionX;
     int         guiResolutionY;
     float       guiFullProbability;
