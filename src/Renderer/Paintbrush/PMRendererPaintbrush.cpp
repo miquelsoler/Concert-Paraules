@@ -62,7 +62,7 @@ void PMRendererPaintbrush::drawIntoFBO()
 {
     fbo.begin();
     {
-        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0, gui->getFadeBackground());
+        ofFloatColor fc = ofFloatColor(1.0,1.0,1.0, gui->getBackgroundFade());
         ofSetColor(fc);
 
         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());

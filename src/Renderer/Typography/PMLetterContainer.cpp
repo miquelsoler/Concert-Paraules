@@ -6,15 +6,13 @@
 
 PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float _letterSize, float letterVelocity, ofxBox2d *_box2d, PMUICanvasTypoRenderer* gui)
 {
-    cout << "+++" << endl;
-
     letterFont = font;
     letter = _letter;
     angle = ofRandom(-90, 90);
 
     box2d = _box2d;
 
-    float posOffset = ofGetWidth() * 0.1;
+    float posOffset = ofGetWidth() * 0.1f;
     float posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
     float posY = 1;
 
@@ -37,7 +35,8 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, float
     setVelocity(0, yVelocity);
 
     timeCreated = ofGetElapsedTimeMillis();
-    cout << "..." << endl;
+
+    needsToBeRemoved = false;
 }
 
 PMLetterContainer::~PMLetterContainer()

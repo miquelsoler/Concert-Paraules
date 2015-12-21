@@ -1,5 +1,13 @@
-ofxAudioAnalyzer
-ofxGui
+ofxAppUtils-PM
+ofxAudioAnalyzer-PM
+ofxBox2d
 ofxJSON
-ofxKinect
+ofxTween
+ofxUI
+ofxAubio
 ofxVideoRecorder
+ofxUnicode
+ofxFontStash
+
+ofxGui
+ofxXmlSettings
