@@ -86,6 +86,8 @@ void PMRendererRibbon::update()
 
 void PMRendererRibbon::drawIntoFBO()
 {
+    ofEnableSmoothing();
+
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
     fbo.begin();
