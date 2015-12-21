@@ -34,6 +34,13 @@ public:
     float       getHorizVertProbability(){return guiHorizontalVerticalProbability;};
     float       getStopOnSilence(){return guiStopOnSilence;};
     bool        getIsRandom(){return guiRandomOrSequential;};
+    bool        getLeftToRight(){return guiLeftToRight;};
+    bool        getUpToDown(){return guiUpToDown;};
+    bool        getDrawHorizontal(){return guiDrawHorizontal;};
+    
+    // SETTERS
+    void        setDrawHorizontal(bool b){guiDrawHorizontal = b;};
+    
     
     // SETTERS
     void        setScanSpeedX(float _s);
@@ -58,6 +65,9 @@ private:
     float       guiFullProbability;
     float       guiHalfProbability;
     float       guiHorizontalVerticalProbability;
+    bool        guiLeftToRight;
+    bool        guiUpToDown;
+    bool        guiDrawHorizontal;
     
     
     

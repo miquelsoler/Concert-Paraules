@@ -49,6 +49,8 @@ private:
     float       drawingPos;
 
     void        startNewBand();
+    int         whichSequentialBand;
+    
     
 };
 

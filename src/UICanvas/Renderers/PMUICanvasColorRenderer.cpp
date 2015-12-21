@@ -16,7 +16,10 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     
     guiHorizontalVerticalProbability = 0.5;
     guiRandomOrSequential = false;
+    guiDrawHorizontal = true;
     
+    guiLeftToRight = true;
+    guiUpToDown = true;
     addSpacer();
     addIntSlider("Mode",1,10,&guiMode);
     addSpacer();
@@ -27,16 +30,19 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 
     addSpacer();
     addLabel("GRID");
-    addToggle("Random ?",&guiRandomOrSequential);
     addIntSlider("Resolution X",1,64,&guiResolutionX);
     addIntSlider("Resolution Y",1,64,&guiResolutionY);
+    addToggle("Drawing Horizontal?",&guiDrawHorizontal);
+    addToggle("Up To Down ?",&guiUpToDown);
+    addToggle("Left To Right ?",&guiLeftToRight);
+    addToggle("Random ?",&guiRandomOrSequential);
     addSlider("Full Probability",0.0,1.0,&guiFullProbability);
     addSlider("Half Probability -/+(",0.0,1.0,&guiHalfProbability);
     addSlider("Horiz./Vertical Probability",0.0,1.0,&guiHorizontalVerticalProbability);
     addSpacer();
     addToggle("Stop on Silence?",&guiStopOnSilence);
-    addSlider("Scan Speed X",0.0,5.0,&guiScanSpeedX);
-    addSlider("Scan With",0.0,150.0,&guiScanWidth);
+    //addSlider("Scan Speed X",0.0,500.0,&guiScanSpeedX);
+    addSlider("Scan With",1.0,300.0,&guiScanWidth);
 
     
     if (autosize) autoSizeToFitWidgets();
