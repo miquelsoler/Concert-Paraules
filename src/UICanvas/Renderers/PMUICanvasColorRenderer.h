@@ -22,7 +22,6 @@ public:
     
     // GETTERS
     float       getScanSpeedX();
-    int         getMode();
     float       getScanWidth();
     ofColor     getGradientColor(int _row,float _p);
     int         getGradientId();
@@ -33,13 +32,20 @@ public:
     float       getHalfProbability(){return guiHalfProbability;};
     float       getHorizVertProbability(){return guiHorizontalVerticalProbability;};
     float       getStopOnSilence(){return guiStopOnSilence;};
+    bool        getIsRandom(){return guiRandomOrSequential;};
+    bool        getLeftToRight(){return guiLeftToRight;};
+    bool        getUpToDown(){return guiUpToDown;};
+    bool        getDrawHorizontal(){return guiDrawHorizontal;};
+    
+    // SETTERS
+    void        setDrawHorizontal(bool b){guiDrawHorizontal = b;};
+    
     
     // SETTERS
     void        setScanSpeedX(float _s);
     
 private:
 
-    int         guiMode;
 
     float       guiScanWidth;
     float       guiScanSpeedX;
@@ -51,11 +57,15 @@ private:
     int         numGradients;
     
     /// GUI GRID
+    bool        guiRandomOrSequential;
     int         guiResolutionX;
     int         guiResolutionY;
     float       guiFullProbability;
     float       guiHalfProbability;
     float       guiHorizontalVerticalProbability;
+    bool        guiLeftToRight;
+    bool        guiUpToDown;
+    bool        guiDrawHorizontal;
     
     
     

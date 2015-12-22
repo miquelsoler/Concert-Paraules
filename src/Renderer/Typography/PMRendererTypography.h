@@ -42,6 +42,8 @@ protected:
 
 private:
 
+    PMUICanvasTypoRenderer                  *myGUI;
+
     string                                  charset;
     ofTrueTypeFont *                        font;
     list<shared_ptr<PMLetterContainer>>     activeLetters;
@@ -62,6 +64,13 @@ private:
     bool somethingInContact;
     void contactStart(ofxBox2dContactArgs &e);
     void contactEnd(ofxBox2dContactArgs &e);
+    
+    
+    /// ELOI
+    int                                 oldMode;
+    ofVec2f                             oldGravity;
+    bool                                addALetter;
+    bool                                firstTimeInMode;
 };
 
 
