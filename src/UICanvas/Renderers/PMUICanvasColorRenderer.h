@@ -22,7 +22,6 @@ public:
     
     // GETTERS
     float       getScanSpeedX();
-    int         getMode();
     float       getScanWidth();
     ofColor     getGradientColor(int _row,float _p);
     int         getGradientId();
@@ -47,7 +46,6 @@ public:
     
 private:
 
-    int         guiMode;
 
     float       guiScanWidth;
     float       guiScanSpeedX;

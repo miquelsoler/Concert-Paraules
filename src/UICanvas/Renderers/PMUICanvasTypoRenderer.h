@@ -20,7 +20,6 @@ public:
     virtual void handleEvents(ofxUIEventArgs &e);
     
     // GETTERS
-    int getMode()           { return guiMode; };
     int getMinVelocity()    { return minVelocity; };
     int getMaxVelocity()    { return maxVelocity; };
     float getMinSize()      { return minSize; };
@@ -29,10 +28,17 @@ public:
     int getMaxAge()         { return maxAge; };
     float getGravityX()     { return gravityX; };
     float getGravityY()     { return gravityY; };
+    float getSinusFreq()    { return guiSinusFreq; };
+    
+    // SETTERS
+    void setGravityX(float f)      { gravityX = f;};
+    void setGravityY(float f)      { gravityY = f;};
+
+    // ELOI
+    float getSinusAmplitude()    { return guiSinusAmplitude; };
 
 private:
 
-    int     guiMode;
     int     minVelocity;
     int     maxVelocity;
     float   minSize;
@@ -41,6 +47,10 @@ private:
     int     maxAge;
     float   gravityX;
     float   gravityY;
+    
+    // ELOI
+    float   guiSinusFreq;
+    float   guiSinusAmplitude;
     
 };
 

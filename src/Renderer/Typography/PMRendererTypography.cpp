@@ -59,6 +59,10 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
     }
     
     typoTimerEnabled = false;
+    
+    myGUI = (PMUICanvasTypoRenderer *)gui;
+    addALetter = false;
+
 }
 
 void PMRendererTypography::setup()
@@ -73,13 +77,32 @@ void PMRendererTypography::setup()
 
 void PMRendererTypography::update()
 {
+    
     PMBaseRenderer::update();
+    int _mode = myGUI->getMode();
+    bool firstTimeInMode = false;
+    
+    if(oldMode != _mode)
+    {
+        firstTimeInMode = true;
+        oldMode = _mode;
+    }
+    else firstTimeInMode = false;
+    
+    // IF ADDALETTER IS ENABLES IN ENERTGY CHANGED ...
+    if(addALetter)
+    {
+        float minVelocity = 0.01;
+        float maxVelocity = 1.0;
+        float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
+        setYVelocity(velocityY);
+        addLetter();
+        addALetter = false;
+        
+    }
 
-    box2d.update();
 
 //    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-
-    PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
     uint64_t maxAge = myGUI->getMaxAge() * uint64_t(1000);
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
@@ -92,7 +115,52 @@ void PMRendererTypography::update()
         }
     }
     
-    box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
+    
+    switch(_mode)
+    {
+        case 1 :
+        {
+            box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
+            oldMode = 1;
+            break;
+        }
+        case 2 :
+        {
+            float time = ofGetElapsedTimef();
+            float gX = sin(time*myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
+            float gY = cos(time*myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
+            myGUI->setGravityX(gX);
+            myGUI->setGravityY(gY);
+            box2d.setGravity(gX, gY);
+            
+            
+            break;
+        }
+        case 3 :
+        {
+            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+            {
+                ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
+
+                ofVec2f v = ofVec2f(ofGetMouseX(),ofGetMouseY());
+                (*letterIt)->addAttractionPoint(mouse, 4.0);
+            }
+            
+            if (firstTimeInMode)
+            {
+                box2d.getWorld()->ClearForces();
+            }
+            break;
+        }
+        default :
+            break;
+            
+    }
+    
+    box2d.update();
+    
+
+
 }
 
 void PMRendererTypography::drawIntoFBO()
@@ -125,7 +193,6 @@ void PMRendererTypography::addLetter()
 
         mutexActiveLetters.lock();
         {
-            PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
             shared_ptr<PMLetterContainer> letterContainer =
                     shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
 
@@ -134,6 +201,8 @@ void PMRendererTypography::addLetter()
         mutexActiveLetters.unlock();
     }
     mutexAddLetter.unlock();
+    
+
 }
 
 void PMRendererTypography::setLetterSize(float normalizedSize)
@@ -219,7 +288,7 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
             float maxVelocity = 1.0;
             float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
             setYVelocity(velocityY);
-            addLetter();
+            //addLetter();
         }
     }
 }
@@ -228,6 +297,11 @@ void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
     setLetterSize(gui->getSmoothedEnergy());
+    
+    if(gui->getSmoothedEnergy()>0.1)
+    {
+        addALetter = true;
+    }
 }
 
 void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)

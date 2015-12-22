@@ -42,7 +42,8 @@ public:
     float           getPitchMax()           { return guiPitchMax; };
     float           getSmoothedPitch()      { return guiSmoothPitch; };
     float           getSmoothedEnergy()     { return guiSmoothEnergy; };
-
+    int             getMode()               { return guiMode; };
+    
     // SETTERS
     void            setSmoothPitch(float p)     { guiSmoothPitch = p; };
     void            setSmoothEnergy(float e)    { guiSmoothEnergy = e; };

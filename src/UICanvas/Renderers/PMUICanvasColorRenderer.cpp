@@ -20,8 +20,8 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     
     guiLeftToRight = true;
     guiUpToDown = true;
-    addSpacer();
-    addIntSlider("Mode",1,10,&guiMode);
+//    addSpacer();
+//    addIntSlider("Mode",1,10,&guiMode);
     addSpacer();
     addLabel("COLOR");
     addImageSampler("Gradient", &gradientImage);
@@ -68,10 +68,6 @@ void PMUICanvasColorRenderer::handleEvents(ofxUIEventArgs &e)
 float PMUICanvasColorRenderer::getScanSpeedX()
 {
     return guiScanSpeedX;
-}
-int PMUICanvasColorRenderer::getMode()
-{
-    return guiMode;
 }
 float PMUICanvasColorRenderer::getScanWidth()
 {

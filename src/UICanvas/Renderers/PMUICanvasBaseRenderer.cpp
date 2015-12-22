@@ -58,6 +58,9 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
     addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
 
+    addSpacer();
+    addIntSlider("Mode",1,10,&guiMode);
+
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
 
     presetsMode = RENDERER_PRESET_LOAD;
