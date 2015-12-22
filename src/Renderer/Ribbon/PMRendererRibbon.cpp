@@ -122,6 +122,49 @@ void PMRendererRibbon::strokeEnded()
         painters[i].clear();
 }
 
+void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
+{
+    PMBaseRenderer::pitchChanged(pitchParams);
+
+    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+
+    // Update brush offset
+    PMUICanvasRibbonRenderer *myGUI = (PMUICanvasRibbonRenderer *)gui;
+
+
+//    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
+//    float normalizedOffset = ofMap(myGUI->getSmoothedPitch(), 0, 1, 1.0f, -1.0f, true);
+//    brush->setOffset(normalizedOffset);
+//
+//    brush->update();
+//
+//    cout << "Pitch changed: " << pitchParams.midiNote << endl;
+}
+
+void PMRendererRibbon::pauseStateChanged(pauseParams &pauseParams)
+{
+    cout << "Pause state changed" << endl;
+    PMBaseRenderer::pauseStateChanged(pauseParams);
+
+    if (state != RENDERERSTATE_ON) return;
+
+    if (pauseParams.isPaused)
+    {
+        cout << "End stroke" << endl;
+        strokeEnded();
+    }
+    else
+    {
+        cout << "Start stroke" << endl;
+        strokeStarted();
+    }
+}
+
+void PMRendererRibbon::energyChanged(energyParams energyParams)
+{
+    PMBaseRenderer::energyChanged(energyParams);
+}
+
 // TODO: Remove mouse events code once audio events are working
 
 void PMRendererRibbon::mouseDragged(int x, int y, int button)

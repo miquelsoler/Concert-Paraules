@@ -23,7 +23,11 @@ public:
     void strokeStarted();
     void strokeEnded();
 
-// TODO: Remove mouse events code once audio events are working
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+    virtual void pauseStateChanged(pauseParams &pauseParams);
+
+    // TODO: Remove mouse events code once audio events are working
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);

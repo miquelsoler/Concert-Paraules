@@ -853,8 +853,8 @@
 				21476260FB4C93592D3144F0 /* PaintbrushV2 */,
 				214768BD63934346740161AD /* Typography */,
 				214769AAEF9CB343F4795042 /* Color */,
-				B070FA691C110F03000D5956 /* TextBox */,
 				21476E043C74C365C9D58150 /* Ribbon */,
+				B070FA691C110F03000D5956 /* TextBox */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
