@@ -32,6 +32,10 @@ private:
     int colorR, colorG, colorB;
     float divisions;
     int pathMaxVertices;
+
+    ofImage     gradientImage;
+    int         gradientId;
+    int         numGradients;
 };
 
 

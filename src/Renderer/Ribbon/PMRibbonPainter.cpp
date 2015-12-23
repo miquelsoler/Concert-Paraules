@@ -19,6 +19,10 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     ease = _ease;
     setSize(size);
 
+    path.setStrokeColor(color);
+    path.setFilled(false);
+    path.setMode(ofPath::COMMANDS);
+
     isNewPath = true;
 
     gui = _gui;
@@ -31,18 +35,6 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
-    // Clean-up path vertices in case its size is higher than the allowed maximum.
-    {
-        int maxNumVertices = gui->getPathNumVertices();
-        vector<ofPoint> vertices = path.getVertices();
-        if (vertices.size() > maxNumVertices)
-        {
-            path.clear();
-            for (unsigned long i=vertices.size() - maxNumVertices; i<vertices.size(); ++i)
-                path.addVertex(vertices[i]);
-        }
-    }
-
     int newX = int(targetPos.x + PAINTER_SPEED);
     if (newX > ofGetWidth() - 2)
     {
@@ -67,8 +59,9 @@ void PMRibbonPainter::draw()
     if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    ofSetColor(color);
-    ofSetLineWidth(size);
+//    ofSetColor(color);
+//    ofSetLineWidth(size);
+
     path.draw();
     ofDisableBlendMode();
 }
@@ -108,6 +101,26 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 void PMRibbonPainter::setPosition(int x, int y)
 {
     targetPos = ofPoint(x, y);
+    vector <ofPoint> vertices = path.getOutline()[0].getVertices();
+
+    // Clean-up path vertices in case its size is higher than the allowed maximum.
+    {
+        int maxNumVertices = gui->getPathNumVertices();
+        vector <ofPoint> vertices = path.getOutline()[0].getVertices();
+        if (vertices.size() > maxNumVertices)
+        {
+            path.clear();
+//            path.newSubPath();
+        }
+//        int maxNumVertices = gui->getPathNumVertices();
+//        vector<ofPoint> vertices = path.getVertices();
+//        if (vertices.size() > maxNumVertices)
+//        {
+//            path.clear();
+//            for (unsigned long i=vertices.size() - maxNumVertices + 50; i<vertices.size(); ++i)
+//                path.addVertex(vertices[i]);
+//        }
+    }
 
     if (isNewPath)
     {
@@ -131,17 +144,25 @@ void PMRibbonPainter::setY(int y)
 void PMRibbonPainter::setColor(ofColor _color)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
+    path.setStrokeColor(color);
 }
 
 void PMRibbonPainter::setSize(unsigned int _size)
 {
     size = _size;
+    path.setStrokeWidth(size);
 }
 
 void PMRibbonPainter::clear()
 {
     path.clear();
-    path = ofPolyline();
+//    path = ofPolyline();
+    path = ofPath();
+
+    path.setMode(ofPath::COMMANDS);
+    path.setStrokeColor(color);
+    path.setFilled(false);
+    path.setStrokeWidth(size);
 
     isNewPath = true;
 }
