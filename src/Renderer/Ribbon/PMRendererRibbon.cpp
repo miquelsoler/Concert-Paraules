@@ -5,6 +5,21 @@
 #include "PMRendererRibbon.h"
 #include "PMUICanvasRibbonRenderer.h"
 
+typedef enum
+{
+    RM_0 = 0,
+    RM_1 = 1,
+    RM_2 = 2,
+    RM_3 = 3,
+    RM_4 = 4,
+    RM_5 = 5,
+    RM_6 = 6,
+    RM_7 = 7,
+    RM_8 = 8,
+    RM_9 = 9,
+    RM_MOUSE = 10,
+} RibbonMode;
+
 PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
 {
     // GUI
@@ -93,12 +108,10 @@ void PMRendererRibbon::update()
         }
     }
 
-    if (isInStroke)
-    {
-        // Update only when is in stroke (when not in silence).
-        for (int i=0; i<numPainters; ++i)
-            painters[i].update();
-    }
+    if (!isInStroke) return;
+
+    for (int i=0; i<numPainters; ++i)
+        painters[i].update();
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -154,7 +167,9 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
-    // Change ribbon X
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
+
     float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, ofGetWidth());
     setX(int(x));
 }
@@ -165,7 +180,9 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
 
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
-    // Change ribbon Y
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
+
     float y = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 0, ofGetHeight());
     setY(int(y));
 }
@@ -173,6 +190,9 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
 void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 {
     PMBaseRenderer::silenceStateChanged(silenceParams);
+
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
 
     if (state != RENDERERSTATE_ON)
     {
@@ -198,7 +218,7 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 void PMRendererRibbon::mouseDragged(int x, int y, int button)
 {
     int mode = myGUI->getMode();
-    if (mode != 10) return;
+    if (mode != RM_MOUSE) return;
 
     if (button == OF_MOUSE_BUTTON_1)
         setPosition(x, y);
@@ -207,7 +227,7 @@ void PMRendererRibbon::mouseDragged(int x, int y, int button)
 void PMRendererRibbon::mousePressed(int x, int y, int button)
 {
     int mode = myGUI->getMode();
-    if (mode != 10) return;
+    if (mode != RM_MOUSE) return;
 
     if (button == OF_MOUSE_BUTTON_1)
     {
@@ -219,7 +239,7 @@ void PMRendererRibbon::mousePressed(int x, int y, int button)
 void PMRendererRibbon::mouseReleased(int x, int y, int button)
 {
     int mode = myGUI->getMode();
-    if (mode != 10) return;
+    if (mode != RM_MOUSE) return;
 
     strokeEnded();
 }
