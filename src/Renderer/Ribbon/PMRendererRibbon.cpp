@@ -122,8 +122,6 @@ void PMRendererRibbon::drawIntoFBO()
 
     fbo.begin();
     {
-//        ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
-//        ofClear(fc);
         for (int i=0; i<numPainters; ++i)
             painters[i].draw();
     }

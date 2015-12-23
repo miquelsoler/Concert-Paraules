@@ -15,8 +15,9 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     ease = _ease;
     setSize(size);
 
-    path.setStrokeColor(color);
-    path.setFilled(false);
+//    path.setStrokeColor(color);
+//    path.setFilled(false);
+//    path.setMode(ofPath::POLYLINES);
 
     isNewPath = true;
 }
@@ -44,6 +45,8 @@ void PMRibbonPainter::draw()
     if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofSetColor(color);
+    ofSetLineWidth(size);
     path.draw();
     ofDisableBlendMode();
 }
@@ -74,25 +77,27 @@ void PMRibbonPainter::setY(int y)
 void PMRibbonPainter::setColor(ofColor _color)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
-    path.setStrokeColor(color);
+//    path.setStrokeColor(color);
 }
 
 void PMRibbonPainter::setSize(unsigned int _size)
 {
     size = _size;
-    path.setStrokeWidth(size);
+//    path.setStrokeWidth(size);
 }
 
 void PMRibbonPainter::clear()
 {
     path.clear();
 
-    path = ofPath();
+    path = ofPolyline();
 
-    path.setMode(ofPath::POLYLINES);
-    path.setStrokeColor(color);
-    path.setFilled(false);
-    path.setStrokeWidth(size);
+//    path = ofPath();
+//
+//    path.setMode(ofPath::POLYLINES);
+//    path.setStrokeColor(color);
+//    path.setFilled(false);
+//    path.setStrokeWidth(size);
 
     isNewPath = true;
 }

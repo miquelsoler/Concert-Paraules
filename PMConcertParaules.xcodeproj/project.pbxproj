@@ -838,8 +838,8 @@
 			children = (
 				21476A54D70EB26A472A9E5E /* PMRendererRibbon.cpp */,
 				21476FC7F3AAA851CDDBC06A /* PMRendererRibbon.h */,
-				214762C14E5F453862FD1C6B /* PMRibbonPainter.h */,
 				21476919F03DFEC6AB837CE4 /* PMRibbonPainter.cpp */,
+				214762C14E5F453862FD1C6B /* PMRibbonPainter.h */,
 			);
 			path = Ribbon;
 			sourceTree = "<group>";
