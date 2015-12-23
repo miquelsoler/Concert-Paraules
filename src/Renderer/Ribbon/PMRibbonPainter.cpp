@@ -29,6 +29,18 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
+    // Clean-up path vertices in case its size is higher than the allowed maximum.
+    {
+        int MAX_NUM_VERTICES = 1;
+        vector<ofPoint> vertices = path.getVertices();
+        if (vertices.size() > MAX_NUM_VERTICES)
+        {
+            path.clear();
+            for (unsigned long i=vertices.size() - MAX_NUM_VERTICES; i<vertices.size(); ++i)
+                path.addVertex(vertices[i]);
+        }
+    }
+
     int newX = int(targetPos.x + PAINTER_SPEED);
     if (newX > ofGetWidth() - 2)
     {
@@ -117,7 +129,6 @@ void PMRibbonPainter::setY(int y)
 void PMRibbonPainter::setColor(ofColor _color)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
-//    path.setStrokeColor(color);
 }
 
 void PMRibbonPainter::setSize(unsigned int _size)
