@@ -106,9 +106,10 @@ void PMRendererRibbon::update()
         {
             break;
         }
+        default: break;
     }
 
-    if (!isInStroke) return;
+//    if (!isInStroke) return;
 
     for (int i=0; i<numPainters; ++i)
         painters[i].update();
@@ -168,8 +169,10 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
-    float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, ofGetWidth());
-    setX(int(x));
+//    float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, ofGetWidth());
+//    setX(int(x));
+    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight(), 0);
+    setY(int(y));
 }
 
 void PMRendererRibbon::energyChanged(energyParams energyParams)
@@ -181,8 +184,8 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
-    float y = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 0, ofGetHeight());
-    setY(int(y));
+//    float y = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 0, ofGetHeight());
+//    setY(int(y));
 }
 
 void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
@@ -192,23 +195,23 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
-    if (state != RENDERERSTATE_ON)
-    {
-        cout << "End stroke (state not ON)" << endl;
-        strokeEnded();
-        return;
-    }
-
-    if (!(silenceParams.isSilent))
-    {
-        cout << "Start stroke (silence stopped)" << endl;
-        strokeStarted();
-    }
-    else
-    {
-        cout << "End stroke (new silence)" << endl;
-        strokeEnded();
-    }
+//    if (state != RENDERERSTATE_ON)
+//    {
+//        cout << "End stroke (state not ON)" << endl;
+//        strokeEnded();
+//        return;
+//    }
+//
+//    if (!(silenceParams.isSilent))
+//    {
+//        cout << "Start stroke (silence stopped)" << endl;
+//        strokeStarted();
+//    }
+//    else
+//    {
+//        cout << "End stroke (new silence)" << endl;
+//        strokeEnded();
+//    }
 }
 
 // TODO: Remove mouse events code once audio events are working
@@ -260,5 +263,8 @@ void PMRendererRibbon::buildPainters()
     isInStroke = false;
 
     for (int i=0; i<numPainters; ++i)
+    {
         painters[i].setup();
+        painters[i].setOrigin(PAINTER_LEFT);
+    }
 }

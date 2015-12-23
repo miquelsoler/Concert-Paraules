@@ -7,6 +7,14 @@
 
 #include "ofMain.h"
 
+typedef enum
+{
+    PAINTER_LEFT = 0,
+    PAINTER_RIGHT = 1,
+    PAINTER_UP = 2,
+    PAINTER_DOWN = 3,
+    PAINTER_NUM_ORIGINS
+} PMPainterOrigin;
 
 class PMRibbonPainter
 {
@@ -18,6 +26,7 @@ public:
     void update();
     void draw();
 
+    void setOrigin(PMPainterOrigin origin);
     void setPosition(int x, int y);
     void setX(int x);
     void setY(int y);

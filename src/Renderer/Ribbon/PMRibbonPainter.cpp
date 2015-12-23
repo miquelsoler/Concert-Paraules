@@ -4,6 +4,10 @@
 
 #include "PMRibbonPainter.h"
 
+static const float MIN_ORIGIN = 0.2f;
+static const float MAX_ORIGIN = 0.8f;
+static const float PAINTER_SPEED = 5.0;
+
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size)
 {
     // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
@@ -29,6 +33,16 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
+    int newX = int(targetPos.x + PAINTER_SPEED);
+    if (newX > ofGetWidth() - 2)
+    {
+        clear();
+        newX = 1;
+    }
+    setX(newX);
+
+    cout << "newX=" << newX << endl;
+
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
         if (isNewPath) return;
@@ -49,6 +63,41 @@ void PMRibbonPainter::draw()
     ofSetLineWidth(size);
     path.draw();
     ofDisableBlendMode();
+}
+
+void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
+{
+    ofSeedRandom(rand());
+    float randomNormalizedPos = ofRandom(MIN_ORIGIN, MAX_ORIGIN);
+
+    switch (origin)
+    {
+        case PAINTER_LEFT:
+        {
+            setX(1);
+            setY(int(randomNormalizedPos * float(ofGetHeight())));
+            break;
+        }
+        case PAINTER_RIGHT:
+        {
+            setX(ofGetWidth()-2);
+            setY(int(randomNormalizedPos * float(ofGetHeight())));
+            break;
+        }
+        case PAINTER_UP:
+        {
+            setX(int(randomNormalizedPos * float(ofGetWidth())));
+            setY(1);
+            break;
+        }
+        case PAINTER_DOWN:
+        {
+            setX(int(randomNormalizedPos * float(ofGetWidth())));
+            setY(ofGetHeight()-2);
+            break;
+        }
+        default: break;
+    }
 }
 
 void PMRibbonPainter::setPosition(int x, int y)
