@@ -110,6 +110,8 @@ void PMRibbonPainter::setPosition(int x, int y)
         if (vertices.size() > maxNumVertices)
         {
             path.clear();
+            // Comenta aquesta línia per a veure els "gaps".
+            path.curveTo(vertices[vertices.size()-maxNumVertices+1]);
 //            path.newSubPath();
         }
 //        int maxNumVertices = gui->getPathNumVertices();
