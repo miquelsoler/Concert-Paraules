@@ -6,6 +6,7 @@
 #define HARMONYFOROF_PMRIBBONPAINTER_H
 
 #include "ofMain.h"
+#include "PMUICanvasRibbonRenderer.h"
 
 typedef enum
 {
@@ -20,7 +21,7 @@ class PMRibbonPainter
 {
 public:
 
-    PMRibbonPainter(ofColor color, float dx, float dy, float div, float ease, unsigned int size);
+    PMRibbonPainter(ofColor color, float dx, float dy, float div, float ease, unsigned int size, PMUICanvasRibbonRenderer *gui);
 
     void setup();
     void update();
@@ -48,6 +49,8 @@ private:
     ofColor color;
 
     bool isNewPath;
+
+    PMUICanvasRibbonRenderer *gui;
 };
 
 #endif //HARMONYFOROF_PMRIBBONPAINTER_H

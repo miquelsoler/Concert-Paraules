@@ -8,7 +8,7 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float PAINTER_SPEED = 5.0;
 
-PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size)
+PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
     // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
@@ -20,6 +20,8 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     setSize(size);
 
     isNewPath = true;
+
+    gui = _gui;
 }
 
 void PMRibbonPainter::setup()
@@ -31,12 +33,12 @@ void PMRibbonPainter::update()
 {
     // Clean-up path vertices in case its size is higher than the allowed maximum.
     {
-        int MAX_NUM_VERTICES = 1;
+        int maxNumVertices = gui->getPathNumVertices();
         vector<ofPoint> vertices = path.getVertices();
-        if (vertices.size() > MAX_NUM_VERTICES)
+        if (vertices.size() > maxNumVertices)
         {
             path.clear();
-            for (unsigned long i=vertices.size() - MAX_NUM_VERTICES; i<vertices.size(); ++i)
+            for (unsigned long i=vertices.size() - maxNumVertices; i<vertices.size(); ++i)
                 path.addVertex(vertices[i]);
         }
     }

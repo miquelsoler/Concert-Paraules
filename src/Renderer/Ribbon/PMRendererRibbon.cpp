@@ -3,7 +3,6 @@
 //
 
 #include "PMRendererRibbon.h"
-#include "PMUICanvasRibbonRenderer.h"
 
 typedef enum
 {
@@ -99,15 +98,6 @@ void PMRendererRibbon::update()
             buildPainters();
             return;
         }
-    }
-
-    switch(mode)
-    {
-        case 1:
-        {
-            break;
-        }
-        default: break;
     }
 
 //    if (!isInStroke) return;
@@ -270,7 +260,7 @@ void PMRendererRibbon::buildPainters()
     for (int i=0; i<numPainters; ++i)
     {
         float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
-        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth);
+        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
         painters.push_back(painter);
     }
 

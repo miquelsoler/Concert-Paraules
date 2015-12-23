@@ -19,10 +19,11 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
-    unsigned int    getNumPainters()    { return (unsigned int)numPainters; };
-    unsigned int    getStrokeWidth()    { return (unsigned int)strokeWidth; };
-    ofColor         getRibbonColor()    { return ofColor(colorR, colorG, colorB, 255); };
-    float           getDivisions()      { return divisions; };
+    unsigned int    getNumPainters()        { return (unsigned int)numPainters; };
+    unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; };
+    ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); };
+    float           getDivisions()          { return divisions; };
+    int             getPathNumVertices()    { return pathMaxVertices; };
 
 private:
 
@@ -30,6 +31,7 @@ private:
     int strokeWidth;
     int colorR, colorG, colorB;
     float divisions;
+    int pathMaxVertices;
 };
 
 
