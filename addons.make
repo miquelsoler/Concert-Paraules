@@ -1,5 +1,4 @@
 ofxAppUtils-PM
-ofxAudioAnalyzer-PM
 ofxBox2d
 ofxJSON
 ofxTween
