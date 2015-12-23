@@ -19,10 +19,6 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     ease = _ease;
     setSize(size);
 
-//    path.setStrokeColor(color);
-//    path.setFilled(false);
-//    path.setMode(ofPath::POLYLINES);
-
     isNewPath = true;
 }
 
@@ -40,8 +36,6 @@ void PMRibbonPainter::update()
         newX = 1;
     }
     setX(newX);
-
-    cout << "newX=" << newX << endl;
 
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
@@ -67,32 +61,29 @@ void PMRibbonPainter::draw()
 
 void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 {
-    ofSeedRandom(rand());
-    float randomNormalizedPos = ofRandom(MIN_ORIGIN, MAX_ORIGIN);
-
     switch (origin)
     {
         case PAINTER_LEFT:
         {
             setX(1);
-            setY(int(randomNormalizedPos * float(ofGetHeight())));
+            setY(ofGetHeight() / 2);
             break;
         }
         case PAINTER_RIGHT:
         {
-            setX(ofGetWidth()-2);
-            setY(int(randomNormalizedPos * float(ofGetHeight())));
+            setX(ofGetWidth() - 2);
+            setY(ofGetHeight() / 2);
             break;
         }
         case PAINTER_UP:
         {
-            setX(int(randomNormalizedPos * float(ofGetWidth())));
+            setX(ofGetWidth() / 2);
             setY(1);
             break;
         }
         case PAINTER_DOWN:
         {
-            setX(int(randomNormalizedPos * float(ofGetWidth())));
+            setX(ofGetWidth() / 2);
             setY(ofGetHeight()-2);
             break;
         }
@@ -132,21 +123,12 @@ void PMRibbonPainter::setColor(ofColor _color)
 void PMRibbonPainter::setSize(unsigned int _size)
 {
     size = _size;
-//    path.setStrokeWidth(size);
 }
 
 void PMRibbonPainter::clear()
 {
     path.clear();
-
     path = ofPolyline();
-
-//    path = ofPath();
-//
-//    path.setMode(ofPath::POLYLINES);
-//    path.setStrokeColor(color);
-//    path.setFilled(false);
-//    path.setStrokeWidth(size);
 
     isNewPath = true;
 }

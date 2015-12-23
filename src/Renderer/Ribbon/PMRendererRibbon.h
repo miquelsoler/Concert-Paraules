@@ -38,6 +38,8 @@ public:
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 
+    virtual void switchStateOnOff();
+
 private:
 
     PMUICanvasRibbonRenderer *myGUI;
@@ -52,6 +54,8 @@ private:
     float divisions;
 
     bool isInStroke;
+
+    bool isSilent;
 
     void buildPainters();
 };

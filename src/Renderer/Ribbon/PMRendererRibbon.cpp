@@ -43,8 +43,9 @@ void PMRendererRibbon::setup()
     divisions = myGUI->getDivisions();
 
     buildPainters();
-    setPosition(ofGetWidth()/2, ofGetHeight()/2);
 //    strokeStarted();
+
+    isSilent = true;
 }
 
 void PMRendererRibbon::update()
@@ -111,8 +112,11 @@ void PMRendererRibbon::update()
 
 //    if (!isInStroke) return;
 
-    for (int i=0; i<numPainters; ++i)
-        painters[i].update();
+    if (!isSilent)
+    {
+        for (int i=0; i<numPainters; ++i)
+            painters[i].update();
+    }
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -169,9 +173,7 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
-//    float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, ofGetWidth());
-//    setX(int(x));
-    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight(), 0);
+    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
     setY(int(y));
 }
 
@@ -184,8 +186,9 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
-//    float y = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 0, ofGetHeight());
-//    setY(int(y));
+    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
+    for (int i=0; i<numPainters; ++i)
+        painters[i].setSize((unsigned int)size);
 }
 
 void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
@@ -194,6 +197,8 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 
     int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
+
+    isSilent = silenceParams.isSilent;
 
 //    if (state != RENDERERSTATE_ON)
 //    {
@@ -243,6 +248,15 @@ void PMRendererRibbon::mouseReleased(int x, int y, int button)
     if (mode != RM_MOUSE) return;
 
     strokeEnded();
+}
+
+void PMRendererRibbon::switchStateOnOff()
+{
+    PMBaseRenderer::switchStateOnOff();
+    if (state == RENDERERSTATE_OFF)
+    {
+        buildPainters();
+    }
 }
 
 void PMRendererRibbon::buildPainters()

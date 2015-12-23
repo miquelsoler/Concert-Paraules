@@ -42,7 +42,7 @@ public:
 
     // SETTERS
     void setState(PMRendererState newState);
-    void switchStateOnOff();
+    virtual void switchStateOnOff();
     void setNeedsToBeCleared(bool _needsToBeCleared) { needsToBeCleared = _needsToBeCleared; };
     
     // GETTERS
