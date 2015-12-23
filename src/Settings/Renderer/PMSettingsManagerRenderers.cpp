@@ -2,7 +2,7 @@
 // Created by Miquel Àngel Soler on 30/10/15.
 //
 
-#include <xpc/xpc.h>
+//#include <xpc/xpc.h>
 #include "PMSettingsManagerRenderers.h"
 
 static const string FILENAME = "settings/renderers.json";
