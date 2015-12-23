@@ -6,7 +6,7 @@
 
 PMBaseRenderer::PMBaseRenderer(PMRendererType _type)
 {
-    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
+    fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB, 6);
 
     type = _type;
     needsToBeCleared = false;

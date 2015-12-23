@@ -7,6 +7,5 @@
 int main( )
 {
 	ofSetupOpenGL(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_MODE);
-
     ofRunAppWithAppUtils(new ofApp());
 }
