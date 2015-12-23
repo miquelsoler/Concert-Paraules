@@ -31,7 +31,10 @@ void PMBaseRenderer::update()
     fbo.begin();
     {
         // background dimming
-        ofFloatColor fc = ofFloatColor(0.0, 0.0, 0.0, gui->getBackgroundFade());
+        ofFloatColor fc = ofFloatColor(float(gui->getBackgroundColor().r) / 255.0f,
+                float(gui->getBackgroundColor().g) / 255.0f,
+                float(gui->getBackgroundColor().b) / 255.0f,
+                gui->getBackgroundFade());
         //ofFloatColor fc = ofFloatColor(gui->getColorBackground().r,gui->getColorBackground().g,gui->getColorBackground().b,gui->getBackgroundFade());
         ofSetColor(fc);
 
@@ -65,8 +68,6 @@ void PMBaseRenderer::setState(PMRendererState newState)
 {
     if (newState == state) return;
 
-    //cout << "[STATE] Previous:" << state;
-
     switch(state) // Different behavior according to current state and new state
     {
         case RENDERERSTATE_ON: {
@@ -86,8 +87,6 @@ void PMBaseRenderer::setState(PMRendererState newState)
             break;
         }
     }
-
-    //cout << " New:" << state << endl;
 }
 
 void PMBaseRenderer::switchStateOnOff()

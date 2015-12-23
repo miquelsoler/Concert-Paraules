@@ -359,11 +359,17 @@ void PMScene2::silenceStateChanged(silenceParams &silenceParams)
 void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
     if (pauseParams.isPaused)
+    {
         renderer->setState(RENDERERSTATE_PAUSED);
+        renderer->pauseStateChanged(pauseParams);
+    }
     else
     {
         if (renderer->getState() == RENDERERSTATE_PAUSED)
+        {
             renderer->setState(RENDERERSTATE_ON);
+            renderer->pauseStateChanged(pauseParams);
+        }
     }
 }
 

@@ -61,6 +61,16 @@ void PMRibbonPainter::setPosition(int x, int y)
     }
 }
 
+void PMRibbonPainter::setX(int x)
+{
+    setPosition(x, int(targetPos.y));
+}
+
+void PMRibbonPainter::setY(int y)
+{
+    setPosition(int(targetPos.x), y);
+}
+
 void PMRibbonPainter::setColor(ofColor _color)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);

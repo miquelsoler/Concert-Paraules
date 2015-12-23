@@ -19,6 +19,8 @@ public:
     void draw();
 
     void setPosition(int x, int y);
+    void setX(int x);
+    void setY(int y);
     void setColor(ofColor color);
     void setSize(unsigned int size);
     void clear();

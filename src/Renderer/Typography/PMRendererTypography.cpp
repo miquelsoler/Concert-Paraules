@@ -13,8 +13,6 @@ static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmno
 static const float MILLISECONDS_NEXT_LETTER = 50;
 
 
-// FIXME: El problema de que es quedin pillades no passava al commit a1f3404 (2/12 18:58).
-
 PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOGRAPHY)
 {
     buildCharsetFromPoem();

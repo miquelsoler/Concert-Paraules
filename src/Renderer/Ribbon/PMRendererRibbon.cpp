@@ -12,12 +12,13 @@ PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
         gui = new PMUICanvasRibbonRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "RIBBON_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500);
     }
+
+    myGUI = (PMUICanvasRibbonRenderer *)gui;
 }
 
 void PMRendererRibbon::setup()
 {
     PMBaseRenderer::setup();
-    PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
 
     numPainters = myGUI->getNumPainters();
     strokeWidth = myGUI->getStrokeWidth();
@@ -27,13 +28,17 @@ void PMRendererRibbon::setup()
     divisions = myGUI->getDivisions();
 
     buildPainters();
+    setPosition(ofGetWidth()/2, ofGetHeight()/2);
+//    strokeStarted();
 }
 
 void PMRendererRibbon::update()
 {
     PMBaseRenderer::update();
 
-    PMUICanvasRibbonRenderer *myGUI = dynamic_cast<PMUICanvasRibbonRenderer *>(gui);
+    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+
+    int mode = myGUI->getMode();
 
     // Stroke width changed
     {
@@ -80,8 +85,20 @@ void PMRendererRibbon::update()
         }
     }
 
-    for (int i=0; i<numPainters; ++i)
-        painters[i].update();
+    switch(mode)
+    {
+        case 1:
+        {
+            break;
+        }
+    }
+
+    if (isInStroke)
+    {
+        // Update only when is in stroke (when not in silence).
+        for (int i=0; i<numPainters; ++i)
+            painters[i].update();
+    }
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -92,11 +109,8 @@ void PMRendererRibbon::drawIntoFBO()
 
     fbo.begin();
     {
-//        ofFloatColor fc = ofColor(gui->getColorBackground().r, gui->getColorBackground().g, gui->getColorBackground().b, 1);
+//        ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
 //        ofClear(fc);
-
-//        cout << "Ribbon draw: " << int(gui->getColorBack().r) << ", " << int(gui->getColorBackground().g) << ", " << int (gui->getColorBack().b) << endl;
-
         for (int i=0; i<numPainters; ++i)
             painters[i].draw();
     }
@@ -108,6 +122,18 @@ void PMRendererRibbon::setPosition(int x, int y)
 {
     for (int i=0; i<numPainters; ++i)
         painters[i].setPosition(x, y);
+}
+
+void PMRendererRibbon::setX(int x)
+{
+    for (int i=0; i<numPainters; ++i)
+        painters[i].setX(x);
+}
+
+void PMRendererRibbon::setY(int y)
+{
+    for (int i=0; i<numPainters; ++i)
+        painters[i].setY(y);
 }
 
 void PMRendererRibbon::strokeStarted()
@@ -128,53 +154,61 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
-    // Update brush offset
-    PMUICanvasRibbonRenderer *myGUI = (PMUICanvasRibbonRenderer *)gui;
-
-
-//    PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
-//    float normalizedOffset = ofMap(myGUI->getSmoothedPitch(), 0, 1, 1.0f, -1.0f, true);
-//    brush->setOffset(normalizedOffset);
-//
-//    brush->update();
-//
-//    cout << "Pitch changed: " << pitchParams.midiNote << endl;
-}
-
-void PMRendererRibbon::pauseStateChanged(pauseParams &pauseParams)
-{
-    cout << "Pause state changed" << endl;
-    PMBaseRenderer::pauseStateChanged(pauseParams);
-
-    if (state != RENDERERSTATE_ON) return;
-
-    if (pauseParams.isPaused)
-    {
-        cout << "End stroke" << endl;
-        strokeEnded();
-    }
-    else
-    {
-        cout << "Start stroke" << endl;
-        strokeStarted();
-    }
+    // Change ribbon X
+    float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, ofGetWidth());
+    setX(int(x));
 }
 
 void PMRendererRibbon::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
+
+    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+
+    // Change ribbon Y
+    float y = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 0, ofGetHeight());
+    setY(int(y));
+}
+
+void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
+{
+    PMBaseRenderer::silenceStateChanged(silenceParams);
+
+    if (state != RENDERERSTATE_ON)
+    {
+        cout << "End stroke (state not ON)" << endl;
+        strokeEnded();
+        return;
+    }
+
+    if (!(silenceParams.isSilent))
+    {
+        cout << "Start stroke (silence stopped)" << endl;
+        strokeStarted();
+    }
+    else
+    {
+        cout << "End stroke (new silence)" << endl;
+        strokeEnded();
+    }
 }
 
 // TODO: Remove mouse events code once audio events are working
 
 void PMRendererRibbon::mouseDragged(int x, int y, int button)
 {
+    int mode = myGUI->getMode();
+    if (mode != 10) return;
+
     if (button == OF_MOUSE_BUTTON_1)
         setPosition(x, y);
 }
 
 void PMRendererRibbon::mousePressed(int x, int y, int button)
 {
+    int mode = myGUI->getMode();
+    if (mode != 10) return;
+
     if (button == OF_MOUSE_BUTTON_1)
     {
         setPosition(x, y);
@@ -184,6 +218,9 @@ void PMRendererRibbon::mousePressed(int x, int y, int button)
 
 void PMRendererRibbon::mouseReleased(int x, int y, int button)
 {
+    int mode = myGUI->getMode();
+    if (mode != 10) return;
+
     strokeEnded();
 }
 

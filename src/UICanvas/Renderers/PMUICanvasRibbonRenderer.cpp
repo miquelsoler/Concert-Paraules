@@ -35,3 +35,10 @@ void PMUICanvasRibbonRenderer::clear()
     PMUICanvasBaseRenderer::clear();
     superInit("RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
 }
+
+void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
+{
+    PMUICanvasBaseRenderer::handleEvents(e);
+
+    string name = e.getName();
+}
