@@ -48,6 +48,17 @@ void PMRibbonPainter::update()
         dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
         dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
 
+        // Clean-up path vertices in case its size is higher than the allowed maximum.
+        {
+            int maxNumVertices = gui->getPathNumVertices();
+            vector<ofPoint> vertices = path.getVertices();
+            if (vertices.size() > maxNumVertices)
+            {
+                path.clear();
+                path.addVertex(vertices[vertices.size()-1]);
+            }
+        }
+
         path.curveTo(dx, dy);
     }
 }
@@ -60,14 +71,17 @@ void PMRibbonPainter::draw()
     ofSetColor(color);
     ofSetLineWidth(size);
 
-    path.draw();
+//    path.draw();
 
 #if (DRAW_POLYLINE_VERTICES == true)
     vector<ofPoint> vertices = path.getVertices();
-    for (int i=0; i<vertices.size(); ++i)
+    if (vertices.size() > 1)
     {
-        ofSetColor(ofColor::black);
-        ofDrawCircle(vertices[i], 1);
+        for (int i=0; i<vertices.size()-1; ++i)
+        {
+            ofSetColor(color);
+            ofDrawLine(vertices[i], vertices[i+1]);
+        }
     }
 #endif
     ofDisableBlendMode();
@@ -108,18 +122,6 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 void PMRibbonPainter::setPosition(int x, int y)
 {
     targetPos = ofPoint(x, y);
-
-    // Clean-up path vertices in case its size is higher than the allowed maximum.
-    {
-        int maxNumVertices = gui->getPathNumVertices();
-        vector<ofPoint> vertices = path.getVertices();
-        if (vertices.size() > maxNumVertices)
-        {
-            path.clear();
-            for (unsigned long i=vertices.size() - 2; i<vertices.size(); ++i)
-                path.addVertex(vertices[i]);
-        }
-    }
 
     if (isNewPath)
     {
