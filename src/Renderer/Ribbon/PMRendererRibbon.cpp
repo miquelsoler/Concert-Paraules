@@ -102,7 +102,7 @@ void PMRendererRibbon::update()
 
 //    if (!isInStroke) return;
 
-    if (!isSilent)
+    if (!isSilent || mode==RM_MOUSE)
     {
         for (int i=0; i<numPainters; ++i)
             painters[i].update();
@@ -121,7 +121,6 @@ void PMRendererRibbon::drawIntoFBO()
             painters[i].draw();
     }
     fbo.end();
-
 }
 
 void PMRendererRibbon::setPosition(int x, int y)

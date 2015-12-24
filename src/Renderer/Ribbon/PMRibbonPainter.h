@@ -45,7 +45,7 @@ private:
 
     ofPoint targetPos;
 
-    ofPath path;
+    ofPolyline path;
     ofColor color;
 
     bool isNewPath;
