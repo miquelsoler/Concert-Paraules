@@ -8,7 +8,7 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float PAINTER_SPEED = 5.0;
 
-#define DRAW_POLYLINE_VERTICES true
+#define DRAW_PATH false
 
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
@@ -71,9 +71,9 @@ void PMRibbonPainter::draw()
     ofSetColor(color);
     ofSetLineWidth(size);
 
-//    path.draw();
-
-#if (DRAW_POLYLINE_VERTICES == true)
+#if (DRAW_PATH == true)
+    path.draw();
+#else
     vector<ofPoint> vertices = path.getVertices();
     if (vertices.size() > 1)
     {
