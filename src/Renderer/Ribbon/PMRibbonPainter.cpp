@@ -8,7 +8,7 @@ static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
 static const float PAINTER_SPEED = 5.0;
 
-#define DRAW_POLYLINE_VERTICES false
+#define DRAW_POLYLINE_VERTICES true
 
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
@@ -109,17 +109,17 @@ void PMRibbonPainter::setPosition(int x, int y)
 {
     targetPos = ofPoint(x, y);
 
-//    // Clean-up path vertices in case its size is higher than the allowed maximum.
-//    {
-//        int maxNumVertices = gui->getPathNumVertices();
-//        vector<ofPoint> vertices = path.getVertices();
-//        if (vertices.size() > maxNumVertices)
-//        {
-//            path.clear();
-//            for (unsigned long i=vertices.size() - maxNumVertices - 1; i<vertices.size(); ++i)
-//                path.addVertex(vertices[i]);
-//        }
-//    }
+    // Clean-up path vertices in case its size is higher than the allowed maximum.
+    {
+        int maxNumVertices = gui->getPathNumVertices();
+        vector<ofPoint> vertices = path.getVertices();
+        if (vertices.size() > maxNumVertices)
+        {
+            path.clear();
+            for (unsigned long i=vertices.size() - 2; i<vertices.size(); ++i)
+                path.addVertex(vertices[i]);
+        }
+    }
 
     if (isNewPath)
     {
