@@ -119,16 +119,12 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
     whichSequentialBand = -1;
 
     myGUI = (PMUICanvasColorRenderer *)gui;
-    ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
 }
 
 //--------------------------------------------------------------
 void PMRendererColor::setup()
 {
     PMBaseRenderer::setup();
-    
-    ofAddListener(ofEvents().keyPressed, this, &PMRendererColor::keyPressed);
-
     startNewBand();
 }
 
@@ -515,7 +511,9 @@ void PMRendererColor::drawIntoFBO()
 //--------------------------------------------------------------------------------
 void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
 {
-    if (eventArgs.key == 'q')
-    {
+    if(state == RENDERERSTATE_ON)
+    {        
+        cout << " KEY ColorRenderer" << endl;
     }
+    
 }

@@ -21,6 +21,9 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+    virtual void silenceStateChanged(silenceParams &silenceParams);
 
     void setPosition(int x, int y);
     void setX(int x);
@@ -28,10 +31,6 @@ public:
 
     void strokeStarted();
     void strokeEnded();
-
-    virtual void pitchChanged(pitchParams pitchParams);
-    virtual void energyChanged(energyParams energyParams);
-    virtual void silenceStateChanged(silenceParams &silenceParams);
 
     // TODO: Remove mouse events code once audio events are working
     void mouseDragged(int x, int y, int button);

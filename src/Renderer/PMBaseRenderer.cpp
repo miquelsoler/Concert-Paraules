@@ -24,25 +24,26 @@ void PMBaseRenderer::setup()
     fbo.end();
 
     state = RENDERERSTATE_OFF;
+    
+    ofAddListener(ofEvents().keyPressed, this, &PMBaseRenderer::keyPressed);
 }
 
-void PMBaseRenderer::update()
+void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
 {
     fbo.begin();
     {
         // background dimming
-        ofFloatColor fc = ofFloatColor(float(gui->getBackgroundColor().r) / 255.0f,
-                float(gui->getBackgroundColor().g) / 255.0f,
-                float(gui->getBackgroundColor().b) / 255.0f,
-                gui->getBackgroundFade());
-        //ofFloatColor fc = ofFloatColor(gui->getColorBackground().r,gui->getColorBackground().g,gui->getColorBackground().b,gui->getBackgroundFade());
+        ofFloatColor fc = ofFloatColor(r,g,b,a);
         ofSetColor(fc);
-
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        //ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
     }
     fbo.end();
+}
 
+void PMBaseRenderer::update()
+{
+    clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
     drawIntoFBO();
 }
 
@@ -105,15 +106,7 @@ void PMBaseRenderer::switchStateOnOff()
 
 void PMBaseRenderer::clear()
 {
-    ofClear(0, 0, 0, 0);
-
-    fbo.begin();
-    {
-        // Often the FBO will contain artifacts from the memory that the graphics card has just allocated for it,
-        // so it's good to clear it before starting to draw it
-        ofClear(0, 0, 0, 0);
-    }
-    fbo.end();
+    clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,1.0f);
 }
 
 void PMBaseRenderer::showGUI(bool show)
@@ -160,4 +153,22 @@ void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)
 ofColor PMBaseRenderer::getBackgroundColor()
 {
     return gui->getBackgroundColor();
+}
+
+void PMBaseRenderer::keyPressed ( ofKeyEventArgs& eventArgs )
+{
+    if(state == RENDERERSTATE_ON)
+    {
+        cout << "KEY in BaseRenderer" << endl;
+    
+//        if(eventArgs.key=='x')
+//        {
+//            fbo.begin();
+//            {
+//                clearBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,1.0);
+//            }
+//            fbo.end();
+//        }
+    }
+
 }

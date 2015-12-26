@@ -17,8 +17,6 @@ PMRendererTextBox::PMRendererTextBox() : PMBaseRenderer(RENDERERTYPE_TEXTBOX)
     myGUI = (PMUICanvasTextBoxRenderer *)gui;
     myGUI->setVisible(false);
 
-    ofAddListener(ofEvents().keyPressed, this, &PMRendererTextBox::keyPressed);
-
     font.setup("./fonts/verdana.ttf", 1.25, 2048, false, 8, 2);
     
     fontSize = 40;
@@ -122,21 +120,12 @@ void PMRendererTextBox::drawIntoFBO()
 // Miquel: commented because it's already done in PMBaseRenderer::draw()
 //    fbo.draw(0, 0);
 }
-//--------------------------------------------------------------------------------
-void PMRendererTextBox::keyPressed ( ofKeyEventArgs& eventArgs )
-{
-    if (eventArgs.key == 'q')
-    {
-    }
-}
 
 //--------------------------------------------------------------------------------
 void PMRendererTextBox::toggleGUIVisible()
 {
     gui->setVisible(!gui->isVisible());
 }
-
-
 
 //--------------------------------------------------------------------------------
 void PMRendererTextBox::getText()

@@ -33,6 +33,7 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
+    /*
     int newX = int(targetPos.x + PAINTER_SPEED);
     if (newX > ofGetWidth() - 2)
     {
@@ -48,23 +49,26 @@ void PMRibbonPainter::update()
         dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
         dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
 
-        // Clean-up path vertices in case its size is higher than the allowed maximum.
-        {
-            int maxNumVertices = gui->getPathNumVertices();
-            vector<ofPoint> vertices = path.getVertices();
-            if (vertices.size() > maxNumVertices)
-            {
-                path.clear();
-                path.addVertex(vertices[vertices.size()-1]);
-            }
-        }
+//        // Clean-up path vertices in case its size is higher than the allowed maximum.
+//        {
+//            int maxNumVertices = gui->getPathNumVertices();
+//            vector<ofPoint> vertices = path.getVertices();
+//            if (vertices.size() > maxNumVertices)
+//            {
+//                path.clear();
+//                path.addVertex(vertices[vertices.size()-1]);
+//            }
+//        }
 
         path.curveTo(dx, dy);
     }
+     
+     */
 }
 
 void PMRibbonPainter::draw()
 {
+    /*
     if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -85,6 +89,7 @@ void PMRibbonPainter::draw()
     }
 #endif
     ofDisableBlendMode();
+     */
 }
 
 void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
@@ -154,6 +159,7 @@ void PMRibbonPainter::setSize(unsigned int _size)
 
 void PMRibbonPainter::clear()
 {
+    cout << "ribbon painter : clear " << endl;
     path.clear();
     path = ofPolyline();
 

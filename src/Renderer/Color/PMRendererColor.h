@@ -25,8 +25,8 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
     
-    void keyPressed ( ofKeyEventArgs& eventArgs );
 
 private:
     

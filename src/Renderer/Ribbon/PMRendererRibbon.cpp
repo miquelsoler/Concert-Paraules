@@ -34,7 +34,7 @@ void PMRendererRibbon::setup()
 {
     PMBaseRenderer::setup();
 
-    numPainters = myGUI->getNumPainters();
+    numPainters = 1;// myGUI->getNumPainters();
     strokeWidth = myGUI->getStrokeWidth();
     ribbonColorR = (unsigned int)(myGUI->getRibbonColor().r);
     ribbonColorG = (unsigned int)(myGUI->getRibbonColor().g);
@@ -50,7 +50,7 @@ void PMRendererRibbon::setup()
 void PMRendererRibbon::update()
 {
     PMBaseRenderer::update();
-
+/*
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
     int mode = myGUI->getMode();
@@ -107,20 +107,21 @@ void PMRendererRibbon::update()
         for (int i=0; i<numPainters; ++i)
             painters[i].update();
     }
+ */
 }
 
 void PMRendererRibbon::drawIntoFBO()
 {
     if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
-    ofEnableSmoothing();
+    //ofEnableSmoothing();
     
-    fbo.begin();
-    {
-        for (int i=0; i<numPainters; ++i)
-            painters[i].draw();
-    }
-    fbo.end();
+//    fbo.begin();
+//    {
+//        for (int i=0; i<numPainters; ++i)
+//            painters[i].draw();
+//    }
+//    fbo.end();
 }
 
 void PMRendererRibbon::setPosition(int x, int y)
@@ -155,39 +156,39 @@ void PMRendererRibbon::strokeEnded()
 
 void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 {
-    PMBaseRenderer::pitchChanged(pitchParams);
-
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-
-    int mode = myGUI->getMode();
-    if (mode == RM_MOUSE) return;
-
-    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
-    setY(int(y));
+//    PMBaseRenderer::pitchChanged(pitchParams);
+//
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//
+//    int mode = myGUI->getMode();
+//    if (mode == RM_MOUSE) return;
+//
+//    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
+//    setY(int(y));
 }
 
 void PMRendererRibbon::energyChanged(energyParams energyParams)
 {
-    PMBaseRenderer::energyChanged(energyParams);
-
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-
-    int mode = myGUI->getMode();
-    if (mode == RM_MOUSE) return;
-
-    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
-    for (int i=0; i<numPainters; ++i)
-        painters[i].setSize((unsigned int)size);
+//    PMBaseRenderer::energyChanged(energyParams);
+//
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//
+//    int mode = myGUI->getMode();
+//    if (mode == RM_MOUSE) return;
+//
+//    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
+//    for (int i=0; i<numPainters; ++i)
+//        painters[i].setSize((unsigned int)size);
 }
 
 void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 {
-    PMBaseRenderer::silenceStateChanged(silenceParams);
-
-    int mode = myGUI->getMode();
-    if (mode == RM_MOUSE) return;
-
-    isSilent = silenceParams.isSilent;
+//    PMBaseRenderer::silenceStateChanged(silenceParams);
+//
+//    int mode = myGUI->getMode();
+//    if (mode == RM_MOUSE) return;
+//
+//    isSilent = silenceParams.isSilent;
 
 //    if (state != RENDERERSTATE_ON)
 //    {
@@ -250,6 +251,7 @@ void PMRendererRibbon::switchStateOnOff()
 
 void PMRendererRibbon::buildPainters()
 {
+    cout << "render Ribbin : building painters..." << endl;
     painters.clear();
 
     ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);

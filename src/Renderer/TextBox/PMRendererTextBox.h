@@ -26,12 +26,10 @@ class PMRendererTextBox : public PMBaseRenderer
 public:
 
     PMRendererTextBox();
-
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
     
-    void keyPressed ( ofKeyEventArgs& eventArgs );
     void toggleGUIVisible();
     void getText();
     

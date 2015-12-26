@@ -10,8 +10,14 @@
 
 void ofApp::setup()
 {
+    
+#ifdef OF_DEBUG
+    ofSetVerticalSync(false);
+#else
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
+#endif
+    
     ofBackground(ofColor::black);
 
     isFullScreen = (DEFAULT_WINDOW_MODE == OF_FULLSCREEN);

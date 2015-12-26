@@ -21,8 +21,6 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
     {
         gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
-
-        ofAddListener(ofEvents().keyPressed, this, &PMRendererTypography::keyPressed);
     }
 
     // Font preload
@@ -167,8 +165,8 @@ void PMRendererTypography::drawIntoFBO()
 
     fbo.begin();
     {
-        ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
-        ofClear(fc);
+        //ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
+        //ofClear(fc);
 
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
         mutexActiveLetters.lock();
@@ -216,12 +214,6 @@ void PMRendererTypography::setYVelocity(float normalizedVelocity)
     letterYVelocity = normalizedVelocity;
     if (letterYVelocity < 0) letterYVelocity = 0.0;
     if (letterYVelocity > 1) letterYVelocity = 1.0;
-}
-
-void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
-{
-    if (eventArgs.key == 'q')
-        addLetter();
 }
 
 void PMRendererTypography::buildCharsetFromPoem()
@@ -329,4 +321,16 @@ void PMRendererTypography::clear()
     for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt) {
         (*letterIt).get()->setNeedsToBeRemoved();
     }
+}
+
+void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
+{
+    if(state == RENDERERSTATE_ON)
+    {
+        if (eventArgs.key == 'q')
+            addLetter();
+        
+        cout << " KEY TYPORenderer" << endl;
+    }
+    
 }

@@ -24,17 +24,15 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
-
-    void addLetter();
-
-    void setLetterSize(float normalizedSize);
-    void setYVelocity(float normalizedVelocity);
-
-    void keyPressed ( ofKeyEventArgs& eventArgs );
-    
+    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
+
+    void addLetter();
+    void setLetterSize(float normalizedSize);
+    void setYVelocity(float normalizedVelocity);
+    
 
 protected:
 

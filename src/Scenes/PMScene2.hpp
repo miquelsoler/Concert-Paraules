@@ -21,6 +21,7 @@
 #include "PMRendererColor.h"
 #include "PMRendererRibbon.h"
 #include "PMRendererTextBox.h"
+#include "PMRendererStillImage.h"
 
 #include "PMRecorder.hpp"
 
@@ -67,7 +68,8 @@ private:
 
     PMBaseRenderer                      *renderer;
     PMRendererTextBox                   textBox;
-
+    PMRendererStillImage                stillImage;
+    
     PMRecorder                          *recorder;
     int                                 recState; // 0 : normal 1 : record textBox !!
     float                               startTimeRecordingText;

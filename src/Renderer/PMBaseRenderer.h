@@ -37,9 +37,20 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-
     virtual void drawIntoFBO() = 0;
+    // Audio events
+    virtual void pitchChanged(pitchParams pitchParams);
+    virtual void energyChanged(energyParams energyParams);
+    virtual void silenceStateChanged(silenceParams &silenceParams);
+    virtual void pauseStateChanged(pauseParams &pauseParams);
+    // Mouse events (only to be implemented in subclasses when really needed)
+    virtual void mouseDragged(int x, int y, int button) {};
+    virtual void mousePressed(int x, int y, int button) {};
+    virtual void mouseReleased(int x, int y, int button) {};
+    
+    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
 
+    
     // SETTERS
     void setState(PMRendererState newState);
     virtual void switchStateOnOff();
@@ -53,17 +64,7 @@ public:
     ofColor         getBackgroundColor();
     
     void showGUI(bool show);
-
-    // Audio events
-    virtual void pitchChanged(pitchParams pitchParams);
-    virtual void energyChanged(energyParams energyParams);
-    virtual void silenceStateChanged(silenceParams &silenceParams);
-    virtual void pauseStateChanged(pauseParams &pauseParams);
-
-    // Mouse events (only to be implemented in subclasses when really needed)
-    virtual void mouseDragged(int x, int y, int button) {};
-    virtual void mousePressed(int x, int y, int button) {};
-    virtual void mouseReleased(int x, int y, int button) {};
+    void clearFBOBackground(float r,float g,float b,float a);
 
 protected:
 

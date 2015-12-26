@@ -151,8 +151,8 @@ void PMScene2::setup()
     int numChannels=aavec.at(0)->getNumChannels();
     recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
     
-    // Scroll Text Setup
-    textBox.setup();
+    // Still Image Setup
+    stillImage.setup();
 }
 
 void PMScene2::update()
@@ -169,7 +169,7 @@ void PMScene2::update()
     }
     else if(recState ==1)
     {
-        recorder->addVideoFrame(textBox.getBackgroundColor());
+        recorder->addVideoFrame(ofColor(0));
 
         if(ofGetElapsedTimeMillis()-startTimeRecordingText>durationRecordingText)
         {
@@ -177,11 +177,12 @@ void PMScene2::update()
             recorder->stopRecording();
             recState = 0;
         }
+        stillImage.update();
     }
     
 
     
-    textBox.update();
+    
 }
 
 void PMScene2::updateEnter()
@@ -216,7 +217,7 @@ void PMScene2::updateExit()
 void PMScene2::draw()
 {
     if(recState==0) renderer->draw();
-    else textBox.draw();
+    else stillImage.draw();
     
 #ifdef OF_DEBUG
     ofSetColor(127);
@@ -279,9 +280,9 @@ void PMScene2::keyReleased(int key)
                 recorder->startRecording();
             } else {
                 
-                // Start TextBox Recording
+                // Start StillImage Recording
                 recState = 1;
-                recorder->changeFbo(textBox.getFbo());
+                recorder->changeFbo(stillImage.getFbo());
                 startTimeRecordingText = ofGetElapsedTimeMillis();
             }
             break;
@@ -293,10 +294,6 @@ void PMScene2::keyReleased(int key)
             recorder->discardRecording();
             break;
         }
-        case 'p' :
-            textBox.toggleGUIVisible();
-            break;
-
         case 'x' :
             renderer->setNeedsToBeCleared(true);
             break;
