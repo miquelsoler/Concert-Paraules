@@ -2,21 +2,35 @@
 // Created by Miquel Àngel Soler on 7/11/15.
 //
 
-static const unsigned int PRESETSMATRIX_NUMROWS = 1;
-static const unsigned int PRESETSMATRIX_NUMCOLS = 6;
-//static const string STR_CANVAS_BASEPATH = "presets/AUDIO_ANALYZER";
-
-
 #include "PMUICanvasAudioAnalyzer.h"
 
-//--------------------------------------------------------------------------------------------------
+static const unsigned int PRESETSMATRIX_NUMROWS = 1;
+static const unsigned int PRESETSMATRIX_NUMCOLS = 6;
+
+static const string STR_PRESETS_BASEPATH = "presets/AUDIO_ANALYZER";
+
+static const string STR_PRESETS         = "PRESETS";
+static const string STR_PITCH           = "PITCH";
+static const string STR_PITCH_MIDINOTE  = "Midi note";
+static const string STR_ENERGY          = "ENERGY";
+static const string STR_ENERGY_CURRENT  = "Energy";
+static const string STR_ENERGY_GAIN     = "Gain";
+static const string STR_SILENCE         = "SILENCE";
+static const string STR_SILENCE_THRSHLD = "Silence Threshold";
+static const string STR_SILENCE_LENGTH  = "Silence Length (ms)";
+static const string STR_PAUSE           = "PAUSE";
+static const string STR_PAUSE_LENGTH    = "Pause Length (ms)";
+static const string STR_ONSET           = "ONSET";
+static const string STR_ONSET_THRSHLD   = "Onset Threshold";
+static const string STR_SHT             = "SHT";
+
+
 PMUICanvasAudioAnalyzer::PMUICanvasAudioAnalyzer(string title, int headerFontSize, unsigned int _audioInputIndex) : PMBaseUICanvas(title, headerFontSize)
 {
     audioInputIndex = _audioInputIndex;
     savingPreset = false;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width, int height)
 {
     PMBaseUICanvas::init(posX, posY, autosize, width, height);
@@ -48,8 +62,8 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         addSpacer();
 
         // Presets
-        addLabel("PRESETS");
-        presetsMatrix = addToggleMatrix("PRESETS", PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS,200/PRESETSMATRIX_NUMCOLS,20);
+        addLabel(STR_PRESETS);
+        presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS,200/PRESETSMATRIX_NUMCOLS,20);
         presetsMatrix->setAllowMultiple(false);
         presetsMatrix->setTriggerType(OFX_UI_TRIGGER_NONE );
         
@@ -57,68 +71,64 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         addSpacer();
 
-        addLabel("PITCH");
-        // Current freq value
-//        pitchSlider = addSlider("Midi note", settings->getMinPitchMidiNote(), settings->getMaxPitchMidiNote(), &pitchCurrentMidiNote, 300, 10);
-        pitchSlider = addSlider("Midi note", 0, 127, &pitchCurrentMidiNote);
+        addLabel(STR_PITCH);
+        pitchSlider = addSlider(STR_PITCH_MIDINOTE, 0, 127, &pitchCurrentMidiNote);
         pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
-        addLabel("ENERGY");
-//        energySilder = addSlider("Energy", settings->getMinEnergy(), settings->getMaxEnergy(), &energyCurrent, 300, 10);
-        
-        energyGainSlider = addSlider("Gain",1.0,10.0,&energyGainCurrent);
-        energySilder = addSlider("Energy", 0.0, 1.0, &energyCurrent);
+        addLabel(STR_ENERGY);
+        energyGainSlider = addSlider(STR_ENERGY_GAIN,1.0,10.0,&energyGainCurrent);
+        energySilder = addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
         energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
 
-        addLabel("SILENCE");
-        addSlider("Silence Threshold",0.0,0.5,&silenceThreshold);
-        addSlider("Silence Length (ms)",0.0,1000.0,&silenceQueueLength);
-        silenceToggle = addLabelToggle("SILENCE", &silenceOn);
+        addLabel(STR_SILENCE);
+        addSlider(STR_SILENCE_THRSHLD,0.0,0.5,&silenceThreshold);
+        addSlider(STR_SILENCE_LENGTH,0.0,1000.0,&silenceQueueLength);
+        silenceToggle = addLabelToggle(STR_SILENCE, &silenceOn);
         silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
 
-        addLabel("PAUSE");
-        addSlider("Pause Length (ms)",0.0,10000.0,&pauseQueueLength);
-        pauseToggle = addLabelToggle("PAUSE", &pauseOn);
+        addLabel(STR_PAUSE);
+        addSlider(STR_PAUSE_LENGTH,0.0,10000.0,&pauseQueueLength);
+        pauseToggle = addLabelToggle(STR_PAUSE, &pauseOn);
         pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
-        addLabel("ONSET");
-        addSlider("Onset Threshold",0.0,1.0,&onsetThreshold);
-        onsetToggle = addLabelToggle("ONSET", &onsetOn);
+        addLabel(STR_ONSET);
+        addSlider(STR_ONSET_THRSHLD,0.0,1.0,&onsetThreshold);
+        onsetToggle = addLabelToggle(STR_ONSET, &onsetOn);
         onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
 
-        addLabel("SHT");
-        shtToggle = addLabelToggle("SHT", &shtOn);
+        addLabel(STR_SHT);
+        shtToggle = addLabelToggle(STR_SHT, &shtOn);
         shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
     }
 
     if (autosize) autoSizeToFitWidgets();
+
+    loadPreset(0);
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::clear()
 {
     ofxUICanvas::clearWidgets();
     superInit("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
 
-    if (name.find("PRESETS")!=-1)
+    if (name.find(STR_PRESETS)!=-1)
     {
         int activePreset = getActivePreset();
 
@@ -128,7 +138,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             loadPreset(activePreset);
         }
     }
-    else if(name=="Silence Threshold")
+    else if(name==STR_SILENCE_THRSHLD)
     {
         vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
         for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
@@ -137,7 +147,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             (*itAudioAnalyzer)->setSilenceThreshold(e.getFloat());
         }
     }
-    else if(name == "Silence Length (ms)")
+    else if(name == STR_SILENCE_LENGTH)
     {
         vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
         for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
@@ -146,7 +156,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             (*itAudioAnalyzer)->setSilenceQueueLength(e.getFloat());
         }
     }
-    else if(name == "Pause Length (ms)")
+    else if(name == STR_PAUSE_LENGTH)
     {
         vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
         for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
@@ -155,7 +165,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             (*itAudioAnalyzer)->setPauseTimeTreshold(e.getFloat());
         }
     }
-    else if(name == "Onset Threshold")
+    else if(name == STR_ONSET_THRSHLD)
     {
         vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
         for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
@@ -164,7 +174,7 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             (*itAudioAnalyzer)->setOnsetsThreshold(e.getFloat());
         }
     }
-    else if(name == "Gain")
+    else if(name == STR_ENERGY_GAIN)
     {
         vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
         for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
@@ -177,7 +187,6 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
     
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 {
     if (pitchParams.audioInputIndex != audioInputIndex) return;
@@ -195,7 +204,6 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 {
     if (energyParams.audioInputIndex != audioInputIndex) return;
@@ -203,7 +211,6 @@ void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 }
 
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
@@ -211,14 +218,12 @@ void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 //    cout << "Silent is " << silenceOn << "En.Curr : " << energyCurrent << "Silence Thr , Length  :  " << silenceThreshold << " , " << silenceQueueLength << endl;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::pauseStateChanged(pauseParams &pauseParams)
 {
     if (pauseParams.audioInputIndex != audioInputIndex) return;
     pauseOn = pauseParams.isPaused;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
 {
     if (onsetParams.audioInputIndex != audioInputIndex) return;
@@ -226,30 +231,47 @@ void PMUICanvasAudioAnalyzer::onsetStateChanged(onsetParams &onsetParams)
 }
 
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::shtStateChanged(shtParams &_shtParams)
 {
     if (_shtParams.audioInputIndex != audioInputIndex) return;
     shtOn = _shtParams.isSht;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::loadPreset(int presetNumber)
 {
-    string presetPath = "presets/AUDIO_ANALYZER/" + ofToString(presetNumber) + ".xml";
+    string presetPath = STR_PRESETS_BASEPATH + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
-    cout << "AudioAnalyzer :: loading preset : " << presetNumber << " to " << presetPath << endl;
+
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+
+        // Update analyzer settings according to preset
+
+        ofxUISlider *energyGainSlider = (ofxUISlider *)getWidget(STR_ENERGY_GAIN);
+        (*itAudioAnalyzer)->setDigitalGain(energyGainSlider->getValue());
+
+        ofxUISlider *silenceThrshldSlider = (ofxUISlider *)getWidget(STR_SILENCE_THRSHLD);
+        (*itAudioAnalyzer)->setSilenceThreshold(silenceThrshldSlider->getValue());
+
+        ofxUISlider *silenceLengthSlider = (ofxUISlider *)getWidget(STR_SILENCE_LENGTH);
+        (*itAudioAnalyzer)->setSilenceQueueLength(silenceLengthSlider->getValue());
+
+        ofxUISlider *pauseLengthSilder = (ofxUISlider *)getWidget(STR_PAUSE_LENGTH);
+        (*itAudioAnalyzer)->setPauseTimeTreshold(pauseLengthSilder->getValue());
+
+        ofxUISlider *onsetThrshldSlider = (ofxUISlider *)getWidget(STR_ONSET_THRSHLD);
+        (*itAudioAnalyzer)->setOnsetsThreshold(onsetThrshldSlider->getValue());
+    }
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::savePreset(int presetNumber)
 {
-    string presetPath = "presets/AUDIO_ANALYZER/" + ofToString(presetNumber) + ".xml";
+    string presetPath = STR_PRESETS_BASEPATH + "/" + ofToString(presetNumber) + ".xml";
     saveSettings(presetPath);
-    cout << "AudioAnalyzer :: saving preset : " << presetNumber << " to " << presetPath << endl;
 }
 
-//--------------------------------------------------------------------------------------------------
 int PMUICanvasAudioAnalyzer::getActivePreset()
 {
     bool found = false;
@@ -267,14 +289,12 @@ int PMUICanvasAudioAnalyzer::getActivePreset()
     return (row * PRESETSMATRIX_NUMCOLS) + col;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::keyPressed(int key)
 {
     if (key != OF_KEY_SHIFT) return;
     savingPreset = true;
 }
 
-//--------------------------------------------------------------------------------------------------
 void PMUICanvasAudioAnalyzer::keyReleased(int key)
 {
     if (key != OF_KEY_SHIFT) return;
