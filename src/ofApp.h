@@ -22,4 +22,8 @@ private:
     ofxSceneManager         sceneManager;
 
     int                     windowPosX, windowPosY;
+
+#if OF_DEBUG
+    bool                    limitFrameRate;
+#endif
 };

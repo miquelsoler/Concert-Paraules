@@ -13,11 +13,12 @@ void ofApp::setup()
     
 #ifdef OF_DEBUG
     ofSetVerticalSync(false);
+    limitFrameRate = false;
 #else
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
 #endif
-    
+
     ofBackground(ofColor::black);
 
     isFullScreen = (DEFAULT_WINDOW_MODE == OF_FULLSCREEN);
@@ -133,6 +134,14 @@ void ofApp::keyReleased(int key)
             showFPS = !showFPS;
             break;
         }
+#ifdef OF_DEBUG
+        case '.':
+        {
+            limitFrameRate = !limitFrameRate;
+            ofSetFrameRate(limitFrameRate ? 60 : 0);
+            break;
+        }
+#endif
         default:
             break;
     }
