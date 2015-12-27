@@ -15,7 +15,7 @@ class PMLetterContainer : public ofxBox2dRect
 {
 public:
 
-    PMLetterContainer(string letter, ofTrueTypeFont *font, float letterSize, float letterVelocity, ofxBox2d *box2d, PMUICanvasTypoRenderer* gui);
+    PMLetterContainer(string letter, ofTrueTypeFont *font, ofPoint pos, float letterSize, float letterVelocity, ofxBox2d *box2d, PMUICanvasTypoRenderer* gui);
     ~PMLetterContainer();
 
     void draw();

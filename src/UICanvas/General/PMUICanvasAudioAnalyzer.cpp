@@ -90,7 +90,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
         addLabel("ONSET");
-        addSlider("Onset Threshold",0.0,1.0,&silenceThreshold);
+        addSlider("Onset Threshold",0.0,1.0,&onsetThreshold);
         onsetToggle = addLabelToggle("ONSET", &onsetOn);
         onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
         addSpacer();
@@ -164,6 +164,16 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
             (*itAudioAnalyzer)->setOnsetsThreshold(e.getFloat());
         }
     }
+    else if(name == "Gain")
+    {
+        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+        for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+        {
+            if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+            (*itAudioAnalyzer)->setDigitalGain(e.getFloat());
+        }
+    }
+    
     
 }
 

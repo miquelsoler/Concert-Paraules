@@ -157,7 +157,6 @@ void PMScene2::setup()
 
 void PMScene2::update()
 {
-    
     if(recState==0)
     {
         renderer->update();
@@ -181,7 +180,6 @@ void PMScene2::update()
     }
     
 
-    
     
 }
 
@@ -222,7 +220,18 @@ void PMScene2::draw()
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
-    ofDrawBitmapString("Renderer state: " + ofToString(renderer->getState()), 15, ofGetHeight() - 60);
+    string stat = "";
+    switch(renderer->getState())
+    {
+        case 0 :
+            stat = " OFF !! ";
+            break;
+            
+        case 1 :
+            stat = " ON ...";
+            break;
+    }
+    ofDrawBitmapString("Renderer state: " + stat, 15, ofGetHeight() - 60);
 #endif
     
 }
@@ -357,16 +366,16 @@ void PMScene2::pauseStateChanged(pauseParams &pauseParams)
 {
     if (pauseParams.isPaused)
     {
-        renderer->setState(RENDERERSTATE_PAUSED);
+//        renderer->setState(RENDERERSTATE_PAUSED);
         renderer->pauseStateChanged(pauseParams);
     }
     else
     {
-        if (renderer->getState() == RENDERERSTATE_PAUSED)
-        {
-            renderer->setState(RENDERERSTATE_ON);
-            renderer->pauseStateChanged(pauseParams);
-        }
+//        if (renderer->getState() == RENDERERSTATE_PAUSED)
+//        {
+//            renderer->setState(RENDERERSTATE_ON);
+//            renderer->pauseStateChanged(pauseParams);
+//        }
     }
 }
 

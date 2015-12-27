@@ -266,14 +266,16 @@ void PMRendererColor::startNewBand()
 //--------------------------------------------------------------
 void PMRendererColor::update()
 {
+    
     if (state != RENDERERSTATE_ON) return;
     
-    PMBaseRenderer::update();
+//    float ini = ofGetElapsedTimef();
 
+    //PMBaseRenderer::update();
+    
     
     
     // STOP ON SILENCE ?
-    
     bool updateScan = false;
     
     if((!myGUI->getStopOnSilence()))
@@ -362,7 +364,7 @@ void PMRendererColor::update()
             {
                 scanX = ofGetHeight();
                 startNewBand();
-                cout << "SEQ NEW BAND : Height : " << drawingHeight  << " __ ScanX = " << scanX << " __ drawPos = " << drawingPos  << endl;
+                //cout << "SEQ NEW BAND : Height : " << drawingHeight  << " __ ScanX = " << scanX << " __ drawPos = " << drawingPos  << endl;
 
             }
 
@@ -371,6 +373,9 @@ void PMRendererColor::update()
         
         
     }
+    
+//    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
+
 }
 
 //--------------------------------------------------------------
@@ -378,10 +383,11 @@ void PMRendererColor::drawIntoFBO()
 {
     if (state != RENDERERSTATE_ON) return;
 
-    PMUICanvasColorRenderer *myGUI = (PMUICanvasColorRenderer *)gui;
 
     fbo.begin();
     {
+        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
+
         float pitchSmooth = gui->getSmoothedPitch();
         float energySmooth = gui->getSmoothedEnergy();
         
@@ -504,7 +510,7 @@ void PMRendererColor::drawIntoFBO()
 
     ofSetColor(255, 255, 255, 255);
     
-    ofScale(0.75,0.75,0.75);
+    
 // Miquel: commented because it's already done in PMBaseRenderer::draw()
 //    fbo.draw(0, 0);
 }

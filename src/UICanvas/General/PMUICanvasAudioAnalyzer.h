@@ -79,6 +79,7 @@ private:
 
     ofxUILabelToggle    *onsetToggle;
     bool                onsetOn;
+    float               onsetThreshold;
 
     // Sht ------------------------------------
     

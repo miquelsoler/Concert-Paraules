@@ -21,6 +21,7 @@ typedef enum
 
 PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
 {
+    
     // GUI
     {
         gui = new PMUICanvasRibbonRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "RIBBON_RENDERER",OFX_UI_FONT_MEDIUM);
@@ -28,6 +29,7 @@ PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
     }
 
     myGUI = (PMUICanvasRibbonRenderer *)gui;
+    
 }
 
 void PMRendererRibbon::setup()
@@ -45,13 +47,21 @@ void PMRendererRibbon::setup()
 //    strokeStarted();
 
     isSilent = true;
+ 
+    
 }
 
 void PMRendererRibbon::update()
 {
-    PMBaseRenderer::update();
-/*
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+    if (state != RENDERERSTATE_ON) return;
+
+//    float ini = ofGetElapsedTimef();
+    
+    PMBaseRenderer::update(); 
+
+ 
+ 
+    if ((state != RENDERERSTATE_ON) ) return;
 
     int mode = myGUI->getMode();
 
@@ -107,21 +117,27 @@ void PMRendererRibbon::update()
         for (int i=0; i<numPainters; ++i)
             painters[i].update();
     }
- */
+ 
+    
+//    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
+    
 }
 
 void PMRendererRibbon::drawIntoFBO()
 {
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//  if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+    if ((state != RENDERERSTATE_ON) ) return;
 
     //ofEnableSmoothing();
     
-//    fbo.begin();
-//    {
-//        for (int i=0; i<numPainters; ++i)
-//            painters[i].draw();
-//    }
-//    fbo.end();
+    fbo.begin();
+    {
+        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
+
+        for (int i=0; i<numPainters; ++i)
+            painters[i].draw();
+    }
+    fbo.end();
 }
 
 void PMRendererRibbon::setPosition(int x, int y)
@@ -156,57 +172,57 @@ void PMRendererRibbon::strokeEnded()
 
 void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 {
-//    PMBaseRenderer::pitchChanged(pitchParams);
-//
-//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-//
-//    int mode = myGUI->getMode();
-//    if (mode == RM_MOUSE) return;
-//
-//    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
-//    setY(int(y));
+    PMBaseRenderer::pitchChanged(pitchParams);
+
+    if ((state != RENDERERSTATE_ON) ) return;
+
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
+
+    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
+    setY(int(y));
 }
 
 void PMRendererRibbon::energyChanged(energyParams energyParams)
 {
-//    PMBaseRenderer::energyChanged(energyParams);
-//
-//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-//
-//    int mode = myGUI->getMode();
-//    if (mode == RM_MOUSE) return;
-//
-//    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
-//    for (int i=0; i<numPainters; ++i)
-//        painters[i].setSize((unsigned int)size);
+    PMBaseRenderer::energyChanged(energyParams);
+
+    if ((state != RENDERERSTATE_ON) ) return;
+
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
+
+    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
+    for (int i=0; i<numPainters; ++i)
+        painters[i].setSize((unsigned int)size);
 }
 
 void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 {
-//    PMBaseRenderer::silenceStateChanged(silenceParams);
-//
-//    int mode = myGUI->getMode();
-//    if (mode == RM_MOUSE) return;
-//
-//    isSilent = silenceParams.isSilent;
+    PMBaseRenderer::silenceStateChanged(silenceParams);
 
-//    if (state != RENDERERSTATE_ON)
-//    {
-//        cout << "End stroke (state not ON)" << endl;
-//        strokeEnded();
-//        return;
-//    }
-//
-//    if (!(silenceParams.isSilent))
-//    {
-//        cout << "Start stroke (silence stopped)" << endl;
-//        strokeStarted();
-//    }
-//    else
-//    {
-//        cout << "End stroke (new silence)" << endl;
-//        strokeEnded();
-//    }
+    int mode = myGUI->getMode();
+    if (mode == RM_MOUSE) return;
+
+    isSilent = silenceParams.isSilent;
+
+    if (state != RENDERERSTATE_ON)
+    {
+        cout << "End stroke (state not ON)" << endl;
+        strokeEnded();
+        return;
+    }
+
+    if (!(silenceParams.isSilent))
+    {
+        cout << "Start stroke (silence stopped)" << endl;
+        strokeStarted();
+    }
+    else
+    {
+        cout << "End stroke (new silence)" << endl;
+        strokeEnded();
+    }
 }
 
 // TODO: Remove mouse events code once audio events are working
@@ -251,7 +267,8 @@ void PMRendererRibbon::switchStateOnOff()
 
 void PMRendererRibbon::buildPainters()
 {
-    cout << "render Ribbin : building painters..." << endl;
+    
+    cout << "render Ribbon : building painters..." << endl;
     painters.clear();
 
     ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);
@@ -272,4 +289,5 @@ void PMRendererRibbon::buildPainters()
         painters[i].setup();
         painters[i].setOrigin(PAINTER_LEFT);
     }
+     
 }

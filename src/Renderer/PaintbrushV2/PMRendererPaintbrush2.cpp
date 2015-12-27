@@ -33,7 +33,8 @@ void PMRendererPaintbrush2::update()
     if (state == RENDERERSTATE_OFF)
         brush->setOrigin((PMBrushContainerOrigin)(myGUI->getBrushOrigin()));
 
-    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
+//    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
+    if ((state == RENDERERSTATE_OFF)) return;
 
     brush->setBounces(myGUI->getBouncyWalls());
     brush->setColor(myGUI->getBrushColor());
@@ -45,7 +46,8 @@ void PMRendererPaintbrush2::update()
 
 void PMRendererPaintbrush2::drawIntoFBO()
 {
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+    if ((state != RENDERERSTATE_ON) ) return;
 
     fbo.begin();
     {
@@ -60,7 +62,8 @@ void PMRendererPaintbrush2::pitchChanged(pitchParams pitchParams)
 {
     PMBaseRenderer::pitchChanged(pitchParams);
 
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+    if ((state != RENDERERSTATE_ON) ) return;
 
     // Update brush offset
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;

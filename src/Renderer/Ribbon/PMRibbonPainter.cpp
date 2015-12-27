@@ -12,6 +12,7 @@ static const float PAINTER_SPEED = 5.0;
 
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
+    
     // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
@@ -24,6 +25,7 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     isNewPath = true;
 
     gui = _gui;
+    
 }
 
 void PMRibbonPainter::setup()
@@ -33,7 +35,6 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
-    /*
     int newX = int(targetPos.x + PAINTER_SPEED);
     if (newX > ofGetWidth() - 2)
     {
@@ -49,26 +50,26 @@ void PMRibbonPainter::update()
         dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
         dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
 
-//        // Clean-up path vertices in case its size is higher than the allowed maximum.
-//        {
-//            int maxNumVertices = gui->getPathNumVertices();
-//            vector<ofPoint> vertices = path.getVertices();
-//            if (vertices.size() > maxNumVertices)
-//            {
-//                path.clear();
-//                path.addVertex(vertices[vertices.size()-1]);
-//            }
-//        }
+        // Clean-up path vertices in case its size is higher than the allowed maximum.
+        {
+            int maxNumVertices = gui->getPathNumVertices();
+            vector<ofPoint> vertices = path.getVertices();
+            if (vertices.size() > maxNumVertices)
+            {
+                path.clear();
+                path.addVertex(vertices[vertices.size()-1]);
+            }
+        }
 
         path.curveTo(dx, dy);
     }
      
-     */
+    
 }
 
 void PMRibbonPainter::draw()
 {
-    /*
+    
     if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -89,11 +90,12 @@ void PMRibbonPainter::draw()
     }
 #endif
     ofDisableBlendMode();
-     */
+     
 }
 
 void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 {
+    
     switch (origin)
     {
         case PAINTER_LEFT:
@@ -122,10 +124,12 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
         }
         default: break;
     }
+     
 }
 
 void PMRibbonPainter::setPosition(int x, int y)
 {
+    
     targetPos = ofPoint(x, y);
 
     if (isNewPath)
@@ -135,6 +139,7 @@ void PMRibbonPainter::setPosition(int x, int y)
         isNewPath = false;
         return;
     }
+     
 }
 
 void PMRibbonPainter::setX(int x)
@@ -159,9 +164,10 @@ void PMRibbonPainter::setSize(unsigned int _size)
 
 void PMRibbonPainter::clear()
 {
+    
     cout << "ribbon painter : clear " << endl;
     path.clear();
     path = ofPolyline();
 
     isNewPath = true;
-}
+    }

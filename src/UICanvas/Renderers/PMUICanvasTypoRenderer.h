@@ -29,14 +29,15 @@ public:
     float getGravityX()     { return gravityX; };
     float getGravityY()     { return gravityY; };
     float getSinusFreq()    { return guiSinusFreq; };
-    
+    float getLetterSpeedMs() {return guiLetterSpeedMs; };
     // SETTERS
     void setGravityX(float f)      { gravityX = f;};
     void setGravityY(float f)      { gravityY = f;};
 
     // ELOI
     float getSinusAmplitude()    { return guiSinusAmplitude; };
-
+    float getAddLetterSensitivity() { return guiAddLetterSensitivity; };
+    
 private:
 
     int     minVelocity;
@@ -51,6 +52,8 @@ private:
     // ELOI
     float   guiSinusFreq;
     float   guiSinusAmplitude;
+    float   guiAddLetterSensitivity;
+    float   guiLetterSpeedMs;
     
 };
 

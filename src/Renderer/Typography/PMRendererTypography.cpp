@@ -29,7 +29,7 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
         string fontPath = "fonts/" + fontName;
 
         font = new ofTrueTypeFont();
-        font->load(fontPath, 200,
+        font->load(fontPath, 100,
                 true, // antialiased
                 true, // full character set
                 true // make contours
@@ -44,17 +44,23 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
         PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
 
         box2d.init();
-        box2d.enableEvents();
+        
         box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
         box2d.createBounds();
-        box2d.setFPS(60);
+        //box2d.createGround(00,ofGetHeight(),ofGetWidth()+00,ofGetHeight());
+        box2d.setFPS(30);
+        //        velocityIterations = 40;
+        //        positionIterations = 20;
+        box2d.setIterations(20, 10);
 
         // register the listener so that we get the events
-        ofAddListener(box2d.contactStartEvents, this, &PMRendererTypography::contactStart);
-        ofAddListener(box2d.contactEndEvents, this, &PMRendererTypography::contactEnd);
+        //box2d.enableEvents();
+        //ofAddListener(box2d.contactStartEvents, this, &PMRendererTypography::contactStart);
+        //ofAddListener(box2d.contactEndEvents, this, &PMRendererTypography::contactEnd);
     }
     
-    typoTimerEnabled = false;
+    typoTimerEnabled = true;
+    typoTimer = ofGetElapsedTimeMillis();
     
     myGUI = (PMUICanvasTypoRenderer *)gui;
     addALetter = false;
@@ -73,8 +79,10 @@ void PMRendererTypography::setup()
 
 void PMRendererTypography::update()
 {
-    
+    if (state != RENDERERSTATE_ON) return;
+
     PMBaseRenderer::update();
+    
     int _mode = myGUI->getMode();
     bool firstTimeInMode = false;
     
@@ -82,6 +90,8 @@ void PMRendererTypography::update()
     {
         firstTimeInMode = true;
         oldMode = _mode;
+        box2d.getWorld()->ClearForces();
+
     }
     else firstTimeInMode = false;
     
@@ -134,19 +144,28 @@ void PMRendererTypography::update()
         }
         case 3 :
         {
+            box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
+            oldMode = 3;
             for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
             {
                 ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
 
-                ofVec2f v = ofVec2f(ofGetMouseX(),ofGetMouseY());
+                ofVec2f v = ofVec2f(ofGetMouseX()/ofGetWidth(),ofGetMouseY()/ofGetHeight());
                 (*letterIt)->addAttractionPoint(mouse, 4.0);
             }
             
-            if (firstTimeInMode)
-            {
-                box2d.getWorld()->ClearForces();
-            }
+//            if (firstTimeInMode)
+//            {
+//                box2d.getWorld()->ClearForces();
+//            }
             break;
+        }
+            
+        case 4 :
+        {
+            box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
+            oldMode = 4;
+
         }
         default :
             break;
@@ -161,20 +180,23 @@ void PMRendererTypography::update()
 
 void PMRendererTypography::drawIntoFBO()
 {
-    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
+    if ((state != RENDERERSTATE_ON) ) return;
 
     fbo.begin();
     {
-        //ofFloatColor fc = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 1);
-        //ofClear(fc);
+        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
 
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-        mutexActiveLetters.lock();
+        //mutexActiveLetters.lock();
         {
             for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
+            {
                 (*letterIt).get()->draw();
+                //ofDrawCircle((*letterIt).get()->getPosition().x,(*letterIt).get()->getPosition().y,10);
+            }
         }
-        mutexActiveLetters.unlock();
+        //mutexActiveLetters.unlock();
     }
     fbo.end();
 }
@@ -183,22 +205,40 @@ void PMRendererTypography::addLetter()
 {
     if (somethingInContact) return;
 
-    mutexAddLetter.lock();
-    {
-        int iLetter = int(ofRandom(charset.size()));
 
-        mutexActiveLetters.lock();
+        //mutexAddLetter.lock();
         {
-            shared_ptr<PMLetterContainer> letterContainer =
-                    shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]), font, letterSize, letterYVelocity, &box2d, myGUI));
+            int iLetter = int(ofRandom(charset.size()));
 
-            activeLetters.push_back(letterContainer);
+            //mutexActiveLetters.lock();
+            {
+                float posX,posY;
+                
+                if((myGUI->getMode()==1)||(myGUI->getMode()==2))
+                {
+                    float posOffset = ofGetWidth() * 0.1f;
+                    posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
+                    posY = 1;
+                }
+                else if (myGUI->getMode()==4)
+                {
+                    posX = ofMap(lastPitchReceived,0.0,1.0,10.0,ofGetWidth()-20);
+                    posY = 1;
+                }
+                
+                shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]),
+                                                                                                                    font,
+                                                                                                                    ofPoint(posX,posY),
+                                                                                                                    letterSize,
+                                                                                                                    letterYVelocity,
+                                                                                                                    &box2d,
+                                                                                                                    myGUI));
+
+                activeLetters.push_back(letterContainer);
+            }
+            //mutexActiveLetters.unlock();
         }
-        mutexActiveLetters.unlock();
-    }
-    mutexAddLetter.unlock();
-    
-
+        //mutexAddLetter.unlock();
 }
 
 void PMRendererTypography::setLetterSize(float normalizedSize)
@@ -267,40 +307,51 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 
     if (state != RENDERERSTATE_ON) return;
 
-    if (typoTimerEnabled)
-    {
-        float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-        if (diffTimeMs > MILLISECONDS_NEXT_LETTER)
-        {
-            typoTimer = ofGetElapsedTimeMillis();
-
-            float minVelocity = 0.01;
-            float maxVelocity = 1.0;
-            float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
-            setYVelocity(velocityY);
-            //addLetter();
-        }
-    }
+//    if (typoTimerEnabled)
+//    {
+//        float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+//        if (diffTimeMs > MILLISECONDS_NEXT_LETTER)
+//        {
+//            typoTimer = ofGetElapsedTimeMillis();
+//
+//            float minVelocity = 0.01;
+//            float maxVelocity = 1.0;
+//            float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
+//            setYVelocity(velocityY);
+//            //addLetter();
+//        }
+//    }
+    
+    lastPitchReceived = myGUI->getSmoothedPitch();
 }
 
 void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
-    setLetterSize(gui->getSmoothedEnergy());
-    
-    if(gui->getSmoothedEnergy()>0.1)
+
+    if(gui->getSmoothedEnergy() > myGUI->getAddLetterSensitivity())
     {
-        addALetter = true;
+
+        float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
+        if (diffTimeMs > myGUI->getLetterSpeedMs())
+        {
+            typoTimer = ofGetElapsedTimeMillis();
+            setLetterSize(gui->getSmoothedEnergy());
+            addALetter = true;
+        }
+        else
+        {
+        }
     }
 }
 
 void PMRendererTypography::silenceStateChanged(silenceParams &silenceParams)
 {
     PMBaseRenderer::silenceStateChanged(silenceParams);
-    
-    typoTimerEnabled = !silenceParams.isSilent;
-    if (typoTimerEnabled)
-        typoTimer = ofGetElapsedTimeMillis();
+//    
+//    typoTimerEnabled = !silenceParams.isSilent;
+//    if (typoTimerEnabled)
+//        typoTimer = ofGetElapsedTimeMillis();
 }
 
 void PMRendererTypography::contactStart(ofxBox2dContactArgs &e)
@@ -329,8 +380,6 @@ void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
     {
         if (eventArgs.key == 'q')
             addLetter();
-        
-        cout << " KEY TYPORenderer" << endl;
     }
     
 }

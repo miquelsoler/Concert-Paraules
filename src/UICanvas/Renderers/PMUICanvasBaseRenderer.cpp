@@ -60,6 +60,7 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 
     addSpacer();
     addIntSlider("Mode",1,10,&guiMode);
+    addSpacer();
 
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
 

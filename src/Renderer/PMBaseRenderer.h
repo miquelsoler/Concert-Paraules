@@ -23,9 +23,8 @@ typedef enum
 
 typedef enum
 {
-    RENDERERSTATE_ON = 0,       // Listening to audio events and rendering
-    RENDERERSTATE_PAUSED = 1,   // Listening to audio events but not rendering
-    RENDERERSTATE_OFF = 2       // Screen is cleared and nothing is rendered
+    RENDERERSTATE_OFF = 0,       // Screen is cleared and nothing is rendered
+    RENDERERSTATE_ON = 1,       // Listening to audio events and rendering
 } PMRendererState;
 
 class PMBaseRenderer

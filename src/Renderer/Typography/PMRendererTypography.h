@@ -69,6 +69,9 @@ private:
     ofVec2f                             oldGravity;
     bool                                addALetter;
     bool                                firstTimeInMode;
+
+    float                               timeForNextLetter;
+    float                               lastPitchReceived;
 };
 
 

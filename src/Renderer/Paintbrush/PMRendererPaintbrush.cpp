@@ -30,7 +30,8 @@ void PMRendererPaintbrush::update()
 {
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *) gui;
 
-    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
+//    if ((state == RENDERERSTATE_PAUSED) || (state == RENDERERSTATE_OFF)) return;
+    if ( (state == RENDERERSTATE_OFF) ) return;
 
     brush->update();
     brush->setBounceWalls(myGUI->getBouncyWalls());

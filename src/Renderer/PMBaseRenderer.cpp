@@ -30,25 +30,34 @@ void PMBaseRenderer::setup()
 
 void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
 {
-    fbo.begin();
+//    fbo.begin();
+//    {
+
+    if(a<1.0f)
     {
-        // background dimming
+//        // background dimming
         ofFloatColor fc = ofFloatColor(r,g,b,a);
         ofSetColor(fc);
         //ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
     }
-    fbo.end();
+    else
+    {
+        ofClear(r,g,b);
+    }
+//    }
+//    fbo.end();
 }
 
 void PMBaseRenderer::update()
 {
-    clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
-    drawIntoFBO();
+    //drawIntoFBO();
 }
 
 void PMBaseRenderer::draw()
 {
+    drawIntoFBO();
+    
     if (needsToBeCleared) {
         needsToBeCleared = false;
         clear();
@@ -57,6 +66,7 @@ void PMBaseRenderer::draw()
     // set background for base renderer
     ofColor c = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 255);
     ofClear(c);
+    //ofBackground(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b);
 
     // Skip FBO drawing if renderer is off
     if (state == RENDERERSTATE_OFF) return;
@@ -76,12 +86,12 @@ void PMBaseRenderer::setState(PMRendererState newState)
             state = newState;
             break;
         }
-        case RENDERERSTATE_PAUSED: {
-            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
-            if (newState == RENDERERSTATE_ON) setNeedsToBeCleared(false);
-            state = newState;
-            break;
-        }
+//        case RENDERERSTATE_PAUSED: {
+//            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
+//            if (newState == RENDERERSTATE_ON) setNeedsToBeCleared(false);
+//            state = newState;
+//            break;
+//        }
         case RENDERERSTATE_OFF: {
             if (newState == RENDERERSTATE_ON)
                 state = newState;
@@ -95,8 +105,8 @@ void PMBaseRenderer::switchStateOnOff()
     switch(state)
     {
         case RENDERERSTATE_ON:
-        case RENDERERSTATE_PAUSED:
-            setState(RENDERERSTATE_OFF);
+//        case RENDERERSTATE_PAUSED:
+        setState(RENDERERSTATE_OFF);
             break;
         case RENDERERSTATE_OFF:
             setState(RENDERERSTATE_ON);
@@ -106,7 +116,10 @@ void PMBaseRenderer::switchStateOnOff()
 
 void PMBaseRenderer::clear()
 {
-    clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,1.0f);
+    fbo.begin();
+        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,1.0f);
+    fbo.end();
+    
 }
 
 void PMBaseRenderer::showGUI(bool show)
@@ -144,10 +157,10 @@ void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
 
 void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)
 {
-    if (pauseParams.isPaused)
-        setState(RENDERERSTATE_PAUSED);
-    else
-        setState(RENDERERSTATE_ON);
+//    if (pauseParams.isPaused)
+//        setState(RENDERERSTATE_PAUSED);
+//    else
+//        setState(RENDERERSTATE_ON);
 }
 
 ofColor PMBaseRenderer::getBackgroundColor()
@@ -161,14 +174,10 @@ void PMBaseRenderer::keyPressed ( ofKeyEventArgs& eventArgs )
     {
         cout << "KEY in BaseRenderer" << endl;
     
-//        if(eventArgs.key=='x')
-//        {
-//            fbo.begin();
-//            {
-//                clearBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,1.0);
-//            }
-//            fbo.end();
-//        }
+        if(eventArgs.key=='x')
+        {
+            setNeedsToBeCleared(true);
+        }
     }
 
 }
