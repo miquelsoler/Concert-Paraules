@@ -22,6 +22,7 @@ public:
     virtual void update();
     void updateMode1();
     void updateMode2();
+    void updateMode3();
     virtual void drawIntoFBO();
 
     void rebuildPainters();
@@ -50,6 +51,8 @@ private:
     vector<PMRibbonPainter> painters;
 
     ofPoint position;
+    int xMin, xMax, yMin, yMax;
+    int offsetSign;
 
     int mode;
     unsigned int numPainters;
@@ -63,6 +66,7 @@ private:
 
     bool isSilent;
 
+    void addOffsetToPosition(float xOffset, float yOffset, bool *didReachBorder);
     void getGUIData();
 };
 

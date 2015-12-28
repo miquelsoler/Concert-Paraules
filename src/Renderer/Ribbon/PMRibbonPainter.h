@@ -31,10 +31,11 @@ public:
     void setPosition(int x, int y);
     void setX(int x);
     void setY(int y);
-    void addOffsetToPosition(float xOffset, float yOffset);
     void setColor(ofColor color);
     void setSize(unsigned int size);
     void clear();
+
+    ofPoint *getTargetPos() { return &targetPos; }
 
 private:
 
@@ -50,7 +51,6 @@ private:
     int xMin, xMax, yMin, yMax;
     ofColor color;
     PMPainterOrigin origin;
-    int offsetSign;
 
     bool isNewPath;
 

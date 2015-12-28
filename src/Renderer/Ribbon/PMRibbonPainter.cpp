@@ -33,7 +33,6 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
 void PMRibbonPainter::setup()
 {
     isNewPath = true;
-    offsetSign = 1;
 }
 
 void PMRibbonPainter::update()
@@ -77,8 +76,6 @@ void PMRibbonPainter::draw()
         for (int i=0; i<vertices.size()-1; ++i)
         {
             ofSetColor(color);
-//            ofColor color = gui->getGradientColor(gui->getGradientId(), )
-//            ofSetColor(color);
             ofDrawLine(vertices[i], vertices[i+1]);
         }
     }
@@ -143,65 +140,6 @@ void PMRibbonPainter::setX(int x)
 void PMRibbonPainter::setY(int y)
 {
     setPosition(int(targetPos.x), y);
-}
-
-void PMRibbonPainter::addOffsetToPosition(float xOffset, float yOffset)
-{
-    bool bounces = gui->getBounceEnabled();
-
-    // X offset
-    {
-        int newX = int(targetPos.x + (xOffset * offsetSign));
-        if (newX > xMax)
-        {
-            if (!bounces) {
-                clear();
-                newX = xMin;
-            } else {
-                offsetSign = -1;
-                newX = xMax;
-            }
-        }
-        else if (newX < xMin)
-        {
-            if (!bounces) {
-                clear();
-                newX = xMax;
-            } else {
-                offsetSign = 1;
-                newX = xMin;
-            }
-        }
-
-        setX(newX);
-    }
-
-    // Y offset
-    {
-        int newY = int(targetPos.y + (yOffset * offsetSign));
-        if (newY > yMax)
-        {
-            if (!bounces) {
-                clear();
-                newY = yMin;
-            } else {
-                offsetSign = -1;
-                newY = yMax;
-            }
-        }
-        else if (newY < 1)
-        {
-            if (!bounces) {
-                clear();
-                newY = yMax;
-            } else {
-                offsetSign = 1;
-                newY = yMin;
-            }
-        }
-
-        setY(newY);
-    }
 }
 
 void PMRibbonPainter::setColor(ofColor _color)
