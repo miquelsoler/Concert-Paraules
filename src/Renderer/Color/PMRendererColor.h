@@ -26,6 +26,8 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
     virtual void keyPressed ( ofKeyEventArgs& eventArgs );
+    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
+
     
 
 private:

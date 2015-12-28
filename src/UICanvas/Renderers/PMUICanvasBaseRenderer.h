@@ -52,8 +52,9 @@ public:
     void            setEnergyMin(float f)       { guiEnergyMin = f; };
     void            setEnergyMax(float f)       { guiEnergyMax = f; };
 
-    void            keyPressed(int key);
-    void            keyReleased(int key);
+    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
+    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
+
     int             getActivePreset();
 
 protected:

@@ -21,6 +21,10 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
     {
         gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
+        
+        ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasTypoRenderer::keyPressed);
+        ofAddListener(ofEvents().keyReleased, gui, &PMUICanvasTypoRenderer::keyReleased);
+
     }
 
     // Font preload
@@ -34,6 +38,8 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
                 true, // full character set
                 true // make contours
         );
+        
+        
     }
 
     letterSize = 1.0;
@@ -374,12 +380,21 @@ void PMRendererTypography::clear()
     }
 }
 
+//--------------------------------------------------------------------------------
 void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
 {
     if(state == RENDERERSTATE_ON)
     {
         if (eventArgs.key == 'q')
             addLetter();
+    }
+    
+}
+//--------------------------------------------------------------------------------
+void PMRendererTypography::keyReleased ( ofKeyEventArgs& eventArgs )
+{
+    if(state == RENDERERSTATE_ON)
+    {
     }
     
 }
