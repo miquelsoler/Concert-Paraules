@@ -229,32 +229,6 @@ void PMRendererRibbon::mouseReleased(int x, int y, int button)
     strokeEnded();
 }
 
-//// TODO: keyPresses and keyReleases should be moved back to a base class (PMBaseRenderer or PMUICanvasBaseRenderer).
-//void PMRendererRibbon::keyPressed ( ofKeyEventArgs& eventArgs )
-//{
-//    if(state == RENDERERSTATE_ON)
-//    {
-//    }
-//}
-//
-//void PMRendererRibbon::keyReleased ( ofKeyEventArgs& eventArgs )
-//{
-//    if(state == RENDERERSTATE_ON)
-//    {
-//        int key = eventArgs.key;
-//
-//        int firstAsciiCode = (int)'1';
-//        int lastAsciiCode = (int)'9';
-//
-//        if ((key > firstAsciiCode) || (key < lastAsciiCode))
-//        {
-//            clear();
-//            return;
-//        }
-//        cout << "did we clear ?" << endl;
-//    }
-//}
-
 void PMRendererRibbon::switchStateOnOff()
 {
     PMBaseRenderer::switchStateOnOff();

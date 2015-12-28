@@ -44,6 +44,8 @@ private:
     float ease;
     unsigned int size;
 
+    int offsetSign;
+
     ofPoint targetPos;
 
     ofPolyline path;

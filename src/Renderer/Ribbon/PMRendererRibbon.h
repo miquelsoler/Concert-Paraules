@@ -39,9 +39,6 @@ public:
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 
-//    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
-//    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
-
     virtual void switchStateOnOff();
 
 private:

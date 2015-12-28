@@ -16,11 +16,15 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
     gradientImage.load("./gradients/gradient4x_512x160.png");
     numGradients = 4;
 
+    setGlobalSliderHeight(10);
+    setGlobalButtonDimension(14);
+
     addSpacer();
     addLabel("RIBBON BASIC");
     addIntSlider("Number of painters", 1, 100, &numPainters);
     addIntSlider("Stroke width", 1, 10, &strokeWidth);
     addSlider("Speed", 1.01f, 10, &speed);
+    addToggle("Enable bounce", &enableBounce);
     addImageSampler("Gradient", &gradientImage);
     addIntSlider("Gradient Id", 1, 4, &gradientId);
     addIntSlider("Ribbon R", 0, 255, &colorR);

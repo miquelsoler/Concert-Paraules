@@ -22,6 +22,7 @@ public:
     unsigned int    getNumPainters()        { return (unsigned int)numPainters; }
     unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; }
     float           getSpeed()              { return speed; }
+    bool            getBounceEnabled()      { return enableBounce; }
     ofColor         getGradientColor(int id, float xPos);
     int             getGradientId()         { return gradientId; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
@@ -33,6 +34,7 @@ private:
     int     numPainters;
     int     strokeWidth;
     float   speed;
+    bool    enableBounce;
     int     colorR, colorG, colorB;
     float   divisions;
     int     pathMaxVertices;

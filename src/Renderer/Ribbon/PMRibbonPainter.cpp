@@ -24,12 +24,12 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     isNewPath = true;
 
     gui = _gui;
-    
 }
 
 void PMRibbonPainter::setup()
 {
     isNewPath = true;
+    offsetSign = 1;
 }
 
 void PMRibbonPainter::update()
@@ -135,7 +135,6 @@ void PMRibbonPainter::setPosition(int x, int y)
         isNewPath = false;
         return;
     }
-     
 }
 
 void PMRibbonPainter::setX(int x)
@@ -150,12 +149,31 @@ void PMRibbonPainter::setY(int y)
 
 void PMRibbonPainter::addOffsetToPosition(float xOffset, float yOffset)
 {
-    int newX = int(targetPos.x + xOffset);
+    bool bounces = gui->getBounceEnabled();
+
+    int newX = int(targetPos.x + (xOffset * offsetSign));
+
     if (newX > ofGetWidth() - 2)
     {
-        clear();
-        newX = 1;
+        if (!bounces) {
+            clear();
+            newX = 1;
+        } else {
+            offsetSign = -1;
+            newX = ofGetWidth() - 2;
+        }
     }
+    else if (newX < 1)
+    {
+        if (!bounces) {
+            clear();
+            newX = ofGetWidth() - 2;
+        } else {
+            offsetSign = 1;
+            newX = 1;
+        }
+    }
+
     setX(newX);
 }
 
@@ -171,10 +189,8 @@ void PMRibbonPainter::setSize(unsigned int _size)
 
 void PMRibbonPainter::clear()
 {
-    
-    cout << "ribbon painter : clear " << endl;
     path.clear();
     path = ofPolyline();
 
     isNewPath = true;
-    }
+}
