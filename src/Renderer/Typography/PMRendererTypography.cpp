@@ -21,10 +21,6 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
     {
         gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
-        
-        ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasTypoRenderer::keyPressed);
-        ofAddListener(ofEvents().keyReleased, gui, &PMUICanvasTypoRenderer::keyReleased);
-
     }
 
     // Font preload

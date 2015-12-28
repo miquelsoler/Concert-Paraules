@@ -111,10 +111,6 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
     {
         gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
-        
-        ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasColorRenderer::keyPressed,OF_EVENT_ORDER_AFTER_APP);
-        ofAddListener(ofEvents().keyReleased, gui, &PMUICanvasColorRenderer::keyReleased,OF_EVENT_ORDER_AFTER_APP);
-
     }
 
     myGUI = (PMUICanvasColorRenderer *)gui;

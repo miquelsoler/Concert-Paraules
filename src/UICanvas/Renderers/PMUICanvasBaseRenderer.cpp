@@ -116,19 +116,14 @@ int PMUICanvasBaseRenderer::getActivePreset()
     return (row * PRESETSMATRIX_NUMCOLS) + col;
 }
 
-void PMUICanvasBaseRenderer::keyPressed(ofKeyEventArgs& eventArgs )
+void PMUICanvasBaseRenderer::keyPressed(int key)
 {
-    int key = eventArgs.key;
-    
     if (key != OF_KEY_SHIFT) return;
     presetsMode = RENDERER_PRESET_SAVE;
 }
 
-void PMUICanvasBaseRenderer::keyReleased(ofKeyEventArgs& eventArgs )
+void PMUICanvasBaseRenderer::keyReleased(int key)
 {
-    int key = eventArgs.key;
-
-
     if (key == OF_KEY_SHIFT) {
         presetsMode = RENDERER_PRESET_LOAD;
         return;
