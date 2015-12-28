@@ -34,13 +34,13 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
-    int newX = int(targetPos.x + gui->getSpeed());
-    if (newX > ofGetWidth() - 2)
-    {
-        clear();
-        newX = 1;
-    }
-    setX(newX);
+//    int newX = int(targetPos.x + gui->getSpeed());
+//    if (newX > ofGetWidth() - 2)
+//    {
+//        clear();
+//        newX = 1;
+//    }
+//    setX(newX);
 
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
@@ -93,7 +93,6 @@ void PMRibbonPainter::draw()
 
 void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 {
-    
     switch (origin)
     {
         case PAINTER_LEFT:
@@ -147,6 +146,17 @@ void PMRibbonPainter::setX(int x)
 void PMRibbonPainter::setY(int y)
 {
     setPosition(int(targetPos.x), y);
+}
+
+void PMRibbonPainter::addOffsetToPosition(float xOffset, float yOffset)
+{
+    int newX = int(targetPos.x + xOffset);
+    if (newX > ofGetWidth() - 2)
+    {
+        clear();
+        newX = 1;
+    }
+    setX(newX);
 }
 
 void PMRibbonPainter::setColor(ofColor _color)

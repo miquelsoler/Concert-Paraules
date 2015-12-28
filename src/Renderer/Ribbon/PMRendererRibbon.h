@@ -21,6 +21,9 @@ public:
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
+
+    void rebuildPainters();
+
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
@@ -32,10 +35,12 @@ public:
     void strokeStarted();
     void strokeEnded();
 
-    // TODO: Remove mouse events code once audio events are working
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
+
+//    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
+//    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
 
     virtual void switchStateOnOff();
 
@@ -57,7 +62,6 @@ private:
 
     bool isSilent;
 
-    void buildPainters();
     void getGUIData();
 };
 

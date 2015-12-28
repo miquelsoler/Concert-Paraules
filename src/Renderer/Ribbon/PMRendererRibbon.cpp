@@ -21,15 +21,9 @@ typedef enum
 
 PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
 {
-    
-    // GUI
-    {
-        gui = new PMUICanvasRibbonRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "RIBBON_RENDERER",OFX_UI_FONT_MEDIUM);
-        gui->init(100, 500);
-    }
-
+    gui = new PMUICanvasRibbonRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "RIBBON_RENDERER",OFX_UI_FONT_MEDIUM);
+    gui->init(100, 500);
     myGUI = (PMUICanvasRibbonRenderer *)gui;
-    
 }
 
 void PMRendererRibbon::setup()
@@ -43,12 +37,10 @@ void PMRendererRibbon::setup()
     ribbonColorB = (unsigned int)(myGUI->getRibbonColor().b);
     divisions = myGUI->getDivisions();
 
-    buildPainters();
+    rebuildPainters();
 //    strokeStarted();
 
     isSilent = true;
- 
-    
 }
 
 void PMRendererRibbon::update()
@@ -60,6 +52,23 @@ void PMRendererRibbon::update()
     PMBaseRenderer::update(); 
 
     getGUIData();
+
+    switch(mode)
+    {
+        case 1:
+        {
+            if (!isSilent) {
+                for (int i = 0; i < numPainters; ++i)
+                    painters[i].addOffsetToPosition(myGUI->getSpeed(), 0);
+            }
+            break;
+        }
+        case 2:
+        {
+            break;
+        }
+        default: break;
+    }
 
 //    if (!isInStroke) return;
 
@@ -74,11 +83,8 @@ void PMRendererRibbon::update()
 
 void PMRendererRibbon::drawIntoFBO()
 {
-//  if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
     if ((state != RENDERERSTATE_ON) ) return;
 
-    //ofEnableSmoothing();
-    
     fbo.begin();
     {
         clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
@@ -87,6 +93,30 @@ void PMRendererRibbon::drawIntoFBO()
             painters[i].draw();
     }
     fbo.end();
+}
+
+void PMRendererRibbon::rebuildPainters()
+{
+    painters.clear();
+
+    ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);
+    float dx = ofGetWidth() / 2;
+    float dy = ofGetHeight() / 2;
+
+    for (int i=0; i<numPainters; ++i)
+    {
+        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
+        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
+        painters.push_back(painter);
+    }
+
+    isInStroke = false;
+
+    for (int i=0; i<numPainters; ++i)
+    {
+        painters[i].setup();
+        painters[i].setOrigin(PAINTER_LEFT);
+    }
 }
 
 void PMRendererRibbon::setPosition(int x, int y)
@@ -199,41 +229,47 @@ void PMRendererRibbon::mouseReleased(int x, int y, int button)
     strokeEnded();
 }
 
+//// TODO: keyPresses and keyReleases should be moved back to a base class (PMBaseRenderer or PMUICanvasBaseRenderer).
+//void PMRendererRibbon::keyPressed ( ofKeyEventArgs& eventArgs )
+//{
+//    if(state == RENDERERSTATE_ON)
+//    {
+//    }
+//}
+//
+//void PMRendererRibbon::keyReleased ( ofKeyEventArgs& eventArgs )
+//{
+//    if(state == RENDERERSTATE_ON)
+//    {
+//        int key = eventArgs.key;
+//
+//        int firstAsciiCode = (int)'1';
+//        int lastAsciiCode = (int)'9';
+//
+//        if ((key > firstAsciiCode) || (key < lastAsciiCode))
+//        {
+//            clear();
+//            return;
+//        }
+//        cout << "did we clear ?" << endl;
+//    }
+//}
+
 void PMRendererRibbon::switchStateOnOff()
 {
     PMBaseRenderer::switchStateOnOff();
     if (state == RENDERERSTATE_OFF)
     {
-        buildPainters();
-    }
-}
-
-void PMRendererRibbon::buildPainters()
-{
-    painters.clear();
-
-    ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);
-    float dx = ofGetWidth() / 2;
-    float dy = ofGetHeight() / 2;
-
-    for (int i=0; i<numPainters; ++i)
-    {
-        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
-        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
-        painters.push_back(painter);
-    }
-
-    isInStroke = false;
-
-    for (int i=0; i<numPainters; ++i)
-    {
-        painters[i].setup();
-        painters[i].setOrigin(PAINTER_LEFT);
+        rebuildPainters();
     }
 }
 
 void PMRendererRibbon::getGUIData()
 {
+    int oldMode = mode;
+    if (myGUI->getMode() != oldMode)
+        rebuildPainters();
+
     mode = myGUI->getMode();
 
     // Stroke width changed
@@ -265,7 +301,7 @@ void PMRendererRibbon::getGUIData()
         if (guiDivisions != divisions)
         {
             divisions = guiDivisions;
-            buildPainters();
+            rebuildPainters();
             return;
         }
     }
@@ -276,7 +312,7 @@ void PMRendererRibbon::getGUIData()
         if (guiNumPainters != numPainters)
         {
             numPainters = guiNumPainters;
-            buildPainters();
+            rebuildPainters();
             return;
         }
     }
