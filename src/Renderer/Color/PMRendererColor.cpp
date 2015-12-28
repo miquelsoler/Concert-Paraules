@@ -106,6 +106,8 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 //    dimmBackground = 0.5;
     scanWidth = 3;
 
+    myGUI = (PMUICanvasColorRenderer *)gui;
+
     // GUI
     {
         gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
@@ -118,7 +120,6 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
     drawingPos = 0; //ofRandomuf()*ofGetHeight();
     whichSequentialBand = -1;
 
-    myGUI = (PMUICanvasColorRenderer *)gui;
 }
 
 //--------------------------------------------------------------
@@ -519,7 +520,16 @@ void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
 {
     if(state == RENDERERSTATE_ON)
     {        
-        cout << " KEY ColorRenderer" << endl;
     }
+    
+}
+
+
+//--------------------------------------------------------------------------------
+void PMRendererColor::clear()
+{
+    PMBaseRenderer::clear();
+    
+    scanX = 0;
     
 }

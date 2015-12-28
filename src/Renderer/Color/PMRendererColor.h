@@ -30,6 +30,8 @@ public:
 
 private:
     
+    virtual void clear();
+
     
     int     scanWidth;
     

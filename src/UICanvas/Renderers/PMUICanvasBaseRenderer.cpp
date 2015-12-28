@@ -124,6 +124,7 @@ void PMUICanvasBaseRenderer::keyPressed(int key)
 
 void PMUICanvasBaseRenderer::keyReleased(int key)
 {
+    cout << "KEY in CanvasBaseRenderer ... "<< key << endl;
     if (key == OF_KEY_SHIFT) {
         presetsMode = RENDERER_PRESET_LOAD;
         return;
