@@ -47,6 +47,7 @@ private:
 
     ofPoint position;
 
+    int mode;
     unsigned int numPainters;
     unsigned int strokeWidth;
     unsigned int ribbonColorR, ribbonColorG, ribbonColorB;
@@ -57,6 +58,7 @@ private:
     bool isSilent;
 
     void buildPainters();
+    void getGUIData();
 };
 
 

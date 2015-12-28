@@ -59,56 +59,7 @@ void PMRendererRibbon::update()
     
     PMBaseRenderer::update(); 
 
- 
- 
-    if ((state != RENDERERSTATE_ON) ) return;
-
-    int mode = myGUI->getMode();
-
-    // Stroke width changed
-    {
-        unsigned int guiStrokeWidth = myGUI->getStrokeWidth();
-        if (guiStrokeWidth != strokeWidth) {
-            strokeWidth = guiStrokeWidth;
-            for (int i = 0; i < numPainters; ++i)
-                painters[i].setSize(strokeWidth);
-        }
-    }
-
-    // Ribbon color changed
-    {
-        unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
-        unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
-        unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
-
-        if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
-        {
-            for (int i=0; i<numPainters; ++i)
-                painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
-        }
-    }
-
-    // Number of divisions changed
-    {
-        float guiDivisions = myGUI->getDivisions();
-        if (guiDivisions != divisions)
-        {
-            divisions = guiDivisions;
-            buildPainters();
-            return;
-        }
-    }
-
-    // Number of painters changed
-    {
-        unsigned int guiNumPainters = myGUI->getNumPainters();
-        if (guiNumPainters != numPainters)
-        {
-            numPainters = guiNumPainters;
-            buildPainters();
-            return;
-        }
-    }
+    getGUIData();
 
 //    if (!isInStroke) return;
 
@@ -117,10 +68,8 @@ void PMRendererRibbon::update()
         for (int i=0; i<numPainters; ++i)
             painters[i].update();
     }
- 
-    
+
 //    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
-    
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -176,7 +125,6 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
     if ((state != RENDERERSTATE_ON) ) return;
 
-    int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
     float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
@@ -189,7 +137,6 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
 
     if ((state != RENDERERSTATE_ON) ) return;
 
-    int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
     float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
@@ -201,7 +148,6 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 {
     PMBaseRenderer::silenceStateChanged(silenceParams);
 
-    int mode = myGUI->getMode();
     if (mode == RM_MOUSE) return;
 
     isSilent = silenceParams.isSilent;
@@ -229,7 +175,6 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 
 void PMRendererRibbon::mouseDragged(int x, int y, int button)
 {
-    int mode = myGUI->getMode();
     if (mode != RM_MOUSE) return;
 
     if (button == OF_MOUSE_BUTTON_1)
@@ -238,7 +183,6 @@ void PMRendererRibbon::mouseDragged(int x, int y, int button)
 
 void PMRendererRibbon::mousePressed(int x, int y, int button)
 {
-    int mode = myGUI->getMode();
     if (mode != RM_MOUSE) return;
 
     if (button == OF_MOUSE_BUTTON_1)
@@ -250,7 +194,6 @@ void PMRendererRibbon::mousePressed(int x, int y, int button)
 
 void PMRendererRibbon::mouseReleased(int x, int y, int button)
 {
-    int mode = myGUI->getMode();
     if (mode != RM_MOUSE) return;
 
     strokeEnded();
@@ -286,5 +229,55 @@ void PMRendererRibbon::buildPainters()
     {
         painters[i].setup();
         painters[i].setOrigin(PAINTER_LEFT);
+    }
+}
+
+void PMRendererRibbon::getGUIData()
+{
+    mode = myGUI->getMode();
+
+    // Stroke width changed
+    {
+        unsigned int guiStrokeWidth = myGUI->getStrokeWidth();
+        if (guiStrokeWidth != strokeWidth) {
+            strokeWidth = guiStrokeWidth;
+            for (int i = 0; i < numPainters; ++i)
+                painters[i].setSize(strokeWidth);
+        }
+    }
+
+    // Ribbon color changed
+    {
+        unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
+        unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
+        unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
+
+        if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
+        {
+            for (int i=0; i<numPainters; ++i)
+                painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
+        }
+    }
+
+    // Number of divisions changed
+    {
+        float guiDivisions = myGUI->getDivisions();
+        if (guiDivisions != divisions)
+        {
+            divisions = guiDivisions;
+            buildPainters();
+            return;
+        }
+    }
+
+    // Number of painters changed
+    {
+        unsigned int guiNumPainters = myGUI->getNumPainters();
+        if (guiNumPainters != numPainters)
+        {
+            numPainters = guiNumPainters;
+            buildPainters();
+            return;
+        }
     }
 }

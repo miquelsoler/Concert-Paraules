@@ -13,11 +13,16 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
 {
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
+    gradientImage.load("./gradients/gradient4x_512x160.png");
+    numGradients = 4;
+
     addSpacer();
     addLabel("RIBBON BASIC");
     addIntSlider("Number of painters", 1, 100, &numPainters);
     addIntSlider("Stroke width", 1, 10, &strokeWidth);
     addSlider("Speed", 1.01f, 10, &speed);
+    addImageSampler("Gradient", &gradientImage);
+    addIntSlider("Gradient Id", 1, 4, &gradientId);
     addIntSlider("Ribbon R", 0, 255, &colorR);
     addIntSlider("Ribbon G", 0, 255, &colorG);
     addIntSlider("Ribbon B", 0, 255, &colorB);
@@ -43,4 +48,14 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
     PMUICanvasBaseRenderer::handleEvents(e);
 
     string name = e.getName();
+}
+
+ofColor PMUICanvasRibbonRenderer::getGradientColor(int id, float xPos)
+{
+    ofxUIImageSampler* is = (ofxUIImageSampler*)getWidget("Gradient");
+    ofPoint p = ofPoint(xPos, ((id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2)));
+
+    //cout << ofToString(((_id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2))) << endl;
+    is->setValue(p);
+    return is->getColor();
 }

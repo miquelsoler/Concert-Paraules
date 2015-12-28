@@ -62,13 +62,10 @@ void PMRibbonPainter::update()
 
         path.curveTo(dx, dy);
     }
-     
-    
 }
 
 void PMRibbonPainter::draw()
 {
-    
     if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
@@ -84,6 +81,8 @@ void PMRibbonPainter::draw()
         for (int i=0; i<vertices.size()-1; ++i)
         {
             ofSetColor(color);
+//            ofColor color = gui->getGradientColor(gui->getGradientId(), )
+//            ofSetColor(color);
             ofDrawLine(vertices[i], vertices[i+1]);
         }
     }
@@ -128,7 +127,6 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
 
 void PMRibbonPainter::setPosition(int x, int y)
 {
-    
     targetPos = ofPoint(x, y);
 
     if (isNewPath)

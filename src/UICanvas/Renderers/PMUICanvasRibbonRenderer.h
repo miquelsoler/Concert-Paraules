@@ -22,6 +22,8 @@ public:
     unsigned int    getNumPainters()        { return (unsigned int)numPainters; }
     unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; }
     float           getSpeed()              { return speed; }
+    ofColor         getGradientColor(int id, float xPos);
+    int             getGradientId()         { return gradientId; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
     float           getDivisions()          { return divisions; }
     int             getPathNumVertices()    { return pathMaxVertices; }
