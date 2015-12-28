@@ -24,8 +24,6 @@ void PMBaseRenderer::setup()
     fbo.end();
 
     state = RENDERERSTATE_OFF;
-
-    ofAddListener(ofEvents().keyPressed, this, &PMBaseRenderer::keyPressed);
 }
 
 void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
@@ -166,29 +164,4 @@ void PMBaseRenderer::pauseStateChanged(pauseParams &pauseParams)
 ofColor PMBaseRenderer::getBackgroundColor()
 {
     return gui->getBackgroundColor();
-}
-
-void PMBaseRenderer::keyPressed ( ofKeyEventArgs& eventArgs )
-{
-    if(state == RENDERERSTATE_ON)
-    {
-        cout << "KEY in BaseRenderer" << endl;
-    
-        if(eventArgs.key=='x')
-        {
-            setNeedsToBeCleared(true);
-        }
-        
-        //gui->keyPressed(eventArgs);
-    }
-
-}
-
-void PMBaseRenderer::keyReleased ( ofKeyEventArgs& eventArgs )
-{
-    if(state == RENDERERSTATE_ON)
-    {
-        //gui->keyReleased(eventArgs);
-    }
-    
 }

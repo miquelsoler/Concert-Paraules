@@ -47,10 +47,6 @@ public:
     virtual void mousePressed(int x, int y, int button) {};
     virtual void mouseReleased(int x, int y, int button) {};
     
-    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
-    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
-
-    
     // SETTERS
     void setState(PMRendererState newState);
     virtual void switchStateOnOff();
