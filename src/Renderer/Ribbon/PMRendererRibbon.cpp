@@ -267,8 +267,6 @@ void PMRendererRibbon::switchStateOnOff()
 
 void PMRendererRibbon::buildPainters()
 {
-    
-    cout << "render Ribbon : building painters..." << endl;
     painters.clear();
 
     ofColor ribbonColor(ribbonColorR, ribbonColorG, ribbonColorB, 255);
@@ -289,5 +287,4 @@ void PMRendererRibbon::buildPainters()
         painters[i].setup();
         painters[i].setOrigin(PAINTER_LEFT);
     }
-     
 }

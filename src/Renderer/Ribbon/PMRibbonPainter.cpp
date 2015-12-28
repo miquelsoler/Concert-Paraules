@@ -6,7 +6,6 @@
 
 static const float MIN_ORIGIN = 0.2f;
 static const float MAX_ORIGIN = 0.8f;
-static const float PAINTER_SPEED = 5.0;
 
 #define DRAW_PATH false
 
@@ -35,7 +34,7 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
-    int newX = int(targetPos.x + PAINTER_SPEED);
+    int newX = int(targetPos.x + gui->getSpeed());
     if (newX > ofGetWidth() - 2)
     {
         clear();

@@ -19,19 +19,21 @@ public:
 
     virtual void handleEvents(ofxUIEventArgs &e);
 
-    unsigned int    getNumPainters()        { return (unsigned int)numPainters; };
-    unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; };
-    ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); };
-    float           getDivisions()          { return divisions; };
-    int             getPathNumVertices()    { return pathMaxVertices; };
+    unsigned int    getNumPainters()        { return (unsigned int)numPainters; }
+    unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; }
+    float           getSpeed()              { return speed; }
+    ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
+    float           getDivisions()          { return divisions; }
+    int             getPathNumVertices()    { return pathMaxVertices; }
 
 private:
 
-    int numPainters;
-    int strokeWidth;
-    int colorR, colorG, colorB;
-    float divisions;
-    int pathMaxVertices;
+    int     numPainters;
+    int     strokeWidth;
+    float   speed;
+    int     colorR, colorG, colorB;
+    float   divisions;
+    int     pathMaxVertices;
 
     ofImage     gradientImage;
     int         gradientId;

@@ -17,6 +17,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
     addLabel("RIBBON BASIC");
     addIntSlider("Number of painters", 1, 100, &numPainters);
     addIntSlider("Stroke width", 1, 10, &strokeWidth);
+    addSlider("Speed", 1.01f, 10, &speed);
     addIntSlider("Ribbon R", 0, 255, &colorR);
     addIntSlider("Ribbon G", 0, 255, &colorG);
     addIntSlider("Ribbon B", 0, 255, &colorB);
