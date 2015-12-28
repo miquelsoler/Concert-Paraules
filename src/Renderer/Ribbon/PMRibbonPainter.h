@@ -44,12 +44,13 @@ private:
     float ease;
     unsigned int size;
 
-    int offsetSign;
+    ofPolyline path;
 
     ofPoint targetPos;
-
-    ofPolyline path;
+    int xMin, xMax, yMin, yMax;
     ofColor color;
+    PMPainterOrigin origin;
+    int offsetSign;
 
     bool isNewPath;
 

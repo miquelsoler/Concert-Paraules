@@ -27,6 +27,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
     addToggle("Enable bounce", &enableBounce);
     addImageSampler("Gradient", &gradientImage);
     addIntSlider("Gradient Id", 1, 4, &gradientId);
+    addIntSlider("Gradient Speed", 1, 500, &gradientSpeed);
     addIntSlider("Ribbon R", 0, 255, &colorR);
     addIntSlider("Ribbon G", 0, 255, &colorG);
     addIntSlider("Ribbon B", 0, 255, &colorB);

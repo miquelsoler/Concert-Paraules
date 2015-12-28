@@ -25,6 +25,7 @@ public:
     bool            getBounceEnabled()      { return enableBounce; }
     ofColor         getGradientColor(int id, float xPos);
     int             getGradientId()         { return gradientId; }
+    int             getGradientSpeed()      { return gradientSpeed; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
     float           getDivisions()          { return divisions; }
     int             getPathNumVertices()    { return pathMaxVertices; }
@@ -41,6 +42,7 @@ private:
 
     ofImage     gradientImage;
     int         gradientId;
+    int         gradientSpeed;
     int         numGradients;
 };
 

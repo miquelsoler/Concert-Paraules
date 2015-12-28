@@ -41,6 +41,8 @@ void PMRendererRibbon::setup()
 //    strokeStarted();
 
     isSilent = true;
+    gradientPosition = 0.0;
+    gradientReverse = false;
 }
 
 void PMRendererRibbon::update()
@@ -55,18 +57,8 @@ void PMRendererRibbon::update()
 
     switch(mode)
     {
-        case 1:
-        {
-            if (!isSilent) {
-                for (int i = 0; i < numPainters; ++i)
-                    painters[i].addOffsetToPosition(myGUI->getSpeed(), 0);
-            }
-            break;
-        }
-        case 2:
-        {
-            break;
-        }
+        case 1: updateMode1(); break;
+        case 2: updateMode2(); break;
         default: break;
     }
 
@@ -79,6 +71,43 @@ void PMRendererRibbon::update()
     }
 
 //    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
+}
+
+void PMRendererRibbon::updateMode1()
+{
+    if (!isSilent)
+    {
+        for (int i = 0; i < numPainters; ++i) {
+            painters[i].addOffsetToPosition(myGUI->getSpeed(), 0);
+        }
+    }
+}
+
+void PMRendererRibbon::updateMode2()
+{
+    if (!isSilent)
+    {
+        float gradientSpeed = float(myGUI->getGradientSpeed()) / 10000.0f;
+        float gradientSign = (gradientReverse ? -1 : 1);
+        gradientPosition = gradientPosition + (gradientSign * gradientSpeed);
+
+        if (gradientPosition > 1.0f)
+        {
+            gradientReverse = true;
+            gradientPosition = 1.0f;
+        }
+        else if (gradientPosition < 0.0f)
+        {
+            gradientReverse = false;
+            gradientPosition = 0.0f;
+        }
+
+        for (int i = 0; i < numPainters; ++i) {
+            painters[i].addOffsetToPosition(myGUI->getSpeed(), 0);
+            ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
+            painters[i].setColor(color);
+        }
+    }
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -258,14 +287,30 @@ void PMRendererRibbon::getGUIData()
 
     // Ribbon color changed
     {
-        unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
-        unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
-        unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
-
-        if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
+        switch(mode)
         {
-            for (int i=0; i<numPainters; ++i)
-                painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
+            case 1:
+            case 10:
+            {
+                unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
+                unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
+                unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
+
+                if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
+                {
+                    for (int i=0; i<numPainters; ++i)
+                        painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
+                }
+                break;
+            }
+            case 2:
+            {
+                ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), 0.1);
+                for (int i=0; i<numPainters; ++i)
+                    painters[i].setColor(color);
+                break;
+            }
+            default: break;
         }
     }
 

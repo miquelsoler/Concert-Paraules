@@ -4,8 +4,7 @@
 
 #include "PMRibbonPainter.h"
 
-static const float MIN_ORIGIN = 0.2f;
-static const float MAX_ORIGIN = 0.8f;
+static const int POS_MARGIN = 1;
 
 #define DRAW_PATH false
 
@@ -24,6 +23,11 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     isNewPath = true;
 
     gui = _gui;
+
+    xMin = POS_MARGIN;
+    xMax = ofGetWidth() - POS_MARGIN - 1;
+    yMin = POS_MARGIN;
+    yMax = ofGetHeight() - POS_MARGIN - 1;
 }
 
 void PMRibbonPainter::setup()
@@ -34,14 +38,6 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
-//    int newX = int(targetPos.x + gui->getSpeed());
-//    if (newX > ofGetWidth() - 2)
-//    {
-//        clear();
-//        newX = 1;
-//    }
-//    setX(newX);
-
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
         if (isNewPath) return;
@@ -91,32 +87,34 @@ void PMRibbonPainter::draw()
      
 }
 
-void PMRibbonPainter::setOrigin(PMPainterOrigin origin)
+void PMRibbonPainter::setOrigin(PMPainterOrigin _origin)
 {
+    origin = _origin;
+
     switch (origin)
     {
         case PAINTER_LEFT:
         {
-            setX(1);
+            setX(xMin);
             setY(ofGetHeight() / 2);
             break;
         }
         case PAINTER_RIGHT:
         {
-            setX(ofGetWidth() - 2);
+            setX(xMax);
             setY(ofGetHeight() / 2);
             break;
         }
         case PAINTER_UP:
         {
             setX(ofGetWidth() / 2);
-            setY(1);
+            setY(yMin);
             break;
         }
         case PAINTER_DOWN:
         {
             setX(ofGetWidth() / 2);
-            setY(ofGetHeight()-2);
+            setY(yMax);
             break;
         }
         default: break;
@@ -151,30 +149,59 @@ void PMRibbonPainter::addOffsetToPosition(float xOffset, float yOffset)
 {
     bool bounces = gui->getBounceEnabled();
 
-    int newX = int(targetPos.x + (xOffset * offsetSign));
-
-    if (newX > ofGetWidth() - 2)
+    // X offset
     {
-        if (!bounces) {
-            clear();
-            newX = 1;
-        } else {
-            offsetSign = -1;
-            newX = ofGetWidth() - 2;
+        int newX = int(targetPos.x + (xOffset * offsetSign));
+        if (newX > xMax)
+        {
+            if (!bounces) {
+                clear();
+                newX = xMin;
+            } else {
+                offsetSign = -1;
+                newX = xMax;
+            }
         }
-    }
-    else if (newX < 1)
-    {
-        if (!bounces) {
-            clear();
-            newX = ofGetWidth() - 2;
-        } else {
-            offsetSign = 1;
-            newX = 1;
+        else if (newX < xMin)
+        {
+            if (!bounces) {
+                clear();
+                newX = xMax;
+            } else {
+                offsetSign = 1;
+                newX = xMin;
+            }
         }
+
+        setX(newX);
     }
 
-    setX(newX);
+    // Y offset
+    {
+        int newY = int(targetPos.y + (yOffset * offsetSign));
+        if (newY > yMax)
+        {
+            if (!bounces) {
+                clear();
+                newY = yMin;
+            } else {
+                offsetSign = -1;
+                newY = yMax;
+            }
+        }
+        else if (newY < 1)
+        {
+            if (!bounces) {
+                clear();
+                newY = yMax;
+            } else {
+                offsetSign = 1;
+                newY = yMin;
+            }
+        }
+
+        setY(newY);
+    }
 }
 
 void PMRibbonPainter::setColor(ofColor _color)

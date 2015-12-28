@@ -20,6 +20,8 @@ public:
 
     virtual void setup();
     virtual void update();
+    void updateMode1();
+    void updateMode2();
     virtual void drawIntoFBO();
 
     void rebuildPainters();
@@ -53,6 +55,8 @@ private:
     unsigned int numPainters;
     unsigned int strokeWidth;
     unsigned int ribbonColorR, ribbonColorG, ribbonColorB;
+    float gradientPosition;
+    bool gradientReverse;
     float divisions;
 
     bool isInStroke;
