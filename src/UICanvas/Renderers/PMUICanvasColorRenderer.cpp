@@ -12,7 +12,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 {
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
-    gradientImage.load("./gradients/test4x_v1.png");
+    gradientImage.load("./gradients/gradient4x_512x160.png");
     
     guiHorizontalVerticalProbability = 0.5;
     guiRandomOrSequential = false;

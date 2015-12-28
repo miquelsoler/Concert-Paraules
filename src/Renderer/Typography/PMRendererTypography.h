@@ -20,11 +20,12 @@ class PMRendererTypography : public PMBaseRenderer
 public:
 
     PMRendererTypography();
+    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
+    virtual void keyReleased ( ofKeyEventArgs& eventArgs );
 
     virtual void setup();
     virtual void update();
     virtual void drawIntoFBO();
-    virtual void keyPressed ( ofKeyEventArgs& eventArgs );
     virtual void pitchChanged(pitchParams pitchParams);
     virtual void energyChanged(energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
@@ -72,6 +73,7 @@ private:
 
     float                               timeForNextLetter;
     float                               lastPitchReceived;
+    
 };
 
 

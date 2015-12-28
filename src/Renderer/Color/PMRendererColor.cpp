@@ -106,19 +106,24 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 //    dimmBackground = 0.5;
     scanWidth = 3;
 
+
     // GUI
     {
         gui = new PMUICanvasColorRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "COLOR_RENDERER",OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
         
+        ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasColorRenderer::keyPressed,OF_EVENT_ORDER_AFTER_APP);
+        ofAddListener(ofEvents().keyReleased, gui, &PMUICanvasColorRenderer::keyReleased,OF_EVENT_ORDER_AFTER_APP);
+
     }
+
+    myGUI = (PMUICanvasColorRenderer *)gui;
     
     // NEW STUFF
     drawingHeight = 50 + (ofRandomuf()*ofGetHeight()/4);
     drawingPos = 0; //ofRandomuf()*ofGetHeight();
     whichSequentialBand = -1;
 
-    myGUI = (PMUICanvasColorRenderer *)gui;
 }
 
 //--------------------------------------------------------------
@@ -509,7 +514,8 @@ void PMRendererColor::drawIntoFBO()
     fbo.end();
 
     ofSetColor(255, 255, 255, 255);
-    
+
+    //cout << "Drawing...  Pos = " << drawingPos << " :::: whichSeqBand ? = " << whichSequentialBand << endl;
     
 // Miquel: commented because it's already done in PMBaseRenderer::draw()
 //    fbo.draw(0, 0);
@@ -519,7 +525,53 @@ void PMRendererColor::keyPressed ( ofKeyEventArgs& eventArgs )
 {
     if(state == RENDERERSTATE_ON)
     {        
-        cout << " KEY ColorRenderer" << endl;
     }
+    
+}
+//--------------------------------------------------------------------------------
+void PMRendererColor::keyReleased ( ofKeyEventArgs& eventArgs )
+{
+    if(state == RENDERERSTATE_ON)
+    {
+        int key = eventArgs.key;
+        
+        int firstAsciiCode = (int)'1';
+        int lastAsciiCode = (int)'9';
+        
+        if ((key > firstAsciiCode) || (key < lastAsciiCode))
+        {
+            clear();
+            return;
+            cout << "clearing?" << endl;
+        }
+        cout << "did we clear ?" << endl;
+ 
+    }
+    
+}
+
+
+//--------------------------------------------------------------------------------
+void PMRendererColor::clear()
+{
+    PMBaseRenderer::clear();
+
+    startNewBand();
+    
+    if((myGUI->getDrawHorizontal()==false) && (myGUI->getLeftToRight()==false) )
+    {
+        drawingPos  = ofGetWidth();
+        whichSequentialBand = myGUI->getResolutionX()-1;
+        cout << "A :: " << endl;
+    }
+    else if(myGUI->getDrawHorizontal() && (myGUI->getLeftToRight()==true) )
+    {
+        drawingPos  = 0;
+        whichSequentialBand = 0;
+        cout << "B :: " << endl;
+    }
+    scanX       = 0;
+
+    cout << "ScanX = " << scanX <<  " ___ D Pos = " << drawingPos <<endl;
     
 }

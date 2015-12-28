@@ -26,6 +26,13 @@ void PMBaseRenderer::setup()
     state = RENDERERSTATE_OFF;
     
     ofAddListener(ofEvents().keyPressed, this, &PMBaseRenderer::keyPressed);
+    ofAddListener(ofEvents().keyPressed, this, &PMBaseRenderer::keyReleased);
+
+    //ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasBaseRenderer::keyPressed);
+    //ofAddListener(ofEvents().keyPressed, gui, &PMUICanvasBaseRenderer::keyReleased);
+    
+    
+    
 }
 
 void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
@@ -178,6 +185,17 @@ void PMBaseRenderer::keyPressed ( ofKeyEventArgs& eventArgs )
         {
             setNeedsToBeCleared(true);
         }
+        
+        //gui->keyPressed(eventArgs);
     }
 
+}
+
+void PMBaseRenderer::keyReleased ( ofKeyEventArgs& eventArgs )
+{
+    if(state == RENDERERSTATE_ON)
+    {
+        //gui->keyReleased(eventArgs);
+    }
+    
 }
