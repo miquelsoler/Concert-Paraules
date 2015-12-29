@@ -23,6 +23,7 @@ public:
     void updateMode1();
     void updateMode2();
     void updateMode3();
+    void updateMode4();
     virtual void drawIntoFBO();
 
     void rebuildPainters();
@@ -68,6 +69,8 @@ private:
 
     void addOffsetToPosition(float xOffset, float yOffset, bool *didReachBorder);
     void getGUIData();
+    
+    float oldY;
 };
 
 

@@ -37,6 +37,7 @@ public:
 
     ofPoint *getTargetPos() { return &targetPos; }
 
+
 private:
 
     float dx, dy;

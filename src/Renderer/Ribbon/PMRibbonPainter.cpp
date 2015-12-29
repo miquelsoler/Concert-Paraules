@@ -28,6 +28,8 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     xMax = ofGetWidth() - POS_MARGIN - 1;
     yMin = POS_MARGIN;
     yMax = ofGetHeight() - POS_MARGIN - 1;
+    
+
 }
 
 void PMRibbonPainter::setup()
@@ -46,13 +48,18 @@ void PMRibbonPainter::update()
 
         // Clean-up path vertices in case its size is higher than the allowed maximum.
         {
-            int maxNumVertices = gui->getPathNumVertices();
-            vector<ofPoint> vertices = path.getVertices();
-            if (vertices.size() > maxNumVertices)
-            {
-                path.clear();
-                path.addVertex(vertices[vertices.size()-1]);
-            }
+//            int maxNumVertices = gui->getPathNumVertices();
+//            vector<ofPoint> vertices = path.getVertices();
+//            //if (vertices.size() > maxNumVertices)
+//            if(false)
+//            {
+//                path.clear();
+//                path.addVertex(vertices[vertices.size()-1]);
+//            }
+//            cout << "Ribbon Clear // vSize = " << vertices.size() << "  __ maxNum " << maxNumVertices;
+            
+            
+            
         }
 
         path.curveTo(dx, dy);
@@ -73,12 +80,27 @@ void PMRibbonPainter::draw()
     vector<ofPoint> vertices = path.getVertices();
     if (vertices.size() > 1)
     {
+        glPointSize(10);
+        glBegin(GL_POINTS);
         for (int i=0; i<vertices.size()-1; ++i)
         {
+            ofDrawLine(vertices[i], vertices[i+1]);
             ofSetColor(color);
+            glVertex2f(vertices[i].x,vertices[i].y);
+        }
+        glEnd();
+        
+        ofSetColor(255,0,0);
+        for (int i=0; i<vertices.size()-1; ++i)
+        {
             ofDrawLine(vertices[i], vertices[i+1]);
         }
+        path.clear();
+        path.addVertex(vertices[vertices.size()-1]);
     }
+    
+    
+    
 #endif
     ofDisableBlendMode();
      

@@ -144,7 +144,6 @@ void PMBaseRenderer::energyChanged(energyParams energyParams)
     float smoothedEnergy = (deltaEnergy) * currentEnergy + (1.0 - deltaEnergy) * oldEnergy;
 
     gui->setSmoothEnergy(ofMap(smoothedEnergy, gui->getEnergyMin(), gui->getEnergyMax(), 0.0, 1.0, true));
-
     oldEnergy = smoothedEnergy;
 }
 

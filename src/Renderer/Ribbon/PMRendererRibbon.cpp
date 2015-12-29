@@ -71,6 +71,7 @@ void PMRendererRibbon::update()
             case 1: updateMode1(); break;
             case 2: updateMode2(); break;
             case 3: updateMode3(); break;
+            case 4: updateMode4(); break;
             default: break;
         }
     }
@@ -93,6 +94,7 @@ void PMRendererRibbon::updateMode1()
     Color is chosen via GUI
 */
     bool didReachBorder;
+    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0, &didReachBorder);
     addOffsetToPosition(myGUI->getSpeed(), 0, &didReachBorder);
 }
 
@@ -158,6 +160,16 @@ void PMRendererRibbon::updateMode3()
     }
 }
 
+void PMRendererRibbon::updateMode4()
+{
+    /*
+     Moves right or left
+     Color is chosen via GUI
+     */
+    bool didReachBorder;
+    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0, &didReachBorder);
+}
+
 void PMRendererRibbon::drawIntoFBO()
 {
     if ((state != RENDERERSTATE_ON) ) return;
@@ -211,7 +223,9 @@ void PMRendererRibbon::setX(int x)
 void PMRendererRibbon::setY(int y)
 {
     for (int i=0; i<numPainters; ++i)
-        painters[i].setY(y);
+    {
+        painters[i].setY(y);        
+    }
 }
 
 void PMRendererRibbon::strokeStarted()
@@ -234,8 +248,12 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
     if (mode == RM_MOUSE) return;
 
+    if(gui->getSmoothedEnergy()<0.15) return;
+    
     float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
+
     setY(int(y));
+
 }
 
 void PMRendererRibbon::energyChanged(energyParams energyParams)

@@ -34,8 +34,9 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
 
     addSpacer();
     addLabel("RIBBON ADVANCED");
-    addSlider("Divisions", 0.01, 0.5, &divisions);
-    addIntSlider("Path Max vertices", 50, 500, &pathMaxVertices);
+    addSlider("Divisions", 0.001, 4.5, &divisions);
+    addSlider("Ease", 0.001, 10.0, &ease);
+    addIntSlider("Path Max vertices",3, 4000, &pathMaxVertices);
 
     if (autosize) autoSizeToFitWidgets();
 

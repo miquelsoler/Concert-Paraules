@@ -28,6 +28,7 @@ public:
     int             getGradientSpeed()      { return gradientSpeed; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
     float           getDivisions()          { return divisions; }
+    float           getEase()               { return ease; }
     int             getPathNumVertices()    { return pathMaxVertices; }
 
 private:
@@ -38,6 +39,7 @@ private:
     bool    enableBounce;
     int     colorR, colorG, colorB;
     float   divisions;
+    float   ease;
     int     pathMaxVertices;
 
     ofImage     gradientImage;
