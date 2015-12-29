@@ -59,11 +59,11 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
         addSpacer();
         addLabel(STR_BRUSH_COLORMODE);
 
-//        vector<string> colorModesNames;
-//        colorModesNames.push_back(STR_BRUSH_COLORMODE_MFIXEDCOLOR);
-//        colorModesNames.push_back(STR_BRUSH_COLORMODE_MGRSPEED);
-//        colorModesNames.push_back(STR_BRUSH_COLORMODE_MGREDGES);
-//    addRadio
+        vector<string> colorModesNames;
+        colorModesNames.push_back(STR_BRUSH_COLORMODE_MFIXEDCOLOR);
+        colorModesNames.push_back(STR_BRUSH_COLORMODE_MGRSPEED);
+        colorModesNames.push_back(STR_BRUSH_COLORMODE_MGREDGES);
+        addRadio(STR_BRUSH_COLORMODE, colorModesNames, OFX_UI_ORIENTATION_VERTICAL);
 
         addImageSampler(STR_BRUSH_COLORMODE_GRIMAGE, &gradientImage);
         addIntSlider(STR_BRUSH_COLORMODE_GRID, 1, 4, &gradientId);
@@ -89,6 +89,11 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
     PMUICanvasBaseRenderer::handleEvents(e);
 
     string name = e.getName();
+
+    if (name == STR_BRUSH_COLORMODE)
+    {
+        cout << "Changed color mode toggle" << endl;
+    }
 }
 
 ofColor PMUICanvasRibbonRenderer::getGradientColor(int id, float xPos)
