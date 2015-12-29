@@ -31,35 +31,44 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     guiPitchMax = 96;
     guiEnergyMin = 0.1;
     guiEnergyMax = 0.9;
-    
-    addLabel(STR_PRESETS);
-    addLabel(STR_PRESETS_INFO, OFX_UI_FONT_SMALL);
-    setGlobalButtonDimension(32);
-    presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS);
-    presetsMatrix->setAllowMultiple(false);
-    presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
-    addSpacer();
 
-    addLabel("BACKGROUND");
-    addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
-    addIntSlider("Background R", 0, 255, &guiColorBgRed);
-    addIntSlider("Background G", 0, 255, &guiColorBgGreen);
-    addIntSlider("Background B", 0, 255, &guiColorBgBlue);
-    addSpacer();
+    { // Presets
+        addLabel(STR_PRESETS);
+        addLabel(STR_PRESETS_INFO, OFX_UI_FONT_SMALL);
+        setGlobalButtonDimension(32);
+        presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS);
+        presetsMatrix->setAllowMultiple(false);
+        presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
+    }
 
-    addLabel("ENERGY");
-    addRangeSlider("Energy Min-Max",0.0,1.0,&guiEnergyMin,&guiEnergyMax);
-    addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
-    addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
-    addSpacer();
+    { // Bg color
+        addSpacer(); addSpacer();
+        addLabel("BACKGROUND");
+        addNumberDialer("Fade Background", 0.0,1.0,&guiFadeBackground,4);
+        addIntSlider("Background R", 0, 255, &guiColorBgRed);
+        addIntSlider("Background G", 0, 255, &guiColorBgGreen);
+        addIntSlider("Background B", 0, 255, &guiColorBgBlue);
+    }
 
-    addLabel("PITCH");
-    addRangeSlider("Pitch Min-Max",0.0,127.0,&guiPitchMin,&guiPitchMax);
-    addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
-    addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
+    { // Audio
+        addSpacer(); addSpacer();
+        addLabel("AUDIO ENERGY");
+        addRangeSlider("Energy Min-Max",0.0,1.0,&guiEnergyMin,&guiEnergyMax);
+        addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
+        addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
 
-    addSpacer();
-    addIntSlider("Mode",1,10,&guiMode);
+        addSpacer();
+        addLabel("AUDIO PITCH");
+        addRangeSlider("Pitch Min-Max",0.0,127.0,&guiPitchMin,&guiPitchMax);
+        addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
+        addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
+    }
+
+    { // Mode
+        addSpacer(); addSpacer();
+        addIntSlider("MODE",1,10,&guiMode);
+    }
+
     addSpacer();
 
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
