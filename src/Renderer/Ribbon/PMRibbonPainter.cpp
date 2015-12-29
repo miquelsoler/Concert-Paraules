@@ -80,26 +80,26 @@ void PMRibbonPainter::draw()
     vector<ofPoint> vertices = path.getVertices();
     if (vertices.size() > 1)
     {
-        glPointSize(10);
-        glBegin(GL_POINTS);
+//        glPointSize(10);
+        glPointSize(size);
         for (int i=0; i<vertices.size()-1; ++i)
         {
             ofDrawLine(vertices[i], vertices[i+1]);
-            ofSetColor(color);
+//            ofSetColor(color);
+            glBegin(GL_POINTS);
             glVertex2f(vertices[i].x,vertices[i].y);
+            glEnd();
         }
-        glEnd();
-        
-        ofSetColor(255,0,0);
-        for (int i=0; i<vertices.size()-1; ++i)
-        {
-            ofDrawLine(vertices[i], vertices[i+1]);
-        }
+
+//        ofSetColor(255,0,0);
+//        ofSetColor(color);
+//        for (int i=0; i<vertices.size()-1; ++i)
+//        {
+//            ofDrawLine(vertices[i], vertices[i+1]);
+//        }
         path.clear();
         path.addVertex(vertices[vertices.size()-1]);
     }
-    
-    
     
 #endif
     ofDisableBlendMode();

@@ -280,19 +280,19 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
     if (state != RENDERERSTATE_ON)
     {
 //        cout << "End stroke (state not ON)" << endl;
-        strokeEnded();
+//        strokeEnded();
         return;
     }
 
     if (!(silenceParams.isSilent))
     {
 //        cout << "Start stroke (silence stopped)" << endl;
-        strokeStarted();
+//        strokeStarted();
     }
     else
     {
 //        cout << "End stroke (new silence)" << endl;
-        strokeEnded();
+//        strokeEnded();
     }
 }
 
