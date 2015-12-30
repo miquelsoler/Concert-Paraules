@@ -91,6 +91,14 @@ void PMUICanvasRibbonRenderer::loadPreset(int presetNumber)
     ofxUIRadio *colorModeRadio = (ofxUIRadio *)getWidget(STR_BRUSH_COLORMODE);
     colorMode = (RibbonColorMode)(colorModeRadio->getValue());
 
+    ofxUIIntSlider *slColorR = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_R);
+    colorR = slColorR->getValue();
+    ofxUIIntSlider *slColorG = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_G);
+    colorG = slColorG->getValue();
+    ofxUIIntSlider *slColorB = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_B);
+    colorB = slColorB->getValue();
+
+
     cout << "Loaded preset " << presetNumber << ": CM=" << colorMode << endl;
 }
 
@@ -105,6 +113,13 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
     {
         ofxUIRadio *colorModeRadio = (ofxUIRadio *)(e.widget);
         colorMode = (RibbonColorMode)(colorModeRadio->getValue());
+
+        ofxUIIntSlider *slColorR = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_R);
+        colorR = slColorR->getValue();
+        ofxUIIntSlider *slColorG = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_G);
+        colorG = slColorG->getValue();
+        ofxUIIntSlider *slColorB = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_B);
+        colorB = slColorB->getValue();
 
         cout << "Event: CM=" << colorMode << endl;
     }

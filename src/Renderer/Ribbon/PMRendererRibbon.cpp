@@ -312,17 +312,11 @@ void PMRendererRibbon::getGUIData()
         {
             case RCM_Fixed:
             {
-                unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
-                unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
-                unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
-                if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB)) {
-                    ribbonColorR = guiRibbonColorR;
-                    ribbonColorG = guiRibbonColorG;
-                    ribbonColorB = guiRibbonColorB;
-                    cout << ribbonColorR<<","<<ribbonColorG<<","<<ribbonColorB<<endl;
-                    for (int i=0; i<numPainters; ++i)
-                        painters[i].setColor(ofColor(ribbonColorR, ribbonColorG, ribbonColorB, 255));
-                }
+                ribbonColorR = myGUI->getRibbonColor().r;
+                ribbonColorG = myGUI->getRibbonColor().g;
+                ribbonColorB = myGUI->getRibbonColor().b;
+                for (int i=0; i<numPainters; ++i)
+                    painters[i].setColor(ofColor(ribbonColorR, ribbonColorG, ribbonColorB, 255));
                 break;
             }
             case RCM_GradientSpeed:
@@ -338,8 +332,8 @@ void PMRendererRibbon::getGUIData()
                     gradientReverse = false;
                     gradientPosition = 0.0f;
                 }
+                ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
                 for (int i = 0; i < numPainters; ++i) {
-                    ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
                     painters[i].setColor(color);
                 }
                 break;
