@@ -9,7 +9,6 @@ static const int NUM_GRADIENT_COLORS = 5;
 
 typedef enum
 {
-    RM_0 = 0,
     RM_1 = 1,
     RM_2 = 2,
     RM_3 = 3,
@@ -68,10 +67,14 @@ void PMRendererRibbon::update()
     {
         switch(mode)
         {
-            case 1: updateMode1(); break;
-            case 2: updateMode2(); break;
-            case 3: updateMode3(); break;
-            case 4: updateMode4(); break;
+            case 1: { // Left-right movement
+                addOffsetToPosition(myGUI->getSpeed(), 0);
+                break;
+            }
+            case 2: { // Up-down movement
+                addOffsetToPosition(0, myGUI->getSpeed());
+                break;
+            }
             default: break;
         }
     }
@@ -83,46 +86,6 @@ void PMRendererRibbon::update()
         for (int i=0; i<numPainters; ++i)
             painters[i].update();
     }
-
-//    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
-}
-
-void PMRendererRibbon::updateMode1()
-{
-/*
-    Moves right or left
-    Color is chosen via GUI
-*/
-    addOffsetToPosition(myGUI->getSpeed(), 0);
-}
-
-void PMRendererRibbon::updateMode2()
-{
-/*
-    Moves right or left
-    Color is changed automatically by using GUI gradient speed
-*/
-
-    addOffsetToPosition(myGUI->getSpeed(), 0);
-}
-
-void PMRendererRibbon::updateMode3()
-{
-/*
-    Moves right or left
-    Color is changed automatically once the painter bounces
-*/
-
-    addOffsetToPosition(myGUI->getSpeed(), 0);
-}
-
-void PMRendererRibbon::updateMode4()
-{
-    /*
-     Moves right or left
-     Color is chosen via GUI
-     */
-    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0);
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -156,10 +119,18 @@ void PMRendererRibbon::rebuildPainters()
 
     isInStroke = false;
 
+    PMPainterOrigin origin;
+    switch(mode)
+    {
+        case 1:     origin = PAINTER_LEFT; break;
+        case 2:     origin = PAINTER_UP; break;
+        default:    origin = PAINTER_LEFT; break;
+    }
+
     for (int i=0; i<numPainters; ++i)
     {
         painters[i].setup();
-        painters[i].setOrigin(PAINTER_LEFT);
+        painters[i].setOrigin(origin);
     }
 }
 
@@ -200,14 +171,24 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
     PMBaseRenderer::pitchChanged(pitchParams);
 
     if ((state != RENDERERSTATE_ON) ) return;
-
     if (mode == RM_MOUSE) return;
 
     if(gui->getSmoothedEnergy()<0.15) return;
-    
-    float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
 
-    setY(int(y));
+    switch(mode)
+    {
+        case 1: { // Left-right movement
+            float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
+            setY(int(y));
+            break;
+        }
+        case 2: { // Up-down movement
+            float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetWidth()-1, 1, true);
+            setX(int(x));
+            break;
+        }
+        default: break;
+    }
 
 }
 
@@ -234,21 +215,16 @@ void PMRendererRibbon::silenceStateChanged(silenceParams &silenceParams)
 
     if (state != RENDERERSTATE_ON)
     {
-//        cout << "End stroke (state not ON)" << endl;
 //        strokeEnded();
         return;
     }
 
+/*
     if (!(silenceParams.isSilent))
-    {
-//        cout << "Start stroke (silence stopped)" << endl;
-//        strokeStarted();
-    }
+        strokeStarted();
     else
-    {
-//        cout << "End stroke (new silence)" << endl;
-//        strokeEnded();
-    }
+        strokeEnded();
+*/
 }
 
 // TODO: Remove mouse events code once audio events are working

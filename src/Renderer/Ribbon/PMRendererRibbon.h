@@ -20,10 +20,6 @@ public:
 
     virtual void setup();
     virtual void update();
-    void updateMode1();
-    void updateMode2();
-    void updateMode3();
-    void updateMode4();
     virtual void drawIntoFBO();
 
     void rebuildPainters();
