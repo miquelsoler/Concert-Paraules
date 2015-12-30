@@ -149,7 +149,8 @@ void PMScene2::setup()
     vector<PMDeviceAudioAnalyzer* > aavec=*PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate=aavec[0]->getSampleRate();
     int numChannels=aavec.at(0)->getNumChannels();
-    recorder->init(renderer->getFbo(), sampleRate, numChannels, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
+    // FIXME : FORCED 2 CHANNELS OF AUDIO !! 
+    recorder->init(renderer->getFbo(), sampleRate, 2, "testMovie", ofFilePath::getAbsolutePath("fonts")+"/../");
     
     // Still Image Setup
     stillImage.setup();
@@ -159,6 +160,7 @@ void PMScene2::update()
 {
     if(recState==0)
     {
+        // normal state ... if recording record !!
         renderer->update();
         
         // Record current frame
@@ -168,11 +170,15 @@ void PMScene2::update()
     }
     else if(recState ==1)
     {
-        recorder->addVideoFrame(ofColor(0));
-
+        // recording text image ... (we've changed the fbo in keyPress)
+        if (recorder->isRecording())
+        {
+            recorder->addVideoFrame(ofColor(0));
+        }
+        
         if(ofGetElapsedTimeMillis()-startTimeRecordingText>durationRecordingText)
         {
-            cout << "SCENE 2 :: STOPPING RECORDING !! " << endl;
+            cout << "SCENE 2 :: Timer for Still Image ended !! STOPPING RECORDING !! " << endl;
             recorder->stopRecording();
             recState = 0;
         }
@@ -214,6 +220,8 @@ void PMScene2::updateExit()
 
 void PMScene2::draw()
 {
+    // if we're in recState 0 (normal) ... draw the renderer.
+    // else if we're in recState 1 (rendering text jpg) ... draw the still image
     if(recState==0) renderer->draw();
     else stillImage.draw();
     
@@ -285,14 +293,18 @@ void PMScene2::keyReleased(int key)
         case 'R':
         {
             if (!recorder->isRecording()) {
-                // Start recording
+                // if not reocording -> Start recording
                 recorder->startRecording();
-            } else {
                 
+            } else {
+                // if we're already recording
                 // Start StillImage Recording
+                cout << "Scene 2 :: changing FBO to record still image..." << endl;
                 recState = 1;
                 recorder->changeFbo(stillImage.getFbo());
+                cout << "Scene 2 :: changed FBO to still iamge one !! " << endl;
                 startTimeRecordingText = ofGetElapsedTimeMillis();
+                cout << "Scene 2 :: started timer for still image render..." << endl;
             }
             break;
         }
