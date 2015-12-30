@@ -47,27 +47,33 @@ private:
 
     vector<PMRibbonPainter> painters;
 
+    int mode;
+
+    // Painter positioning
     ofPoint position;
     int xMin, xMax, yMin, yMax;
     bool didReachBorder;
     int offsetSign;
 
-    int mode;
+    // Colors
     unsigned int numPainters;
     unsigned int strokeWidth;
     unsigned int ribbonColorR, ribbonColorG, ribbonColorB;
     float gradientPosition;
     bool gradientReverse;
+
+    // Mode 3
+    float pitchLastTime;
+    float lastPitch;
+    float m3offsetX, m3offsetY;
+
+    // Others
     float divisions;
-
     bool isInStroke;
-
     bool isSilent;
 
     void addOffsetToPosition(float xOffset, float yOffset);
     void getGUIData();
-    
-    float oldY;
 };
 
 

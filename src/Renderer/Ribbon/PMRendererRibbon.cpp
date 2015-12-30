@@ -9,9 +9,9 @@ static const int NUM_GRADIENT_COLORS = 5;
 
 typedef enum
 {
-    RM_1 = 1,
-    RM_2 = 2,
-    RM_3 = 3,
+    LEFT_RIGHT = 1,
+    UP_DOWN = 2,
+    PITCH_RANDOM = 3,
     RM_4 = 4,
     RM_5 = 5,
     RM_6 = 6,
@@ -57,7 +57,7 @@ void PMRendererRibbon::update()
 {
     if (state != RENDERERSTATE_ON) return;
 
-//    float ini = ofGetElapsedTimef();
+    float ini = ofGetElapsedTimef();
     
     PMBaseRenderer::update(); 
 
@@ -67,11 +67,11 @@ void PMRendererRibbon::update()
     {
         switch(mode)
         {
-            case 1: { // Left-right movement
+            case LEFT_RIGHT: { // Left-right movement
                 addOffsetToPosition(myGUI->getSpeed(), 0);
                 break;
             }
-            case 2: { // Up-down movement
+            case UP_DOWN: { // Up-down movement
                 addOffsetToPosition(0, myGUI->getSpeed());
                 break;
             }
@@ -122,9 +122,10 @@ void PMRendererRibbon::rebuildPainters()
     PMPainterOrigin origin;
     switch(mode)
     {
-        case 1:     origin = PAINTER_LEFT; break;
-        case 2:     origin = PAINTER_UP; break;
-        default:    origin = PAINTER_LEFT; break;
+        case LEFT_RIGHT:    origin = PAINTER_LEFT; break;
+        case UP_DOWN:       origin = PAINTER_UP; break;
+        case PITCH_RANDOM:  origin = PAINTER_CENTER; break;
+        default:            origin = PAINTER_LEFT; break;
     }
 
     for (int i=0; i<numPainters; ++i)
@@ -173,18 +174,82 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
     if ((state != RENDERERSTATE_ON) ) return;
     if (mode == RM_MOUSE) return;
 
-    if(gui->getSmoothedEnergy()<0.15) return;
+//    if(gui->getSmoothedEnergy()<0.15) return;
 
     switch(mode)
     {
-        case 1: { // Left-right movement
+        case LEFT_RIGHT: { // Left-right movement
             float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
             setY(int(y));
             break;
         }
-        case 2: { // Up-down movement
+        case UP_DOWN: { // Up-down movement
             float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetWidth()-1, 1, true);
             setX(int(x));
+            break;
+        }
+        case PITCH_RANDOM: { // Random position every few pitch updates
+//            float currentTime = ofGetElapsedTimef();
+//            if (currentTime - pitchLastTime > 1)
+//            {
+            // OPCIO 1
+//                pitchLastTime = currentTime;
+//                float m3offsetX = ofMap(myGUI->getSmoothedPitch(), 0, 1, -15, 15);
+//                float yOffset = ofMap(myGUI->getSmoothedPitch(), 0, 1, -15, 15);
+//                cout << "Offset: " << m3offsetX << "-" << yOffset << endl;
+//                addOffsetToPosition(m3offsetX, yOffset);
+
+            // OPCIO 2
+//                addOffsetToPosition(ofRandom(-15,15), ofRandom(-15,15));
+
+            // OPCIO 3
+
+            if (fabs(lastPitch - myGUI->getSmoothedPitch()) > 0.2)
+            {
+                float offset;
+                float rndNumber2 = ofRandom(0, 1);
+                if (rndNumber2 < 0.5)
+                    offset = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, 15);
+                else
+                    offset = ofMap(myGUI->getSmoothedPitch(), 0, 1, -15, 0);
+
+                float rndNumber1 = ofRandom(0, 1);
+                if (rndNumber1 < 0.5)
+                {
+                    m3offsetX = offset;
+                    m3offsetY = offset/10;
+                }
+                else
+                {
+                    m3offsetX = offset/10;
+                    m3offsetY = offset;
+                }
+
+                addOffsetToPosition(m3offsetX, m3offsetY);
+            }
+            else
+            {
+                float increment = 0.2;
+                if (fabs(m3offsetX) > fabs(m3offsetY))
+                {
+                    if (m3offsetX < 0)
+                        m3offsetX += increment;
+                    else
+                        m3offsetX -= increment;
+                }
+                else
+                {
+                    if (m3offsetY < 0)
+                        m3offsetY += increment;
+                    else
+                        m3offsetY -= increment;
+                }
+                cout << "(oX, oy) = ("<< m3offsetX << "; " << m3offsetY << ")" << endl;
+                addOffsetToPosition(m3offsetX, m3offsetY);
+            }
+
+
+//            }
             break;
         }
         default: break;
@@ -268,7 +333,12 @@ void PMRendererRibbon::getGUIData()
 {
     int oldMode = mode;
     if (myGUI->getMode() != oldMode)
+    {
         rebuildPainters();
+        if (myGUI->getMode() == PITCH_RANDOM)
+            pitchLastTime = ofGetElapsedTimef();
+            lastPitch = 0;
+    }
 
     mode = myGUI->getMode();
 

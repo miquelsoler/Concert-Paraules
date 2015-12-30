@@ -26,8 +26,6 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     xMax = ofGetWidth() - POS_MARGIN - 1;
     yMin = POS_MARGIN;
     yMax = ofGetHeight() - POS_MARGIN - 1;
-    
-
 }
 
 void PMRibbonPainter::setup()
@@ -58,14 +56,15 @@ void PMRibbonPainter::update()
         }
 
         path.curveTo(dx, dy);
+
+//        cout << "T Pos:   (" << targetPos.x << ", " << targetPos.y << ")" << endl;
+//        cout << "(dx,dy): (" << dx << ", " << dy << ")" << endl;
     }
 }
 
 void PMRibbonPainter::draw()
 {
     if (isNewPath) return;
-
-    cout << "TargetPos: (" << targetPos.x << ", " << targetPos.y << ")" << endl;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofSetColor(color);
@@ -133,6 +132,12 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin _origin)
             setY(yMax);
             break;
         }
+        case PAINTER_CENTER:
+        {
+            setX(ofGetWidth() / 2);
+            setY(ofGetHeight() / 2);
+            break;
+        }
         default: break;
     }
      
@@ -144,6 +149,7 @@ void PMRibbonPainter::setPosition(int x, int y)
 
     if (isNewPath)
     {
+//        cout << "Change dx, dy" << endl;
         dx = targetPos.x;
         dy = targetPos.y;
         isNewPath = false;
