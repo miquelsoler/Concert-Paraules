@@ -29,7 +29,6 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     // TODO: Path Miquel
 //    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg")); // use this is you have ffmpeg installed in your data folder
     //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
-
 //    He hagut de fer aquest canvi per a que em funcioni. El que tinc a /usr/local/bin és versió 2.8 i no em funciona.
 //    vidRecorder.setFfmpegLocation("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg");
 
@@ -41,7 +40,7 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     // run 'ffmpeg -codecs' to find out çwhat your implementation supports (or -formats on some older versions)
     vidRecorder.setVideoCodec("mpeg4");
     vidRecorder.setVideoBitrate("20000k");
-    vidRecorder.setAudioCodec("mp3");
+    vidRecorder.setAudioCodec("pcm_s16le");
     vidRecorder.setAudioBitrate("128k");
 
     ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PMRecorder::recordingComplete);
@@ -54,9 +53,12 @@ void PMRecorder::addVideoFrame(ofColor backColor)
 {
     //Draw main fbo to auxiliary fbo
     fboRecorderOut.begin();
-    ofClear(backColor);
-    ofSetColor(255);
-    fbo->draw(0, 0);
+    {
+        ofClear(backColor);
+        ofSetColor(255);
+        fbo->draw(0, 0);
+    }
+    
     fboRecorderOut.end();
 
     if (bRecording) {
@@ -108,6 +110,8 @@ void PMRecorder::exit()
     ofRemoveListener(vidRecorder.outputFileCompleteEvent, this, &PMRecorder::recordingComplete);
     vidRecorder.close();
 
+    cout << "PMRecorder : exit !! Deleting Pipes !! " << endl;
+
     string cmd = "rm " + filePath + "ofxarpipe0 " + filePath + "ofxvrpipe0";
     system(cmd.c_str());
 }
@@ -117,7 +121,7 @@ void PMRecorder::startRecording()
     bRecording = !bRecording;
     if (bRecording && !vidRecorder.isInitialized()) {
         lastFileNameGenerated = fileName + ofGetTimestampString() + fileExt;
-        vidRecorder.setup(lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 60, sampleRate, channels);
+        vidRecorder.setup(lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 30, sampleRate, channels);
         // Start recording
         vidRecorder.start();
     }
@@ -134,6 +138,7 @@ void PMRecorder::discardRecording()
     bRecording = false;
     vidRecorder.close();
     // TODO: delete last clip.
+    cout << "PMRecorder : Discard Recording !! Deleting Pipes !! " << endl;
     string cmd = "rm " + filePath + "ofxarpipe0 " + filePath + "ofxvrpipe0";
     system(cmd.c_str());
     cmd = "rm " + filePath + lastFileNameGenerated;
