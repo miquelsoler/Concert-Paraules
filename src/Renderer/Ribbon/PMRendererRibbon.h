@@ -55,6 +55,9 @@ private:
     bool didReachBorder;
     int offsetSign;
 
+    // Ease
+    float lastEase;
+
     // Colors
     unsigned int numPainters;
     unsigned int strokeWidth;

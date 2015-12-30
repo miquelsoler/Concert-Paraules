@@ -118,12 +118,13 @@ void PMRendererRibbon::rebuildPainters()
     float dx = ofGetWidth() / 2;
     float dy = ofGetHeight() / 2;
 
+    float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
     for (int i=0; i<numPainters; ++i)
     {
-        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
         PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
         painters.push_back(painter);
     }
+    lastEase = ease;
 
     isInStroke = false;
 
@@ -454,6 +455,17 @@ void PMRendererRibbon::getGUIData()
             numPainters = guiNumPainters;
             rebuildPainters();
             return;
+        }
+    }
+
+    // Ease
+    {
+        if (myGUI->getEase() != lastEase)
+        {
+            for (int i=0; i<numPainters; ++i)
+                painters[i].setEase(myGUI->getEase());
+
+            lastEase = myGUI->getEase();
         }
     }
 }

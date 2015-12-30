@@ -34,6 +34,7 @@ public:
     void setY(int y);
     void setColor(ofColor color);
     void setSize(unsigned int size);
+    void setEase(float _ease) { ease = _ease; }
     void clear();
 
     ofPoint *getTargetPos() { return &targetPos; }
