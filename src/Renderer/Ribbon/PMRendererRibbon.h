@@ -53,6 +53,7 @@ private:
 
     ofPoint position;
     int xMin, xMax, yMin, yMax;
+    bool didReachBorder;
     int offsetSign;
 
     int mode;
@@ -67,7 +68,7 @@ private:
 
     bool isSilent;
 
-    void addOffsetToPosition(float xOffset, float yOffset, bool *didReachBorder);
+    void addOffsetToPosition(float xOffset, float yOffset);
     void getGUIData();
     
     float oldY;

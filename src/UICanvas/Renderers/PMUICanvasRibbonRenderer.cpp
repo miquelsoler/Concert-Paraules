@@ -84,6 +84,17 @@ void PMUICanvasRibbonRenderer::clear()
     superInit("RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
+void PMUICanvasRibbonRenderer::loadPreset(int presetNumber)
+{
+    PMUICanvasBaseRenderer::loadPreset(presetNumber);
+
+    ofxUIRadio *colorModeRadio = (ofxUIRadio *)getWidget(STR_BRUSH_COLORMODE);
+    colorMode = (RibbonColorMode)(colorModeRadio->getValue());
+
+    cout << "Loaded preset " << presetNumber << ": CM=" << colorMode << endl;
+}
+
+
 void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
 {
     PMUICanvasBaseRenderer::handleEvents(e);
@@ -92,7 +103,10 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
 
     if (name == STR_BRUSH_COLORMODE)
     {
-        cout << "Changed color mode toggle" << endl;
+        ofxUIRadio *colorModeRadio = (ofxUIRadio *)(e.widget);
+        colorMode = (RibbonColorMode)(colorModeRadio->getValue());
+
+        cout << "Event: CM=" << colorMode << endl;
     }
 }
 

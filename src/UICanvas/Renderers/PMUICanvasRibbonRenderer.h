@@ -8,6 +8,13 @@
 #include "PMBaseUICanvas.h"
 #include "PMUICanvasBaseRenderer.h"
 
+typedef enum
+{
+    RCM_Fixed = 0,
+    RCM_GradientSpeed = 1,
+    RCM_GradientEdges = 2
+} RibbonColorMode;
+
 class PMUICanvasRibbonRenderer : public PMUICanvasBaseRenderer
 {
 public:
@@ -17,19 +24,24 @@ public:
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();
 
+    virtual void loadPreset(int presetNumber = 0);
+
     virtual void handleEvents(ofxUIEventArgs &e);
 
     unsigned int    getNumPainters()        { return (unsigned int)numPainters; }
     unsigned int    getStrokeWidth()        { return (unsigned int)strokeWidth; }
     float           getSpeed()              { return speed; }
     bool            getBounceEnabled()      { return enableBounce; }
+
+    float           getDivisions()          { return divisions; }
+    float           getEase()               { return ease; }
+    int             getPathNumVertices()    { return pathMaxVertices; }
+
+    RibbonColorMode getColorMode()          { return colorMode; }
     ofColor         getGradientColor(int id, float xPos);
     int             getGradientId()         { return gradientId; }
     int             getGradientSpeed()      { return gradientSpeed; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
-    float           getDivisions()          { return divisions; }
-    float           getEase()               { return ease; }
-    int             getPathNumVertices()    { return pathMaxVertices; }
 
 private:
 
@@ -37,15 +49,17 @@ private:
     int     strokeWidth;
     float   speed;
     bool    enableBounce;
-    int     colorR, colorG, colorB;
+
     float   divisions;
     float   ease;
     int     pathMaxVertices;
 
+    RibbonColorMode colorMode;
     ofImage     gradientImage;
     int         gradientId;
     int         gradientSpeed;
     int         numGradients;
+    int         colorR, colorG, colorB;
 };
 
 

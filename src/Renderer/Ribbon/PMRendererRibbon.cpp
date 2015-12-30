@@ -93,9 +93,7 @@ void PMRendererRibbon::updateMode1()
     Moves right or left
     Color is chosen via GUI
 */
-    bool didReachBorder;
-    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0, &didReachBorder);
-    addOffsetToPosition(myGUI->getSpeed(), 0, &didReachBorder);
+    addOffsetToPosition(myGUI->getSpeed(), 0);
 }
 
 void PMRendererRibbon::updateMode2()
@@ -105,27 +103,7 @@ void PMRendererRibbon::updateMode2()
     Color is changed automatically by using GUI gradient speed
 */
 
-    float gradientSpeed = float(myGUI->getGradientSpeed()) / 10000.0f;
-    float gradientSign = (gradientReverse ? -1 : 1);
-    gradientPosition = gradientPosition + (gradientSign * gradientSpeed);
-
-    if (gradientPosition > 1.0f)
-    {
-        gradientReverse = true;
-        gradientPosition = 1.0f;
-    }
-    else if (gradientPosition < 0.0f)
-    {
-        gradientReverse = false;
-        gradientPosition = 0.0f;
-    }
-
-    bool didReachBorder;
-    for (int i = 0; i < numPainters; ++i) {
-        addOffsetToPosition(myGUI->getSpeed(), 0, &didReachBorder);
-        ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
-        painters[i].setColor(color);
-    }
+    addOffsetToPosition(myGUI->getSpeed(), 0);
 }
 
 void PMRendererRibbon::updateMode3()
@@ -134,30 +112,8 @@ void PMRendererRibbon::updateMode3()
     Moves right or left
     Color is changed automatically once the painter bounces
 */
-    float gradientSign = (gradientReverse ? -1 : 1);
 
-    for (int i = 0; i < numPainters; ++i)
-    {
-        bool didReachBorder;
-        addOffsetToPosition(myGUI->getSpeed(), 0, &didReachBorder);
-        if (didReachBorder && i==0)
-        {
-            float increment = (1 / float(NUM_GRADIENT_COLORS)) * gradientSign;
-            gradientPosition += increment;
-            if (gradientPosition >= 1.0f)
-            {
-                gradientReverse = true;
-                gradientPosition -= increment * 2.0f;
-            }
-            else if (gradientPosition <= 0.0f)
-            {
-                gradientReverse = false;
-                gradientPosition -= increment * 2.0f;
-            }
-        }
-        ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
-        painters[i].setColor(color);
-    }
+    addOffsetToPosition(myGUI->getSpeed(), 0);
 }
 
 void PMRendererRibbon::updateMode4()
@@ -166,8 +122,7 @@ void PMRendererRibbon::updateMode4()
      Moves right or left
      Color is chosen via GUI
      */
-    bool didReachBorder;
-    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0, &didReachBorder);
+    addOffsetToPosition(gui->getSmoothedEnergy() * myGUI->getSpeed(), 0);
 }
 
 void PMRendererRibbon::drawIntoFBO()
@@ -351,32 +306,70 @@ void PMRendererRibbon::getGUIData()
         }
     }
 
-    // Ribbon color changed
+    // Ribbon color
     {
-        switch(mode)
+        switch(myGUI->getColorMode())
         {
-            case 1:
-            case 10:
+            case RCM_Fixed:
             {
                 unsigned int guiRibbonColorR = myGUI->getRibbonColor().r;
                 unsigned int guiRibbonColorG = myGUI->getRibbonColor().g;
                 unsigned int guiRibbonColorB = myGUI->getRibbonColor().b;
-
-                if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB))
-                {
+                if ((guiRibbonColorR != ribbonColorR) || (guiRibbonColorG != ribbonColorG) || (guiRibbonColorB != ribbonColorB)) {
+                    ribbonColorR = guiRibbonColorR;
+                    ribbonColorG = guiRibbonColorG;
+                    ribbonColorB = guiRibbonColorB;
+                    cout << ribbonColorR<<","<<ribbonColorG<<","<<ribbonColorB<<endl;
                     for (int i=0; i<numPainters; ++i)
-                        painters[i].setColor(ofColor(guiRibbonColorR, guiRibbonColorG, guiRibbonColorB, 255));
+                        painters[i].setColor(ofColor(ribbonColorR, ribbonColorG, ribbonColorB, 255));
                 }
                 break;
             }
-            case 2:
+            case RCM_GradientSpeed:
             {
-                ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), 0.1);
-                for (int i=0; i<numPainters; ++i)
+                float gradientSpeed = float(myGUI->getGradientSpeed()) / 10000.0f;
+                float gradientSign = (gradientReverse ? -1 : 1);
+                gradientPosition = gradientPosition + (gradientSign * gradientSpeed);
+
+                if (gradientPosition > 1.0f) {
+                    gradientReverse = true;
+                    gradientPosition = 1.0f;
+                } else if (gradientPosition < 0.0f) {
+                    gradientReverse = false;
+                    gradientPosition = 0.0f;
+                }
+                for (int i = 0; i < numPainters; ++i) {
+                    ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
                     painters[i].setColor(color);
+                }
                 break;
             }
-            default: break;
+            case RCM_GradientEdges:
+            {
+                float gradientSign = (gradientReverse ? -1 : 1);
+
+                for (int i = 0; i < numPainters; ++i)
+                {
+                    if (didReachBorder && i==0)
+                    {
+                        float increment = (1 / float(NUM_GRADIENT_COLORS)) * gradientSign;
+                        gradientPosition += increment;
+                        if (gradientPosition >= 1.0f)
+                        {
+                            gradientReverse = true;
+                            gradientPosition -= increment * 2.0f;
+                        }
+                        else if (gradientPosition <= 0.0f)
+                        {
+                            gradientReverse = false;
+                            gradientPosition -= increment * 2.0f;
+                        }
+                    }
+                    ofColor color = myGUI->getGradientColor(myGUI->getGradientId(), gradientPosition);
+                    painters[i].setColor(color);
+                }
+                break;
+            }
         }
     }
 
@@ -403,8 +396,10 @@ void PMRendererRibbon::getGUIData()
     }
 }
 
-void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset, bool *didReachBorder)
+void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
 {
+    didReachBorder = false;
+
     bool bounces = myGUI->getBounceEnabled();
     for (int i=0; i<numPainters; ++i)
     {
@@ -422,7 +417,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset, bool *d
                     offsetSign = -offsetSign;
                     newX = xMax;
                 }
-                *didReachBorder = true;
+                didReachBorder = true;
             }
             else if (newX < xMin)
             {
@@ -433,7 +428,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset, bool *d
                     offsetSign = -offsetSign;
                     newX = xMin;
                 }
-                *didReachBorder = true;
+                didReachBorder = true;
             }
 
             painters[i].setX(newX);
@@ -451,7 +446,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset, bool *d
                     offsetSign = -1;
                     newY = yMax;
                 }
-                *didReachBorder = bounces;
+                didReachBorder = bounces;
             }
             else if (newY < 1)
             {
@@ -462,7 +457,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset, bool *d
                     offsetSign = 1;
                     newY = yMin;
                 }
-                *didReachBorder = bounces;
+                didReachBorder = bounces;
             }
 
             painters[i].setY(newY);
