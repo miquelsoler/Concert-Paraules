@@ -59,7 +59,7 @@ public:
 
 protected:
 
-    void            loadPreset(int presetNumber = 0);
+    virtual void    loadPreset(int presetNumber = 0);
     void            savePreset(int presetNumber = 0);
 
 private:

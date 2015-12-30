@@ -10,8 +10,6 @@ static const int POS_MARGIN = 1;
 
 PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
-    
-    // FIXME: Why adding a color that is not black (color = ofColor(1,1,1,255)) tends to set alpha to zero???
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
     dx = _dx; dy = _dy;
@@ -28,8 +26,6 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     xMax = ofGetWidth() - POS_MARGIN - 1;
     yMin = POS_MARGIN;
     yMax = ofGetHeight() - POS_MARGIN - 1;
-    
-
 }
 
 void PMRibbonPainter::setup()
@@ -57,12 +53,12 @@ void PMRibbonPainter::update()
 //                path.addVertex(vertices[vertices.size()-1]);
 //            }
 //            cout << "Ribbon Clear // vSize = " << vertices.size() << "  __ maxNum " << maxNumVertices;
-            
-            
-            
         }
 
         path.curveTo(dx, dy);
+
+//        cout << "T Pos:   (" << targetPos.x << ", " << targetPos.y << ")" << endl;
+//        cout << "(dx,dy): (" << dx << ", " << dy << ")" << endl;
     }
 }
 
@@ -136,6 +132,12 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin _origin)
             setY(yMax);
             break;
         }
+        case PAINTER_CENTER:
+        {
+            setX(ofGetWidth() / 2);
+            setY(ofGetHeight() / 2);
+            break;
+        }
         default: break;
     }
      
@@ -147,6 +149,7 @@ void PMRibbonPainter::setPosition(int x, int y)
 
     if (isNewPath)
     {
+//        cout << "Change dx, dy" << endl;
         dx = targetPos.x;
         dy = targetPos.y;
         isNewPath = false;

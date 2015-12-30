@@ -14,6 +14,7 @@ typedef enum
     PAINTER_RIGHT = 1,
     PAINTER_UP = 2,
     PAINTER_DOWN = 3,
+    PAINTER_CENTER = 4,
     PAINTER_NUM_ORIGINS
 } PMPainterOrigin;
 
