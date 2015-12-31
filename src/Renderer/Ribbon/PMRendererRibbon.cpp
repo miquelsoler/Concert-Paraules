@@ -10,10 +10,10 @@ static const int NUM_GRADIENT_COLORS = 5;
 typedef enum
 {
     LEFT_RIGHT = 1,
-    UP_DOWN = 2,
-    PITCH_RANDOM = 3,
-    PITCH_DRIVE = 4,
-    RM_5 = 5,
+    LEFT_RIGHT_NRG = 2,
+    UP_DOWN = 3,
+    UP_DOWN_NRG = 4,
+    PITCH_RANDOM = 5,
     RM_6 = 6,
     RM_7 = 7,
     RM_8 = 8,
@@ -71,31 +71,16 @@ void PMRendererRibbon::update()
                 addOffsetToPosition(myGUI->getSpeed(), 0);
                 break;
             }
+            case LEFT_RIGHT_NRG: { // Left-right movement speeding via energy
+                addOffsetToPosition(myGUI->getSpeed() * myGUI->getSmoothedEnergy(), 0);
+
+            }
             case UP_DOWN: { // Up-down movement
                 addOffsetToPosition(0, myGUI->getSpeed());
                 break;
             }
-                
-            case PITCH_DRIVE:
-            {
-                ofVec3f pathDirection,newPosition;
-                int numVertices;
-                
-                for (int i=0; i<numPainters; ++i)
-                {
-                    numVertices =  painters[i].getVertices().size();
-                    cout << "numVertices" << numVertices<< endl;
-                    if(numVertices>1)
-                    {
-                        
-                        pathDirection = painters[i].getPath().getTangentAtIndexInterpolated(numVertices-1);
-                        
-                        newPosition = ofVec3f(painters[i].getVertices()[numVertices-1] + pathDirection* 4);
-                        newPosition.rotate(5*pitchDrive, ofVec3f(0,0,1));
-                        
-                        painters[i].setPosition(newPosition.x,newPosition.y);
-                    }
-                }
+            case UP_DOWN_NRG: { // Up-down movement speeding via energy
+                addOffsetToPosition(0, myGUI->getSpeed() * myGUI->getSmoothedEnergy());
                 break;
             }
             default: break;
@@ -139,14 +124,25 @@ void PMRendererRibbon::rebuildPainters()
         PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
         painters.push_back(painter);
     }
+    lastEase = ease;
 
     isInStroke = false;
 
     PMPainterOrigin origin;
     switch(mode)
     {
-        case LEFT_RIGHT:    origin = PAINTER_LEFT; break;
-        case UP_DOWN:       origin = PAINTER_UP; break;
+        case LEFT_RIGHT:
+        case LEFT_RIGHT_NRG:
+        {
+            origin = PAINTER_LEFT;
+            break;
+        }
+        case UP_DOWN:
+        case UP_DOWN_NRG:
+        {
+            origin = PAINTER_UP;
+            break;
+        }
         case PITCH_RANDOM:  origin = PAINTER_CENTER; break;
         default:            origin = PAINTER_LEFT; break;
     }
@@ -201,12 +197,16 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
     switch(mode)
     {
-        case LEFT_RIGHT: { // Left-right movement
+        case LEFT_RIGHT:
+        case LEFT_RIGHT_NRG:
+        {
             float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
             setY(int(y));
             break;
         }
-        case UP_DOWN: { // Up-down movemen3
+        case UP_DOWN:
+        case UP_DOWN_NRG:
+        {
             float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetWidth()-1, 1, true);
             setX(int(x));
             break;
@@ -470,6 +470,17 @@ void PMRendererRibbon::getGUIData()
             numPainters = guiNumPainters;
             rebuildPainters();
             return;
+        }
+    }
+
+    // Ease
+    {
+        if (myGUI->getEase() != lastEase)
+        {
+            for (int i=0; i<numPainters; ++i)
+                painters[i].setEase(myGUI->getEase());
+
+            lastEase = myGUI->getEase();
         }
     }
 }
