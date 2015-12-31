@@ -14,7 +14,7 @@ typedef enum
     UP_DOWN = 3,
     UP_DOWN_NRG = 4,
     PITCH_RANDOM = 5,
-    RM_6 = 6,
+    PITCH_DRIVE = 6,
     RM_7 = 7,
     RM_8 = 8,
     RM_9 = 9,
@@ -120,11 +120,12 @@ void PMRendererRibbon::rebuildPainters()
 
     for (int i=0; i<numPainters; ++i)
     {
-        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
-        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
+        float ease = myGUI->getEase();
+        float easeRandom = myGUI->getEaseRandomness();
+        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease,easeRandom, strokeWidth, myGUI);
         painters.push_back(painter);
     }
-    lastEase = ease;
+    lastEase = myGUI->getEase();
 
     isInStroke = false;
 
@@ -211,20 +212,28 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
             setX(int(x));
             break;
         }
-        case PITCH_DRIVE: { // Drive with pitch
-
+        case PITCH_DRIVE:
+        {
+            ofVec3f pathDirection,newPosition;
+            int numVertices;
             
-//            ofSetColor(255,0,0);
-//            ofDrawLine(vertices[vertices.size()-1],vertices[vertices.size()-1] + pathDirection*40);
-
-            pitchDrive = myGUI->getSmoothedPitch()- 0.5f;
-
+            for (int i=0; i<numPainters; ++i)
+            {
+                numVertices =  painters[i].getVertices().size();
+                cout << "numVertices" << numVertices<< endl;
+                if(numVertices>1)
+                {
+                    
+                    pathDirection = painters[i].getPath().getTangentAtIndexInterpolated(numVertices-1);
+                    
+                    newPosition = ofVec3f(painters[i].getVertices()[numVertices-1] + pathDirection* 4);
+                    newPosition.rotate(5*pitchDrive, ofVec3f(0,0,1));
+                    
+                    painters[i].setPosition(newPosition.x,newPosition.y);
+                }
+            }
             break;
-            
-            
-            
         }
-            
             
         case PITCH_RANDOM: { // Random position every few pitch updates
 //            float currentTime = ofGetElapsedTimef();
@@ -478,11 +487,20 @@ void PMRendererRibbon::getGUIData()
         if (myGUI->getEase() != lastEase)
         {
             for (int i=0; i<numPainters; ++i)
+            {
                 painters[i].setEase(myGUI->getEase());
-
+            }
             lastEase = myGUI->getEase();
         }
+        
+        for (int i=0; i<numPainters; ++i)
+        {
+            painters[i].setEaseRandomness(myGUI->getEaseRandomness());
+        }
+        
     }
+    
+    
 }
 
 void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)

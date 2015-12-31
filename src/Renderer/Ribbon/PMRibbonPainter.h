@@ -15,6 +15,7 @@ typedef enum
     PAINTER_UP = 2,
     PAINTER_DOWN = 3,
     PAINTER_CENTER = 4,
+    PAINTER_PITCH_DRIVE = 5,
     PAINTER_NUM_ORIGINS
 } PMPainterOrigin;
 
@@ -22,7 +23,7 @@ class PMRibbonPainter
 {
 public:
 
-    PMRibbonPainter(ofColor color, float dx, float dy, float div, float ease, unsigned int size, PMUICanvasRibbonRenderer *gui);
+    PMRibbonPainter(ofColor color, float dx, float dy, float div, float ease, float easeRandom, unsigned int size, PMUICanvasRibbonRenderer *gui);
 
     void setup();
     void update();
@@ -34,7 +35,8 @@ public:
     void setY(int y);
     void setColor(ofColor color);
     void setSize(unsigned int size);
-    void setEase(float _ease) { ease = _ease; }
+    void setEase(float _ease) { ease = _ease + ofRandomuf()*easeRandomness; }
+    void setEaseRandomness(float _randomnes) { easeRandomness = _randomnes; }
     void clear();
 
     ofPoint *getTargetPos() { return &targetPos; }
@@ -47,6 +49,7 @@ private:
     float ax, ay;
     float div;
     float ease;
+    float easeRandomness;
     unsigned int size;
 
     ofPolyline path;

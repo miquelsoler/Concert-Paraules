@@ -35,6 +35,7 @@ public:
 
     float           getDivisions()          { return divisions; }
     float           getEase()               { return ease; }
+    float           getEaseRandomness()     { return easeRandomness; };
     int             getPathNumVertices()    { return pathMaxVertices; }
 
     RibbonColorMode getColorMode()          { return colorMode; }
@@ -52,6 +53,7 @@ private:
 
     float   divisions;
     float   ease;
+    float   easeRandomness;
     int     pathMaxVertices;
 
     RibbonColorMode colorMode;

@@ -52,6 +52,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
         addLabel(STR_BRUSH_ADVANCED);
         addSlider(STR_BRUSH_ADVANCED_DIVISIONS, 0.001, 4.5, &divisions);
         addSlider(STR_BRUSH_ADVANCED_EASE, 0.1, 1.0, &ease);
+        addSlider("Ease Randomness",0.0,1.0,&easeRandomness);
         addIntSlider(STR_BRUSH_ADVANCED_MAXVERT,3, 4000, &pathMaxVertices);
     }
 
