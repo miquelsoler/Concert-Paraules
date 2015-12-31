@@ -37,7 +37,8 @@ public:
     void clear();
 
     ofPoint *getTargetPos() { return &targetPos; }
-
+    vector<ofPoint> getVertices() {return vertices;};
+    ofPolyline getPath()    {return path;};
 
 private:
 
@@ -55,6 +56,8 @@ private:
     PMPainterOrigin origin;
 
     bool isNewPath;
+    vector<ofPoint> vertices;
+    vector<ofPoint> lastVertices;
 
     PMUICanvasRibbonRenderer *gui;
 };

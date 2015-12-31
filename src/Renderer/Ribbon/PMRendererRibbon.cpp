@@ -12,7 +12,7 @@ typedef enum
     LEFT_RIGHT = 1,
     UP_DOWN = 2,
     PITCH_RANDOM = 3,
-    RM_4 = 4,
+    PITCH_DRIVE = 4,
     RM_5 = 5,
     RM_6 = 6,
     RM_7 = 7,
@@ -73,6 +73,29 @@ void PMRendererRibbon::update()
             }
             case UP_DOWN: { // Up-down movement
                 addOffsetToPosition(0, myGUI->getSpeed());
+                break;
+            }
+                
+            case PITCH_DRIVE:
+            {
+                ofVec3f pathDirection,newPosition;
+                int numVertices;
+                
+                for (int i=0; i<numPainters; ++i)
+                {
+                    numVertices =  painters[i].getVertices().size();
+                    cout << "numVertices" << numVertices<< endl;
+                    if(numVertices>1)
+                    {
+                        
+                        pathDirection = painters[i].getPath().getTangentAtIndexInterpolated(numVertices-1);
+                        
+                        newPosition = ofVec3f(painters[i].getVertices()[numVertices-1] + pathDirection* 4);
+                        newPosition.rotate(5*pitchDrive, ofVec3f(0,0,1));
+                        
+                        painters[i].setPosition(newPosition.x,newPosition.y);
+                    }
+                }
                 break;
             }
             default: break;
@@ -183,11 +206,26 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
             setY(int(y));
             break;
         }
-        case UP_DOWN: { // Up-down movement
+        case UP_DOWN: { // Up-down movemen3
             float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetWidth()-1, 1, true);
             setX(int(x));
             break;
         }
+        case PITCH_DRIVE: { // Drive with pitch
+
+            
+//            ofSetColor(255,0,0);
+//            ofDrawLine(vertices[vertices.size()-1],vertices[vertices.size()-1] + pathDirection*40);
+
+            pitchDrive = myGUI->getSmoothedPitch()- 0.5f;
+
+            break;
+            
+            
+            
+        }
+            
+            
         case PITCH_RANDOM: { // Random position every few pitch updates
 //            float currentTime = ofGetElapsedTimef();
 //            if (currentTime - pitchLastTime > 1)

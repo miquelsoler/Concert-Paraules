@@ -35,6 +35,7 @@ void PMRibbonPainter::setup()
 
 void PMRibbonPainter::update()
 {
+    
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
         if (isNewPath) return;
@@ -60,6 +61,7 @@ void PMRibbonPainter::update()
 //        cout << "T Pos:   (" << targetPos.x << ", " << targetPos.y << ")" << endl;
 //        cout << "(dx,dy): (" << dx << ", " << dy << ")" << endl;
     }
+    
 }
 
 void PMRibbonPainter::draw()
@@ -73,10 +75,12 @@ void PMRibbonPainter::draw()
 #if (DRAW_PATH == true)
     path.draw();
 #else
-    vector<ofPoint> vertices = path.getVertices();
+    
+    
+    vertices = path.getVertices();
+    
     if (vertices.size() > 1)
     {
-//        glPointSize(10);
         glPointSize(size);
         for (int i=0; i<vertices.size()-1; ++i)
         {
@@ -85,19 +89,25 @@ void PMRibbonPainter::draw()
             glBegin(GL_POINTS);
             glVertex2f(vertices[i].x,vertices[i].y);
             glEnd();
+            
+            
         }
 
+        cout << "Riboon : vertices = "<< vertices.size() << endl;
 //        ofSetColor(255,0,0);
 //        ofSetColor(color);
 //        for (int i=0; i<vertices.size()-1; ++i)
 //        {
 //            ofDrawLine(vertices[i], vertices[i+1]);
 //        }
+        
         path.clear();
         path.addVertex(vertices[vertices.size()-1]);
     }
     
 #endif
+    
+    
     ofDisableBlendMode();
      
 }

@@ -46,7 +46,9 @@ private:
     PMUICanvasRibbonRenderer *myGUI;
 
     vector<PMRibbonPainter> painters;
-
+    vector<ofVec3f> newPositions;
+    float  pitchDrive;
+    
     int mode;
 
     // Painter positioning
