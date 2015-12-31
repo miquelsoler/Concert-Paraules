@@ -15,7 +15,6 @@ typedef enum
     PAINTER_UP = 2,
     PAINTER_DOWN = 3,
     PAINTER_CENTER = 4,
-    PAINTER_PITCH_DRIVE = 5,
     PAINTER_NUM_ORIGINS
 } PMPainterOrigin;
 
@@ -35,7 +34,7 @@ public:
     void setY(int y);
     void setColor(ofColor color);
     void setSize(unsigned int size);
-    void setEase(float _ease) { ease = _ease + ofRandomuf()*easeRandomness; }
+    void setEase(float _ease) {ease = ofRandom(0.0f, 1.0f) * easeRandomness + _ease;};//{ ease = _ease + ofRandomuf()*easeRandomness; }
     void setEaseRandomness(float _randomnes) { easeRandomness = _randomnes; }
     void clear();
 
