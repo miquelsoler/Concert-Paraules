@@ -121,16 +121,16 @@ void PMRendererRibbon::rebuildPainters()
     float dx = ofGetWidth() / 2;
     float dy = ofGetHeight() / 2;
 
+    float ease = 0.6;
     for (int i=0; i<numPainters; ++i)
     {
         //float ease = myGUI->getEase();
-        float easeRandom = myGUI->getEaseRandomness();
-        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
+        ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
 
-        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease,easeRandom, strokeWidth, myGUI);
+        PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
         painters.push_back(painter);
     }
-    lastEase = myGUI->getEase();
+//    lastEase = ease
 
     isInStroke = false;
 

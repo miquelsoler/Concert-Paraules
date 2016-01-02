@@ -8,16 +8,13 @@ static const int POS_MARGIN = 1;
 
 #define DRAW_PATH false
 
-PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease, float _easeRandom,unsigned int size, PMUICanvasRibbonRenderer *_gui)
+PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _div, float _ease,unsigned int size, PMUICanvasRibbonRenderer *_gui)
 {
     color = ofColor(_color.r, _color.g, _color.b, _color.a);
 
     dx = _dx; dy = _dy;
     ax = ay = 0.0f;
     div = _div;
-    
-    easeRandomness = _easeRandom;
-    //setEase(_ease);
     ease = _ease;
     
     setSize(size);
@@ -221,7 +218,7 @@ void PMRibbonPainter::setPosition(int x, int y)
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
         ofPoint p = ofPoint(dx,dy);
-        //    ofPoint p = ofPoint(x,y); // no easing option
+        //ofPoint p = ofPoint(x,y); // no easing option
         points.push_back(p);
         
     }
