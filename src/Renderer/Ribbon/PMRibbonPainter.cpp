@@ -17,7 +17,8 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     div = _div;
     
     easeRandomness = _easeRandom;
-    setEase(_ease);
+    //setEase(_ease);
+    ease = _ease;
     
     setSize(size);
 
@@ -29,6 +30,15 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     xMax = ofGetWidth() - POS_MARGIN - 1;
     yMin = POS_MARGIN;
     yMax = ofGetHeight() - POS_MARGIN - 1;
+    
+    vec.setColor(255, 255, 0);
+    vec.noFill();
+    for(int i=0;i<4;i++)
+    {
+        points.push_back(ofPoint(0,0,0));        
+    }
+    vec.enableDraw();
+
 }
 
 void PMRibbonPainter::setup()
@@ -39,13 +49,18 @@ void PMRibbonPainter::setup()
 void PMRibbonPainter::update()
 {
     
-    if ((dx != targetPos.x) && (dy != targetPos.y))
-    {
-        if (isNewPath) return;
+//    if ((dx != targetPos.x) && (dy != targetPos.y))
+//    {
+//        if (isNewPath) return;
+//
+//        dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
+//        dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
+    
+        
+//        dx = targetPos.x;
+//        dy = targetPos.y;
 
-        dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
-        dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
-
+        
         // Clean-up path vertices in case its size is higher than the allowed maximum.
         {
 //            int maxNumVertices = gui->getPathNumVertices();
@@ -59,28 +74,37 @@ void PMRibbonPainter::update()
 //            cout << "Ribbon Clear // vSize = " << vertices.size() << "  __ maxNum " << maxNumVertices;
         }
 
-        path.curveTo(dx, dy);
+        //polyline.curveTo(dx, dy,20);
 
 //        cout << "T Pos:   (" << targetPos.x << ", " << targetPos.y << ")" << endl;
 //        cout << "(dx,dy): (" << dx << ", " << dy << ")" << endl;
-    }
+//    }
     
 }
 
 void PMRibbonPainter::draw()
 {
-    if (isNewPath) return;
+    //if (isNewPath) return;
 
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    ofSetColor(color);
     ofSetLineWidth(size);
 
 #if (DRAW_PATH == true)
-    path.draw();
+    polyline.draw();
+    
+    vertices = polyline.getVertices();
+    cout << "Riboon : vertices = "<< vertices.size() << endl;
+
+    if (vertices.size() > 1)
+    {
+//        polyline.clear();
+//        polyline.addVertex(vertices[vertices.size()-1]);
+    }
+
 #else
     
-    
-    vertices = path.getVertices();
+    /*
+    vertices = polyline.getVertices();
     
     if (vertices.size() > 1)
     {
@@ -104,15 +128,32 @@ void PMRibbonPainter::draw()
 //            ofDrawLine(vertices[i], vertices[i+1]);
 //        }
         
-        path.clear();
-        path.addVertex(vertices[vertices.size()-1]);
+        polyline.clear();
+        polyline.addVertex(vertices[vertices.size()-1]);
     }
+    */
+    if(points.size()>3)
+    {
+        ofPoint pLast3 = points[3];
+        ofPoint pLast2 = points[2];
+        ofPoint pLast1 = points[1];
+        
+        ofNoFill();
+        ofSetColor(color);
+        vec.curve(points[0].x,points[0].y,points[1].x,points[1].y,points[2].x,points[2].y,points[3].x,points[3].y);
+
+        points.clear();
+        points.push_back(pLast1);
+        points.push_back(pLast2);
+        points.push_back(pLast3);
+    }
+
     
 #endif
     
     
-    ofDisableBlendMode();
-     
+    //ofDisableBlendMode();
+    
 }
 
 void PMRibbonPainter::setOrigin(PMPainterOrigin _origin)
@@ -158,16 +199,37 @@ void PMRibbonPainter::setOrigin(PMPainterOrigin _origin)
 
 void PMRibbonPainter::setPosition(int x, int y)
 {
-    targetPos = ofPoint(x, y);
+    float delta = gui->getNextPositionDelta();
+    ofPoint newPoint = ofPoint(x,y);
+    
+    targetPos = ( newPoint * (1.0 - delta)) + (lastPoint*(delta));
 
-    if (isNewPath)
+    //    targetPos = ofPoint(x, y);
+
+//    if (isNewPath)
+//    {
+////        cout << "Change dx, dy" << endl;
+//        dx = targetPos.x;
+//        dy = targetPos.y;
+//        isNewPath = false;
+//        return;
+//    }
+    
+    dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
+    dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
+
+    if ((dx != targetPos.x) && (dy != targetPos.y))
     {
-//        cout << "Change dx, dy" << endl;
-        dx = targetPos.x;
-        dy = targetPos.y;
-        isNewPath = false;
-        return;
+        ofPoint p = ofPoint(dx,dy);
+        //    ofPoint p = ofPoint(x,y); // no easing option
+        points.push_back(p);
+        
     }
+    
+
+    lastPoint = targetPos;
+    //cout << "Painter : setPosition at " << ofGetElapsedTimef()  << endl;
+    
 }
 
 void PMRibbonPainter::setX(int x)
@@ -192,8 +254,8 @@ void PMRibbonPainter::setSize(unsigned int _size)
 
 void PMRibbonPainter::clear()
 {
-    path.clear();
-    path = ofPolyline();
+    polyline.clear();
+    polyline = ofPolyline();
 
     isNewPath = true;
 }

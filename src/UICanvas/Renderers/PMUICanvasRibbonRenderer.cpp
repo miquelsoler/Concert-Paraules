@@ -43,7 +43,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
         addLabel(STR_BRUSH_BASIC);
         addIntSlider(STR_BRUSH_BASIC_NUMPAINTERS, 1, 100, &numPainters);
         addIntSlider(STR_BRUSH_BASIC_WIDTH, 1, 10, &strokeWidth);
-        addSlider(STR_BRUSH_BASIC_SPEED, 1.01f, 10, &speed);
+        addSlider(STR_BRUSH_BASIC_SPEED, 1.01f, 100, &speed);
         addToggle(STR_BRUSH_BASIC_ENABLEBOUNCE, &enableBounce);
     }
 
@@ -51,9 +51,10 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
         addSpacer();
         addLabel(STR_BRUSH_ADVANCED);
         addSlider(STR_BRUSH_ADVANCED_DIVISIONS, 0.001, 4.5, &divisions);
-        addSlider(STR_BRUSH_ADVANCED_EASE, 0.1, 1.0, &ease);
+        addSlider(STR_BRUSH_ADVANCED_EASE, -1.0, 10.0, &ease);
         addSlider("Ease Randomness",0.0,1.0,&easeRandomness);
         addIntSlider(STR_BRUSH_ADVANCED_MAXVERT,3, 4000, &pathMaxVertices);
+        addSlider("Next Position Delta",0.0,1.0,&nextPositionDelta);
     }
 
     { // Color mode

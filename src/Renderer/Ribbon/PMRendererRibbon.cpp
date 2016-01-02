@@ -4,6 +4,8 @@
 
 #include "PMRendererRibbon.h"
 
+ofVec3f pathDirection,newPosition;
+
 static const int POS_MARGIN = 1;
 static const int NUM_GRADIENT_COLORS = 5;
 
@@ -102,6 +104,7 @@ void PMRendererRibbon::drawIntoFBO()
 
     fbo.begin();
     {
+
         clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
 
         for (int i=0; i<numPainters; ++i)
@@ -120,8 +123,10 @@ void PMRendererRibbon::rebuildPainters()
 
     for (int i=0; i<numPainters; ++i)
     {
-        float ease = myGUI->getEase();
+        //float ease = myGUI->getEase();
         float easeRandom = myGUI->getEaseRandomness();
+        float ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
+
         PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease,easeRandom, strokeWidth, myGUI);
         painters.push_back(painter);
     }
@@ -145,6 +150,7 @@ void PMRendererRibbon::rebuildPainters()
             break;
         }
         case PITCH_RANDOM:  origin = PAINTER_CENTER; break;
+            
         default:            origin = PAINTER_LEFT; break;
     }
 
@@ -214,21 +220,30 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
         }
         case PITCH_DRIVE:
         {
-            ofVec3f pathDirection,newPosition;
+            pitchDrive  = myGUI->getSmoothedPitch()- 0.5f;
             int numVertices;
             
             for (int i=0; i<numPainters; ++i)
             {
-                numVertices =  painters[i].getVertices().size();
-                cout << "numVertices" << numVertices<< endl;
-                if(numVertices>1)
+                vector<ofPoint> points = painters[i].getPoints();
+                int numOfPoints = points.size();
+                ofPolyline p;
+                
+                if(numOfPoints>2)
                 {
+                    // we contrsutct a polyline to calculate it's tangent ...
+                    for(int i=0;i<2;i++)
+                    {
+                        p.addVertex(points[numOfPoints-2+i]);
+                    }
+
+                    pathDirection = p.getTangentAtIndexInterpolated(numOfPoints-1);
                     
-                    pathDirection = painters[i].getPath().getTangentAtIndexInterpolated(numVertices-1);
-                    
-                    newPosition = ofVec3f(painters[i].getVertices()[numVertices-1] + pathDirection* 4);
-                    newPosition.rotate(5*pitchDrive, ofVec3f(0,0,1));
-                    
+                    newPosition = pathDirection*30;
+                    newPosition.rotate(12.5*pitchDrive, ofVec3f(0,0,1));
+                    //newPosition = ofVec3f(points[numOfPoints-1] + ( pathDirection * 20 ) );
+//                    newPosition.rotate(2.5*pitchDrive, ofVec3f(0,0,1));
+                    newPosition = newPosition + points[numOfPoints-1] ;
                     painters[i].setPosition(newPosition.x,newPosition.y);
                 }
             }
@@ -298,8 +313,8 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
 //            }
             break;
+            
         }
-        default: break;
     }
 
 }
@@ -484,19 +499,19 @@ void PMRendererRibbon::getGUIData()
 
     // Ease
     {
-        if (myGUI->getEase() != lastEase)
-        {
-            for (int i=0; i<numPainters; ++i)
-            {
-                painters[i].setEase(myGUI->getEase());
-            }
-            lastEase = myGUI->getEase();
-        }
-        
-        for (int i=0; i<numPainters; ++i)
-        {
-            painters[i].setEaseRandomness(myGUI->getEaseRandomness());
-        }
+//        if (myGUI->getEase() != lastEase)
+//        {
+//            for (int i=0; i<numPainters; ++i)
+//            {
+//                painters[i].setEase(myGUI->getEase());
+//            }
+//            lastEase = myGUI->getEase();
+//        }
+//        
+//        for (int i=0; i<numPainters; ++i)
+//        {
+//            painters[i].setEaseRandomness(myGUI->getEaseRandomness());
+//        }
         
     }
     
@@ -518,7 +533,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
             if (newX > xMax)
             {
                 if (!bounces) {
-                    painters[i].clear();
+                    //painters[i].clear();
                     newX = xMin;
                 } else {
                     offsetSign = -offsetSign;
@@ -547,7 +562,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
             if (newY > yMax)
             {
                 if (!bounces) {
-                    painters[i].clear();
+                    //painters[i].clear();
                     newY = yMin;
                 } else {
                     offsetSign = -1;

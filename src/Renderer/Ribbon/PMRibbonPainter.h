@@ -7,6 +7,7 @@
 
 #include "ofMain.h"
 #include "PMUICanvasRibbonRenderer.h"
+#include "ofxVectorGraphics.h"
 
 typedef enum
 {
@@ -40,7 +41,10 @@ public:
 
     ofPoint *getTargetPos() { return &targetPos; }
     vector<ofPoint> getVertices() {return vertices;};
-    ofPolyline getPath()    {return path;};
+    ofPolyline getPolyline()    {return polyline;};
+
+    ofxVectorGraphics getVectorGraphics() { return vec; };
+    vector<ofPoint> getPoints() { return points; };
 
 private:
 
@@ -51,7 +55,11 @@ private:
     float easeRandomness;
     unsigned int size;
 
-    ofPolyline path;
+    ofPolyline polyline;
+    
+    ofxVectorGraphics vec;
+    vector<ofPoint>     points;
+    ofPoint             lastPoint;
 
     ofPoint targetPos;
     int xMin, xMax, yMin, yMax;

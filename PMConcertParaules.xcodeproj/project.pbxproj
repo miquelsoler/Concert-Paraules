@@ -199,6 +199,8 @@
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
 		9F2A3EEF1C039F6400048315 /* PMParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A3EED1C039F6400048315 /* PMParticle.cpp */; };
 		ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD37876A11E46E4D7069B3 /* cameras.c */; };
+		B0605EE41C3868B300707F3D /* CreEPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EDE1C3868B300707F3D /* CreEPS.cpp */; settings = {ASSET_TAGS = (); }; };
+		B0605EE51C3868B300707F3D /* ofxVectorGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */; settings = {ASSET_TAGS = (); }; };
 		B070FA6F1C110F14000D5956 /* PMRendererColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA6D1C110F14000D5956 /* PMRendererColor.cpp */; };
 		B070FA721C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */; };
 		B0DFBF0A1C11EE9400076552 /* fontstash.c in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEDB1C11EE9300076552 /* fontstash.c */; };
@@ -658,6 +660,11 @@
 		9F2A3EED1C039F6400048315 /* PMParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMParticle.cpp; sourceTree = "<group>"; };
 		9F2A3EEE1C039F6400048315 /* PMParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMParticle.h; sourceTree = "<group>"; };
 		A3528DDFF05B00283552455D /* keep_alive.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = keep_alive.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/keep_alive.c; sourceTree = SOURCE_ROOT; };
+		B0605EDE1C3868B300707F3D /* CreEPS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreEPS.cpp; sourceTree = "<group>"; };
+		B0605EDF1C3868B300707F3D /* CreEPS.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CreEPS.hpp; sourceTree = "<group>"; };
+		B0605EE01C3868B300707F3D /* CreEPS_Types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CreEPS_Types.hpp; sourceTree = "<group>"; };
+		B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVectorGraphics.cpp; sourceTree = "<group>"; };
+		B0605EE31C3868B300707F3D /* ofxVectorGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVectorGraphics.h; sourceTree = "<group>"; };
 		B070FA6D1C110F14000D5956 /* PMRendererColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererColor.cpp; sourceTree = "<group>"; };
 		B070FA6E1C110F14000D5956 /* PMRendererColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererColor.h; sourceTree = "<group>"; };
 		B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasTextBoxRenderer.cpp; sourceTree = "<group>"; };
@@ -1627,6 +1634,35 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		B0605EDC1C3868B300707F3D /* ofxVectorGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				B0605EDD1C3868B300707F3D /* libs */,
+				B0605EE11C3868B300707F3D /* src */,
+			);
+			name = ofxVectorGraphics;
+			path = ../../../addons/ofxVectorGraphics;
+			sourceTree = "<group>";
+		};
+		B0605EDD1C3868B300707F3D /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B0605EDE1C3868B300707F3D /* CreEPS.cpp */,
+				B0605EDF1C3868B300707F3D /* CreEPS.hpp */,
+				B0605EE01C3868B300707F3D /* CreEPS_Types.hpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		B0605EE11C3868B300707F3D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */,
+				B0605EE31C3868B300707F3D /* ofxVectorGraphics.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		B0DFBEC31C11EE9300076552 /* ofxFontStash */ = {
 			isa = PBXGroup;
 			children = (
@@ -1752,6 +1788,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				B0605EDC1C3868B300707F3D /* ofxVectorGraphics */,
 				B0DFBEC31C11EE9300076552 /* ofxFontStash */,
 				B0DFBEE41C11EE9400076552 /* ofxUnicode */,
 				480A780D8D0308AE4A368801 /* ofxGui */,
@@ -2002,6 +2039,7 @@
 				2A8250D41BCE5CC500EEADDF /* ofxUIScrollableCanvas.cpp in Sources */,
 				2AE048F81C030E97009C99AF /* b2Body.cpp in Sources */,
 				2ADCED431BC4834300F7F86A /* ofxEasingExpo.cpp in Sources */,
+				B0605EE41C3868B300707F3D /* CreEPS.cpp in Sources */,
 				2AE049091C030E97009C99AF /* b2GearJoint.cpp in Sources */,
 				2A8250D91BCE5CC500EEADDF /* ofxUISuperCanvas.cpp in Sources */,
 				B0DFBF0A1C11EE9400076552 /* fontstash.c in Sources */,
@@ -2027,6 +2065,7 @@
 				2ADCED461BC4834300F7F86A /* ofxEasingQuart.cpp in Sources */,
 				2A8250C21BCE5CC500EEADDF /* ofxUIFPSSlider.cpp in Sources */,
 				B0DFBF111C11EE9400076552 /* ofTextConverter.cpp in Sources */,
+				B0605EE51C3868B300707F3D /* ofxVectorGraphics.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				2AE048E11C030E97009C99AF /* ofxBox2dConvexPoly.cpp in Sources */,

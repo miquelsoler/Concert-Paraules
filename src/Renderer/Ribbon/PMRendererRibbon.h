@@ -10,6 +10,8 @@
 #include "PMBaseRenderer.h"
 #include "PMRibbonPainter.h"
 #include "PMUICanvasRibbonRenderer.h"
+#include "ofxVectorGraphics.h"
+
 
 
 class PMRendererRibbon : public PMBaseRenderer

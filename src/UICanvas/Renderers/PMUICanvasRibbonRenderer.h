@@ -43,6 +43,7 @@ public:
     int             getGradientId()         { return gradientId; }
     int             getGradientSpeed()      { return gradientSpeed; }
     ofColor         getRibbonColor()        { return ofColor(colorR, colorG, colorB, 255); }
+    float           getNextPositionDelta()  { return nextPositionDelta; };
 
 private:
 
@@ -62,6 +63,8 @@ private:
     int         gradientSpeed;
     int         numGradients;
     int         colorR, colorG, colorB;
+    
+    float       nextPositionDelta;
 };
 
 

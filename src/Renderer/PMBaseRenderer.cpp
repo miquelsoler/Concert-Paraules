@@ -31,12 +31,14 @@ void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
 //    fbo.begin();
 //    {
 
+    
     if(a<1.0f)
     {
 //        // background dimming
         ofFloatColor fc = ofFloatColor(r,g,b,a);
         ofSetColor(fc);
         //ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofFill();
         ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
     }
     else
