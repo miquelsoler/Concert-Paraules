@@ -133,12 +133,24 @@ void PMUICanvasBaseRenderer::keyPressed(int key)
 
 void PMUICanvasBaseRenderer::keyReleased(int key)
 {
-    if (key == OF_KEY_SHIFT) {
+    if (key == OF_KEY_SHIFT)
+    {
         presetsMode = RENDERER_PRESET_LOAD;
         return;
     }
-
-    int presetNumber = 0;
+    
+    /// SHIT to avoid
+    bool found = false;
+    unsigned int col = 0, row = 0;
+    for (unsigned int i=0; i<PRESETSMATRIX_NUMCOLS && !found; ++i) {
+        col = i;
+        for (unsigned int j=0; j<PRESETSMATRIX_NUMROWS && !found; ++j) {
+            row = j;
+            found = presetsMatrix->getState(j, i);
+        }
+    }
+    int presetNumber = (row * PRESETSMATRIX_NUMCOLS) + col;
+    
     switch(key)
     {
         case '1': presetNumber = 0; break;
