@@ -4,8 +4,8 @@
 
 #include "PMUICanvasBaseRenderer.h"
 
-static const unsigned int PRESETSMATRIX_NUMROWS = 2;
-static const unsigned int PRESETSMATRIX_NUMCOLS = 5;
+static const unsigned int PRESETSMATRIX_NUMROWS = 1;
+static const unsigned int PRESETSMATRIX_NUMCOLS = 10;
 
 static const string STR_PRESETS = "PRESETS";
 static const string STR_PRESETS_INFO = "Click to LOAD | Shift+Click to SAVE";
@@ -38,7 +38,7 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
         setGlobalButtonDimension(32);
         presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS);
         presetsMatrix->setAllowMultiple(false);
-        presetsMatrix->setTriggerType(OFX_UI_TRIGGER_END);
+        presetsMatrix->setTriggerType(OFX_UI_TRIGGER_CHANGE);
     }
 
     { // Bg color
@@ -152,6 +152,17 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
         case '9': presetNumber = 8; break;
         case '0': presetNumber = 9; break;
         default: break;
+    }
+
+    if (presetsMode == RENDERER_PRESET_LOAD)
+    {
+        unsigned int row = presetNumber / PRESETSMATRIX_NUMCOLS;
+        unsigned int col = presetNumber % PRESETSMATRIX_NUMCOLS;
+        for (unsigned int i=0; i<PRESETSMATRIX_NUMROWS; ++i) {
+            for (unsigned int j=0; j<PRESETSMATRIX_NUMCOLS; ++j) {
+                presetsMatrix->setToggle(i, j, (i==row) && (j==col), true);
+            }
+        }
     }
 
     loadPreset(presetNumber);
