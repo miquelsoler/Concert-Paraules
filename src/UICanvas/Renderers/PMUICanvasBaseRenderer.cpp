@@ -4,8 +4,8 @@
 
 #include "PMUICanvasBaseRenderer.h"
 
-static const unsigned int PRESETSMATRIX_NUMROWS = 1;
-static const unsigned int PRESETSMATRIX_NUMCOLS = 6;
+static const unsigned int PRESETSMATRIX_NUMROWS = 2;
+static const unsigned int PRESETSMATRIX_NUMCOLS = 5;
 
 static const string STR_PRESETS = "PRESETS";
 static const string STR_PRESETS_INFO = "Click to LOAD | Shift+Click to SAVE";
@@ -138,11 +138,21 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
         return;
     }
 
-    int firstAsciiCode = (int)'1';
-    int lastAsciiCode = (int)'9';
+    int presetNumber = 0;
+    switch(key)
+    {
+        case '1': presetNumber = 0; break;
+        case '2': presetNumber = 1; break;
+        case '3': presetNumber = 2; break;
+        case '4': presetNumber = 3; break;
+        case '5': presetNumber = 4; break;
+        case '6': presetNumber = 5; break;
+        case '7': presetNumber = 6; break;
+        case '8': presetNumber = 7; break;
+        case '9': presetNumber = 8; break;
+        case '0': presetNumber = 9; break;
+        default: break;
+    }
 
-    if ((key < firstAsciiCode) || (key > lastAsciiCode))
-        return;
-
-    loadPreset(key - firstAsciiCode);
+    loadPreset(presetNumber);
 }
