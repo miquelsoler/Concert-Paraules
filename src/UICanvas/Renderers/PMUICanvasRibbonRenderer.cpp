@@ -14,6 +14,7 @@ static const string STR_BRUSH_ADVANCED_DIVISIONS    = "Number of Divisions";
 static const string STR_BRUSH_ADVANCED_EASE         = "Ease";
 static const string STR_BRUSH_ADVANCED_MAXVERT      = "Path Max Vertices";
 static const string STR_BRUSH_COLORMODE             = "BRUSH COLOR MODE";
+static const string STR_BRUSH_COLORMODE_RADIO       = "RADIO BRUSH COLOR MODE";
 static const string STR_BRUSH_COLORMODE_MFIXEDCOLOR = "Fixed Color";
 static const string STR_BRUSH_COLORMODE_MGRSPEED    = "Gradient (with Speed)";
 static const string STR_BRUSH_COLORMODE_MGREDGES    = "Gradient (edges)";
@@ -65,7 +66,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
         colorModesNames.push_back(STR_BRUSH_COLORMODE_MFIXEDCOLOR);
         colorModesNames.push_back(STR_BRUSH_COLORMODE_MGRSPEED);
         colorModesNames.push_back(STR_BRUSH_COLORMODE_MGREDGES);
-        addRadio(STR_BRUSH_COLORMODE, colorModesNames, OFX_UI_ORIENTATION_VERTICAL);
+        addRadio(STR_BRUSH_COLORMODE_RADIO, colorModesNames, OFX_UI_ORIENTATION_VERTICAL);
 
         addImageSampler(STR_BRUSH_COLORMODE_GRIMAGE, &gradientImage);
         addIntSlider(STR_BRUSH_COLORMODE_GRID, 1, 4, &gradientId);
@@ -90,7 +91,7 @@ void PMUICanvasRibbonRenderer::loadPreset(int presetNumber)
 {
     PMUICanvasBaseRenderer::loadPreset(presetNumber);
 
-    ofxUIRadio *colorModeRadio = (ofxUIRadio *)getWidget(STR_BRUSH_COLORMODE);
+    ofxUIRadio *colorModeRadio = (ofxUIRadio *)getWidget(STR_BRUSH_COLORMODE_RADIO);
     colorMode = (RibbonColorMode)(colorModeRadio->getValue());
 
     ofxUIIntSlider *slColorR = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_R);
@@ -111,7 +112,7 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
 
     string name = e.getName();
 
-    if (name == STR_BRUSH_COLORMODE)
+    if (name == STR_BRUSH_COLORMODE_RADIO)
     {
         ofxUIRadio *colorModeRadio = (ofxUIRadio *)(e.widget);
         colorMode = (RibbonColorMode)(colorModeRadio->getValue());
