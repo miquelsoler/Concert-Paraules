@@ -33,16 +33,22 @@ PMSettingsManagerAudioDevices::PMSettingsManagerAudioDevices() : PMSettingsManag
 
 bool PMSettingsManagerAudioDevices::load(string filename)
 {
+    bool result;
     if (!fileExists(FILENAME))
-        createJSONSettings();
-
-    bool result = PMSettingsManager::load(filename);
-    if (result)
     {
-//        if (!JSONmatchesCurrentAudioDevices())
-//            createJSONSettings();
+        createJSONSettings();
+        result = true;
+    }
+    else
+    {
+        result = PMSettingsManager::load(filename);
+        if (result)
+        {
+            if (!JSONmatchesCurrentAudioDevices())
+                createJSONSettings();
 
-        buildAllAudioDevicesVectorFromJSON();
+            buildAllAudioDevicesVectorFromJSON();
+        }
     }
 
     return result;
@@ -67,7 +73,7 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
     {
         Json::Value jsonDevice;
         jsonDevice[STR_DEVICE_ID] = devices[i].deviceID;
-        jsonDevice[STR_DEVICE_ENABLED] = false;
+        jsonDevice[STR_DEVICE_ENABLED] = (i==0);
         jsonDevice[STR_DEVICE_NAME] = devices[i].name;
         jsonDevice[STR_DEVICE_INCHANNELS] = devices[i].inputChannels;
         jsonDevice[STR_DEVICE_OUTCHANNELS] = devices[i].outputChannels;
@@ -77,7 +83,7 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
         {
             Json::Value jsonDeviceChannel;
             jsonDeviceChannel[STR_CHANNEL_ID] = j;
-            jsonDeviceChannel[STR_CHANNEL_ENABLED] = false;
+            jsonDeviceChannel[STR_CHANNEL_ENABLED] = (j<2);
 
             jsonDevice[STR_CHANNELS].append(jsonDeviceChannel);
         }
@@ -90,8 +96,19 @@ void PMSettingsManagerAudioDevices::createJSONSettings()
 
 bool PMSettingsManagerAudioDevices::JSONmatchesCurrentAudioDevices()
 {
-    // TODO: Compare actual audio devices with JSON settings.
-    return true;
+    vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
+
+    // Compare number of devices
+    if (devices.size() != json[STR_DEVICES].size()) return false;
+
+    // Compare device sorting
+    bool sorted = true;
+    for (int i=0; i<devices.size() && sorted; ++i)
+    {
+        Json::Value jsonDevice = json[STR_DEVICES][i];
+        sorted = sorted && (devices[i].deviceID == jsonDevice[STR_DEVICE_ID].asUInt());
+    }
+    return sorted;
 }
 
 void PMSettingsManagerAudioDevices::buildAllAudioDevicesVectorFromJSON()
