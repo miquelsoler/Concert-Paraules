@@ -46,8 +46,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         string strChannelNumbers;
         vector<unsigned int> channelNumbers = (*itAudioAnalyzer)->getChannelNumbers();
-        for (int i=0; i<channelNumbers.size(); ++i)
-        {
+        for (int i = 0; i < channelNumbers.size(); ++i) {
             strChannelNumbers += ofToString(channelNumbers[i]);
             if (i < channelNumbers.size() - 1)
                 strChannelNumbers += ",";
@@ -58,54 +57,47 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         // Presets
         addLabel(STR_PRESETS);
-        presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS,200/PRESETSMATRIX_NUMCOLS,20);
+        presetsMatrix = addToggleMatrix(STR_PRESETS, PRESETSMATRIX_NUMROWS, PRESETSMATRIX_NUMCOLS, 200 / PRESETSMATRIX_NUMCOLS, 20);
         presetsMatrix->setAllowMultiple(false);
-        presetsMatrix->setTriggerType(OFX_UI_TRIGGER_NONE );
-        
-        ofAddListener(newGUIEvent, this, &PMUICanvasAudioAnalyzer::handleEvents);
 
         addSpacer();
 
         addLabel(STR_PITCH);
-        ofxUISlider *pitchSlider = addSlider(STR_PITCH_MIDINOTE, 0, 127, &pitchCurrentMidiNote);
-        pitchSlider->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSlider(STR_PITCH_MIDINOTE, 0, 127, &pitchCurrentMidiNote);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
         addLabel(STR_ENERGY);
-        addSlider(STR_ENERGY_GAIN,1.0,10.0,&energyGainCurrent);
-        ofxUISlider *energySilder = addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
-        energySilder->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSlider(STR_ENERGY_GAIN, 1.0, 10.0, &energyGainCurrent);
+        addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
 
         addLabel(STR_SILENCE);
-        addSlider(STR_SILENCE_THRSHLD,0.0,0.5,&silenceThreshold);
-        addSlider(STR_SILENCE_LENGTH,0.0,1000.0,&silenceQueueLength);
-        ofxUILabelToggle *silenceToggle = addLabelToggle(STR_SILENCE, &silenceOn);
-        silenceToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSlider(STR_SILENCE_THRSHLD, 0.0, 0.5, &silenceThreshold);
+        addSlider(STR_SILENCE_LENGTH, 0.0, 1000.0, &silenceQueueLength);
+        addLabelToggle(STR_SILENCE, &silenceOn);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
 
         addLabel(STR_PAUSE);
-        addSlider(STR_PAUSE_LENGTH,0.0,10000.0,&pauseQueueLength);
-        ofxUILabelToggle *pauseToggle = addLabelToggle(STR_PAUSE, &pauseOn);
-        pauseToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSlider(STR_PAUSE_LENGTH, 0.0, 10000.0, &pauseQueueLength);
+        addLabelToggle(STR_PAUSE, &pauseOn);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
         addLabel(STR_ONSET);
-        addSlider(STR_ONSET_THRSHLD,0.0,1.0,&onsetThreshold);
-        ofxUILabelToggle *onsetToggle = addLabelToggle(STR_ONSET, &onsetOn);
-        onsetToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addSlider(STR_ONSET_THRSHLD, 0.0, 1.0, &onsetThreshold);
+        addLabelToggle(STR_ONSET, &onsetOn);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
 
         addLabel(STR_SHT);
-        ofxUILabelToggle *shtToggle = addLabelToggle(STR_SHT, &shtOn);
-        shtToggle->setTriggerType(OFX_UI_TRIGGER_NONE);
+        addLabelToggle(STR_SHT, &shtOn);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
+
+        ofAddListener(newGUIEvent, this, &PMUICanvasAudioAnalyzer::handleEvents);
     }
 
     if (autosize) autoSizeToFitWidgets();
