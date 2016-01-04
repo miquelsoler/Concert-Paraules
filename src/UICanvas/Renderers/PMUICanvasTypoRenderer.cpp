@@ -34,7 +34,7 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSlider("Gravity X", -50, 50, &gravityX);
     addSlider("Gravity Y", -50, 50, &gravityY);
     addSlider("Gravity Sinus Freq",-8,8, &guiSinusFreq);
-    addSlider("Gravity Sinus Amplitude ",0, 250, &guiSinusAmplitude);
+    addSlider("Gravity Sinus Amplitude",0, 250, &guiSinusAmplitude);
     
     if (autosize) autoSizeToFitWidgets();
 
