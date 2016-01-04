@@ -125,8 +125,8 @@ void PMBaseRenderer::clear()
 void PMBaseRenderer::showGUI(bool show)
 {
     gui->setVisible(show);
+    gui->enableKeyEventCallbacks();
 }
-
 
 void PMBaseRenderer::pitchChanged(pitchParams pitchParams)
 {
