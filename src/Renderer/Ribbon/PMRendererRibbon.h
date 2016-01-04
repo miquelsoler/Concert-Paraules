@@ -34,9 +34,6 @@ public:
     void setX(int x);
     void setY(int y);
 
-    void strokeStarted();
-    void strokeEnded();
-
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -76,7 +73,6 @@ private:
 
     // Others
     float divisions;
-    bool isInStroke;
     bool isSilent;
 
     void addOffsetToPosition(float xOffset, float yOffset);

@@ -117,25 +117,32 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     aubioOnset->audioIn(input, bufferSize, nChannels);
     aubioMelBands->audioIn(input, bufferSize, nChannels);
 
+    /// PITCH
+    ///////////
     float currentMidiNote = aubioPitch->latestPitch;
 //    cout << "Pitch confidence: " << aubioPitch->pitchConfidence << endl;
 
-    // Silence
+    // SILENCE
+    ////////////
+//    cout << "............." << endl;
 //    cout << " sil.thr : " << silenceThreshold << endl;
 //    cout << " sil.length : " << silenceTimeTreshold << endl;
 //    cout << " gain : " << digitalGain << endl;
 
-    bool isSilent = (getAbsMean(input, bufferSize) < silenceThreshold);
+    float absMean = getAbsMean(input,bufferSize);
+    
+    bool isSilent = (absMean < silenceThreshold);
     {
         if (wasSilent != isSilent) // Changes in silence (ON>OFF or OFF>ON)
         {
-            wasSilent = isSilent;
-            if (isSilent) {
+            if (isSilent)
+            {
                 silenceStarted();
-            } else {
+            } else
+            {
                 silenceEnded();
-
             }
+            wasSilent = isSilent;
         }
 
         if (isInSilence)
@@ -167,7 +174,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
     // Mel bands
     {
-        energyParams.energy = getAbsMean(input, bufferSize);
+        energyParams.energy = absMean;
         ofNotifyEvent(eventEnergyChanged, energyParams, this);
     }
 
@@ -259,15 +266,18 @@ void PMDeviceAudioAnalyzer::updateSilenceTime()
 
     bool sendPauseEvent = false;
 
-    if (timeOfSilence > pauseTimeTreshold) {
+    if (timeOfSilence > pauseTimeTreshold)
+    {
         sendPauseEvent = !isInPause;
         isInPause = true;
-    } else {
+    } else
+    {
         sendPauseEvent = isInPause;
         isInPause = false;
     }
 
-    if (sendPauseEvent) {
+    if (sendPauseEvent)
+    {
         pauseParams pauseParams;
         pauseParams.deviceID = deviceID;
         pauseParams.audioInputIndex = audioInputIndex;

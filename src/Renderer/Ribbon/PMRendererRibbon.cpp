@@ -6,7 +6,7 @@
 
 ofVec3f pathDirection,newPosition;
 
-static const int POS_MARGIN = 1;
+static const int POS_MARGIN = 0;
 static const int NUM_GRADIENT_COLORS = 5;
 
 typedef enum
@@ -39,7 +39,7 @@ void PMRendererRibbon::setup()
 {
     PMBaseRenderer::setup();
 
-    numPainters = 1;// myGUI->getNumPainters();
+    numPainters = myGUI->getNumPainters();
     strokeWidth = myGUI->getStrokeWidth();
     ribbonColorR = (unsigned int)(myGUI->getRibbonColor().r);
     ribbonColorG = (unsigned int)(myGUI->getRibbonColor().g);
@@ -47,7 +47,6 @@ void PMRendererRibbon::setup()
     divisions = myGUI->getDivisions();
 
     rebuildPainters();
-//    strokeStarted();
 
     isSilent = true;
     gradientPosition = 1 / (2 *float(NUM_GRADIENT_COLORS));
@@ -58,8 +57,6 @@ void PMRendererRibbon::setup()
 void PMRendererRibbon::update()
 {
     if (state != RENDERERSTATE_ON) return;
-
-    float ini = ofGetElapsedTimef();
     
     PMBaseRenderer::update(); 
 
@@ -89,7 +86,6 @@ void PMRendererRibbon::update()
         }
     }
 
-//    if (!isInStroke) return;
 
     if (!isSilent || mode==RM_MOUSE)
     {
@@ -124,15 +120,11 @@ void PMRendererRibbon::rebuildPainters()
     float ease = 0.6;
     for (int i=0; i<numPainters; ++i)
     {
-        //float ease = myGUI->getEase();
         ease = ofRandom(0.0f, 1.0f) * 0.2f + 0.6f;
 
         PMRibbonPainter painter = PMRibbonPainter(ribbonColor, dx, dy, divisions, ease, strokeWidth, myGUI);
         painters.push_back(painter);
     }
-//    lastEase = ease
-
-    isInStroke = false;
 
     PMPainterOrigin origin;
     switch(mode)
@@ -181,17 +173,6 @@ void PMRendererRibbon::setY(int y)
     }
 }
 
-void PMRendererRibbon::strokeStarted()
-{
-    isInStroke = true;
-}
-
-void PMRendererRibbon::strokeEnded()
-{
-    isInStroke = false;
-    for (int i=0; i<numPainters; ++i)
-        painters[i].clear();
-}
 
 void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 {
@@ -209,7 +190,8 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
         {
             float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight()-1, 1, true);
             setY(int(y));
-            break;
+            //cout << "-> settingY  = " << y << " __ smooth.pitch = " << myGUI->getSmoothedPitch() << endl;
+             break;
         }
         case UP_DOWN:
         case UP_DOWN_NRG:
@@ -220,8 +202,20 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
         }
         case PITCH_DRIVE:
         {
-            pitchDrive  = myGUI->getSmoothedPitch()- 0.5f;
             int numVertices;
+            bool positive;
+            
+            pitchDrive  = myGUI->getSmoothedPitch()- 0.5f;
+            
+            if(pitchDrive > 0.0) positive = true;
+            else positive = false;
+            
+            pitchDrive = pow(pitchDrive,1/2);
+            
+            if(positive) pitchDrive = pitchDrive;
+            else pitchDrive = - pitchDrive;
+        
+            
             
             for (int i=0; i<numPainters; ++i)
             {
@@ -237,13 +231,43 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
                         p.addVertex(points[numOfPoints-2+i]);
                     }
 
-                    pathDirection = p.getTangentAtIndexInterpolated(numOfPoints-1);
+                    pathDirection = p.getTangentAtIndexInterpolated(numOfPoints-1).normalize();
                     
-                    newPosition = pathDirection*30;
-                    newPosition.rotate(12.5*pitchDrive, ofVec3f(0,0,1));
+                    newPosition = pathDirection * 10.0 ;
+                    newPosition.rotate(2.5*pitchDrive, ofVec3f(0,0,1));
+                    newPosition = (myGUI->getSmoothedEnergy()*newPosition) + points[numOfPoints-1] ;
+                    
+                    // Y
+                    /////
+                    if(newPosition.y < 0)
+                    {
+                        newPosition.y = newPosition.y * -1;
+                        cout << "y<0" << endl;
+                    }
+                    else if(newPosition.y > ofGetHeight())
+                    {
+                        float dif = newPosition.y - ofGetHeight();
+                        newPosition.y = ofGetHeight() - dif;
+                        cout << "y>h" << endl;
+                    }
+
+                    // X
+                    /////
+                    if(newPosition.x < 0)
+                    {
+                        newPosition.x = newPosition.x * -1;
+                        cout << "x<0" << endl;
+                    }
+                    else if(newPosition.x > ofGetWidth())
+                    {
+                        float dif = newPosition.x - ofGetWidth();
+                        newPosition.x = ofGetWidth() - dif;
+                        cout << "x>w" << endl;
+                    }
+
                     //newPosition = ofVec3f(points[numOfPoints-1] + ( pathDirection * 20 ) );
 //                    newPosition.rotate(2.5*pitchDrive, ofVec3f(0,0,1));
-                    newPosition = newPosition + points[numOfPoints-1] ;
+                    
                     painters[i].setPosition(newPosition.x,newPosition.y);
                 }
             }
@@ -371,15 +395,12 @@ void PMRendererRibbon::mousePressed(int x, int y, int button)
     if (button == OF_MOUSE_BUTTON_1)
     {
         setPosition(x, y);
-        strokeStarted();
     }
 }
 
 void PMRendererRibbon::mouseReleased(int x, int y, int button)
 {
     if (mode != RM_MOUSE) return;
-
-    strokeEnded();
 }
 
 void PMRendererRibbon::switchStateOnOff()
@@ -540,6 +561,17 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
                     newX = xMax;
                 }
                 didReachBorder = true;
+                cout << "did reach border X > max : " << ofGetElapsedTimef() << endl;
+                
+                //refill the points vector from painters ...
+                vector<ofPoint> v;
+                for(int k=0;k<4;k++)
+                {
+                    v.push_back(ofPoint(newX-1000*(3-i),targetPos->y));
+                }
+                painters[i].setPoints(v);
+                return;
+                
             }
             else if (newX < xMin)
             {
@@ -551,6 +583,7 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
                     newX = xMin;
                 }
                 didReachBorder = true;
+                cout << "did reach border X < min :" << ofGetElapsedTimef()  << endl;
             }
 
             painters[i].setX(newX);
@@ -567,8 +600,11 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
                 } else {
                     offsetSign = -1;
                     newY = yMax;
+                    cout << "did reach border Y > max : " << ofGetElapsedTimef()  << endl;
                 }
                 didReachBorder = bounces;
+               
+
             }
             else if (newY < 1)
             {
@@ -578,8 +614,10 @@ void PMRendererRibbon::addOffsetToPosition(float xOffset, float yOffset)
                 } else {
                     offsetSign = 1;
                     newY = yMin;
+                    cout << "did reach border Y < min " << ofGetElapsedTimef()  << endl;
                 }
                 didReachBorder = bounces;
+
             }
 
             painters[i].setY(newY);

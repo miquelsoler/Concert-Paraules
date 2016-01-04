@@ -32,7 +32,7 @@ PMRibbonPainter::PMRibbonPainter(ofColor _color, float _dx, float _dy, float _di
     vec.noFill();
     for(int i=0;i<4;i++)
     {
-        points.push_back(ofPoint(0,0,0));        
+        points.push_back(ofPoint(ofGetWidth()/2,ofGetHeight()/2,0));
     }
     vec.enableDraw();
 
@@ -215,6 +215,9 @@ void PMRibbonPainter::setPosition(int x, int y)
     dx -= ax = (ax + (dx - targetPos.x) * div) * ease;
     dy -= ay = (ay + (dy - targetPos.y) * div) * ease;
 
+    
+    //cout << "dx = " << dx << " ___ dy = " << dy << "   __ targetPos = " << targetPos.x << " , " << targetPos.y << endl;
+    
     if ((dx != targetPos.x) && (dy != targetPos.y))
     {
         ofPoint p = ofPoint(dx,dy);

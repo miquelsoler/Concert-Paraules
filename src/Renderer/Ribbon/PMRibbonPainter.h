@@ -42,9 +42,10 @@ public:
     vector<ofPoint> getVertices() {return vertices;};
     ofPolyline getPolyline()    {return polyline;};
 
-    ofxVectorGraphics getVectorGraphics() { return vec; };
-    vector<ofPoint> getPoints() { return points; };
-
+    ofxVectorGraphics getVectorGraphics()   { return vec; };
+    vector<ofPoint> getPoints()             { return points; };
+    void setPoints(vector<ofPoint> p)      { points = p;};
+    
 private:
 
     float dx, dy;
