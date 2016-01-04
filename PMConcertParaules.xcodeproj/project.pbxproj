@@ -475,13 +475,13 @@
 		2A9352521C00AC6C001FF954 /* PMRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRecorder.cpp; sourceTree = "<group>"; };
 		2A9352531C00AC6C001FF954 /* PMRecorder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PMRecorder.hpp; sourceTree = "<group>"; };
 		2AC0885F1BFB59BC00488E72 /* ofxAubio.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubio.h; sourceTree = "<group>"; };
-		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
+		2AC088601BFB59BC00488E72 /* ofxAubioBeat.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBeat.cpp; sourceTree = "<group>"; };
 		2AC088611BFB59BC00488E72 /* ofxAubioBeat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioBeat.h; sourceTree = "<group>"; };
-		2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBlock.cpp; sourceTree = "<group>"; };
+		2AC088621BFB59BC00488E72 /* ofxAubioBlock.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioBlock.cpp; sourceTree = "<group>"; };
 		2AC088631BFB59BC00488E72 /* ofxAubioBlock.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioBlock.h; sourceTree = "<group>"; };
-		2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioMelBands.cpp; sourceTree = "<group>"; };
+		2AC088641BFB59BC00488E72 /* ofxAubioMelBands.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioMelBands.cpp; sourceTree = "<group>"; };
 		2AC088651BFB59BC00488E72 /* ofxAubioMelBands.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioMelBands.h; sourceTree = "<group>"; };
-		2AC088661BFB59BC00488E72 /* ofxAubioOnset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioOnset.cpp; sourceTree = "<group>"; };
+		2AC088661BFB59BC00488E72 /* ofxAubioOnset.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioOnset.cpp; sourceTree = "<group>"; };
 		2AC088671BFB59BC00488E72 /* ofxAubioOnset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioOnset.h; sourceTree = "<group>"; };
 		2AC088681BFB59BC00488E72 /* ofxAubioPitch.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAubioPitch.cpp; sourceTree = "<group>"; };
 		2AC088691BFB59BC00488E72 /* ofxAubioPitch.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxAubioPitch.h; sourceTree = "<group>"; };
@@ -2533,7 +2533,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			};
 			name = Release;
 		};

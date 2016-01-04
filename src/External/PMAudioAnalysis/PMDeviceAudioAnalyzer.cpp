@@ -124,10 +124,6 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
     // SILENCE
     ////////////
-//    cout << "............." << endl;
-//    cout << " sil.thr : " << silenceThreshold << endl;
-//    cout << " sil.length : " << silenceTimeTreshold << endl;
-    cout << " gain : " << digitalGain << endl;
 
     float absMean = getAbsMean(input,bufferSize);
     
@@ -200,6 +196,8 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     if (PMRecorder::getInstance().isRecording()) {
         PMRecorder::getInstance().addAudioBuffer(input, bufferSize, inChannels);
     }
+
+//    cout << "g:" << digitalGain << " st:" << silenceThreshold << " sl:" << silenceTimeTreshold << endl;
 }
 
 float PMDeviceAudioAnalyzer::getEnergy()

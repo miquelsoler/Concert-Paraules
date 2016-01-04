@@ -11,8 +11,6 @@
 #include "Defaults.h"
 #include "PMSettingsManagerGeneral.h"
 
-static const string STR_CANVAS_BASEPATH = "settings/gui/";
-
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
 #ifdef OF_DEBUG
@@ -195,10 +193,7 @@ void PMScene2::updateEnter()
     {
         int i;
         vector<PMUICanvasAudioAnalyzer *>::iterator it;
-        for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++)
-        {
-            string guiSettingsFilename = "audioAnalyzer2." + ofToString(i) + ".xml";
-            (*it)->loadSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
+        for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++) {
             (*it)->setVisible(showGUI);
         }
     }
@@ -252,11 +247,7 @@ void PMScene2::saveSettings()
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
     for(i=0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
-    {
-        string guiSettingsFilename = "audioAnalyzer2." + ofToString(i) + ".xml";
-        (*it)->saveSettings(STR_CANVAS_BASEPATH + guiSettingsFilename);
         (*it)->setVisible(false);
-    }
 
     recorder->exit();
 }

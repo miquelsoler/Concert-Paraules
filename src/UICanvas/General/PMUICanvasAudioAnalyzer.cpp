@@ -178,7 +178,6 @@ void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
     energyCurrent = energyGainCurrent * energyParams.energy;
 }
 
-
 void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
 {
     if (silenceParams.audioInputIndex != audioInputIndex) return;
