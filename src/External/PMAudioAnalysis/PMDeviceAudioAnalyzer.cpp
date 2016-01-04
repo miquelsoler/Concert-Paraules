@@ -127,7 +127,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 //    cout << "............." << endl;
 //    cout << " sil.thr : " << silenceThreshold << endl;
 //    cout << " sil.length : " << silenceTimeTreshold << endl;
-//    cout << " gain : " << digitalGain << endl;
+    cout << " gain : " << digitalGain << endl;
 
     float absMean = getAbsMean(input,bufferSize);
     
