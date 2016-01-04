@@ -9,7 +9,6 @@
 
 #include "PMAudioInParams.h"
 #include "PMAudioAnalyzer.hpp"
-//#include "PMSettingsManagerAudioAnalyzers.h"
 
 class PMUICanvasAudioAnalyzer : public PMBaseUICanvas
 {
@@ -33,67 +32,43 @@ private:
 
     vector<PMDeviceAudioAnalyzer *> *audioAnalyzers;
 
-    // Matrix --------------------------------
-    
-    ofxUIToggleMatrix       *presetsMatrix;
-    int                     getActivePreset();
-    bool                    savingPreset;
+    // Presets --------------------------------
+    ofxUIToggleMatrix   *presetsMatrix;
+    bool                savingPreset;
+    int getActivePreset();
 
     // Pitch ------------------------------------
-
+    float               pitchCurrentMidiNote;
     void pitchChanged(pitchParams &pitchParams);
 
-    ofxUISlider         *pitchSlider;
-    float               pitchMinMidiNote, pitchMaxMidiNote;
-    float pitchCurrentMidiNote;
-
     // Energy -----------------------------------
-
+    float               energyGainCurrent;
+    float               energyCurrent;
     void energyChanged(energyParams &energyParams);
 
-    ofxUISlider         *energyGainSlider;
-    float               energyGainCurrent;
-    ofxUISlider         *energySilder;
-    float               energyCurrent;
-
     // Silence ----------------------------------
-
-    void silenceStateChanged(silenceParams &silenceParams);
-
-    ofxUILabelToggle    *silenceToggle;
     bool                silenceOn;
     float               silenceThreshold;
     float               silenceQueueLength;
-    
+    void silenceStateChanged(silenceParams &silenceParams);
+
     // Pause ------------------------------------
-
-    void pauseStateChanged(pauseParams &pauseParams);
-
-    ofxUILabelToggle    *pauseToggle;
     bool                pauseOn;
     float               pauseQueueLength;
+    void pauseStateChanged(pauseParams &pauseParams);
 
     // Onset ------------------------------------
-
-    void onsetStateChanged(onsetParams &onsetParams);
-
-    ofxUILabelToggle    *onsetToggle;
     bool                onsetOn;
     float               onsetThreshold;
+    void onsetStateChanged(onsetParams &onsetParams);
 
     // Sht ------------------------------------
-    
-    void shtStateChanged(shtParams &_shtParams);
-    
-    ofxUILabelToggle    *shtToggle;
     bool                shtOn;
-    
-    void            keyPressed(int key);
-    void            keyReleased(int key);
+    void shtStateChanged(shtParams &_shtParams);
 
-    // Settings
-
-    //PMSettingsManagerAudioAnalyzers *settings;
+    // Key handling ----------------------------
+    void keyPressed(int key);
+    void keyReleased(int key);
 };
 
 
