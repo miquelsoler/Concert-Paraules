@@ -12,8 +12,11 @@ PMCurvesPainter::PMCurvesPainter(PMUICanvasCurvesRenderer *_gui)
     gui = _gui;
 
     // init values
-    mode = 0;
     
+    // vector Graphics config
+    vec.setColor(255, 255 , 255);
+    vec.noFill();
+    vec.enableDraw();
 
 }
 
@@ -26,16 +29,12 @@ void PMCurvesPainter::setup()
         points.push_back(p);
     }
     
-    // vector Graphics config
-    vec.setColor(255, 255 , 255);
-    vec.noFill();
-    vec.enableDraw();
 }
 
 void PMCurvesPainter::update()
 {
     
-    float delta = 0.45;
+    float delta = gui->getDelta();
     float mX = ofClamp(ofGetMouseX(),0.0,ofGetWidth());
     float mY = ofClamp(ofGetMouseY(),0.0,ofGetHeight());
     
@@ -45,19 +44,19 @@ void PMCurvesPainter::update()
     bool isNegative=false;
     if(ny<0) isNegative = true;
     
-    ny = pow(ny,2);
+    ny = pow(ny,gui->getPowExponent());
     
     if(isNegative) ny=-ny;
     
-    if(mode==0)
+    if(gui->getMode()==1)
     {
         if(points.size()>1)
         {
             
             turnDirection = lineDirection.normalize();
-            turnDirection.rotate(90.0 * ny,ofVec3f(0,0,1));
+            turnDirection.rotate(gui->getMaxRotation() * ny,ofVec3f(0,0,1));
             
-            ofPoint p = points[points.size()-1] + turnDirection*5;
+            ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed();
             
             /// DELTA SMOOTHING
             p = (p*delta) + (points[points.size()-1]*(1.0-delta));
@@ -65,12 +64,12 @@ void PMCurvesPainter::update()
             controlBounds(p);
         }
     }
-    else if(mode==1)
+    else if(gui->getMode()==2)
     {
         if(points.size()>1)
         {
             //            posX = fmod(posX+10,ofGetWidth());
-            posX = posX + 10;
+            posX = posX + gui->getSpeed();
             ofPoint p = ofPoint(posX,mY * ofGetHeight());
             
             /// DELTA SMOOTHING
@@ -80,11 +79,11 @@ void PMCurvesPainter::update()
         }
         
     }
-    else if(mode==2)
+    else if(gui->getMode()==3)
     {
         if(points.size()>1)
         {
-            posY = posY + 10;
+            posY = posY + gui->getSpeed();
             ofPoint p = ofPoint(mX * ofGetWidth(),posY);
             
             
@@ -117,9 +116,12 @@ void PMCurvesPainter::draw()
         // DRAW CURVE !!
         /////////////////
         // draw the curve from the last 4 points ...
-        ofSetLineWidth(ofMap(ofGetMouseX(),0,ofGetWidth(),0.0,10.0));
-        ofSetColor(255,128,0);
-        ofEnableSmoothing();
+        ofSetLineWidth(gui->getThickness());
+        ofSetColor(gui->getCurveColor());
+       ofEnableSmoothing();
+        
+        ofNoFill();
+
         vec.curve(points[0].x,/* + (ammount * ofNoise(points[0].x)/ofGetWidth()),*/
                   points[0].y,/* + (ammount * ofNoise(points[0].y)/ofGetHeight()),*/
                   points[1].x,/* + (ammount * ofNoise(points[1].x)/ofGetWidth()),*/
@@ -161,25 +163,29 @@ void PMCurvesPainter::draw()
         /// DRAW DEBUG
         /////////////////
         
+        // draw the points
+        ///////////////////
+        glPointSize(gui->getThickness());
+        ofSetColor(gui->getCurveColor());
+        glBegin(GL_POINTS);
+        glVertex2f(points[0].x,points[0].y);
+        glVertex2f((points[0].x + points[1].x)/2 ,(points[0].y + points[1].y)/2 );
+        glVertex2f(points[1].x,points[1].y);
+        glVertex2f((points[1].x + points[2].x)/2 ,(points[1].y + points[2].y)/2 );
+        glVertex2f(points[2].x,points[2].y);
+        glVertex2f((points[2].x + points[3].x)/2 ,(points[2].y + points[3].y)/2 );
+        glVertex2f(points[3].x,points[3].y);
+        glEnd();
+                
         if(drawDebug)
         {
-            // draw the points
-            ///////////////////
-            glPointSize(10);
-            ofSetColor(255,0,0,32);
-            glBegin(GL_POINTS);
-            glVertex2f(points[0].x,points[0].y);
-            glVertex2f(points[1].x,points[1].y);
-            glVertex2f(points[2].x,points[2].y);
-            glVertex2f(points[3].x,points[3].y);
-            glEnd();
             
             /// DRAW lineDirection
-            ofSetColor(0,255,255,32);
+            ofSetColor(0,255,255,64);
             ofDrawLine(points[3],points[3] + lineDirection*100);
             
             // DRAW turnDirection
-            ofSetColor(0,255,0,32);
+            ofSetColor(0,255,0,64);
             ofDrawLine(points[3],points[3] + turnDirection*50);
         }
         
@@ -192,24 +198,25 @@ void PMCurvesPainter::draw()
     }
     
     // print mode in screen
-    if      (mode ==0) ofDrawBitmapString("mode 0 : Curve Turn", 10, 10);
-    else if (mode ==1) ofDrawBitmapString("mode 1 : Curve X", 10, 10);
-    else if (mode ==2) ofDrawBitmapString("mode 2 : Curve Y", 10, 10);
-    
-    
+    if      (gui->getMode() ==1) ofDrawBitmapString("mode 0 : Curve Turn", 10, 10);
+    else if (gui->getMode() ==2) ofDrawBitmapString("mode 1 : Curve X", 10, 10);
+    else if (gui->getMode() ==3) ofDrawBitmapString("mode 2 : Curve Y", 10, 10);
+
     /// LINE ADDONS
-    // add a small circles arround the vector
-    float p = ofRandomuf();
-    ofFill();
-    ofSetColor(255,138,0);
-    if(p<0.05)
-    {
-        ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
-                     points[points.size()-3].y + ofRandomf()*3,
-                     ofMap(ofGetMouseX(),0,ofGetWidth(),0.0,8.0));
-    }
-    ofNoFill();
+    //////////////////
     
+//    // add a small circles arround the vector
+//    float p = ofRandomuf();
+//    ofFill();
+//    ofSetColor(gui->getCurveColor());
+//    if(p<0.05)
+//    {
+//        ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
+//                     points[points.size()-3].y + ofRandomf()*3,
+//                     ofMap(ofGetMouseX(),0,ofGetWidth(),0.0,8.0));
+//    }
+//    ofNoFill();
+//    
     
 }
 
@@ -233,3 +240,83 @@ void PMCurvesPainter::clear()
     }
 
 }
+
+void PMCurvesPainter::controlBounds(ofPoint p)
+{
+    float margin=10;
+    
+    ofPoint res =  p ; //ofPoint(ofGetWidth()/2, ofGetHeight()/2);
+    if(points.size()>1)
+    {
+        if ( ( p.x > ofGetWidth() + margin ) || (p.x < -margin) )
+        {
+            // we're out !! bounce !!
+            ofPoint lastPoint = points[points.size()-1];
+            ofPoint lastVec = p - lastPoint;
+            ofPoint newOrigin;
+            
+            if(p.x<0)
+            {
+                newOrigin = ofPoint(ofGetWidth()+margin,lastPoint.y);
+            }
+            else
+            {
+                newOrigin = ofPoint(-margin,lastPoint.y);
+            }
+            
+            
+            points.clear();
+            points.push_back(newOrigin + lastVec * 0.0);
+            points.push_back(newOrigin + lastVec * 0.33);
+            points.push_back(newOrigin + lastVec * 0.66);
+            points.push_back(newOrigin + lastVec * 1.0);
+            
+            if(gui->getMode()==2) posX=0;
+            else if (gui->getMode()==3) posY=0;
+            
+            return;
+        }
+        
+        
+        else if ( ( p.y > ofGetHeight()+ margin ) || (p.y < - margin) )
+        {
+            // we're out !! bounce !!
+            ofPoint lastPoint = points[points.size()-1];
+            ofPoint lastVec = p - lastPoint;
+            ofPoint newOrigin;
+            
+            if(p.y<0)
+            {
+                newOrigin = ofPoint(lastPoint.x,ofGetHeight()+margin);
+            }
+            else
+            {
+                newOrigin = ofPoint(lastPoint.x,-margin);
+            }
+            
+            if(gui->getMode()==2) posX=0;
+            else if (gui->getMode()==3) posY=0;
+            
+            
+            points.clear();
+            points.push_back(newOrigin + lastVec * 0.0);
+            points.push_back(newOrigin + lastVec * 0.33);
+            points.push_back(newOrigin + lastVec * 0.66);
+            points.push_back(newOrigin + lastVec * 1.0);
+            
+            return;
+        }
+        else
+        {
+            ofPoint newP = p;
+            //p.x = p.x + ofRandom(-1,1)*500;
+            //p.y = p.y + ofRandom(-1,1)*500;
+            points.push_back(newP);
+            //cout << " Random " << p.x << " , " << p.y << endl;
+        }
+    }
+    
+}
+
+
+

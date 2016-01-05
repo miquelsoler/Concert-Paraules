@@ -15,7 +15,12 @@ static const string STR_BRUSH_COLORMODE_GRSPEED     = "Gradient Speed";
 static const string STR_BRUSH_COLORMODE_R           = "Fixed Red";
 static const string STR_BRUSH_COLORMODE_G           = "Fixed Green";
 static const string STR_BRUSH_COLORMODE_B           = "Fixed Blue";
-
+static const string STR_NUM_PAINTERS                = "Num. Painters";
+static const string STR_SPEED                       = "Speed";
+static const string STR_DELTA                       = "Delta";
+static const string STR_POW                         = "Pow Exponent";
+static const string STR_MAX_ROTATION                = "Max Rotation";
+static const string STR_THICKNESS                   = "Thickness";
 
 PMUICanvasCurvesRenderer::PMUICanvasCurvesRenderer(PMUIRendererType type, string title, int headerFontSize) : PMUICanvasBaseRenderer(type, title, headerFontSize)
 {
@@ -32,6 +37,15 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
     setGlobalButtonDimension(14);
 
     { // Color mode
+        addSpacer();
+        
+        addIntSlider(STR_NUM_PAINTERS, 1, 100, &numPainters);
+        addSlider(STR_SPEED,0.0,200.0,&speed);
+        addSlider(STR_DELTA,0.0,1.0,&delta);
+        addSlider(STR_POW,0.0,5.0,&powExponent);
+        addSlider(STR_MAX_ROTATION,0.0,90.0,&maxRotation);
+        addSlider(STR_THICKNESS,0.0,90.0,&thickness);
+        
         addSpacer();
         addLabel(STR_BRUSH_COLORMODE);
 

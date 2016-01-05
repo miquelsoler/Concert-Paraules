@@ -32,6 +32,8 @@ public:
 
     virtual void switchStateOnOff();
 
+    void rebuildPainters();
+
 private:
 
     float gradientPosition;

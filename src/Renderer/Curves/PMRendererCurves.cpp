@@ -35,6 +35,8 @@ void PMRendererCurves::setup()
     gradientPosition = 1 / (2 *float(NUM_GRADIENT_COLORS));
     gradientReverse = false;
     offsetSign = 1;
+    
+    rebuildPainters();
 }
 
 void PMRendererCurves::update()
@@ -43,6 +45,10 @@ void PMRendererCurves::update()
     
     PMBaseRenderer::update(); 
 
+    for(int i=0;i<myGUI->getNumPainters();i++)
+    {
+        painters[i].update();
+    }
 
 //    if (!isSilent)
 //    {
@@ -85,8 +91,10 @@ void PMRendererCurves::drawIntoFBO()
 
         clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
 
-//        for (int i=0; i<numPainters; ++i)
-//            painters[i].draw();
+        for (int i=0; i<myGUI->getNumPainters(); i++)
+        {
+            painters[i].draw();
+        }
     }
     fbo.end();
 }
@@ -329,3 +337,18 @@ void PMRendererCurves::switchStateOnOff()
     }
 }
 
+void PMRendererCurves::rebuildPainters()
+{
+    painters.clear();
+    
+    for (int i=0; i<myGUI->getNumPainters(); ++i)
+    {
+        PMCurvesPainter painter = PMCurvesPainter(myGUI);
+        painters.push_back(painter);
+    }
+    
+    for (int i=0; i<myGUI->getNumPainters(); ++i)
+    {
+        painters[i].setup();
+    }
+}

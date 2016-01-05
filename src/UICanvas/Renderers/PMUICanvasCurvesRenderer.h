@@ -27,14 +27,21 @@ public:
     virtual void handleEvents(ofxUIEventArgs &e);
 
     
-    CurvesColorMode getColorMode()          { return colorMode; }
+    CurvesColorMode getColorMode()          { return colorMode; };
     ofColor         getGradientColor(int id, float xPos);
-    int             getGradientId()         { return gradientId; }
-    int             getGradientSpeed()      { return gradientSpeed; }
-
+    int             getGradientId()         { return gradientId; };
+    int             getGradientSpeed()      { return gradientSpeed; };
+    int             getNumPainters()        { return numPainters; };
+    ofColor         getCurveColor()        { return ofColor(colorR, colorG, colorB, 255); }
+    float           getSpeed()              { return speed; };
+    float           getDelta()              { return delta; };
+    float           getMaxRotation()        { return maxRotation; };
+    float           getPowExponent()        { return powExponent; };
+    float           getThickness()           { return thickness; };
+    
 private:
 
-
+    int         numPainters;
 
     CurvesColorMode colorMode;
     ofImage     gradientImage;
@@ -42,6 +49,12 @@ private:
     int         gradientSpeed;
     int         numGradients;
     int         colorR, colorG, colorB;
+    
+    float       speed;
+    float       delta;
+    float       maxRotation;
+    float       powExponent;
+    float       thickness;
     
 };
 
