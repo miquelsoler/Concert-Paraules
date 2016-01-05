@@ -15,7 +15,6 @@
 
 #include "PMBaseScene.hpp"
 
-//#include "PMRendererPaintbrush.h"
 #include "PMRendererPaintbrush2.h"
 #include "PMRendererTypography.h"
 #include "PMRendererColor.h"
@@ -31,6 +30,12 @@
 #include "PMAudioAnalyzer.hpp"
 
 #include "PMSettingsManagerAudioDevices.h"
+
+typedef enum
+{
+    RECORDING_NORMAL = 0,
+    RECORDING_ADDPOEM = 1
+} PMRecordingState;
 
 
 class PMScene2 : public PMBaseScene
@@ -71,7 +76,7 @@ private:
     PMRendererStillImage                stillImage;
     
     PMRecorder                          *recorder;
-    int                                 recState; // 0 : normal 1 : record textBox !!
+    PMRecordingState                    recState;
     float                               startTimeRecordingText;
     float                               durationRecordingText;
 
