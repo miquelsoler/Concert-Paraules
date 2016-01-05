@@ -152,7 +152,8 @@ void PMScene2::setup()
 
 void PMScene2::update()
 {
-    switch (recState) {
+    switch (recState)
+    {
         case RECORDING_NORMAL: {
             // normal state ... if recording record !!
             renderer->update();
@@ -209,8 +210,7 @@ void PMScene2::draw()
 {
     // if we're in recState 0 (normal) ... draw the renderer.
     // else if we're in recState 1 (rendering text jpg) ... draw the still image
-    switch(recState)
-    {
+    switch(recState) {
         case RECORDING_NORMAL: renderer->draw(); break;
         case RECORDING_ADDPOEM: stillImage.draw(); break;
     }
@@ -218,15 +218,10 @@ void PMScene2::draw()
 #ifdef OF_DEBUG
     ofSetColor(127);
     ofDrawBitmapString("Renderer type: " + ofToString(renderer->getType()), 15, ofGetHeight() - 40);
-    string stat = "";
+    string stat;
     switch (renderer->getState()) {
-        case RENDERERSTATE_OFF:
-            stat = " OFF !! ";
-            break;
-
-        case RENDERERSTATE_ON:
-            stat = " ON ...";
-            break;
+        case RENDERERSTATE_OFF: stat = " OFF !! "; break;
+        case RENDERERSTATE_ON: stat = " ON ..."; break;
     }
     ofDrawBitmapString("Renderer state: " + stat, 15, ofGetHeight() - 60);
 #endif
@@ -252,7 +247,8 @@ void PMScene2::keyReleased(int key)
 {
     PMBaseScene::keyReleased(key);
 
-    switch (key) {
+    switch (key)
+    {
         case 'g':
         case 'G': {
             showGUI = !showGUI;
@@ -276,7 +272,6 @@ void PMScene2::keyReleased(int key)
             if (!recorder->isRecording()) {
                 // if not reocording -> Start recording
                 recorder->startRecording();
-
             } else {
                 // if we're already recording
                 // Start StillImage Recording
@@ -335,7 +330,8 @@ void PMScene2::onsetDetected(onsetParams &onsetParams)
 
 void PMScene2::shtDetected(shtParams &shtParams)
 {
-    switch (renderer->getType()) {
+    switch (renderer->getType())
+    {
         case RENDERERTYPE_COLOR: {
             PMRendererColor *colorRenderer = (PMRendererColor *) renderer;
             colorRenderer->setNeedsToBeCleared(shtParams.isSht);

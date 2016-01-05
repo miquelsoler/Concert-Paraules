@@ -63,10 +63,13 @@ void PMBaseRenderer::draw()
         clear();
     }
 
-    // set background for base renderer
-    ofColor c = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 255);
-    ofClear(c);
-    //ofBackground(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b);
+    if (type != RENDERERTYPE_STILLIMAGE)
+    {
+        // set background for base renderer
+        ofColor c = ofColor(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b, 255);
+        ofClear(c);
+        //ofBackground(gui->getBackgroundColor().r, gui->getBackgroundColor().g, gui->getBackgroundColor().b);
+    }
 
     // Skip FBO drawing if renderer is off
     if (state == RENDERERSTATE_OFF) return;
@@ -86,12 +89,6 @@ void PMBaseRenderer::setState(PMRendererState newState)
             state = newState;
             break;
         }
-//        case RENDERERSTATE_PAUSED: {
-//            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
-//            if (newState == RENDERERSTATE_ON) setNeedsToBeCleared(false);
-//            state = newState;
-//            break;
-//        }
         case RENDERERSTATE_OFF: {
             if (newState == RENDERERSTATE_ON)
                 state = newState;

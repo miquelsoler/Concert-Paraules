@@ -13,7 +13,7 @@ void PMRecorder::changeFbo(ofFbo *_fbo)
     fbo = _fbo;
     pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
     pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
-    
+
 }
 
 void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileName, string _filePath)
@@ -58,7 +58,7 @@ void PMRecorder::addVideoFrame(ofColor backColor)
         ofSetColor(255);
         fbo->draw(0, 0);
     }
-    
+
     fboRecorderOut.end();
 
     if (bRecording) {
@@ -79,7 +79,7 @@ void PMRecorder::addVideoFrame(ofColor backColor)
         // copying the texture to one buffer and reading
         // back from another to avoid stalls
         swap(pixelBufferBack, pixelBufferFront);
-        
+
         // add Frame to videoRecorder
         bool success = vidRecorder.addFrame(pixels);
         if (!success) {
@@ -143,8 +143,6 @@ void PMRecorder::discardRecording()
     system(cmd.c_str());
     cmd = "rm " + filePath + lastFileNameGenerated;
     system(cmd.c_str());
-
-
 }
 
 bool PMRecorder::isRecording()

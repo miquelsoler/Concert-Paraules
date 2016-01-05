@@ -18,8 +18,8 @@
 class PMRecorder
 {
 public:
-    static PMRecorder &getInstance()
-    {
+
+    static PMRecorder &getInstance() {
         static PMRecorder instance;
         return instance;
     }
@@ -37,6 +37,7 @@ public:
     void changeFbo(ofFbo *fbo);
 
 private:
+
     ofxVideoRecorder vidRecorder;
     bool bRecording;
     string fileName;
