@@ -30,4 +30,8 @@ class PMSettingsRendererRibbon : public PMSettingsRendererSpecific
 {
 };
 
+class PMSettingsRendererCurves : public PMSettingsRendererSpecific
+{
+};
+
 #endif //PMCONCERTPARAULES_PMSETTINGSRENDERERSPECIFIC_H

@@ -17,6 +17,7 @@ static const string STR_RENDERER_PAINTBRUSH = "Paint Brush";
 static const string STR_RENDERER_TYPOGRAPHY = "Typography";
 static const string STR_RENDERER_COLORS     = "Colors";
 static const string STR_RENDERER_RIBBON     = "Ribbon";
+static const string STR_RENDERER_CURVES     = "Curves";
 
 
 PMSettingsManagerRenderers::PMSettingsManagerRenderers() : PMSettingsManager()
@@ -59,6 +60,9 @@ void PMSettingsManagerRenderers::createJSONSettings()
     Json::Value jsonRibbon = buildRenderer(STR_RENDERER_RIBBON, PMSRENDERER_RIBBON);
     json[STR_RENDERERS].append(jsonRibbon);
 
+    Json::Value jsonCurves = buildRenderer(STR_RENDERER_CURVES, PMSRENDERER_CURVES);
+    json[STR_RENDERERS].append(jsonCurves);
+
     write();
 }
 
@@ -100,6 +104,13 @@ void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()
             {
                 PMSettingsRendererRibbon rendererRibbon;
                 renderer.specificSettings = rendererRibbon;
+                break;
+            }
+            case PMSRENDERER_CURVES:
+            {
+                PMSettingsRendererCurves rendererCurves;
+                renderer.specificSettings = rendererCurves;
+                break;
             }
             default: break;
         }

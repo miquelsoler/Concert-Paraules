@@ -62,6 +62,9 @@ void PMScene2::setup()
             case RENDERERTYPE_RIBBON:
                 renderer = new PMRendererRibbon();
                 break;
+            case RENDERERTYPE_CURVES:
+                renderer = new PMRendererCurves();
+                break;
             default:
                 break;
         }
