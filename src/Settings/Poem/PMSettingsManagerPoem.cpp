@@ -5,7 +5,7 @@
 #include "PMSettingsManagerPoem.h"
 
 static const string FILENAME                = "settings/poem.json";
-static const string FOLDER_PATH             = "poems";
+static const string FOLDER_PATH             = "poemes";
 
 static const string STR_POEM_FILE           = "Poem File";
 static const string STR_POEM_VALID          = "Valid File";
