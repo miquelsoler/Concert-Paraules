@@ -5,12 +5,11 @@ PMRendererStillImage::PMRendererStillImage() : PMBaseRenderer(RENDERERTYPE_STILL
 {
 }
 
-//--------------------------------------------------------------
 void PMRendererStillImage::setup()
 {
     PMBaseRenderer::setup();
 
-    stillImage.load("./images/plantillaText.jpg");
+    stillImage.load("./poemes/J.V.Foix - És quan dormo que hi veig clar.jpg");
 
     setState(RENDERERSTATE_ON);
 }
@@ -21,7 +20,6 @@ void PMRendererStillImage::update()
     if (state != RENDERERSTATE_ON) return;
 }
 
-//--------------------------------------------------------------
 void PMRendererStillImage::drawIntoFBO()
 {
     if (state != RENDERERSTATE_ON) return;
