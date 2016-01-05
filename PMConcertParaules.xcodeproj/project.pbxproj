@@ -201,8 +201,11 @@
 		ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD37876A11E46E4D7069B3 /* cameras.c */; };
 		B0605EE41C3868B300707F3D /* CreEPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EDE1C3868B300707F3D /* CreEPS.cpp */; settings = {ASSET_TAGS = (); }; };
 		B0605EE51C3868B300707F3D /* ofxVectorGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */; settings = {ASSET_TAGS = (); }; };
+		B06F36051C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06F36031C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
 		B070FA6F1C110F14000D5956 /* PMRendererColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA6D1C110F14000D5956 /* PMRendererColor.cpp */; };
 		B070FA721C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */; };
+		B0C1EB741C3C0DAD00AEB4BE /* PMCurvesPainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C1EB721C3C0DAD00AEB4BE /* PMCurvesPainter.cpp */; settings = {ASSET_TAGS = (); }; };
+		B0C1EB771C3C0DBF00AEB4BE /* PMRendererCurves.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C1EB751C3C0DBF00AEB4BE /* PMRendererCurves.cpp */; settings = {ASSET_TAGS = (); }; };
 		B0DFBF0A1C11EE9400076552 /* fontstash.c in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEDB1C11EE9300076552 /* fontstash.c */; };
 		B0DFBF0B1C11EE9400076552 /* stb_truetype.c in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEDD1C11EE9300076552 /* stb_truetype.c */; };
 		B0DFBF0D1C11EE9400076552 /* ofxFontStash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DFBEE21C11EE9300076552 /* ofxFontStash.cpp */; };
@@ -665,10 +668,16 @@
 		B0605EE01C3868B300707F3D /* CreEPS_Types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CreEPS_Types.hpp; sourceTree = "<group>"; };
 		B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVectorGraphics.cpp; sourceTree = "<group>"; };
 		B0605EE31C3868B300707F3D /* ofxVectorGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVectorGraphics.h; sourceTree = "<group>"; };
+		B06F36031C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasCurvesRenderer.cpp; sourceTree = "<group>"; };
+		B06F36041C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasCurvesRenderer.h; sourceTree = "<group>"; };
 		B070FA6D1C110F14000D5956 /* PMRendererColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererColor.cpp; sourceTree = "<group>"; };
 		B070FA6E1C110F14000D5956 /* PMRendererColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererColor.h; sourceTree = "<group>"; };
 		B070FA701C1114BF000D5956 /* PMUICanvasTextBoxRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasTextBoxRenderer.cpp; sourceTree = "<group>"; };
 		B070FA711C1114BF000D5956 /* PMUICanvasTextBoxRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasTextBoxRenderer.h; sourceTree = "<group>"; };
+		B0C1EB721C3C0DAD00AEB4BE /* PMCurvesPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMCurvesPainter.cpp; sourceTree = "<group>"; };
+		B0C1EB731C3C0DAD00AEB4BE /* PMCurvesPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMCurvesPainter.h; sourceTree = "<group>"; };
+		B0C1EB751C3C0DBF00AEB4BE /* PMRendererCurves.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRendererCurves.cpp; sourceTree = "<group>"; };
+		B0C1EB761C3C0DBF00AEB4BE /* PMRendererCurves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRendererCurves.h; sourceTree = "<group>"; };
 		B0DFBEDB1C11EE9300076552 /* fontstash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fontstash.c; sourceTree = "<group>"; };
 		B0DFBEDC1C11EE9300076552 /* fontstash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontstash.h; sourceTree = "<group>"; };
 		B0DFBEDD1C11EE9300076552 /* stb_truetype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_truetype.c; sourceTree = "<group>"; };
@@ -795,6 +804,8 @@
 				B070FA711C1114BF000D5956 /* PMUICanvasTextBoxRenderer.h */,
 				21476E17461782B4F7C65E99 /* PMUICanvasRibbonRenderer.cpp */,
 				214762CD0273533C6998C8A3 /* PMUICanvasRibbonRenderer.h */,
+				B06F36031C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp */,
+				B06F36041C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.h */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -864,6 +875,7 @@
 				214768BD63934346740161AD /* Typography */,
 				214769AAEF9CB343F4795042 /* Color */,
 				21476E043C74C365C9D58150 /* Ribbon */,
+				B0C1EB6B1C3C0C3700AEB4BE /* Curves */,
 				B0ECAFE81C2E087A0053437D /* TextBox */,
 				B0ECAFEC1C2E0A4D0053437D /* StillImage */,
 			);
@@ -1663,6 +1675,18 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		B0C1EB6B1C3C0C3700AEB4BE /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				B0C1EB751C3C0DBF00AEB4BE /* PMRendererCurves.cpp */,
+				B0C1EB761C3C0DBF00AEB4BE /* PMRendererCurves.h */,
+				B0C1EB721C3C0DAD00AEB4BE /* PMCurvesPainter.cpp */,
+				B0C1EB731C3C0DAD00AEB4BE /* PMCurvesPainter.h */,
+			);
+			name = Curves;
+			path = src/Renderer/Curves;
+			sourceTree = SOURCE_ROOT;
+		};
 		B0DFBEC31C11EE9300076552 /* ofxFontStash */ = {
 			isa = PBXGroup;
 			children = (
@@ -2034,6 +2058,7 @@
 				2A8250C41BCE5CC500EEADDF /* ofxUIImageButton.cpp in Sources */,
 				2A8250EE1BCE5D6600EEADDF /* tinyxmlerror.cpp in Sources */,
 				2A8250BC1BCE5CC500EEADDF /* ofxUICanvas.cpp in Sources */,
+				B0C1EB741C3C0DAD00AEB4BE /* PMCurvesPainter.cpp in Sources */,
 				2A8250C51BCE5CC500EEADDF /* ofxUIImageSampler.cpp in Sources */,
 				2A1731901BFE016F00FD9554 /* ofxVideoRecorder.cpp in Sources */,
 				2A8250D41BCE5CC500EEADDF /* ofxUIScrollableCanvas.cpp in Sources */,
@@ -2198,10 +2223,12 @@
 				21476B98530422D39E95932C /* PMUICanvasPoem.cpp in Sources */,
 				2147625AF349A67F06DF24B7 /* PMUICanvasAudioSettings.cpp in Sources */,
 				21476AF5716FFF7FF0A4AD57 /* PMUICanvasRenderers.cpp in Sources */,
+				B0C1EB771C3C0DBF00AEB4BE /* PMRendererCurves.cpp in Sources */,
 				21476914F095C7A90E6E9C08 /* PMUICanvasNavigation.cpp in Sources */,
 				21476CAD585FD81EA2FF6F70 /* PMUICanvasAudioAnalyzer.cpp in Sources */,
 				2147678E110D3E8B4E9A1964 /* PMRendererPaintbrush2.cpp in Sources */,
 				21476474464EAA2BDDC67588 /* PMBrushContainer2.cpp in Sources */,
+				B06F36051C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp in Sources */,
 				2147603B2386293250058A6A /* PMRendererRibbon.cpp in Sources */,
 				21476E9B9C01F42EEC2EF453 /* PMUICanvasRibbonRenderer.cpp in Sources */,
 				B0ECAFEB1C2E087A0053437D /* PMRendererTextBox.cpp in Sources */,
@@ -2533,7 +2560,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

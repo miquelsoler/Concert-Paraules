@@ -21,6 +21,7 @@
 #include "PMRendererRibbon.h"
 #include "PMRendererTextBox.h"
 #include "PMRendererStillImage.h"
+#include "PMRendererCurves.h"
 
 #include "PMRecorder.hpp"
 
