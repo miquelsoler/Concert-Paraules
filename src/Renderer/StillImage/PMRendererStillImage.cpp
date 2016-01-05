@@ -9,7 +9,8 @@ void PMRendererStillImage::setup()
 {
     PMBaseRenderer::setup();
 
-    stillImage.load("./poemes/J.V.Foix - És quan dormo que hi veig clar.jpg");
+    string poemPath = PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename();
+    stillImage.load(poemPath);
 
     setState(RENDERERSTATE_ON);
 }

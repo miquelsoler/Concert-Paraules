@@ -9,6 +9,7 @@
 #include "PMScene2.hpp"
 
 #include "PMSettingsManagerGeneral.h"
+#include "PMSettingsManagerPoem.h"
 
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
@@ -143,7 +144,10 @@ void PMScene2::setup()
     vector<PMDeviceAudioAnalyzer *> aavec = *PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate = aavec[0]->getSampleRate();
     int numChannels = aavec.at(0)->getNumChannels();
-    // FIXME : FORCED 2 CHANNELS OF AUDIO !! 
+    // FIXME : FORCED 2 CHANNELS OF AUDIO !!
+
+
+    string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
     recorder->init(renderer->getFbo(), sampleRate, 2, "testMovie", ofFilePath::getAbsolutePath("fonts") + "/../");
 
     // Still Image Setup
