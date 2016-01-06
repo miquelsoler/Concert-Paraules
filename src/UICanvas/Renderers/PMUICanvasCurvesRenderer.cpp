@@ -22,7 +22,8 @@ static const string STR_POW                         = "Pow Exponent";
 static const string STR_MAX_ROTATION                = "Max Rotation";
 static const string STR_THICKNESS                   = "Thickness";
 
-PMUICanvasCurvesRenderer::PMUICanvasCurvesRenderer(PMUIRendererType type, string title, int headerFontSize) : PMUICanvasBaseRenderer(type, title, headerFontSize)
+PMUICanvasCurvesRenderer::PMUICanvasCurvesRenderer(PMUIRendererType type, string title, int headerFontSize)
+        : PMUICanvasBaseRenderer(type, title, headerFontSize)
 {
 }
 
@@ -38,14 +39,14 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 
     { // Color mode
         addSpacer();
-        
+
         addIntSlider(STR_NUM_PAINTERS, 1, 100, &numPainters);
-        addSlider(STR_SPEED,0.0,200.0,&speed);
-        addSlider(STR_DELTA,0.0,1.0,&delta);
-        addSlider(STR_POW,0.0,5.0,&powExponent);
-        addSlider(STR_MAX_ROTATION,0.0,180.0,&maxRotation);
-        addSlider(STR_THICKNESS,0.0,90.0,&thickness);
-        
+        addSlider(STR_SPEED, 0.0, 200.0, &speed);
+        addSlider(STR_DELTA, 0.0, 1.0, &delta);
+        addSlider(STR_POW, 0.0, 5.0, &powExponent);
+        addSlider(STR_MAX_ROTATION, 0.0, 180.0, &maxRotation);
+        addSlider(STR_THICKNESS, 0.0, 90.0, &thickness);
+
         addSpacer();
         addLabel(STR_BRUSH_COLORMODE);
 
@@ -78,20 +79,20 @@ void PMUICanvasCurvesRenderer::loadPreset(int presetNumber)
 {
     PMUICanvasBaseRenderer::loadPreset(presetNumber);
 
-    ofxUIRadio *colorModeRadio = (ofxUIRadio *)getWidget(STR_BRUSH_COLORMODE_RADIO);
+    ofxUIRadio *colorModeRadio = (ofxUIRadio *) getWidget(STR_BRUSH_COLORMODE_RADIO);
 
-    ofxUIIntSlider *slColorR = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_R);
+    ofxUIIntSlider *slColorR = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_R);
     colorR = slColorR->getValue();
-    ofxUIIntSlider *slColorG = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_G);
+    ofxUIIntSlider *slColorG = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_G);
     colorG = slColorG->getValue();
-    ofxUIIntSlider *slColorB = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_B);
+    ofxUIIntSlider *slColorB = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_B);
     colorB = slColorB->getValue();
 
     vector<ofxUIToggle *> toggles = colorModeRadio->getToggles();
     bool found = false;
-    for (int i=0; i<toggles.size() && !found; ++i) {
+    for (int i = 0; i < toggles.size() && !found; ++i) {
         found = toggles[i]->getValue();
-        if (found) colorMode = (CurvesColorMode)i;
+        if (found) colorMode = (CurvesColorMode) i;
     }
 
     if (!found) colorMode = CCM_Fixed;
@@ -103,24 +104,23 @@ void PMUICanvasCurvesRenderer::handleEvents(ofxUIEventArgs &e)
 
     string name = e.getName();
 
-    if (name == STR_BRUSH_COLORMODE_RADIO)
-    {
-        ofxUIRadio *colorModeRadio = (ofxUIRadio *)(e.widget);
-        colorMode = (CurvesColorMode)(colorModeRadio->getValue());
+    if (name == STR_BRUSH_COLORMODE_RADIO) {
+        ofxUIRadio *colorModeRadio = (ofxUIRadio *) (e.widget);
+        colorMode = (CurvesColorMode) (colorModeRadio->getValue());
 
-        ofxUIIntSlider *slColorR = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_R);
+        ofxUIIntSlider *slColorR = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_R);
         colorR = slColorR->getValue();
-        ofxUIIntSlider *slColorG = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_G);
+        ofxUIIntSlider *slColorG = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_G);
         colorG = slColorG->getValue();
-        ofxUIIntSlider *slColorB = (ofxUIIntSlider *)getWidget(STR_BRUSH_COLORMODE_B);
+        ofxUIIntSlider *slColorB = (ofxUIIntSlider *) getWidget(STR_BRUSH_COLORMODE_B);
         colorB = slColorB->getValue();
     }
 }
 
 ofColor PMUICanvasCurvesRenderer::getGradientColor(int id, float xPos)
 {
-    ofxUIImageSampler* is = (ofxUIImageSampler*)getWidget("Gradient");
-    ofPoint p = ofPoint(xPos, ((id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2)));
+    ofxUIImageSampler *is = (ofxUIImageSampler *) getWidget("Gradient");
+    ofPoint p = ofPoint(xPos, ((id) * ((1.0f / float(numGradients))) - ((1.0f / float(numGradients)) / 2)));
 
     is->setValue(p);
     return is->getColor();

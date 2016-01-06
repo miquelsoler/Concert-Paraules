@@ -49,7 +49,6 @@ public:
     void setSmoothingDelta(float delta);
     
     int getAscDescAnalysisSize();
-    void setAscDescAnalysisSize(int size);
 };
 
 #endif //PMCONCERTPARAULES_PMSETTINGSMANAGERAUDIOANALYZER_H

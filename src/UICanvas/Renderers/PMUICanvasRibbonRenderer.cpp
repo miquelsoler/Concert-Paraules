@@ -133,7 +133,7 @@ void PMUICanvasRibbonRenderer::handleEvents(ofxUIEventArgs &e)
 ofColor PMUICanvasRibbonRenderer::getGradientColor(int id, float xPos)
 {
     ofxUIImageSampler* is = (ofxUIImageSampler*)getWidget("Gradient");
-    ofPoint p = ofPoint(xPos, ((id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2)));
+    ofPoint p = ofPoint(xPos, ((id)*((1.0f/float(numGradients))) - ((1.0f/float(numGradients))/2)));
 
     //cout << ofToString(((_id)*((1.0/float(numGradients))) - ((1.0/float(numGradients))/2))) << endl;
     is->setValue(p);

@@ -50,8 +50,6 @@ private:
     bool    enableBounce;
 
     float   divisions;
-//    float   ease;
-//    float   easeRandomness;
     int     pathMaxVertices;
 
     RibbonColorMode colorMode;

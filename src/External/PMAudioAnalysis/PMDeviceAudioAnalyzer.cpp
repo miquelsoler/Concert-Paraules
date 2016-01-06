@@ -256,7 +256,6 @@ void PMDeviceAudioAnalyzer::updateSilenceTime()
         silenceParams.deviceID = deviceID;
         silenceParams.audioInputIndex = audioInputIndex;
         silenceParams.isSilent = isInSilence;
-        silenceParams.silenceTime = 0;
         ofNotifyEvent(eventSilenceStateChanged, silenceParams, this);
     }
 
@@ -280,7 +279,6 @@ void PMDeviceAudioAnalyzer::updateSilenceTime()
         pauseParams.deviceID = deviceID;
         pauseParams.audioInputIndex = audioInputIndex;
         pauseParams.isPaused = isInPause;
-        pauseParams.pauseTime = 0;
         ofNotifyEvent(eventPauseStateChanged, pauseParams, this);
     }
 }
@@ -294,7 +292,6 @@ void PMDeviceAudioAnalyzer::silenceEnded()
         silenceParams.deviceID = deviceID;
         silenceParams.audioInputIndex = audioInputIndex;
         silenceParams.isSilent = false;
-        silenceParams.silenceTime = timeOfSilence;
         ofNotifyEvent(eventSilenceStateChanged, silenceParams, this);
     }
 
@@ -303,7 +300,6 @@ void PMDeviceAudioAnalyzer::silenceEnded()
         pauseParams.deviceID = deviceID;
         pauseParams.audioInputIndex = audioInputIndex;
         pauseParams.isPaused = false;
-        pauseParams.pauseTime = timeOfSilence;
         ofNotifyEvent(eventPauseStateChanged, pauseParams, this);
     }
     isInPause = false;

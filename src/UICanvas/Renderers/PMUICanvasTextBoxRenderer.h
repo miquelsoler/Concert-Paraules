@@ -18,16 +18,10 @@ public:
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
-//    virtual void saveGui();
-    
-    // GETTERS
-    int         getMode();
-    
-    
+
 private:
 
     int         guiMode;
-    
 };
 
 

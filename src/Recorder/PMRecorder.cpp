@@ -11,9 +11,8 @@
 void PMRecorder::changeFbo(ofFbo *_fbo)
 {
     fbo = _fbo;
-    pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
-    pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
-
+    pixelBufferBack.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
+    pixelBufferFront.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
 }
 
 void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileName, string _filePath)
@@ -23,8 +22,8 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     channels = _channels;
     fileName = _fileName;
     filePath = _filePath;
-    pixelBufferBack.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
-    pixelBufferFront.allocate(fbo->getWidth() * fbo->getHeight() * 3, GL_DYNAMIC_READ);
+    pixelBufferBack.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
+    pixelBufferFront.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
 
     // TODO: Path Miquel
 //    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg")); // use this is you have ffmpeg installed in your data folder
@@ -32,7 +31,7 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
 //    He hagut de fer aquest canvi per a que em funcioni. El que tinc a /usr/local/bin és versió 2.8 i no em funciona.
 //    vidRecorder.setFfmpegLocation("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg");
 
-    fboRecorderOut.allocate(fbo->getWidth(), fbo->getHeight(), GL_RGB);
+    fboRecorderOut.allocate(int(fbo->getWidth()), int(fbo->getHeight()), GL_RGB);
 
     //CODEC information
     fileExt = ".mov"; // ffmpeg uses the extension to determine the container type. run 'ffmpeg -formats' to see supported formats
@@ -69,9 +68,8 @@ void PMRecorder::addVideoFrame(ofColor backColor)
         // and wrap the memory in an ofPixels to save it
         // easily. Finally unmap it.
         pixelBufferFront.bind(GL_PIXEL_UNPACK_BUFFER);
-        unsigned char *p = pixelBufferFront.map < unsigned
-        char > (GL_READ_ONLY);
-        pixels.setFromExternalPixels(p, fbo->getWidth(), fbo->getHeight(), OF_PIXELS_RGB);
+        unsigned char *p = pixelBufferFront.map <unsigned char> (GL_READ_ONLY);
+        pixels.setFromExternalPixels(p, int(fbo->getWidth()), int(fbo->getHeight()), OF_PIXELS_RGB);
         //        ofSaveImage(pixels,ofToString(ofGetFrameNum())+".jpg");
         pixelBufferFront.unmap();
 

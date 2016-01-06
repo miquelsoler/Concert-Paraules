@@ -73,7 +73,6 @@ public:
 private:
 
     PMBaseRenderer                      *renderer;
-    PMRendererTextBox                   textBox;
     PMRendererStillImage                stillImage;
     
     PMRecorder                          *recorder;

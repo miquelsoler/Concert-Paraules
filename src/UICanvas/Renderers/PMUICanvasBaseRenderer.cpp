@@ -168,8 +168,8 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
 
     if (presetsMode == RENDERER_PRESET_LOAD)
     {
-        unsigned int row = presetNumber / PRESETSMATRIX_NUMCOLS;
-        unsigned int col = presetNumber % PRESETSMATRIX_NUMCOLS;
+        row = presetNumber / PRESETSMATRIX_NUMCOLS;
+        col = presetNumber % PRESETSMATRIX_NUMCOLS;
         for (unsigned int i=0; i<PRESETSMATRIX_NUMROWS; ++i) {
             for (unsigned int j=0; j<PRESETSMATRIX_NUMCOLS; ++j) {
                 presetsMatrix->setToggle(i, j, (i==row) && (j==col), true);

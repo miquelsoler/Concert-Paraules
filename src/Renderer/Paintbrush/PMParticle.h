@@ -14,7 +14,7 @@ public:
     void update();
     void draw();
     ofPoint getPosition() { return originalPos; };
-    bool isDead() { if (bornTime == 0) {return true;} else {return false;} };
+    bool isDead() { return (bornTime == 0); };
     void setVelocity(float velocity);
     void setLife(float life);
     void setBounceWalls(bool bouncy);

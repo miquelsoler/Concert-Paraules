@@ -54,8 +54,8 @@ void PMBrushContainer::update()
         if (y < margin) y += viewHeight - 2*margin;
     }
 
-    xOffset = generalOffset * sinAngle * 100.0 * OFFSET_SCALE;
-    yOffset = -generalOffset * cosAngle * 100.0 * OFFSET_SCALE;
+    xOffset = float(generalOffset * sinAngle * 100.0f * OFFSET_SCALE);
+    yOffset = float(-generalOffset * cosAngle * 100.0f * OFFSET_SCALE);
 }
 
 void PMBrushContainer::draw()

@@ -6,9 +6,7 @@
 #include "PMUICanvasTypoRenderer.h"
 #include "PMSettingsManagerPoem.h"
 
-//static const string DEFAULT_CHARSET = "?";
 static const string DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-//static const string DEFAULT_CHARSET = "aeiouAEIOU";
 
 static const float MILLISECONDS_NEXT_LETTER = 50;
 
@@ -19,7 +17,7 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
 
     // GUI
     {
-        gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER",OFX_UI_FONT_MEDIUM);
+        gui = new PMUICanvasTypoRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "TYPO_RENDERER", OFX_UI_FONT_MEDIUM);
         gui->init(100, 500, 200, 300);
     }
 
@@ -34,8 +32,8 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
                 true, // full character set
                 true // make contours
         );
-        
-        
+
+
     }
 
     letterSize = 1.0;
@@ -43,28 +41,20 @@ PMRendererTypography::PMRendererTypography() : PMBaseRenderer(RENDERERTYPE_TYPOG
 
     // Box2D
     {
-        PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *)gui;
+        PMUICanvasTypoRenderer *myGUI = (PMUICanvasTypoRenderer *) gui;
 
         box2d.init();
-        
+
         box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
         box2d.createBounds();
-        //box2d.createGround(00,ofGetHeight(),ofGetWidth()+00,ofGetHeight());
         box2d.setFPS(30);
-        //        velocityIterations = 40;
-        //        positionIterations = 20;
         box2d.setIterations(20, 10);
-
-        // register the listener so that we get the events
-        //box2d.enableEvents();
-        //ofAddListener(box2d.contactStartEvents, this, &PMRendererTypography::contactStart);
-        //ofAddListener(box2d.contactEndEvents, this, &PMRendererTypography::contactEnd);
     }
-    
+
     typoTimerEnabled = true;
     typoTimer = ofGetElapsedTimeMillis();
-    
-    myGUI = (PMUICanvasTypoRenderer *)gui;
+
+    myGUI = (PMUICanvasTypoRenderer *) gui;
     addALetter = false;
 
 }
@@ -84,121 +74,89 @@ void PMRendererTypography::update()
     if (state != RENDERERSTATE_ON) return;
 
     PMBaseRenderer::update();
-    
+
     int _mode = myGUI->getMode();
-    bool firstTimeInMode = false;
-    
-    if(oldMode != _mode)
-    {
-        firstTimeInMode = true;
+
+    if (oldMode != _mode) {
         oldMode = _mode;
         box2d.getWorld()->ClearForces();
 
     }
-    else firstTimeInMode = false;
-    
-    // IF ADDALETTER IS ENABLES IN ENERTGY CHANGED ...
-    if(addALetter)
-    {
+
+    // IF ADDALETTER IS ENABLES IN ENERGY CHANGED ...
+    if (addALetter) {
         float minVelocity = 0.01;
         float maxVelocity = 1.0;
         float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
         setYVelocity(velocityY);
         addLetter();
         addALetter = false;
-        
     }
-
-
-//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
 
     uint64_t maxAge = myGUI->getMaxAge() * uint64_t(1000);
     list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-    {
-        if (((*letterIt)->getAge() >= maxAge) || ((*letterIt)->getNeedsToBeRemoved()))
-        {
+    for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt) {
+        if (((*letterIt)->getAge() >= maxAge) || ((*letterIt)->getNeedsToBeRemoved())) {
             (*letterIt).get()->destroy();
             activeLetters.erase(letterIt++);
         }
     }
-    
-    
-    switch(_mode)
-    {
-        case 1 :
-        {
+
+
+    switch (_mode) {
+        case 1 : {
             box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
             oldMode = 1;
             break;
         }
-        case 2 :
-        {
+        case 2 : {
             float time = ofGetElapsedTimef();
-            float gX = sin(time*myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
-            float gY = cos(time*myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
+            float gX = sin(time * myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
+            float gY = cos(time * myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
             myGUI->setGravityX(gX);
             myGUI->setGravityY(gY);
             box2d.setGravity(gX, gY);
-            
-            
             break;
         }
-        case 3 :
-        {
+        case 3 : {
             box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
             oldMode = 3;
-            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-            {
+            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt) {
                 ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
 
-                ofVec2f v = ofVec2f(ofGetMouseX()/ofGetWidth(),ofGetMouseY()/ofGetHeight());
+                ofVec2f v = ofVec2f(ofGetMouseX() / ofGetWidth(), ofGetMouseY() / ofGetHeight());
                 (*letterIt)->addAttractionPoint(mouse, 4.0);
             }
-            
-//            if (firstTimeInMode)
-//            {
-//                box2d.getWorld()->ClearForces();
-//            }
-            break;
+
         }
-            
-        case 4 :
-        {
+
+        case 4 : {
             box2d.setGravity(myGUI->getGravityX(), myGUI->getGravityY());
             oldMode = 4;
 
         }
         default :
             break;
-            
+
     }
-    
+
     box2d.update();
-    
 
 
 }
 
 void PMRendererTypography::drawIntoFBO()
 {
-//    if ((state != RENDERERSTATE_ON) && (state != RENDERERSTATE_PAUSED)) return;
-    if ((state != RENDERERSTATE_ON) ) return;
+    if ((state != RENDERERSTATE_ON)) return;
 
     fbo.begin();
     {
-        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f,float(gui->getBackgroundColor().g) / 255.0f,float(gui->getBackgroundColor().b) / 255.0f,gui->getBackgroundFade());
+        clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f, float(gui->getBackgroundColor().g) / 255.0f, float(gui->getBackgroundColor().b) / 255.0f, gui->getBackgroundFade());
 
         list<shared_ptr<PMLetterContainer>>::iterator letterIt;
-        //mutexActiveLetters.lock();
-        {
-            for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt)
-            {
-                (*letterIt).get()->draw();
-                //ofDrawCircle((*letterIt).get()->getPosition().x,(*letterIt).get()->getPosition().y,10);
-            }
+        for (letterIt = activeLetters.begin(); letterIt != activeLetters.end(); ++letterIt) {
+            (*letterIt).get()->draw();
         }
-        //mutexActiveLetters.unlock();
     }
     fbo.end();
 }
@@ -207,40 +165,29 @@ void PMRendererTypography::addLetter()
 {
     if (somethingInContact) return;
 
+    int iLetter = int(ofRandom(charset.size()));
 
-        //mutexAddLetter.lock();
-        {
-            int iLetter = int(ofRandom(charset.size()));
+    float posX = 0, posY = 0;
 
-            //mutexActiveLetters.lock();
-            {
-                float posX,posY;
-                
-                if((myGUI->getMode()==1)||(myGUI->getMode()==2))
-                {
-                    float posOffset = ofGetWidth() * 0.1f;
-                    posX = ofRandom(posOffset, ofGetWidth() - 2*posOffset);
-                    posY = 1;
-                }
-                else if (myGUI->getMode()==4)
-                {
-                    posX = ofMap(lastPitchReceived,0.0,1.0,10.0,ofGetWidth()-20);
-                    posY = 1;
-                }
-                
-                shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]),
-                                                                                                                    font,
-                                                                                                                    ofPoint(posX,posY),
-                                                                                                                    letterSize,
-                                                                                                                    letterYVelocity,
-                                                                                                                    &box2d,
-                                                                                                                    myGUI));
+    if ((myGUI->getMode() == 1) || (myGUI->getMode() == 2)) {
+        float posOffset = ofGetWidth() * 0.1f;
+        posX = ofRandom(posOffset, ofGetWidth() - 2 * posOffset);
+        posY = 1;
+    }
+    else if (myGUI->getMode() == 4) {
+        posX = ofMap(lastPitchReceived, 0.0, 1.0, 10.0, ofGetWidth() - 20);
+        posY = 1;
+    }
 
-                activeLetters.push_back(letterContainer);
-            }
-            //mutexActiveLetters.unlock();
-        }
-        //mutexAddLetter.unlock();
+    shared_ptr<PMLetterContainer> letterContainer = shared_ptr<PMLetterContainer>(new PMLetterContainer(ofToString(charset[iLetter]),
+            font,
+            ofPoint(posX, posY),
+            letterSize,
+            letterYVelocity,
+            &box2d,
+            myGUI));
+
+    activeLetters.push_back(letterContainer);
 }
 
 void PMRendererTypography::setLetterSize(float normalizedSize)
@@ -276,15 +223,17 @@ void PMRendererTypography::buildCharsetFromPoem()
     ofBuffer::Lines lines = buffer.getLines();
     ofBuffer::Line iter = lines.begin();
 
-    while (iter != lines.end())
-    {
-        if (!(*iter).empty())
-        {
+    while (iter != lines.end()) {
+        if (!(*iter).empty()) {
             string line = (*iter);
-            ofStringReplace(line, ",", " "); ofStringReplace(line, ";", " ");
-            ofStringReplace(line, ":", " "); ofStringReplace(line, ".", " ");
-            ofStringReplace(line, "-", " "); ofStringReplace(line, "!", " ");
-            ofStringReplace(line, "?", " "); ofStringReplace(line, "'", " ");
+            ofStringReplace(line, ",", " ");
+            ofStringReplace(line, ";", " ");
+            ofStringReplace(line, ":", " ");
+            ofStringReplace(line, ".", " ");
+            ofStringReplace(line, "-", " ");
+            ofStringReplace(line, "!", " ");
+            ofStringReplace(line, "?", " ");
+            ofStringReplace(line, "'", " ");
             vector<string> words = ofSplitString(line, " ", true, true);
             for (int i = 0; i < words.size(); ++i) {
                 string word = words[i];
@@ -323,7 +272,7 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 //            //addLetter();
 //        }
 //    }
-    
+
     lastPitchReceived = myGUI->getSmoothedPitch();
 }
 
@@ -331,18 +280,15 @@ void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
 
-    if(gui->getSmoothedEnergy() > myGUI->getAddLetterSensitivity())
-    {
+    if (gui->getSmoothedEnergy() > myGUI->getAddLetterSensitivity()) {
 
         float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
-        if (diffTimeMs > myGUI->getLetterSpeedMs())
-        {
+        if (diffTimeMs > myGUI->getLetterSpeedMs()) {
             typoTimer = ofGetElapsedTimeMillis();
             setLetterSize(gui->getSmoothedEnergy());
             addALetter = true;
         }
-        else
-        {
+        else {
         }
     }
 }
@@ -377,20 +323,19 @@ void PMRendererTypography::clear()
 }
 
 //--------------------------------------------------------------------------------
-void PMRendererTypography::keyPressed ( ofKeyEventArgs& eventArgs )
+void PMRendererTypography::keyPressed(ofKeyEventArgs &eventArgs)
 {
-    if(state == RENDERERSTATE_ON)
-    {
+    if (state == RENDERERSTATE_ON) {
         if (eventArgs.key == 'q')
             addLetter();
     }
-    
+
 }
+
 //--------------------------------------------------------------------------------
-void PMRendererTypography::keyReleased ( ofKeyEventArgs& eventArgs )
+void PMRendererTypography::keyReleased(ofKeyEventArgs &eventArgs)
 {
-    if(state == RENDERERSTATE_ON)
-    {
+    if (state == RENDERERSTATE_ON) {
     }
-    
+
 }

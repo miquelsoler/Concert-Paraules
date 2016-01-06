@@ -133,7 +133,7 @@ void PMRendererPaintbrush::vibrate(float hasToVibrate)
         for (int i=0; i<particles.size(); i++){
             PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
 
-            particles[i].setVelocity(ofRandom(myGUI->getParticleVelocity()-0.5, myGUI->getParticleVelocity()));
+            particles[i].setVelocity(ofRandom(myGUI->getParticleVelocity()-0.5f, myGUI->getParticleVelocity()));
         }
     }
 }

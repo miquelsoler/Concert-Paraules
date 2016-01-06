@@ -157,13 +157,13 @@ void PMUICanvasAudioDevices::disableAllDevicesExcept(ofxUIToggle *deviceToggle)
         {
             // Disable current device
             currentDeviceToggle->setValue(false);
-            settings->enableAudioDevice(currentDeviceId, false);
+            settings->enableAudioDevice((unsigned int)currentDeviceId, false);
 
             // Disable all channels for the current device
             toggleMatrix->setAllToggles(false, false);
             vector <ofxUIToggle *> channelToggles = toggleMatrix->getToggles();
             for (int j=0; j<channelToggles.size(); ++j)
-                settings->enableAudioDeviceChannel(currentDeviceId, channelToggles[j]->getID(), false);
+                settings->enableAudioDeviceChannel((unsigned int)currentDeviceId, (unsigned int)(channelToggles[j]->getID()), false);
         }
     }
 

@@ -39,10 +39,8 @@ private:
     PMUICanvasPoem                  *guiPoemSelector;
     PMUICanvasAudioDevices          *guiAudioDevices;
     PMUICanvasRenderers             *guiRendererSettings;
-//    PMUICanvasAudioSettings         *guiAudioSettings;
 
     ofColor                         canvasBgColor;
-    int                             panelMargin = 5;
 };
 
 #endif /* PMScene1_hpp */

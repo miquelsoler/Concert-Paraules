@@ -38,8 +38,8 @@ void PMCurvesPainter::update()
     float mX = ofClamp(ofGetMouseX(),0.0,ofGetWidth());
     float mY = ofClamp(ofGetMouseY(),0.0,ofGetHeight());
     
-    float ny = float(mY / ofGetHeight());
-    ny = ny - 0.5;
+    float ny = mY / float(ofGetHeight());
+    ny -= 0.5f;
     
     bool isNegative=false;
     if(ny<0) isNegative = true;

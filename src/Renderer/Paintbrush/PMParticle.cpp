@@ -174,7 +174,7 @@ void PMParticle::draw(){
 //    ofSetColor(255, 63, 180, alphaValue);
     ofSetColor(color, alphaValue);
 			
-	ofDrawCircle(pos.x, pos.y, scale * 4.0);
+	ofDrawCircle(pos.x, pos.y, scale * 4.0f);
 //    image->draw(pos, scale, scale);
 }
 

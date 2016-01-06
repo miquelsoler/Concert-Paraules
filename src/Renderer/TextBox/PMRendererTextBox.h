@@ -36,7 +36,6 @@ public:
 private:
     
     PMUICanvasTextBoxRenderer       *myGUI;
-    vector<string>                  textToWrite;
     string                          text;
     ofImage                         logoImage;
 
