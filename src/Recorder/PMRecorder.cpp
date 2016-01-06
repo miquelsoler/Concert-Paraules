@@ -25,12 +25,6 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     pixelBufferBack.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
     pixelBufferFront.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
 
-    // TODO: Path Miquel
-//    vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg")); // use this is you have ffmpeg installed in your data folder
-    //vidRecorder.setFfmpegLocation(ofFilePath::getAbsolutePath("ffmpeg")); // use this is you have ffmpeg installed in your data folder
-//    He hagut de fer aquest canvi per a que em funcioni. El que tinc a /usr/local/bin és versió 2.8 i no em funciona.
-//    vidRecorder.setFfmpegLocation("/usr/local/Cellar/ffmpeg/2.8.2/bin/ffmpeg");
-
     fboRecorderOut.allocate(int(fbo->getWidth()), int(fbo->getHeight()), GL_RGB);
 
     //CODEC information
@@ -68,7 +62,8 @@ void PMRecorder::addVideoFrame(ofColor backColor)
         // and wrap the memory in an ofPixels to save it
         // easily. Finally unmap it.
         pixelBufferFront.bind(GL_PIXEL_UNPACK_BUFFER);
-        unsigned char *p = pixelBufferFront.map <unsigned char> (GL_READ_ONLY);
+        unsigned char *p = pixelBufferFront.map < unsigned
+        char > (GL_READ_ONLY);
         pixels.setFromExternalPixels(p, int(fbo->getWidth()), int(fbo->getHeight()), OF_PIXELS_RGB);
         //        ofSaveImage(pixels,ofToString(ofGetFrameNum())+".jpg");
         pixelBufferFront.unmap();
@@ -117,8 +112,9 @@ void PMRecorder::exit()
 void PMRecorder::startRecording()
 {
     bRecording = !bRecording;
-    if (bRecording && !vidRecorder.isInitialized()) {
-        lastFileNameGenerated = fileName + ofGetTimestampString() + fileExt;
+    if (bRecording && !vidRecorder.isInitialized())
+    {
+        lastFileNameGenerated = ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M") + "---" + fileName + fileExt;
         vidRecorder.setup(lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 30, sampleRate, channels);
         // Start recording
         vidRecorder.start();

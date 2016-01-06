@@ -147,7 +147,9 @@ void PMScene2::setup()
     // FIXME : FORCED 2 CHANNELS OF AUDIO !!
 
     string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
-    recorder->init(renderer->getFbo(), sampleRate, 2, "testMovie", ofFilePath::getAbsolutePath("fonts") + "/../");
+    ofStringReplace(filename, " ", "_");
+    ofStringReplace(filename, ".jpg", "");
+    recorder->init(renderer->getFbo(), sampleRate, 2, filename, ofFilePath::getAbsolutePath("", true));
 
     // Still Image Setup
     stillImage.setup();

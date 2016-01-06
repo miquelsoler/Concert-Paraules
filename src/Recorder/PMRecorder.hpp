@@ -24,7 +24,7 @@ public:
         return instance;
     }
 
-    void init(ofFbo *fbo, int _samplerate, int _channels, string fileName, string filePath);
+    void init(ofFbo *fbo, int samplerate, int channels, string fileName, string filePath);
     void addVideoFrame(ofColor backColor);
     void addAudioBuffer(float *input, int bufferSize, int nChannels);
     void exit();
