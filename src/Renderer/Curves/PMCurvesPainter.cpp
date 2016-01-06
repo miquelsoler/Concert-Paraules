@@ -44,7 +44,7 @@ void PMCurvesPainter::update()
     bool isNegative=false;
     if(ny<0) isNegative = true;
     
-    ny = pow(ny,gui->getPowExponent());
+    ny = pow(fabs(ny),gui->getPowExponent());
     
     if(isNegative) ny=-ny;
     
@@ -52,12 +52,12 @@ void PMCurvesPainter::update()
     {
         if(points.size()>1)
         {
-            
             turnDirection = lineDirection.normalize();
             turnDirection.rotate(gui->getMaxRotation() * ny,ofVec3f(0,0,1));
             
             ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed();
             
+            cout << "turn Dir." << turnDirection << " ____ " << p << " _____ "  << endl;
             /// DELTA SMOOTHING
             p = (p*delta) + (points[points.size()-1]*(1.0-delta));
             
@@ -118,7 +118,8 @@ void PMCurvesPainter::draw()
         // draw the curve from the last 4 points ...
         ofSetLineWidth(gui->getThickness());
         ofSetColor(gui->getCurveColor());
-       ofEnableSmoothing();
+       
+        //ofEnableSmoothing();
         
         ofNoFill();
 
@@ -130,9 +131,9 @@ void PMCurvesPainter::draw()
                   points[2].y,/*+ (ammount * ofNoise(points[2].y)/ofGetHeight()),*/
                   points[3].x,/* + (ammount * ofNoise(points[3].x)/ofGetWidth()),*/
                   points[3].y);/* + (ammount * ofNoise(points[3].y)/ofGetHeight()));*/
-        ofDisableSmoothing();
+        //ofDisableSmoothing();
         
-        
+        cout << points[0] << " ___ " << points[1] << "  ___  " << points[2] << "  ___  " << points[3] << "  ___  " << endl;
         
         // LINE DIRECTIONS
         //////////////////////////////////////
@@ -149,12 +150,14 @@ void PMCurvesPainter::draw()
             ofVec2f v = ofVec2f(points[i+1]-points[i]);
             v.normalize();
             interPointDirections.push_back(v);
+            cout << "interPointDirs ("<< i << ")" << v << endl;
         }
         
         // calculate the average direction of this 4 point curve (3 vec in between vertices)
         for(int i=0;i<3;i++)
         {
             lineDirection = lineDirection + interPointDirections[i];
+            cout << "line Direction " << lineDirection << endl;
         }
         lineDirection = (lineDirection/3.0).normalize();
         
@@ -312,7 +315,7 @@ void PMCurvesPainter::controlBounds(ofPoint p)
             //p.x = p.x + ofRandom(-1,1)*500;
             //p.y = p.y + ofRandom(-1,1)*500;
             points.push_back(newP);
-            //cout << " Random " << p.x << " , " << p.y << endl;
+            cout << " new Point = " << p.x << " , " << p.y << endl;
         }
     }
     

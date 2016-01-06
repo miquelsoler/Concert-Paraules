@@ -43,7 +43,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
         addSlider(STR_SPEED,0.0,200.0,&speed);
         addSlider(STR_DELTA,0.0,1.0,&delta);
         addSlider(STR_POW,0.0,5.0,&powExponent);
-        addSlider(STR_MAX_ROTATION,0.0,90.0,&maxRotation);
+        addSlider(STR_MAX_ROTATION,0.0,180.0,&maxRotation);
         addSlider(STR_THICKNESS,0.0,90.0,&thickness);
         
         addSpacer();
