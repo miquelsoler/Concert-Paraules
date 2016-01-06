@@ -1,5 +1,4 @@
 #include "PMRendererStillImage.h"
-#include "PMSettingsManagerPoem.h"
 
 PMRendererStillImage::PMRendererStillImage() : PMBaseRenderer(RENDERERTYPE_STILLIMAGE)
 {

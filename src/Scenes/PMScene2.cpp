@@ -146,7 +146,6 @@ void PMScene2::setup()
     int numChannels = aavec.at(0)->getNumChannels();
     // FIXME : FORCED 2 CHANNELS OF AUDIO !!
 
-
     string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
     recorder->init(renderer->getFbo(), sampleRate, 2, "testMovie", ofFilePath::getAbsolutePath("fonts") + "/../");
 

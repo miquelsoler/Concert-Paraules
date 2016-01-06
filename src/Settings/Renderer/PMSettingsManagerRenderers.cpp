@@ -11,7 +11,6 @@ static const string STR_RENDERERS           = "Renderers";
 static const string STR_RENDERER_NAME       = "1. Name";
 static const string STR_RENDERER_ID         = "2. Id";
 static const string STR_RENDERER_ENABLED    = "3. Enabled";
-static const string STR_RENDERER_SETTINGS   = "4. Settings";
 
 static const string STR_RENDERER_PAINTBRUSH = "Paint Brush";
 static const string STR_RENDERER_TYPOGRAPHY = "Typography";
@@ -79,42 +78,6 @@ void PMSettingsManagerRenderers::buildRenderersVectorFromJSON()
         renderer.name = jsonRenderer[STR_RENDERER_NAME].asString();
         renderer.enabled = jsonRenderer[STR_RENDERER_ENABLED].asBool();
 
-        switch(jsonRenderer[STR_RENDERER_ID].asInt())
-        {
-            case PMSRENDERER_PAINTBRUSH:
-            {
-                PMSettingsRendererPaintbrush rendererPaintbrush;
-                rendererPaintbrush.size = 10;
-                renderer.specificSettings = rendererPaintbrush;
-                break;
-            }
-            case PMSRENDERER_TYPOGRAPHY:
-            {
-                PMSettingsRendererTypography rendererTypography;
-                renderer.specificSettings = rendererTypography;
-                break;
-            }
-            case PMSRENDERER_COLORS:
-            {
-                PMSettingsRendererColors rendererColors;
-                renderer.specificSettings = rendererColors;
-                break;
-            }
-            case PMSRENDERER_RIBBON:
-            {
-                PMSettingsRendererRibbon rendererRibbon;
-                renderer.specificSettings = rendererRibbon;
-                break;
-            }
-            case PMSRENDERER_CURVES:
-            {
-                PMSettingsRendererCurves rendererCurves;
-                renderer.specificSettings = rendererCurves;
-                break;
-            }
-            default: break;
-        }
-
         renderersSettings.push_back(renderer);
     }
 }
@@ -156,6 +119,5 @@ Json::Value PMSettingsManagerRenderers::buildRenderer(string name, PMS_RendererM
     jsonRenderer[STR_RENDERER_NAME] = name;
     jsonRenderer[STR_RENDERER_ID] = id;
     jsonRenderer[STR_RENDERER_ENABLED] = false;
-    jsonRenderer[STR_RENDERER_SETTINGS] = Json::arrayValue;
     return jsonRenderer;
 }
