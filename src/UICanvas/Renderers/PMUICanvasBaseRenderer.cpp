@@ -31,6 +31,8 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     guiPitchMax = 96;
     guiEnergyMin = 0.1;
     guiEnergyMax = 0.9;
+    guiSmoothEnergy = 0.5;
+    guiSmoothPitch = 0.5;
 
     { // Presets
         addLabel(STR_PRESETS);
