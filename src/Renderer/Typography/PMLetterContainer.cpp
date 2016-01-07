@@ -53,6 +53,7 @@ void PMLetterContainer::draw()
     float height = letterFont->stringHeight(letter);
 
     ofSetColor(ofColor::black);
+    ofFill();
     ofPushMatrix();
     {
         ofTranslate(getPosition());

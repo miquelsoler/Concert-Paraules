@@ -35,8 +35,9 @@ public:
     void setGravityY(float f)      { gravityY = f;};
 
     // ELOI
-    float getSinusAmplitude()    { return guiSinusAmplitude; };
+    float getSinusAmplitude()       { return guiSinusAmplitude; };
     float getAddLetterSensitivity() { return guiAddLetterSensitivity; };
+    ofColor getLetterColor()        { return ofColor(colorR,colorG,colorB);};
     
 private:
 
@@ -54,7 +55,9 @@ private:
     float   guiSinusAmplitude;
     float   guiAddLetterSensitivity;
     float   guiLetterSpeedMs;
-    
+    int     colorR;
+    int     colorG;
+    int     colorB;
 };
 
 

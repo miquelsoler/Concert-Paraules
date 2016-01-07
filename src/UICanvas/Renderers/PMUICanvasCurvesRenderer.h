@@ -38,7 +38,7 @@ public:
     float           getDelta()              { return delta; };
     float           getMaxRotation()        { return maxRotation; };
     float           getPowExponent()        { return powExponent; };
-    float           getThickness()           { return thickness; };
+    float           getThickness()          { return thickness; };
     
 private:
 

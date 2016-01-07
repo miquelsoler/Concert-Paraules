@@ -236,6 +236,8 @@ float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
         }
     }
 
+    cout << "bufferSize " << (bufferSize) << "ch.num " << channelNumbers.size() << endl;
+
     return (sum / (bufferSize * channelNumbers.size()));
 }
 
