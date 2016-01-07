@@ -102,6 +102,9 @@ void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
 {
     string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
+
+    // Force GUI position when loading
+    setPosition(ofGetWidth() - 215, 5);
 }
 
 void PMUICanvasBaseRenderer::savePreset(int presetNumber)

@@ -220,6 +220,9 @@ void PMUICanvasAudioAnalyzer::loadPreset(int presetNumber)
         (*itAudioAnalyzer)->setPauseTimeTreshold(pauseQueueLength);
         (*itAudioAnalyzer)->setOnsetsThreshold(onsetThreshold);
     }
+
+    // Force GUI position when loading
+    setPosition(5, 5);
 }
 
 void PMUICanvasAudioAnalyzer::savePreset(int presetNumber)
