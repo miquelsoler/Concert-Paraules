@@ -40,6 +40,8 @@ private:
     void controlBounds(ofPoint p);
 
     PMUICanvasCurvesRenderer *gui;
+    
+    bool useMouse;
 };
 
 #endif //HARMONYFOROF_PMCURVESPAINTER_H

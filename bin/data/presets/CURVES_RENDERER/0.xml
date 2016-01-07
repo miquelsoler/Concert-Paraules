@@ -84,7 +84,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Smooth Energy</Name>
-    <Value>0.000000000</Value>
+    <Value>0.155464783</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -94,18 +94,18 @@
 <Widget>
     <Kind>6</Kind>
     <Name>Pitch Min-Max</Name>
-    <HighValue>75.354675293</HighValue>
-    <LowValue>34.408866882</LowValue>
+    <HighValue>51.300491333</HighValue>
+    <LowValue>45.044334412</LowValue>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>Smooth Pitch</Name>
-    <Value>0.576245308</Value>
+    <Value>0.995667696</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>Delta Pitch</Name>
-    <Value>0.290640384</Value>
+    <Value>0.137931034</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -120,7 +120,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Speed</Name>
-    <Value>66.995071411</Value>
+    <Value>23.645320892</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -130,7 +130,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Pow Exponent</Name>
-    <Value>0.862069011</Value>
+    <Value>1.970443249</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -140,7 +140,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>Thickness</Name>
-    <Value>8.423645020</Value>
+    <Value>17.733989716</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -150,7 +150,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>Gradient (with Speed)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -160,11 +160,11 @@
 <Widget>
     <Kind>28</Kind>
     <Name>Gradient</Name>
-    <XValue>0.497536957</XValue>
-    <YValue>0.488669962</YValue>
-    <RColor>0</RColor>
+    <XValue>0.083748676</XValue>
+    <YValue>0.875000000</YValue>
+    <RColor>31</RColor>
     <GColor>0</GColor>
-    <BColor>0</BColor>
+    <BColor>162</BColor>
     <AColor>255</AColor>
 </Widget>
 <Widget>
@@ -173,9 +173,9 @@
     <Value>4</Value>
 </Widget>
 <Widget>
-    <Kind>42</Kind>
+    <Kind>4</Kind>
     <Name>Gradient Speed</Name>
-    <Value>500</Value>
+    <Value>0.024630541</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>

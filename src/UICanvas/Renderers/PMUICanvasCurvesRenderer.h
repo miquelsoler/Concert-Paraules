@@ -22,6 +22,7 @@ public:
     PMUICanvasCurvesRenderer(PMUIRendererType type, string title, int headerFontSize);
 
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
+    virtual void update();
     virtual void clear();
     virtual void loadPreset(int presetNumber = 0);
     virtual void handleEvents(ofxUIEventArgs &e);
@@ -30,9 +31,9 @@ public:
     CurvesColorMode getColorMode()          { return colorMode; };
     ofColor         getGradientColor(int id, float xPos);
     int             getGradientId()         { return gradientId; };
-    int             getGradientSpeed()      { return gradientSpeed; };
+    float           getGradientSpeed()      { return gradientSpeed; };
     int             getNumPainters()        { return numPainters; };
-    ofColor         getCurveColor()        { return ofColor(colorR, colorG, colorB, 255); }
+    ofColor         getCurveColor();
     float           getSpeed()              { return speed; };
     float           getDelta()              { return delta; };
     float           getMaxRotation()        { return maxRotation; };
@@ -46,7 +47,7 @@ private:
     CurvesColorMode colorMode;
     ofImage     gradientImage;
     int         gradientId;
-    int         gradientSpeed;
+    float       gradientSpeed;
     int         numGradients;
     int         colorR, colorG, colorB;
     
@@ -55,6 +56,8 @@ private:
     float       maxRotation;
     float       powExponent;
     float       thickness;
+    
+    float       gradientPos;
     
 };
 

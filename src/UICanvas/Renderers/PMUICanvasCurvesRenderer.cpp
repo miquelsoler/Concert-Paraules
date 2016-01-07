@@ -31,7 +31,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 {
     PMUICanvasBaseRenderer::init(posX, posY, autosize, width, height);
 
-    gradientImage.load("./gradients/gradient4x_512x160.png");
+    gradientImage.load("./gradients/gradient4x_512x160_CURVES.png");
     numGradients = 4;
 
     setGlobalSliderHeight(10);
@@ -58,7 +58,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 
         addImageSampler(STR_BRUSH_COLORMODE_GRIMAGE, &gradientImage);
         addIntSlider(STR_BRUSH_COLORMODE_GRID, 1, 4, &gradientId);
-        addIntSlider(STR_BRUSH_COLORMODE_GRSPEED, 1, 500, &gradientSpeed);
+        addSlider(STR_BRUSH_COLORMODE_GRSPEED, 0.0, 1.0, &gradientSpeed);
         addIntSlider(STR_BRUSH_COLORMODE_R, 0, 255, &colorR);
         addIntSlider(STR_BRUSH_COLORMODE_G, 0, 255, &colorG);
         addIntSlider(STR_BRUSH_COLORMODE_B, 0, 255, &colorB);
@@ -66,6 +66,8 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 
     if (autosize) autoSizeToFitWidgets();
 
+    gradientPos = 0.0f;
+    
     loadPreset(0);
 }
 
@@ -124,4 +126,30 @@ ofColor PMUICanvasCurvesRenderer::getGradientColor(int id, float xPos)
 
     is->setValue(p);
     return is->getColor();
+}
+
+void PMUICanvasCurvesRenderer::update()
+{
+    ofxUICanvas::update();
+    
+    gradientPos = fmod(gradientPos + getGradientSpeed(),1.0);
+}
+
+ofColor PMUICanvasCurvesRenderer::getCurveColor()
+{
+    if(getColorMode()==CCM_Fixed)
+    {
+        return ofColor(colorR, colorG, colorB, 255);
+    }
+    else if(getColorMode()==CCM_GradientSpeed)
+    {
+        ofxUIImageSampler *is = (ofxUIImageSampler *) getWidget("Gradient");
+        int id = int(getGradientId());
+        ofPoint p = ofPoint(gradientPos, ((id) * ((1.0f / float(numGradients))) - ((1.0f / float(numGradients)) / 2)));
+        is->setValue(p);
+        return is->getColor();
+        
+        
+    }
+    
 }

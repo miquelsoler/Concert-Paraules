@@ -18,6 +18,7 @@ PMCurvesPainter::PMCurvesPainter(PMUICanvasCurvesRenderer *_gui)
     vec.noFill();
     vec.enableDraw();
 
+    useMouse=false;
 }
 
 void PMCurvesPainter::setup()
@@ -35,8 +36,18 @@ void PMCurvesPainter::update()
 {
     
     float delta = gui->getDelta();
-    float mX = ofClamp(ofGetMouseX(),0.0,ofGetWidth());
-    float mY = ofClamp(ofGetMouseY(),0.0,ofGetHeight());
+    float mX,mY;
+    
+    if(useMouse)
+    {
+        mX = ofClamp(ofGetMouseX(),0.0,ofGetWidth());
+        mY = ofClamp(ofGetMouseY(),0.0,ofGetHeight());
+    }
+    else
+    {
+        mX = ofGetWidth() * gui->getSmoothedPitch();
+        mY = ofGetHeight() * gui->getSmoothedPitch();
+    }
     
     float ny = mY / float(ofGetHeight());
     ny -= 0.5f;
@@ -48,6 +59,7 @@ void PMCurvesPainter::update()
     
     if(isNegative) ny=-ny;
     
+    
     if(gui->getMode()==1)
     {
         if(points.size()>1)
@@ -55,9 +67,8 @@ void PMCurvesPainter::update()
             turnDirection = lineDirection.normalize();
             turnDirection.rotate(gui->getMaxRotation() * ny,ofVec3f(0,0,1));
             
-            ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed();
+            ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed()*gui->getSmoothedEnergy();
             
-            cout << "turn Dir." << turnDirection << " ____ " << p << " _____ "  << endl;
             /// DELTA SMOOTHING
             p = (p*delta) + (points[points.size()-1]*(1.0-delta));
             
@@ -69,8 +80,8 @@ void PMCurvesPainter::update()
         if(points.size()>1)
         {
             //            posX = fmod(posX+10,ofGetWidth());
-            posX = posX + gui->getSpeed();
-            ofPoint p = ofPoint(posX,mY * ofGetHeight());
+            posX = posX + (gui->getSpeed()*gui->getSmoothedEnergy());
+            ofPoint p = ofPoint(posX,mY );
             
             /// DELTA SMOOTHING
             p = (p*delta) + (points[points.size()-1]*(1.0-delta));
@@ -81,10 +92,11 @@ void PMCurvesPainter::update()
     }
     else if(gui->getMode()==3)
     {
+        
         if(points.size()>1)
         {
-            posY = posY + gui->getSpeed();
-            ofPoint p = ofPoint(mX * ofGetWidth(),posY);
+            posY = posY + (gui->getSpeed()*gui->getSmoothedEnergy());
+            ofPoint p = ofPoint(mX ,posY);
             
             
             /// DELTA SMOOTHING
@@ -116,7 +128,7 @@ void PMCurvesPainter::draw()
         // DRAW CURVE !!
         /////////////////
         // draw the curve from the last 4 points ...
-        ofSetLineWidth(gui->getThickness());
+        ofSetLineWidth(gui->getThickness()*gui->getSmoothedEnergy());
         ofSetColor(gui->getCurveColor());
        
         //ofEnableSmoothing();
@@ -133,7 +145,9 @@ void PMCurvesPainter::draw()
                   points[3].y);/* + (ammount * ofNoise(points[3].y)/ofGetHeight()));*/
         //ofDisableSmoothing();
         
-        cout << points[0] << " ___ " << points[1] << "  ___  " << points[2] << "  ___  " << points[3] << "  ___  " << endl;
+//        cout << "points.....mode = " << gui->getMode() << endl;
+//        cout << points[0] << " ___ " << points[1] << "  ___  " << points[2] << "  ___  " << points[3] << "  ___  " << endl;
+//        cout << "............" << endl;
         
         // LINE DIRECTIONS
         //////////////////////////////////////
@@ -150,14 +164,13 @@ void PMCurvesPainter::draw()
             ofVec2f v = ofVec2f(points[i+1]-points[i]);
             v.normalize();
             interPointDirections.push_back(v);
-            cout << "interPointDirs ("<< i << ")" << v << endl;
         }
         
         // calculate the average direction of this 4 point curve (3 vec in between vertices)
         for(int i=0;i<3;i++)
         {
             lineDirection = lineDirection + interPointDirections[i];
-            cout << "line Direction " << lineDirection << endl;
+            
         }
         lineDirection = (lineDirection/3.0).normalize();
         
@@ -168,7 +181,7 @@ void PMCurvesPainter::draw()
         
         // draw the points
         ///////////////////
-        glPointSize(gui->getThickness());
+        glPointSize(gui->getThickness()*gui->getSmoothedEnergy());
         ofSetColor(gui->getCurveColor());
         glBegin(GL_POINTS);
         glVertex2f(points[0].x,points[0].y);
@@ -315,7 +328,6 @@ void PMCurvesPainter::controlBounds(ofPoint p)
             //p.x = p.x + ofRandom(-1,1)*500;
             //p.y = p.y + ofRandom(-1,1)*500;
             points.push_back(newP);
-            cout << " new Point = " << p.x << " , " << p.y << endl;
         }
     }
     
