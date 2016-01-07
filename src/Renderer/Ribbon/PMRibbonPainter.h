@@ -41,7 +41,6 @@ public:
     ofPoint *getTargetPos() { return &targetPos; }
     vector<ofPoint> getVertices() {return vertices;};
     ofPolyline getPolyline()    {return polyline;};
-
     ofxVectorGraphics getVectorGraphics()   { return vec; };
     vector<ofPoint> getPoints()             { return points; };
     void setPoints(vector<ofPoint> p)      { points = p;};

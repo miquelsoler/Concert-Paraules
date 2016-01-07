@@ -20,6 +20,8 @@ private:
     bool                    isFullScreen;
 
     ofxSceneManager         sceneManager;
+    
+    ofImage                 initImage;
 
     int                     windowPosX, windowPosY;
 

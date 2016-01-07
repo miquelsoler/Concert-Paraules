@@ -62,7 +62,9 @@ void ofApp::setup()
 
     setSceneManager(&sceneManager);
 
-    sceneManager.gotoScene("Scene 1", false);
+    //sceneManager.gotoScene("Scene 1", false);
+    
+    initImage.load("./images/pantallaInicial.jpg");
 }
 
 void ofApp::update()
@@ -76,11 +78,21 @@ void ofApp::draw()
 {
     ofColor debugMessagesColor = ofColor(127);
 
+    cout << "SCENE : "  << sceneManager.getCurrentSceneIndex() << endl;
+
     if (showFPS && sceneManager.getCurrentSceneIndex() != -1)
     {
         ofSetColor(debugMessagesColor);
         ofxBitmapString(15, ofGetHeight() - 15) << roundf(ofGetFrameRate()) << "fps" << endl;
     }
+    else
+    {
+        initImage.draw(0,0,ofGetWidth(),ofGetHeight());
+    }
+    
+    cout << "SCENE : "  << sceneManager.getCurrentSceneIndex() << endl;
+
+    
 
 #if OF_DEBUG
     ofSetColor(debugMessagesColor);

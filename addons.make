@@ -7,6 +7,7 @@ ofxAubio
 ofxVideoRecorder
 ofxUnicode
 ofxFontStash
-
+ofxVectorGraphics
 ofxGui
 ofxXmlSettings
+
