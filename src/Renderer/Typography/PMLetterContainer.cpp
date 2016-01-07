@@ -4,7 +4,7 @@
 
 #include "PMLetterContainer.h"
 
-PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofPoint pos, float _letterSize, float letterVelocity, ofxBox2d *_box2d, PMUICanvasTypoRenderer* gui)
+PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofPoint pos, float _letterSize, float letterVelocity, ofxBox2d *_box2d, PMUICanvasTypoRenderer* _gui)
 {
     letterFont = font;
     letter = _letter;
@@ -23,6 +23,8 @@ PMLetterContainer::PMLetterContainer(string _letter, ofTrueTypeFont *font, ofPoi
 //    float normalizedPosX = posX / ofGetWidth();
 //    float normalizedPosY = posY / ofGetHeight();
 
+    gui = _gui;
+    
     letterSize = ofMap(_letterSize, 0.1, 1.0, gui->getMinSize(), gui->getMaxSize(), true);
 
     float width = letterFont->stringWidth(letter) * letterSize;
@@ -52,14 +54,13 @@ void PMLetterContainer::draw()
     float width = letterFont->stringWidth(letter);
     float height = letterFont->stringHeight(letter);
 
-    ofSetColor(ofColor::black);
+    ofSetColor(gui->getLetterColor());
     ofFill();
     ofPushMatrix();
     {
         ofTranslate(getPosition());
         ofRotateZ(getRotation());
         ofScale(letterSize, letterSize);
-        ofSetColor(ofColor::black);
         letterFont->drawStringAsShapes(letter, -width/2, height/2);
     }
     ofPopMatrix();

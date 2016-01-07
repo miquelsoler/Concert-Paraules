@@ -35,6 +35,7 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSlider("Gravity Y", -50, 50, &gravityY);
     addSlider("Gravity Sinus Freq",-8,8, &guiSinusFreq);
     addSlider("Gravity Sinus Amplitude",0, 250, &guiSinusAmplitude);
+    addSpacer();
     addLabel("COLOR");
     addIntSlider("Red",    0, 255, &colorR);
     addIntSlider("Green",  0, 255, &colorG);

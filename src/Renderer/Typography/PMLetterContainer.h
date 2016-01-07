@@ -39,6 +39,9 @@ private:
     uint64_t        timeCreated;
 
     bool            needsToBeRemoved;
+
+    PMUICanvasTypoRenderer *gui;
+
 };
 
 
