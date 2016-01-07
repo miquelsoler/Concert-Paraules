@@ -78,8 +78,6 @@ void ofApp::draw()
 {
     ofColor debugMessagesColor = ofColor(127);
 
-    cout << "SCENE : "  << sceneManager.getCurrentSceneIndex() << endl;
-
     if (showFPS && sceneManager.getCurrentSceneIndex() != -1)
     {
         ofSetColor(debugMessagesColor);
@@ -89,8 +87,6 @@ void ofApp::draw()
     {
         initImage.draw(0,0,ofGetWidth(),ofGetHeight());
     }
-    
-    cout << "SCENE : "  << sceneManager.getCurrentSceneIndex() << endl;
 
     
 
