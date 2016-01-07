@@ -83,7 +83,8 @@ void ofApp::draw()
         ofSetColor(debugMessagesColor);
         ofxBitmapString(15, ofGetHeight() - 15) << roundf(ofGetFrameRate()) << "fps" << endl;
     }
-    else
+
+    if(sceneManager.getCurrentSceneIndex() == -1)
     {
         initImage.draw(0,0,ofGetWidth(),ofGetHeight());
     }
