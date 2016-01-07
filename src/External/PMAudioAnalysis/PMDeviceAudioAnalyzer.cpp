@@ -120,7 +120,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     /// PITCH
     ///////////
     float currentMidiNote = aubioPitch->latestPitch;
-//    cout << "Pitch confidence: " << aubioPitch->pitchConfidence << endl;
+    cout << "Pitch confidence: " << aubioPitch->pitchConfidence << endl;
 
     // SILENCE
     ////////////
@@ -236,7 +236,7 @@ float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
         }
     }
 
-    //cout << "bufferSize " << (bufferSize) << "ch.num " << channelNumbers.size() << endl;
+    cout <<"sum " << sum << "bufferSize " << (bufferSize) << " ch.num " << channelNumbers.size() << (sum / (bufferSize * channelNumbers.size())) << endl;
 
     return (sum / (bufferSize * channelNumbers.size()));
 }

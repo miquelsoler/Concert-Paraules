@@ -24,6 +24,9 @@ void PMBaseRenderer::setup()
     fbo.end();
 
     state = RENDERERSTATE_OFF;
+    
+    oldPitch = 0.0;
+    oldEnergy = 0.0;
 }
 
 void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
