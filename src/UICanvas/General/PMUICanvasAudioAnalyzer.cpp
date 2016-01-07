@@ -259,3 +259,9 @@ void PMUICanvasAudioAnalyzer::keyReleased(int key)
     if (key != OF_KEY_SHIFT) return;
     savingPreset = false;
 }
+
+void PMUICanvasAudioAnalyzer::windowResized(ofResizeEventArgs& data)
+{
+    // Force GUI position when loading
+    setPosition(5, 5);
+}

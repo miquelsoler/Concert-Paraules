@@ -25,6 +25,9 @@ void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int hei
         //setWidth(width);
         //setHeight(height);
     }
+        
+    ofAddListener(ofEvents().windowResized,this,&PMBaseUICanvas::windowResized);
+    
 }
 
 void PMBaseUICanvas::setBackgroundColor(ofColor backgroundColor)
@@ -41,4 +44,9 @@ float PMBaseUICanvas::getWidth()
 float PMBaseUICanvas::getHeight()
 {
     return getRect()->getHeight();
+}
+
+
+void PMBaseUICanvas::windowResized(ofResizeEventArgs& data)
+{
 }

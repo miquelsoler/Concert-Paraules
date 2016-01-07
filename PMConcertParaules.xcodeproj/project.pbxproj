@@ -30,7 +30,6 @@
 		21476D009FF7B9DC12BB300C /* PMRibbonPainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476919F03DFEC6AB837CE4 /* PMRibbonPainter.cpp */; };
 		21476D9840A4C65D1A2D8089 /* PMBrushContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476C6FBB2D89B5A96CC5F3 /* PMBrushContainer.cpp */; };
 		21476E9B9C01F42EEC2EF453 /* PMUICanvasRibbonRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 21476E17461782B4F7C65E99 /* PMUICanvasRibbonRenderer.cpp */; };
-		21476F9BD440BBB91D5A320F /* PMBaseUICanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */; };
 		21A059755481CC0BF969FD2D /* keep_alive.c in Sources */ = {isa = PBXBuildFile; fileRef = A3528DDFF05B00283552455D /* keep_alive.c */; };
 		255A7B680DC81E543C875794 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F9707464BA3FF98E05096C /* usb_libusb10.c */; };
 		2A0EF8571BD7F3B300D40230 /* PMAudioAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A0EF8551BD7F3B300D40230 /* PMAudioAnalyzer.cpp */; };
@@ -199,6 +198,7 @@
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
 		9F2A3EEF1C039F6400048315 /* PMParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A3EED1C039F6400048315 /* PMParticle.cpp */; };
 		ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD37876A11E46E4D7069B3 /* cameras.c */; };
+		B03009B51C3F2E6B0015C816 /* PMBaseUICanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03009B41C3F2E6B0015C816 /* PMBaseUICanvas.cpp */; settings = {ASSET_TAGS = (); }; };
 		B0605EE41C3868B300707F3D /* CreEPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EDE1C3868B300707F3D /* CreEPS.cpp */; settings = {ASSET_TAGS = (); }; };
 		B0605EE51C3868B300707F3D /* ofxVectorGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0605EE21C3868B300707F3D /* ofxVectorGraphics.cpp */; settings = {ASSET_TAGS = (); }; };
 		B06F36051C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B06F36031C3C0B4F00B05E22 /* PMUICanvasCurvesRenderer.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -286,7 +286,6 @@
 		214767BC16A8D4BDCE99EE0A /* PMUICanvasRenderers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasRenderers.cpp; sourceTree = "<group>"; };
 		2147686E219E442DCD619EED /* PMBaseRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMBaseRenderer.h; sourceTree = "<group>"; };
 		214768779E5AF4C73256674B /* PMUICanvasNavigation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasNavigation.cpp; sourceTree = "<group>"; };
-		2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseUICanvas.cpp; sourceTree = "<group>"; };
 		21476919F03DFEC6AB837CE4 /* PMRibbonPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMRibbonPainter.cpp; sourceTree = "<group>"; };
 		2147694AD034469FEF2846F0 /* PMUICanvasPoem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUICanvasPoem.h; sourceTree = "<group>"; };
 		2147696C46646BFD41AA7B75 /* PMUICanvasAudioAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMUICanvasAudioAnalyzer.cpp; sourceTree = "<group>"; };
@@ -662,6 +661,7 @@
 		9F2A3EED1C039F6400048315 /* PMParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMParticle.cpp; sourceTree = "<group>"; };
 		9F2A3EEE1C039F6400048315 /* PMParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMParticle.h; sourceTree = "<group>"; };
 		A3528DDFF05B00283552455D /* keep_alive.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = keep_alive.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/keep_alive.c; sourceTree = SOURCE_ROOT; };
+		B03009B41C3F2E6B0015C816 /* PMBaseUICanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PMBaseUICanvas.cpp; sourceTree = "<group>"; };
 		B0605EDE1C3868B300707F3D /* CreEPS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreEPS.cpp; sourceTree = "<group>"; };
 		B0605EDF1C3868B300707F3D /* CreEPS.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CreEPS.hpp; sourceTree = "<group>"; };
 		B0605EE01C3868B300707F3D /* CreEPS_Types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CreEPS_Types.hpp; sourceTree = "<group>"; };
@@ -812,8 +812,8 @@
 		214765AE440B55849C0E601A /* UICanvas */ = {
 			isa = PBXGroup;
 			children = (
-				2147688BAE4361E2619D1C77 /* PMBaseUICanvas.cpp */,
 				21476C5F7B46099C0554AFCD /* PMBaseUICanvas.h */,
+				B03009B41C3F2E6B0015C816 /* PMBaseUICanvas.cpp */,
 				214761D1F8927B0A752FD330 /* General */,
 				21476477CEA14FDB86668002 /* Renderers */,
 			);
@@ -2093,6 +2093,7 @@
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				2AE048E11C030E97009C99AF /* ofxBox2dConvexPoly.cpp in Sources */,
 				2A6549911BEA84B900F272F3 /* ofxTransformPanel.cpp in Sources */,
+				B03009B51C3F2E6B0015C816 /* PMBaseUICanvas.cpp in Sources */,
 				2AC0886D1BFB59BC00488E72 /* ofxAubioOnset.cpp in Sources */,
 				2AE049121C030E97009C99AF /* b2WheelJoint.cpp in Sources */,
 				2AE049071C030E97009C99AF /* b2DistanceJoint.cpp in Sources */,
@@ -2197,7 +2198,6 @@
 				2AE048FC1C030E97009C99AF /* b2World.cpp in Sources */,
 				214769B2FDC06D0F46A77FE5 /* PMBaseRenderer.cpp in Sources */,
 				2AE048EB1C030E97009C99AF /* b2Distance.cpp in Sources */,
-				21476F9BD440BBB91D5A320F /* PMBaseUICanvas.cpp in Sources */,
 				2AE048FB1C030E97009C99AF /* b2Island.cpp in Sources */,
 				2A6549901BEA84B900F272F3 /* ofxTransformer.cpp in Sources */,
 				2AE048EA1C030E97009C99AF /* b2Collision.cpp in Sources */,
@@ -2558,7 +2558,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};

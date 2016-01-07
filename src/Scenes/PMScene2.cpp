@@ -126,13 +126,15 @@ void PMScene2::setup()
                     guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                     guiAudioAnalyzer->setVisible(false);
 
+
                     guiAudioAnalyzers.push_back(guiAudioAnalyzer);
 
                     audioInputIndex++;
 //                    }
                 }
             }
-
+            
+            
             guiAudioAnalyzerCreated = true;
         }
     }

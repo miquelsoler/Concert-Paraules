@@ -25,7 +25,8 @@ public:
     float getHeight();
 
     virtual void handleEvents(ofxUIEventArgs &e) = 0;
-
+    virtual void windowResized(ofResizeEventArgs& data);
+    
 protected:
 
     ofColor bgColor = ofColor(0, 0, 0, 50);

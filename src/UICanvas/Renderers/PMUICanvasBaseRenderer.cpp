@@ -184,3 +184,11 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
 
     loadPreset(presetNumber);
 }
+
+void PMUICanvasBaseRenderer::windowResized(ofResizeEventArgs& data)
+{
+    // Force GUI position when loading
+    setPosition(ofGetWidth() - 215, 5);
+
+}
+

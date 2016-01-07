@@ -20,7 +20,7 @@ public:
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
-
+    virtual void windowResized(ofResizeEventArgs& data);
 protected:
     
     void            loadPreset(int presetNumber = 0);
@@ -66,9 +66,10 @@ private:
     bool                shtOn;
     void shtStateChanged(shtParams &_shtParams);
 
-    // Key handling ----------------------------
+    // Event handling ----------------------------
     void keyPressed(int key);
     void keyReleased(int key);
+
 };
 
 

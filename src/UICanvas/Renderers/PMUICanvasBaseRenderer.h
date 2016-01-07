@@ -30,6 +30,8 @@ public:
     virtual void clear();
 
     virtual void handleEvents(ofxUIEventArgs &e);
+    virtual void windowResized(ofResizeEventArgs& data);
+
 
     // GETTERS
     ofColor         getBackgroundColor()    { return ofColor(guiColorBgRed, guiColorBgGreen, guiColorBgBlue, 255); }
@@ -56,6 +58,8 @@ public:
     void            keyReleased(int key);
 
     int             getActivePreset();
+    
+    
 
 protected:
 

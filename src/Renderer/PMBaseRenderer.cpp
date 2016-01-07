@@ -166,3 +166,4 @@ ofColor PMBaseRenderer::getBackgroundColor()
 {
     return gui->getBackgroundColor();
 }
+
