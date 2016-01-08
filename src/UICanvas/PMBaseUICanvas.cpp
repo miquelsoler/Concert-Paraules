@@ -11,7 +11,7 @@ PMBaseUICanvas::PMBaseUICanvas(string _title, int headerFontSize) : ofxUIScrolla
 
 void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int height)
 {
-    setColorBack(bgColor);
+    //setColorBack(bgColor);
     //getCanvasTitle()->setColorFill(titleColor);
 
     setTriggerWidgetsUponLoad(false);
@@ -28,7 +28,7 @@ void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int hei
     }
         
     ofAddListener(ofEvents().windowResized,this,&PMBaseUICanvas::windowResized);
-    
+    setTheme(OFX_UI_THEME_HACKER);
 }
 
 void PMBaseUICanvas::setBackgroundColor(ofColor backgroundColor)

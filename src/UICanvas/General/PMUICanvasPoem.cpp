@@ -18,6 +18,8 @@ void PMUICanvasPoem::init(int posX, int posY, bool autosize, int width, int heig
 
     if (autosize) autoSizeToFitWidgets();
 
+    setScrollableDirections(false,false);
+
     ofAddListener(newGUIEvent, this, &PMUICanvasPoem::handleEvents);
 }
 

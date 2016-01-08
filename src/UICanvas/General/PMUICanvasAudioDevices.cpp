@@ -22,7 +22,7 @@ void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, 
 
             ofxUIToggle *deviceToggle = addToggle(device.name, device.enabled);
             deviceToggle->setID(device.ID);
-            deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
+            //deviceToggle->getLabelWidget()->setColorFill(deviceLabelColor);
 
             int numChannels = int(device.channels.size());
             int numRows = 1;
@@ -53,6 +53,8 @@ void PMUICanvasAudioDevices::init(int posX, int posY, bool autosize, int width, 
 
     if (autosize) autoSizeToFitWidgets();
 
+    setScrollableDirections(false,false);
+    
     ofAddListener(newGUIEvent, this, &PMUICanvasAudioDevices::handleEvents);
 }
 

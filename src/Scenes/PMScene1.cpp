@@ -24,20 +24,20 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
     {
         // Poem selector
         guiPoemSelector = new PMUICanvasPoem("POEM", OFX_UI_FONT_MEDIUM);
-        guiPoemSelector->init(5, 5, false, 500, 70);
-        guiPoemSelector->setBackgroundColor(canvasBgColor);
+        guiPoemSelector->init(5, 5, true, 500, 70);
+//        guiPoemSelector->setBackgroundColor(canvasBgColor);
         guiPoemSelector->setVisible(false);
 
         // Audio devices
         guiAudioDevices = new PMUICanvasAudioDevices("INPUT DEVICES", OFX_UI_FONT_MEDIUM);
         guiAudioDevices->init(5, 80);
-        guiAudioDevices->setBackgroundColor(canvasBgColor);
+//        guiAudioDevices->setBackgroundColor(canvasBgColor);
         guiAudioDevices->setVisible(false);
 
         // Renderer settings
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
         guiRendererSettings->init(220, 5);
-        guiRendererSettings->setBackgroundColor(canvasBgColor);
+//        guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
     }
     

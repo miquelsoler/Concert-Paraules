@@ -37,13 +37,13 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
     addToggle("Up To Down ?", &guiUpToDown);
     addToggle("Left To Right ?", &guiLeftToRight);
     addToggle("Random ?", &guiRandomOrSequential);
-    addSlider("Full Probability", 0.0, 1.0, &guiFullProbability);
-    addSlider("Half Probability -/+(", 0.0, 1.0, &guiHalfProbability);
-    addSlider("Horiz./Vertical Probability", 0.0, 1.0, &guiHorizontalVerticalProbability);
+//    addSlider("Full Probability", 0.0, 1.0, &guiFullProbability);
+//    addSlider("Half Probability -/+(", 0.0, 1.0, &guiHalfProbability);
+//    addSlider("Horiz./Vertical Probability", 0.0, 1.0, &guiHorizontalVerticalProbability);
     addSpacer();
     addToggle("Stop on Silence?", &guiStopOnSilence);
     //addSlider("Scan Speed X",0.0,500.0,&guiScanSpeedX);
-    addSlider("Scan With", 1.0, 300.0, &guiScanWidth);
+    addSlider("Scan With", 1.0, 40.0, &guiScanWidth);
 
 
     if (autosize) autoSizeToFitWidgets();
