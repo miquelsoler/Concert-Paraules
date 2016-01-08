@@ -195,4 +195,5 @@ void PMUICanvasBaseRenderer::resetGUIPosition()
 {
     // Force GUI position when loading
     setPosition(ofGetWidth() - 215, 5);
+    setScrollAreaToScreenHeight();
 }
