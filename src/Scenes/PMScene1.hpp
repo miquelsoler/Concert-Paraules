@@ -41,6 +41,7 @@ private:
     PMUICanvasRenderers             *guiRendererSettings;
 
     ofColor                         canvasBgColor;
+    ofImage                         logoImage;
 };
 
 #endif /* PMScene1_hpp */

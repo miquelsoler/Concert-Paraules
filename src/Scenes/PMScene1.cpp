@@ -36,10 +36,12 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
 
         // Renderer settings
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRendererSettings->init(530, 5);
+        guiRendererSettings->init(5, 260);
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
     }
+    
+    logoImage.load("./images/iconaWhite.jpg");
 }
 
 PMScene1::~PMScene1()
@@ -81,7 +83,13 @@ void PMScene1::updateExit()
 
 void PMScene1::draw()
 {
-    ofClear(backgroundColor);
+    ofClear(ofColor(255,255,255));
+    
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    logoImage.draw(ofGetWidth()/2,ofGetHeight()/2);
+    ofSetRectMode(OF_RECTMODE_CORNER);
+    
+    
 }
 
 void PMScene1::saveSettings()
