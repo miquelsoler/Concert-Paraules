@@ -70,6 +70,7 @@ private:
     void keyPressed(int key);
     void keyReleased(int key);
 
+    void resetGUIPosition();
 };
 
 

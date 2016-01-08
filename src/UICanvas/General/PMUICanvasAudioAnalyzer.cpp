@@ -221,8 +221,7 @@ void PMUICanvasAudioAnalyzer::loadPreset(int presetNumber)
         (*itAudioAnalyzer)->setOnsetsThreshold(onsetThreshold);
     }
 
-    // Force GUI position when loading
-    setPosition(5, 5);
+    resetGUIPosition();
 }
 
 void PMUICanvasAudioAnalyzer::savePreset(int presetNumber)
@@ -261,6 +260,11 @@ void PMUICanvasAudioAnalyzer::keyReleased(int key)
 }
 
 void PMUICanvasAudioAnalyzer::windowResized(ofResizeEventArgs& data)
+{
+    resetGUIPosition();
+}
+
+void PMUICanvasAudioAnalyzer::resetGUIPosition()
 {
     // Force GUI position when loading
     setPosition(5, 5);

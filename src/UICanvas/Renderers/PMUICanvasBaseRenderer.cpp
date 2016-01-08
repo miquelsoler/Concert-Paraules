@@ -103,8 +103,7 @@ void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
     string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
 
-    // Force GUI position when loading
-    setPosition(ofGetWidth() - 215, 5);
+    resetGUIPosition();
 }
 
 void PMUICanvasBaseRenderer::savePreset(int presetNumber)
@@ -187,8 +186,11 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
 
 void PMUICanvasBaseRenderer::windowResized(ofResizeEventArgs& data)
 {
-    // Force GUI position when loading
-    setPosition(ofGetWidth() - 215, 5);
-
+    resetGUIPosition();
 }
 
+void PMUICanvasBaseRenderer::resetGUIPosition()
+{
+    // Force GUI position when loading
+    setPosition(ofGetWidth() - 215, 5);
+}

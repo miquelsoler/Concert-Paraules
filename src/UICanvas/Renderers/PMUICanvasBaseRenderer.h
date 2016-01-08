@@ -59,8 +59,6 @@ public:
 
     int             getActivePreset();
     
-    
-
 protected:
 
     virtual void    loadPreset(int presetNumber = 0);
@@ -95,8 +93,7 @@ private:
     float           guiEnergyMin;
     float           guiEnergyMax;
 
-    // --- 
-    
+    void resetGUIPosition();
 };
 
 
