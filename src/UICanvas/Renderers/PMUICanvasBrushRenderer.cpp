@@ -62,7 +62,7 @@ void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width,
 
     if (autosize) autoSizeToFitWidgets();
 
-    loadPreset(0);
+    loadPreset(selectedPreset);
 }
 
 void PMUICanvasBrushRenderer::clear()

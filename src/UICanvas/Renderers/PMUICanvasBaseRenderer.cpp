@@ -76,6 +76,7 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
     ofAddListener(newGUIEvent, this, &PMUICanvasBaseRenderer::handleEvents);
 
     presetsMode = RENDERER_PRESET_LOAD;
+    selectedPreset = 0;
 }
 
 void PMUICanvasBaseRenderer::clear()
@@ -154,7 +155,7 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
         }
     }
     int presetNumber = (row * PRESETSMATRIX_NUMCOLS) + col;
-    
+
     switch(key)
     {
         case '1': presetNumber = 0; break;
@@ -181,7 +182,8 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
         }
     }
 
-    loadPreset(presetNumber);
+    selectedPreset = presetNumber;
+    loadPreset(selectedPreset);
 }
 
 void PMUICanvasBaseRenderer::windowResized(ofResizeEventArgs& data)

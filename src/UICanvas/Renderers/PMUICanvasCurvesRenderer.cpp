@@ -68,7 +68,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 
     gradientPos = 0.0f;
     
-    loadPreset(0);
+    loadPreset(selectedPreset);
 }
 
 void PMUICanvasCurvesRenderer::clear()
