@@ -168,7 +168,7 @@ void PMUICanvasBaseRenderer::keyReleased(int key)
         case '8': presetNumber = 7; break;
         case '9': presetNumber = 8; break;
         case '0': presetNumber = 9; break;
-        default: break;
+        default: return;
     }
 
     if (presetsMode == RENDERER_PRESET_LOAD)
