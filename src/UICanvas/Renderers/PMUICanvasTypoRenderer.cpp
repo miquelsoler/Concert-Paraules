@@ -16,7 +16,7 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
     addSlider("Add Letter Sensitivity",0.0, 1.0, &guiAddLetterSensitivity);
     addSpacer();
     addLabel("VELOCITY");
-    addIntSlider("Min Velocity", 1, 1, &minVelocity);
+    addIntSlider("Min Velocity", 1, 10, &minVelocity);
     addIntSlider("Max Velocity", 10, 150, &maxVelocity);
     addSpacer();
     addLabel("SIZE");
