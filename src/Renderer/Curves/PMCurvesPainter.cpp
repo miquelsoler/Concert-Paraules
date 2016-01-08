@@ -115,10 +115,10 @@ void PMCurvesPainter::update()
 
 void PMCurvesPainter::draw()
 {
-    // draw medium line just as reference
-    ofSetLineWidth(1.0);
-    ofSetColor(0,255,255);
-    ofDrawLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
+//    // draw medium line just as reference
+//    ofSetLineWidth(1.0);
+//    ofSetColor(0,255,255);
+//    ofDrawLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
     
     // draw it
     //-----------------------
@@ -213,26 +213,26 @@ void PMCurvesPainter::draw()
         points.push_back(pLast3);
     }
     
-    // print mode in screen
-    if      (gui->getMode() ==1) ofDrawBitmapString("mode 0 : Curve Turn", 10, 10);
-    else if (gui->getMode() ==2) ofDrawBitmapString("mode 1 : Curve X", 10, 10);
-    else if (gui->getMode() ==3) ofDrawBitmapString("mode 2 : Curve Y", 10, 10);
+//    // print mode in screen
+//    if      (gui->getMode() ==1) ofDrawBitmapString("mode 0 : Curve Turn", 10, 10);
+//    else if (gui->getMode() ==2) ofDrawBitmapString("mode 1 : Curve X", 10, 10);
+//    else if (gui->getMode() ==3) ofDrawBitmapString("mode 2 : Curve Y", 10, 10);
 
     /// LINE ADDONS
     //////////////////
     
-//    // add a small circles arround the vector
-//    float p = ofRandomuf();
-//    ofFill();
-//    ofSetColor(gui->getCurveColor());
-//    if(p<0.05)
-//    {
-//        ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
-//                     points[points.size()-3].y + ofRandomf()*3,
-//                     ofMap(ofGetMouseX(),0,ofGetWidth(),0.0,8.0));
-//    }
-//    ofNoFill();
-//    
+    // add a small circles arround the vector
+    float p = ofRandomuf();
+    ofFill();
+    ofSetColor(gui->getCurveColor());
+    if(p<0.05)
+    {
+        ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
+                     points[points.size()-3].y + ofRandomf()*3,
+                     gui->getThickness()*gui->getSmoothedEnergy()/1.2);
+    }
+    ofNoFill();
+    
     
 }
 
