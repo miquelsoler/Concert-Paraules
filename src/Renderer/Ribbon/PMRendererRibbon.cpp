@@ -23,7 +23,7 @@ typedef enum
     RM_MOUSE = 10,
 } RibbonMode;
 
-PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_RIBBON)
+PMRendererRibbon::PMRendererRibbon() : PMBaseRenderer(RENDERERTYPE_UNDEFINED)
 {
     gui = new PMUICanvasRibbonRenderer(UI_RENDERERTYPE_TYPOGRAPHY, "RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
     gui->init(100, 500);

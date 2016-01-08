@@ -4,7 +4,7 @@
 
 #include "PMRendererPaintbrush2.h"
 
-PMRendererPaintbrush2::PMRendererPaintbrush2() : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH)
+PMRendererPaintbrush2::PMRendererPaintbrush2() : PMBaseRenderer(RENDERERTYPE_UNDEFINED)
 {
     gui = new PMUICanvasBrushRenderer(UI_RENDERERTYPE_PAINTBRUSH, "BRUSH_RENDERER",OFX_UI_FONT_MEDIUM);
     gui->init(100, 500, true);

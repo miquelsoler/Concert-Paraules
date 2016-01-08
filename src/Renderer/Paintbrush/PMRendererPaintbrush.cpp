@@ -7,8 +7,7 @@
 //static ofColor tintColor = ofColor(200, 200, 0, 255);
 
 //------------------------------------------------------------------------------------------
-//PMRendererPaintbrush::PMRendererPaintbrush(unsigned int numInputs) : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH, numInputs)
-PMRendererPaintbrush::PMRendererPaintbrush() : PMBaseRenderer(RENDERERTYPE_PAINTBRUSH)
+PMRendererPaintbrush::PMRendererPaintbrush() : PMBaseRenderer(RENDERERTYPE_UNDEFINED)
 {
     brush = new PMBrushContainer("brushes/pinzell2.png");
     brush->setOrigin(PMBrushContainerOrigin(LEFT));

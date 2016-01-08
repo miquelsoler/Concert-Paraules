@@ -48,18 +48,18 @@ void PMScene2::setup()
     {
         PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
         switch (settingsRenderer.ID) {
-            case RENDERERTYPE_PAINTBRUSH:
-                renderer = new PMRendererPaintbrush2();
-                break;
+//            case RENDERERTYPE_PAINTBRUSH:
+//                renderer = new PMRendererPaintbrush2();
+//                break;
             case RENDERERTYPE_TYPOGRAPHY:
                 renderer = new PMRendererTypography();
                 break;
             case RENDERERTYPE_COLOR:
                 renderer = new PMRendererColor();
                 break;
-            case RENDERERTYPE_RIBBON:
-                renderer = new PMRendererRibbon();
-                break;
+//            case RENDERERTYPE_RIBBON:
+//                renderer = new PMRendererRibbon();
+//                break;
             case RENDERERTYPE_CURVES:
                 renderer = new PMRendererCurves();
                 break;

@@ -46,17 +46,11 @@ void PMSettingsManagerRenderers::createJSONSettings()
 {
     json[STR_RENDERERS] = Json::arrayValue;
 
-    Json::Value jsonPaintbrush = buildRenderer(STR_RENDERER_PAINTBRUSH, PMSRENDERER_PAINTBRUSH);
-    json[STR_RENDERERS].append(jsonPaintbrush);
-
     Json::Value jsonTypo = buildRenderer(STR_RENDERER_TYPOGRAPHY, PMSRENDERER_TYPOGRAPHY);
     json[STR_RENDERERS].append(jsonTypo);
 
     Json::Value jsonColors = buildRenderer(STR_RENDERER_COLORS, PMSRENDERER_COLORS);
     json[STR_RENDERERS].append(jsonColors);
-
-    Json::Value jsonRibbon = buildRenderer(STR_RENDERER_RIBBON, PMSRENDERER_RIBBON);
-    json[STR_RENDERERS].append(jsonRibbon);
 
     Json::Value jsonCurves = buildRenderer(STR_RENDERER_CURVES, PMSRENDERER_CURVES);
     json[STR_RENDERERS].append(jsonCurves);
