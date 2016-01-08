@@ -225,11 +225,11 @@ void PMCurvesPainter::draw()
     float p = ofRandomuf();
     ofFill();
     ofSetColor(gui->getCurveColor());
-    if(p<0.05)
+    if(p<0.5)
     {
         ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
                      points[points.size()-3].y + ofRandomf()*3,
-                     gui->getThickness()*gui->getSmoothedEnergy()/1.2);
+                     gui->getThickness()*gui->getSmoothedEnergy()/1.7);
     }
     ofNoFill();
     
