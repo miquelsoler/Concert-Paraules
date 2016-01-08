@@ -49,7 +49,7 @@ void PMUICanvasTypoRenderer::init(int posX, int posY, bool autosize, int width, 
 void PMUICanvasTypoRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("TYPO_RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("TYPO_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasTypoRenderer::handleEvents(ofxUIEventArgs &e)

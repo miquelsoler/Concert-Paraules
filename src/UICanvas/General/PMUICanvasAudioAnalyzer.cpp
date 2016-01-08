@@ -108,7 +108,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 void PMUICanvasAudioAnalyzer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
+    //superInit("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)

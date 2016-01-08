@@ -54,7 +54,7 @@ void PMUICanvasColorRenderer::init(int posX, int posY, bool autosize, int width,
 void PMUICanvasColorRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("COLOR_RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("COLOR_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasColorRenderer::handleEvents(ofxUIEventArgs &e)

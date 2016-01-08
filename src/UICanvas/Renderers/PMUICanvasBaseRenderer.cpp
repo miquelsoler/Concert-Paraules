@@ -82,7 +82,7 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
 void PMUICanvasBaseRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("BASE RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("BASE RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
@@ -101,7 +101,7 @@ void PMUICanvasBaseRenderer::handleEvents(ofxUIEventArgs &e)
 
 void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
 {
-    string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
+    string presetPath = STR_CANVAS_BASEPATH + getTitle() + "/" + ofToString(presetNumber) + ".xml";
     loadSettings(presetPath);
 
     resetGUIPosition();
@@ -109,7 +109,7 @@ void PMUICanvasBaseRenderer::loadPreset(int presetNumber)
 
 void PMUICanvasBaseRenderer::savePreset(int presetNumber)
 {
-    string presetPath = STR_CANVAS_BASEPATH + title + "/" + ofToString(presetNumber) + ".xml";
+    string presetPath = STR_CANVAS_BASEPATH + getTitle() + "/" + ofToString(presetNumber) + ".xml";
     saveSettings(presetPath);
 }
 

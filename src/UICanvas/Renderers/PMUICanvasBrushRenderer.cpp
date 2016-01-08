@@ -68,7 +68,7 @@ void PMUICanvasBrushRenderer::init(int posX, int posY, bool autosize, int width,
 void PMUICanvasBrushRenderer::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("BRUSH_RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("BRUSH_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasBrushRenderer::handleEvents(ofxUIEventArgs &e)

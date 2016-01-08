@@ -74,7 +74,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 void PMUICanvasCurvesRenderer::clear()
 {
     PMUICanvasBaseRenderer::clear();
-    superInit("CURVES_RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("CURVES_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasCurvesRenderer::loadPreset(int presetNumber)

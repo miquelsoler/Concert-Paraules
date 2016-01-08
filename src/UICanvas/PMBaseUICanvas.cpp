@@ -4,14 +4,15 @@
 
 #include "PMBaseUICanvas.h"
 
-PMBaseUICanvas::PMBaseUICanvas(string _title, int headerFontSize) : ofxUISuperCanvas(_title, headerFontSize)
+PMBaseUICanvas::PMBaseUICanvas(string _title, int headerFontSize) : ofxUIScrollableCanvas(_title)
 {
+    
 }
 
 void PMBaseUICanvas::init(int posX, int posY, bool _autosize, int width, int height)
 {
     setColorBack(bgColor);
-    getCanvasTitle()->setColorFill(titleColor);
+    //getCanvasTitle()->setColorFill(titleColor);
 
     setTriggerWidgetsUponLoad(false);
 

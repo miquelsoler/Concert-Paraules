@@ -84,7 +84,7 @@ void PMUICanvasRibbonRenderer::init(int posX, int posY, bool autosize, int width
 void PMUICanvasRibbonRenderer::clear()
 {
     PMUICanvasBaseRenderer::clear();
-    superInit("RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
+    //superInit("RIBBON_RENDERER", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasRibbonRenderer::loadPreset(int presetNumber)

@@ -119,7 +119,7 @@ void PMUICanvasAudioSettings::init(int posX, int posY, bool autosize, int width,
 void PMUICanvasAudioSettings::clear()
 {
     ofxUICanvas::clearWidgets();
-    superInit("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
+    //superInit("AUDIO SETTINGS", OFX_UI_FONT_MEDIUM);
 }
 
 void PMUICanvasAudioSettings::handleEvents(ofxUIEventArgs &e)

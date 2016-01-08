@@ -10,7 +10,7 @@
 #include "ofxUI.h"
 
 
-class PMBaseUICanvas : public ofxUISuperCanvas
+class PMBaseUICanvas : public ofxUIScrollableCanvas
 {
 public:
 
