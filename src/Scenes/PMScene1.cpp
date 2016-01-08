@@ -36,7 +36,7 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
 
         // Renderer settings
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
-        guiRendererSettings->init(5, 260);
+        guiRendererSettings->init(220, 5);
         guiRendererSettings->setBackgroundColor(canvasBgColor);
         guiRendererSettings->setVisible(false);
     }
