@@ -72,6 +72,8 @@ public:
 
 private:
 
+    void takeSnapshot();
+    
     PMBaseRenderer                      *renderer;
     PMRendererStillImage                stillImage;
     

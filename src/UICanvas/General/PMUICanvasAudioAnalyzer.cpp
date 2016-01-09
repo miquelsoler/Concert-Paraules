@@ -68,7 +68,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
         addLabel(STR_ENERGY);
-        addSlider(STR_ENERGY_GAIN, 1.0, 10.0, &energyGainCurrent);
+        addSlider(STR_ENERGY_GAIN, 0.0001, 10.0, &energyGainCurrent);
         addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);

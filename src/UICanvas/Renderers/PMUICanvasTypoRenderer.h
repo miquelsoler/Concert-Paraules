@@ -38,6 +38,7 @@ public:
     float getSinusAmplitude()       { return guiSinusAmplitude; };
     float getAddLetterSensitivity() { return guiAddLetterSensitivity; };
     ofColor getLetterColor()        { return ofColor(colorR,colorG,colorB);};
+    float getAttractorForce()       { return attractorForce; };
     
 private:
 
@@ -58,6 +59,7 @@ private:
     int     colorR;
     int     colorG;
     int     colorB;
+    float   attractorForce;
 };
 
 

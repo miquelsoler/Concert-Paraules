@@ -65,7 +65,7 @@ void PMCurvesPainter::update()
         if(points.size()>1)
         {
             turnDirection = lineDirection.normalize();
-            turnDirection.rotate(gui->getMaxRotation() * ny,ofVec3f(0,0,1));
+            turnDirection.rotate(gui->getMaxRotation() * ny * ofRandom(0.5,2.5),ofVec3f(0,0,1));
             
             ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed()*gui->getSmoothedEnergy();
             
@@ -192,7 +192,7 @@ void PMCurvesPainter::draw()
         glVertex2f((points[2].x + points[3].x)/2 ,(points[2].y + points[3].y)/2 );
         glVertex2f(points[3].x,points[3].y);
         glEnd();
-                
+        
         if(drawDebug)
         {
             
@@ -225,11 +225,11 @@ void PMCurvesPainter::draw()
     float p = ofRandomuf();
     ofFill();
     ofSetColor(gui->getCurveColor());
-    if(p<0.5)
+    if(p<0.75)
     {
         ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
                      points[points.size()-3].y + ofRandomf()*3,
-                     gui->getThickness()*gui->getSmoothedEnergy()/1.7);
+                     gui->getThickness()*gui->getSmoothedEnergy()*gui->getBubbleness());
     }
     ofNoFill();
     

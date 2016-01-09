@@ -65,6 +65,7 @@ public:
     void showGUI(bool show);
     void clearFBOBackground(float r,float g,float b,float a);
 
+    
 protected:
 
     virtual void clear();

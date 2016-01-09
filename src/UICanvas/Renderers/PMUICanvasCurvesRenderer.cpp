@@ -21,6 +21,7 @@ static const string STR_DELTA                       = "Delta";
 static const string STR_POW                         = "Pow Exponent";
 static const string STR_MAX_ROTATION                = "Max Rotation";
 static const string STR_THICKNESS                   = "Thickness";
+static const string STR_BUBBLENESS                  = "Bubbleness";
 
 PMUICanvasCurvesRenderer::PMUICanvasCurvesRenderer(PMUIRendererType type, string title, int headerFontSize)
         : PMUICanvasBaseRenderer(type, title, headerFontSize)
@@ -46,6 +47,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
         addSlider(STR_POW, 0.0, 5.0, &powExponent);
         addSlider(STR_MAX_ROTATION, 0.0, 180.0, &maxRotation);
         addSlider(STR_THICKNESS, 0.0, 90.0, &thickness);
+        addSlider(STR_BUBBLENESS, 0.0,1.0, &bubbleness);
 
         addSpacer();
         addLabel(STR_BRUSH_COLORMODE);
@@ -58,7 +60,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
 
         addImageSampler(STR_BRUSH_COLORMODE_GRIMAGE, &gradientImage);
         addIntSlider(STR_BRUSH_COLORMODE_GRID, 1, 4, &gradientId);
-        addSlider(STR_BRUSH_COLORMODE_GRSPEED, 0.0, 1.0, &gradientSpeed);
+        addSlider(STR_BRUSH_COLORMODE_GRSPEED, 0.0, 0.10, &gradientSpeed);
         addIntSlider(STR_BRUSH_COLORMODE_R, 0, 255, &colorR);
         addIntSlider(STR_BRUSH_COLORMODE_G, 0, 255, &colorG);
         addIntSlider(STR_BRUSH_COLORMODE_B, 0, 255, &colorB);

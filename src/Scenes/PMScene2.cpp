@@ -258,8 +258,13 @@ void PMScene2::keyReleased(int key)
     {
         case 'g':
         case 'G': {
+
+            if(!showGUI) ofShowCursor();
+            else ofHideCursor();
+
             showGUI = !showGUI;
 
+            
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for (it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
                 (*it)->setVisible(showGUI);
@@ -299,6 +304,11 @@ void PMScene2::keyReleased(int key)
         }
         case 'x' :
             renderer->setNeedsToBeCleared(true);
+            break;
+            
+            
+        case 'p':
+            takeSnapshot();
             break;
         default:
             break;
@@ -366,4 +376,17 @@ void PMScene2::mousePressed(int x, int y, int button)
 void PMScene2::mouseReleased(int x, int y, int button)
 {
     renderer->mouseReleased(x, y, button);
+}
+
+void PMScene2::takeSnapshot()
+{
+    string fileExt = ".png";
+    string filename =  "./snapshots/" + ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M.%S") + fileExt;
+    
+    ofImage i;
+    i.grabScreen(0,0, ofGetWidth(), ofGetHeight());
+    i.save(filename);
+
+    cout << "Taking Snapshot : filename : " << filename << endl;
+
 }

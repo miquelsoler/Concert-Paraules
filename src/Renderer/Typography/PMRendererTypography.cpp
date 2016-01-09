@@ -125,7 +125,7 @@ void PMRendererTypography::update()
                 ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
 
                 ofVec2f v = ofVec2f(ofGetMouseX() / ofGetWidth(), ofGetMouseY() / ofGetHeight());
-                (*letterIt)->addAttractionPoint(mouse, 4.0);
+                (*letterIt)->addAttractionPoint(mouse, myGUI->getAttractorForce());
             }
 
         }

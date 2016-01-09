@@ -70,7 +70,7 @@ void ofApp::setup()
 void ofApp::update()
 {
 #ifdef OF_DEBUG
-    ofShowCursor();
+//    ofShowCursor();
 #endif
 }
 

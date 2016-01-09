@@ -115,7 +115,7 @@ void PMRecorder::startRecording()
     if (bRecording && !vidRecorder.isInitialized())
     {
         lastFileNameGenerated = ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M") + "---" + fileName + fileExt;
-        vidRecorder.setup(lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 30, sampleRate, channels);
+        vidRecorder.setup("./videos/" + lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 30, sampleRate, channels);
         // Start recording
         vidRecorder.start();
     }

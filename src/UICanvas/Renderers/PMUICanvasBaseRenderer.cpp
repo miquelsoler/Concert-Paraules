@@ -8,7 +8,7 @@ static const unsigned int PRESETSMATRIX_NUMROWS = 1;
 static const unsigned int PRESETSMATRIX_NUMCOLS = 10;
 
 static const string STR_PRESETS = "PRESETS";
-static const string STR_PRESETS_INFO = "Click to LOAD | Shift+Click to SAVE";
+static const string STR_PRESETS_INFO = " 1   2    3    4    5   6   7    8   9   0";
 
 static const string STR_CANVAS_BASEPATH = "presets/";
 

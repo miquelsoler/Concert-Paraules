@@ -39,6 +39,7 @@ public:
     float           getMaxRotation()        { return maxRotation; };
     float           getPowExponent()        { return powExponent; };
     float           getThickness()          { return thickness; };
+    float           getBubbleness()         { return bubbleness;};
     
 private:
 
@@ -58,6 +59,8 @@ private:
     float       thickness;
     
     float       gradientPos;
+    
+    float       bubbleness;
     
 };
 
