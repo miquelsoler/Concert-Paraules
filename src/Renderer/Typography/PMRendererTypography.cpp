@@ -114,7 +114,7 @@ void PMRendererTypography::update()
             float gX = sin(time * myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
             float gY = cos(time * myGUI->getSinusFreq()) * myGUI->getSinusAmplitude();
             myGUI->setGravityX(gX);
-            myGUI->setGravityY(gY);
+            myGUI->setGravityY(ggeY);
             box2d.setGravity(gX, gY);
             break;
         }

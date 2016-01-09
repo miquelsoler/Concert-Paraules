@@ -22,8 +22,8 @@ public:
     virtual void update();
     virtual void drawIntoFBO();
 
-    virtual void pitchChanged(pitchParams pitchParams);
-    virtual void energyChanged(energyParams energyParams);
+    virtual void pitchChanged(struct pitchParams pitchParams);
+    virtual void energyChanged(struct energyParams energyParams);
     virtual void silenceStateChanged(silenceParams &silenceParams);
 
     void mouseDragged(int x, int y, int button);

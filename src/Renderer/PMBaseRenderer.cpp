@@ -128,25 +128,29 @@ void PMBaseRenderer::showGUI(bool show)
     gui->enableKeyEventCallbacks();
 }
 
-void PMBaseRenderer::pitchChanged(pitchParams pitchParams)
+void PMBaseRenderer::pitchChanged(struct pitchParams _pp)
 {
-    float deltaPitch = gui->getDeltaPitch();
+    pitchParams = _pp;
+    
+    float deltaPitch = pitchParams.deltaPitch;
     float currentPitch = pitchParams.midiNote;
-    float smoothedPitch = (deltaPitch) * currentPitch + (1.0f - deltaPitch) * oldPitch;
+    float smoothedPitch = pitchParams.smoothedPitch;
 
-    gui->setSmoothPitch(ofMap(smoothedPitch, gui->getPitchMin(), gui->getPitchMax(), 0.0, 1.0, true));
-
-    oldPitch = smoothedPitch;
+    
+    //gui->setSmoothPitch(ofMap(smoothedPitch, gui->getPitchMin(), gui->getPitchMax(), 0.0, 1.0, true));
+    //oldPitch = smoothedPitch;
 }
 
-void PMBaseRenderer::energyChanged(energyParams energyParams)
+void PMBaseRenderer::energyChanged(struct energyParams ep)
 {
-    float deltaEnergy = gui->getDeltaEnergy();
+    energyParams = ep;
+    
+    float deltaEnergy = energyParams.deltaEnergy;
     float currentEnergy = energyParams.energy;
-    float smoothedEnergy = (deltaEnergy) * currentEnergy + (1.0f - deltaEnergy) * oldEnergy;
+    float smoothedEnergy = energyParams.smoothedEnergy;
 
-    gui->setSmoothEnergy(ofMap(smoothedEnergy, gui->getEnergyMin(), gui->getEnergyMax(), 0.0, 1.0, true));
-    oldEnergy = smoothedEnergy;
+    //gui->setSmoothEnergy(ofMap(smoothedEnergy, gui->getEnergyMin(), gui->getEnergyMax(), 0.0, 1.0, true));
+    //oldEnergy = smoothedEnergy;
 }
 
 void PMBaseRenderer::silenceStateChanged(silenceParams &silenceParams)
