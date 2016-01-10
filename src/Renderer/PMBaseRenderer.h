@@ -50,16 +50,6 @@ public:
     virtual void mousePressed(int x, int y, int button) {};
     virtual void mouseReleased(int x, int y, int button) {};
     
-    float getDeltaPitch()         { return pitchParams.deltaPitch; }
-    float getDeltaEnergy()        { return energyParams.deltaEnergy; }
-    float getEnergyMin()          { return energyParams.min; }
-    float getEnergyMax()          { return energyParams.max; }
-    float getPitchMin()           { return pitchParams.min; }
-    float getPitchMax()           { return pitchParams.max; }
-    float getSmoothedPitch()      { return pitchParams.smoothedPitch; }
-    float getSmoothedEnergy()     { return energyParams.smoothedEnergy; }
-
-    
     // SETTERS
     void setState(PMRendererState newState);
     virtual void switchStateOnOff();
@@ -94,9 +84,6 @@ protected:
     float                   oldEnergy;
     
     bool                    isSilent;
-    
-    pitchParams             pitchParams;
-    energyParams            energyParams;
 };
 
 

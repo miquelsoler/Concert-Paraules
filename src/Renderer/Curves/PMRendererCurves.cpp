@@ -343,7 +343,7 @@ void PMRendererCurves::rebuildPainters()
     
     for (int i=0; i<myGUI->getNumPainters(); ++i)
     {
-        PMCurvesPainter painter = PMCurvesPainter(this);
+        PMCurvesPainter painter = PMCurvesPainter(myGUI);
         painters.push_back(painter);
     }
     
