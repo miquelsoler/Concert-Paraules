@@ -83,26 +83,26 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         addLabel(STR_SILENCE);
         addSlider(STR_SILENCE_THRSHLD, 0.0, 0.5, &silenceThreshold);
         addSlider(STR_SILENCE_LENGTH, 0.0, 1000.0, &silenceQueueLength);
-        addLabelToggle(STR_SILENCE, &silenceOn);
+        addLabelToggle(STR_SILENCE, &silenceOn)->setColorBack(ofColor(255,0,0));;
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
 
         addLabel(STR_PAUSE);
         addSlider(STR_PAUSE_LENGTH, 0.0, 10000.0, &pauseQueueLength);
-        addLabelToggle(STR_PAUSE, &pauseOn);
+        addLabelToggle(STR_PAUSE, &pauseOn)->setColorBack(ofColor(255,0,0));;
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
-        addLabel(STR_ONSET);
-        addSlider(STR_ONSET_THRSHLD, 0.0, 1.0, &onsetThreshold);
-        addLabelToggle(STR_ONSET, &onsetOn);
-        addSpacer();
-        ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
-
-        addLabel(STR_SHT);
-        addLabelToggle(STR_SHT, &shtOn);
-        addSpacer();
-        ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
+//        addLabel(STR_ONSET);
+//        addSlider(STR_ONSET_THRSHLD, 0.0, 1.0, &onsetThreshold);
+//        addLabelToggle(STR_ONSET, &onsetOn);
+//        addSpacer();
+//        ofAddListener((*itAudioAnalyzer)->eventOnsetStateChanged, this, &PMUICanvasAudioAnalyzer::onsetStateChanged);
+//
+//        addLabel(STR_SHT);
+//        addLabelToggle(STR_SHT, &shtOn);
+//        addSpacer();
+//        ofAddListener((*itAudioAnalyzer)->eventShtStateChanged, this, &PMUICanvasAudioAnalyzer::shtStateChanged);
 
         ofAddListener(newGUIEvent, this, &PMUICanvasAudioAnalyzer::handleEvents);
     }
