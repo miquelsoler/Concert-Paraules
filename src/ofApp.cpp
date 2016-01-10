@@ -80,7 +80,7 @@ void ofApp::draw()
 
     if (showFPS && sceneManager.getCurrentSceneIndex() != -1)
     {
-        ofSetColor(debugMessagesColor);
+        ofSetColor(ofColor(0,255,0));
         ofxBitmapString(15, ofGetHeight() - 15) << roundf(ofGetFrameRate()) << "fps" << endl;
     }
 

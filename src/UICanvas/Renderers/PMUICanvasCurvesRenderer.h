@@ -40,7 +40,7 @@ public:
     float           getPowExponent()        { return powExponent; };
     float           getThickness()          { return thickness; };
     float           getBubbleness()         { return bubbleness;};
-    float           getUpdateThreshold()    { return updateThreshold;};
+//    float           getUpdateThreshold()    { return updateThreshold;};
 private:
 
     int         numPainters;
@@ -62,7 +62,7 @@ private:
     
     float       bubbleness;
     
-    float       updateThreshold;
+//    float       updateThreshold;
     
 };
 

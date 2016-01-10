@@ -114,7 +114,7 @@ PMRendererColor::PMRendererColor() : PMBaseRenderer(RENDERERTYPE_COLOR)
 {
 //    dimmBackground = 0.5;
     scanWidth = 3;
-
+    lastPresetNumber = -1;
 
     // GUI
     {
@@ -141,33 +141,26 @@ void PMRendererColor::setup()
 //--------------------------------------------------------------
 void PMRendererColor::startNewBand()
 {
-
+    
     bool beRandom = myGUI->getIsRandom();
     bool upToDown = myGUI->getUpToDown();
     bool leftToRight = myGUI->getLeftToRight();
 
     int resolution;
 
-
     if (beRandom) {
         // IS RANDOM = WE DRAW BASED ON PROBABILITYS
-        float newProbabilityFull = ofRandomuf();
-        float newProbabilityHalf = ofRandomuf();
         float newProbabilityHorizVert = ofRandomuf();
 
-        bool newIsFull;
-        bool newIsHalf;
-        int whichFullBand;
 
         // Horizontal / Vertical orientation
-        if (newProbabilityHorizVert < myGUI->getHorizVertProbability()) {
+        if (newProbabilityHorizVert > 0.5) {
             // NEXT BAND DRAWING VERTICAL
             myGUI->setDrawHorizontal(false);
             resolution = myGUI->getResolutionX();
             drawingHeight = int(fbo.getWidth() / resolution);
             if (upToDown) scanX = 0;
             else scanX = ofGetHeight();
-            cout << "NEW IS VERTICAL ||||||||||||| " << endl;
         }
         else {
             // NEXT BAND DRAWING HORIZONTAL
@@ -176,44 +169,10 @@ void PMRendererColor::startNewBand()
             drawingHeight = int(fbo.getHeight() / resolution);
             if (leftToRight) scanX = 0;
             else scanX = ofGetWidth();
-            cout << "NEW IS HORIZONTAL ---------------" << endl;
         }
-
-
-
         // which full band position to draw next
-        whichFullBand = int(ceil(ofRandom(0, resolution)));
-
-        // ARE WE IN A FULL BAND MODE ?
-        if (newProbabilityFull > (1.0 - myGUI->getFullProbability())) newIsFull = true;
-        else newIsFull = false;
-
-        drawingPos = (whichFullBand - 1) * drawingHeight;
-
-        if (newIsFull) {
-            // do nothing
-            //        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half :  " << myGUI->getHalfProbability() <<  endl;
-            //        cout << "Band is Full : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
-        }
-        else {
-            //        cout << "New Prob. full : " << newProbabilityFull << " \\ GUI Full Prob. : " << myGUI->getFullProbability() << " Half : " << myGUI->getHalfProbability() << endl;
-            //        cout << "Band is NOT FULL : Resolution = " << resolution << " WhichFullBand : " << whichFullBand << " Height : " << drawingHeight << " Pos : " << drawingPos << endl;
-            // it's not a full band so we use half of it's width
-            drawingHeight = drawingHeight / 2;
-
-            // ... so we want to know which half is it going (+/-)
-            if (newProbabilityHalf > (1.0 - myGUI->getHalfProbability())) newIsHalf = true;
-            else newIsHalf = false;
-
-            // FIRST OR SECOND BAND ?
-            if (newIsHalf) {
-                // do nothing
-            }
-            else {
-                drawingPos = drawingPos + drawingHeight;
-            }
-        }
-
+        whichSequentialBand = int(ceil(ofRandom(0, resolution)));
+        drawingPos = (whichSequentialBand - 1) * drawingHeight;
     }
     else {
         bool isDrawHorizontal = myGUI->getDrawHorizontal();
@@ -221,15 +180,30 @@ void PMRendererColor::startNewBand()
         if (isDrawHorizontal) {
             resolution = myGUI->getResolutionY();
             drawingHeight = int(fbo.getHeight() / resolution);
+            
 
-            if (upToDown) {
+            if ((upToDown) && (leftToRight) )
+            {
                 whichSequentialBand = whichSequentialBand + 1;
-                if (whichSequentialBand > (resolution - 1)) whichSequentialBand = 0;
+                if (whichSequentialBand > (resolution-1 )) whichSequentialBand = 0;
                 drawingPos = (whichSequentialBand) * drawingHeight;
             }
-            else {
+            else if ((upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = whichSequentialBand + 1;
+                if (whichSequentialBand > (resolution-1 )) whichSequentialBand = 0;
+                drawingPos = (whichSequentialBand) * drawingHeight;
+            }
+            else if ((!upToDown) && (leftToRight) )
+            {
                 whichSequentialBand = whichSequentialBand - 1;
-                if (whichSequentialBand < 0) whichSequentialBand = resolution - 1;
+                if (whichSequentialBand < 0) whichSequentialBand = resolution-1;
+                drawingPos = (whichSequentialBand) * drawingHeight;
+            }
+            else if ((!upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = whichSequentialBand - 1;
+                if (whichSequentialBand < 0) whichSequentialBand = resolution-1;
                 drawingPos = (whichSequentialBand) * drawingHeight;
             }
         }
@@ -239,17 +213,43 @@ void PMRendererColor::startNewBand()
             resolution = myGUI->getResolutionX();
             drawingHeight = int(fbo.getWidth() / resolution);
 
-            if (leftToRight) {
+//            if (leftToRight) {
+//                whichSequentialBand = whichSequentialBand + 1;
+//                if (whichSequentialBand > (resolution - 1)) whichSequentialBand = 0;
+//                drawingPos = (whichSequentialBand) * drawingHeight;
+//            }
+//            else {
+//                whichSequentialBand = whichSequentialBand - 1;
+//                if (whichSequentialBand < 0) whichSequentialBand = resolution - 1;
+//                drawingPos = (whichSequentialBand) * drawingHeight;
+//            }
+
+            if ((upToDown) && (leftToRight) )
+            {
                 whichSequentialBand = whichSequentialBand + 1;
-                if (whichSequentialBand > (resolution - 1)) whichSequentialBand = 0;
+                if (whichSequentialBand > (resolution-1 )) whichSequentialBand = 0;
                 drawingPos = (whichSequentialBand) * drawingHeight;
             }
-            else {
+            else if ((upToDown) && (!leftToRight) )
+            {
                 whichSequentialBand = whichSequentialBand - 1;
-                if (whichSequentialBand < 0) whichSequentialBand = resolution - 1;
+                if (whichSequentialBand < 0) whichSequentialBand = resolution-1;
+                drawingPos = (whichSequentialBand) * drawingHeight;
+            }
+            else if ((!upToDown) && (leftToRight) )
+            {
+                whichSequentialBand = whichSequentialBand + 1;
+                if (whichSequentialBand > resolution-1 ) whichSequentialBand = 0;
+                drawingPos = (whichSequentialBand) * drawingHeight;
+            }
+            else if ((!upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = whichSequentialBand - 1;
+                if (whichSequentialBand < 0) whichSequentialBand = resolution-1;
                 drawingPos = (whichSequentialBand) * drawingHeight;
             }
 
+            
         }
 
 
@@ -263,10 +263,11 @@ void PMRendererColor::startNewBand()
 void PMRendererColor::update()
 {
 
+    
+    
     if (state != RENDERERSTATE_ON) return;
 
 //    float ini = ofGetElapsedTimef();
-
     //PMBaseRenderer::update();
 
 
@@ -297,7 +298,8 @@ void PMRendererColor::update()
         limit = ofGetWidth();
 
         if (leftToRight) {
-            if (updateScan) {
+            if (updateScan)
+            {
                 scanX = scanX + int(myGUI->getScanWidth()); //+ int(myGUI->getScanWidth()) -1 ;
             }
 
@@ -355,6 +357,85 @@ void PMRendererColor::update()
 
 //    cout << "update duration = " << ofGetElapsedTimef() - ini << endl;
 
+    
+    // DETECT IF THERE HAS BEEN A NEW PRESET ...
+    int actualPresetNumber = myGUI->getActivePreset();
+    if(lastPresetNumber!=actualPresetNumber)
+    {
+        // new preset !
+        lastPresetNumber = actualPresetNumber;
+        
+        if(myGUI->getDrawHorizontal())
+        {
+            /// HORIZONTAL
+            ////////////////
+
+            int resolution = myGUI->getResolutionY();
+            drawingHeight = int(fbo.getHeight() / resolution);
+
+            if ((upToDown) && (leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = 0;
+
+            }
+            else if ((upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = ofGetWidth();
+            }
+            else if ((!upToDown) && (leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = 0;
+
+            }
+            else if ((!upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = ofGetWidth();
+
+            }
+        }
+        else if(!myGUI->getDrawHorizontal())
+        {
+            /// VERTICAL
+            ///////////////
+            
+            int resolution = myGUI->getResolutionX();
+            drawingHeight = int(fbo.getWidth() / resolution);
+            
+            if ((upToDown) && (leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = 0;
+                
+            }
+            else if ((upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = 0;
+                scanX = 0;
+            }
+            else if ((!upToDown) && (leftToRight) )
+            {
+                whichSequentialBand = -1;
+                scanX = ofGetHeight();
+                
+            }
+            else if ((!upToDown) && (!leftToRight) )
+            {
+                whichSequentialBand = 0;
+                scanX = ofGetHeight();
+                
+            }
+        }
+        //drawingPos = (whichSequentialBand) * drawingHeight;
+        startNewBand();
+        cout << "New Preset in Colors" << whichSequentialBand << "  ___ " << ofGetElapsedTimef() <<  endl;
+        
+    }
+
+    
 }
 
 //--------------------------------------------------------------
@@ -461,8 +542,9 @@ void PMRendererColor::drawIntoFBO()
                     ofSetRectMode(OF_RECTMODE_CORNER);
                 }
 
-//                cout << "scanX : " << scanX << " // pos " << drawingPos << " // Height " << drawingHeight << endl;
-
+//                cout << "IN DRAW :: scanX : " << scanX << " // pos " << drawingPos << " // Height " << drawingHeight << " // WhichBand? "<< whichSequentialBand << endl;
+                
+                
                 break;
             }
             default:

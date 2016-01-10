@@ -55,6 +55,8 @@ private:
     void        startNewBand();
     int         whichSequentialBand;
     
+    int         lastPresetNumber;
+    
     
 };
 
