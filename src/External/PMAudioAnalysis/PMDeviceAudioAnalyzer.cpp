@@ -120,7 +120,15 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     /// PITCH
     ///////////
     float currentMidiNote = aubioPitch->latestPitch;
-
+    float pitchConfidence = aubioPitch->pitchConfidence;
+    pParams.confidence = pitchConfidence;
+    pParams.minConfidence = 0.5;
+    if(pitchConfidence<pParams.minConfidence)
+    {
+        currentMidiNote = pParams.min + (pParams.max-pParams.min) / 2.0;
+    }
+    cout << "Pitch Confidence " << aubioPitch->pitchConfidence << endl;
+    
     // SILENCE
     ////////////
 
@@ -131,23 +139,23 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     if(nowIsSilent && !alreadyInSilence)
     {
         silenceStarted();
-        cout << "SILENCE STARTED" << endl;
+//        cout << "SILENCE STARTED" << endl;
     }
     else if(nowIsSilent && ( (ofGetElapsedTimeMillis() - notSilenceBeginTime) > silenceTimeTreshold ) )
     {
         notifySilence(true);
-        cout << "SILENCE BROKEN DURATION DONE  ... Sent TRUE!! Mean : " << absMean << " __ thrs." << silenceThreshold  << endl;
+//        cout << "SILENCE BROKEN DURATION DONE  ... Sent TRUE!! Mean : " << absMean << " __ thrs." << silenceThreshold  << endl;
         
     }
     else if(!nowIsSilent)
     {
         notifySilence(false);
         silenceStopped();
-        cout << "SILENCE ENDED ... Sent FALSE!" << absMean << " __ thrs." << silenceThreshold  << endl;
+//        cout << "SILENCE ENDED ... Sent FALSE!" << absMean << " __ thrs." << silenceThreshold  << endl;
     }
     else
     {
-        cout << "ELSE " << (ofGetElapsedTimeMillis() - notSilenceBeginTime) << " .... " << silenceTimeTreshold << endl;
+//        cout << "ELSE " << (ofGetElapsedTimeMillis() - notSilenceBeginTime) << " .... " << silenceTimeTreshold << endl;
     }
     
     
@@ -285,8 +293,8 @@ float PMDeviceAudioAnalyzer::getAbsMean(float *input, int bufferSize)
 //        sum = sum + actual;
 //    }
 
-    cout << " .......... " << endl;
-    cout <<"SUM " << sum << endl << " __ bufferSize " << (bufferSize) << " __ ch.num " << channelNumbers.size()  << " __ In.Channels : " << inChannels <<" __ Result : "  <<  (sum / (bufferSize * channelNumbers.size())) << endl;
+//    cout << " .......... " << endl;
+//    cout <<"SUM " << sum << endl << " __ bufferSize " << (bufferSize) << " __ ch.num " << channelNumbers.size()  << " __ In.Channels : " << inChannels <<" __ Result : "  <<  (sum / (bufferSize * channelNumbers.size())) << endl;
 
     return (sum / (bufferSize * channelNumbers.size()));
 }

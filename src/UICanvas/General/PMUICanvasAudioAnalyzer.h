@@ -23,6 +23,8 @@ public:
     
     virtual void handleEvents(ofxUIEventArgs &e);
     virtual void windowResized(ofResizeEventArgs& data);
+    void setLowConfidence(bool b){pitchConfidenceLow = b;};
+
 protected:
     
     void            loadPreset(int presetNumber = 0);
@@ -41,13 +43,15 @@ private:
 
     // Pitch ------------------------------------
     float               pitchCurrentMidiNote;
-    void pitchChanged(pitchParams &pitchParams);
     float               minPitch;
     float               maxPitch;
     float               deltaPitch;
     float               smoothedPitch;
     float               oldPitch;
+    bool                pitchConfidenceLow;
 
+    void                pitchChanged(pitchParams &pitchParams);
+    
     // Energy -----------------------------------
     float               energyGainCurrent;
     float               energyCurrent;

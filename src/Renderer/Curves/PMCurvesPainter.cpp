@@ -37,7 +37,7 @@ void PMCurvesPainter::setup()
 void PMCurvesPainter::update()
 {
     
-    float delta = renderer->getDeltaPitch();
+    float delta = gui->getDelta();
     float mX,mY;
     
     if(useMouse)

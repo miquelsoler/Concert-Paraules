@@ -64,9 +64,10 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         addLabel(STR_PITCH);
         addSlider(STR_PITCH_MIDINOTE, 0, 127, &pitchCurrentMidiNote);
+        addToggle("Low Confidence (<0.7)",&pitchConfidenceLow);
         addRangeSlider("Min/Max Pitch", 0,127, &minPitch,&maxPitch);
         addSlider("Delta Pitch",0.0,1.0,&deltaPitch);
-        addSlider("Smoothed Pitch",0.0,1.0,&smoothedPitch)->setColorBack(ofColor(255,0,0));
+        addSlider("Smoothed Pitch",0.0,1.0,&smoothedPitch)->setColorFill(ofColor(255,0,0));
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
@@ -75,7 +76,7 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
         addRangeSlider("Min/Max Energy", 0,1, &minEnergy,&maxEnergy);
         addSlider("Delta Energy",0.0,1.0,&deltaEnergy);
-        addSlider("Smoothed Energy",0.0,1.0,&smoothedEnergy)->setColorBack(ofColor(255,0,0));;
+        addSlider("Smoothed Energy",0.0,1.0,&smoothedEnergy)->setColorFill(ofColor(255,0,0));;
         
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);

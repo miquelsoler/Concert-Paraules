@@ -48,7 +48,8 @@ void PMRendererCurves::update()
     
     PMBaseRenderer::update(); 
 
-    if(getSmoothedEnergy() >= myGUI->getUpdateThreshold())
+//    if(getSmoothedEnergy() >= myGUI->getUpdateThreshold())
+    if(!isSilent)
     {
         for(int i=0;i<myGUI->getNumPainters();i++)
         {

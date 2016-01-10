@@ -135,7 +135,8 @@ private:
     energyParams eParams;
     float      oldPitch;
     float      oldEnergy;
-    
+    float      deltaConfidence;
+    float      oldPitchForConfidence;
 };
 
 #endif /* PMDeviceAudioAnalyzer_h */

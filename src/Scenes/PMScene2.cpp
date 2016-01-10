@@ -125,7 +125,7 @@ void PMScene2::setup()
                     guiAudioAnalyzer->init(5, initialY + (audioInputIndex * widthY));
 //                    guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                     guiAudioAnalyzer->setVisible(false);
-
+                    
 
                     guiAudioAnalyzers.push_back(guiAudioAnalyzer);
 
@@ -186,6 +186,8 @@ void PMScene2::update()
             break;
         }
     }
+    
+
 }
 
 void PMScene2::updateEnter()
@@ -321,6 +323,23 @@ void PMScene2::keyReleased(int key)
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     renderer->pitchChanged(pitchParams);
+    
+    // update LOW confidence on pitch
+    int i;
+    vector<PMUICanvasAudioAnalyzer *>::iterator it;
+    for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
+    {
+        if(pitchParams.confidence < pitchParams.minConfidence)
+        {
+            (*it)->setLowConfidence(true);
+        }
+        else
+        {
+            (*it)->setLowConfidence(false);
+        }
+    }
+
+    
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)

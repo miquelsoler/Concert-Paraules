@@ -21,6 +21,8 @@ struct pitchParams : public baseAudioInParams {
     float max;
     float deltaPitch;
     float smoothedPitch;
+    float confidence;
+    float minConfidence;
 };
 
 struct energyParams : public baseAudioInParams {
