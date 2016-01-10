@@ -83,13 +83,14 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
         addLabel(STR_SILENCE);
         addSlider(STR_SILENCE_THRSHLD, 0.0, 0.5, &silenceThreshold);
         addSlider(STR_SILENCE_LENGTH, 0.0, 1000.0, &silenceQueueLength);
-        addLabelToggle(STR_SILENCE, &silenceOn)->setColorBack(ofColor(255,0,0));;
+        ofxUIToggle* t = addToggle(STR_SILENCE, &silenceOn);
+        
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventSilenceStateChanged, this, &PMUICanvasAudioAnalyzer::silenceStateChanged);
 
         addLabel(STR_PAUSE);
         addSlider(STR_PAUSE_LENGTH, 0.0, 10000.0, &pauseQueueLength);
-        addLabelToggle(STR_PAUSE, &pauseOn)->setColorBack(ofColor(255,0,0));;
+        addToggle(STR_PAUSE, &pauseOn);//->setColorBack(ofColor(255,0,0));;
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPauseStateChanged, this, &PMUICanvasAudioAnalyzer::pauseStateChanged);
 
@@ -191,7 +192,7 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 {
     if (energyParams.audioInputIndex != audioInputIndex) return;
-    energyCurrent = energyGainCurrent * energyParams.energy;
+    energyCurrent = energyParams.energy;
     smoothedEnergy = energyParams.smoothedEnergy;
     
 }

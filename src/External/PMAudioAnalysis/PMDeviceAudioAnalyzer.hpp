@@ -105,9 +105,9 @@ private:
     float silenceThreshold;
     float oldTimeOfSilence;
 
-    bool isInSilence;
+    bool alreadyInSilence;
     bool isInPause;
-    float silenceBeginTime;
+    float notSilenceBeginTime;
     float silenceTimeTreshold;
     float pauseTimeTreshold;
     float digitalGain;
@@ -116,8 +116,8 @@ private:
     float getRms(float *input, int bufferSize);
     float getAbsMean(float *input, int bufferSize);
     void silenceStarted();
-    void updateSilenceTime();
-    void silenceEnded();
+    void notifySilence(bool b);
+    void silenceStopped();
     void checkMelodyDirection();
 
     int ascDescAnalysisSize;

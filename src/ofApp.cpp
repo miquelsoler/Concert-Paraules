@@ -119,8 +119,8 @@ void ofApp::keyReleased(int key)
         case OF_KEY_LEFT:   sceneManager.prevScene(); break;
 
         // Change window mode
-        case 'f':
-        case 'F':
+        case 'w':
+        case 'W':
         {
             isFullScreen = !isFullScreen;
             if (!isFullScreen)
@@ -137,8 +137,8 @@ void ofApp::keyReleased(int key)
             break;
         }
         // Show/hide FPS
-        case 'p':
-        case 'P':
+        case 'f':
+        case 'F':
         {
             showFPS = !showFPS;
             break;
