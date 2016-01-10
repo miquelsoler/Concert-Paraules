@@ -50,20 +50,6 @@ void PMUICanvasBaseRenderer::init(int posX, int posY, bool autosize, int width, 
         addIntSlider("Background B", 0, 255, &guiColorBgBlue);
     }
 
-    { // Audio
-        addSpacer(); addSpacer();
-        addLabel("AUDIO ENERGY");
-        addRangeSlider("Energy Min-Max",0.0,1.0,&guiEnergyMin,&guiEnergyMax);
-        addSlider("Smooth Energy",0.0,1.0,&guiSmoothEnergy);
-        addSlider("Delta Energy",0.0,1.0,&guiDeltaEnergy);
-
-        addSpacer();
-        addLabel("AUDIO PITCH");
-        addRangeSlider("Pitch Min-Max",0.0,127.0,&guiPitchMin,&guiPitchMax);
-        addSlider("Smooth Pitch",0.0,1.0,&guiSmoothPitch);
-        addSlider("Delta Pitch",0.0,1.0,&guiDeltaPitch);
-    }
-
     { // Mode
         addSpacer(); addSpacer();
         addIntSlider("MODE",1,10,&guiMode);

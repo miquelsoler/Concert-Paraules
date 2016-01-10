@@ -26,6 +26,8 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     soundStream.printDeviceList();
 
     isSetup = false;
+    oldPitch = 0.0f;
+    oldEnergy = 0.0f;
 }
 
 PMDeviceAudioAnalyzer::~PMDeviceAudioAnalyzer()
@@ -95,15 +97,13 @@ void PMDeviceAudioAnalyzer::clear()
 void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 {
     // Init of audio event params struct
-    pitchParams pitchParams;
-    pitchParams.deviceID = deviceID;
-    pitchParams.audioInputIndex = audioInputIndex;
+    pParams.deviceID = deviceID;
+    pParams.audioInputIndex = audioInputIndex;
     silenceParams silenceParams;
     silenceParams.deviceID = deviceID;
     silenceParams.audioInputIndex = audioInputIndex;
-    energyParams energyParams;
-    energyParams.deviceID = deviceID;
-    energyParams.audioInputIndex = audioInputIndex;
+    eParams.deviceID = deviceID;
+    eParams.audioInputIndex = audioInputIndex;
     onsetParams onsetParams;
     onsetParams.deviceID = deviceID;
     onsetParams.audioInputIndex = audioInputIndex;
@@ -151,8 +151,11 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
     {
         if (currentMidiNote)
         {
-            pitchParams.midiNote = currentMidiNote;
-            ofNotifyEvent(eventPitchChanged, pitchParams, this);
+            pParams.midiNote = currentMidiNote;
+            float pitchDelted = (pParams.deltaPitch)*pParams.midiNote + (1.0 - pParams.deltaPitch)*oldPitch;
+            pParams.smoothedPitch = ofMap(pitchDelted,pParams.min,pParams.max,0,1,true);
+            oldPitch = pitchDelted;
+            ofNotifyEvent(eventPitchChanged, pParams, this);
 
             midiNoteHistory.push_front(currentMidiNote);
 
@@ -169,8 +172,12 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
     // Mel bands
     {
-        energyParams.energy = absMean;
-        ofNotifyEvent(eventEnergyChanged, energyParams, this);
+        eParams.energy = absMean;
+        float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
+        eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,true);
+        oldEnergy = energyDelted;
+
+        ofNotifyEvent(eventEnergyChanged, eParams, this);
     }
 
     // Shhhht

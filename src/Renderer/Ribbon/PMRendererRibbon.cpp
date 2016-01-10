@@ -69,7 +69,7 @@ void PMRendererRibbon::update()
                 break;
             }
             case LEFT_RIGHT_NRG: { // Left-right movement speeding via energy
-                addOffsetToPosition(myGUI->getSpeed() * myGUI->getSmoothedEnergy(), 0);
+                addOffsetToPosition(myGUI->getSpeed() * eParams.smoothedEnergy, 0);
 
             }
             case UP_DOWN: { // Up-down movement
@@ -77,7 +77,7 @@ void PMRendererRibbon::update()
                 break;
             }
             case UP_DOWN_NRG: { // Up-down movement speeding via energy
-                addOffsetToPosition(0, myGUI->getSpeed() * myGUI->getSmoothedEnergy());
+                addOffsetToPosition(0, myGUI->getSpeed() * eParams.smoothedEnergy);
                 break;
             }
             default:
@@ -182,21 +182,21 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
     switch (mode) {
         case LEFT_RIGHT:
         case LEFT_RIGHT_NRG: {
-            float y = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetHeight() - 1, 1, true);
+            float y = ofMap(pParams.smoothedPitch, 0, 1, ofGetHeight() - 1, 1, true);
             setY(int(y));
             //cout << "-> settingY  = " << y << " __ smooth.pitch = " << myGUI->getSmoothedPitch() << endl;
             break;
         }
         case UP_DOWN:
         case UP_DOWN_NRG: {
-            float x = ofMap(myGUI->getSmoothedPitch(), 0, 1, ofGetWidth() - 1, 1, true);
+            float x = ofMap(pParams.smoothedPitch, 0, 1, ofGetWidth() - 1, 1, true);
             setX(int(x));
             break;
         }
         case PITCH_DRIVE: {
             bool positive;
 
-            pitchDrive = myGUI->getSmoothedPitch() - 0.5f;
+            pitchDrive = pParams.smoothedPitch - 0.5f;
 
             positive = (pitchDrive > 0.0);
 
@@ -220,7 +220,7 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
                     newPosition = pathDirection * 10.0;
                     newPosition.rotate(2.5f * pitchDrive, ofVec3f(0, 0, 1));
-                    newPosition = (myGUI->getSmoothedEnergy() * newPosition) + points[numOfPoints - 1];
+                    newPosition = (eParams.smoothedEnergy * newPosition) + points[numOfPoints - 1];
 
                     // Y
                     /////
@@ -271,13 +271,13 @@ void PMRendererRibbon::pitchChanged(pitchParams pitchParams)
 
             // OPCIO 3
 
-            if (fabs(lastPitch - myGUI->getSmoothedPitch()) > 0.2) {
+            if (fabs(lastPitch - pParams.smoothedPitch) > 0.2) {
                 float offset;
                 float rndNumber2 = ofRandom(0, 1);
                 if (rndNumber2 < 0.5)
-                    offset = ofMap(myGUI->getSmoothedPitch(), 0, 1, 0, 15);
+                    offset = ofMap(pParams.smoothedPitch, 0, 1, 0, 15);
                 else
-                    offset = ofMap(myGUI->getSmoothedPitch(), 0, 1, -15, 0);
+                    offset = ofMap(pParams.smoothedPitch, 0, 1, -15, 0);
 
                 float rndNumber1 = ofRandom(0, 1);
                 if (rndNumber1 < 0.5) {
@@ -323,7 +323,7 @@ void PMRendererRibbon::energyChanged(energyParams energyParams)
 
     if (mode == RM_MOUSE) return;
 
-    float size = ofMap(myGUI->getSmoothedEnergy(), 0, 1, 1, myGUI->getStrokeWidth());
+    float size = ofMap(eParams.smoothedEnergy, 0, 1, 1, myGUI->getStrokeWidth());
     for (int i = 0; i < numPainters; ++i)
         painters[i].setSize((unsigned int) size);
 }

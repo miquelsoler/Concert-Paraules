@@ -67,7 +67,7 @@ void PMRendererPaintbrush2::pitchChanged(pitchParams pitchParams)
 
     // Update brush offset
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
-    float normalizedOffset = ofMap(myGUI->getSmoothedPitch(), 0, 1, 1.0f, -1.0f, true);
+    float normalizedOffset = ofMap(pParams.smoothedPitch, 0, 1, 1.0f, -1.0f, true);
     brush->setOffset(normalizedOffset);
 
     brush->update();
@@ -78,5 +78,5 @@ void PMRendererPaintbrush2::energyChanged(energyParams energyParams)
     PMBaseRenderer::energyChanged(energyParams);
 
     PMUICanvasBrushRenderer *myGUI = (PMUICanvasBrushRenderer *)gui;
-    brush->setSize(myGUI->getSmoothedEnergy());
+    brush->setSize(eParams.smoothedEnergy);
 }

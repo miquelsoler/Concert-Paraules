@@ -144,7 +144,7 @@ void PMRendererPaintbrush::pitchChanged(pitchParams pitchParams)
     
     //            float pitch = ofMap(pitchParams.midiNote, audioAnalyzersSettings->getMinPitchMidiNote(), audioAnalyzersSettings->getMaxPitchMidiNote(), minOffset, maxOffset, true);
     //            paintbrushRenderer->changeDirection(pitchParams.audioInputIndex, pitchParams.midiPitchDivengence);
-    setPositionY(gui->getSmoothedPitch());
+    setPositionY(pParams.smoothedPitch);
 
 }
 

@@ -87,7 +87,7 @@ void PMRendererTypography::update()
     if (addALetter) {
         float minVelocity = 0.01;
         float maxVelocity = 1.0;
-        float velocityY = ofMap(gui->getSmoothedPitch(), 0.0, 1.0, minVelocity, maxVelocity, true);
+        float velocityY = ofMap(pParams.smoothedPitch, 0.0, 1.0, minVelocity, maxVelocity, true);
         setYVelocity(velocityY);
         addLetter();
         addALetter = false;
@@ -273,19 +273,19 @@ void PMRendererTypography::pitchChanged(pitchParams pitchParams)
 //        }
 //    }
 
-    lastPitchReceived = myGUI->getSmoothedPitch();
+    lastPitchReceived = pParams.smoothedPitch;
 }
 
 void PMRendererTypography::energyChanged(energyParams energyParams)
 {
     PMBaseRenderer::energyChanged(energyParams);
 
-    if (gui->getSmoothedEnergy() > myGUI->getAddLetterSensitivity()) {
+    if (eParams.smoothedEnergy > myGUI->getAddLetterSensitivity()) {
 
         float diffTimeMs = ofGetElapsedTimeMillis() - typoTimer;
         if (diffTimeMs > myGUI->getLetterSpeedMs()) {
             typoTimer = ofGetElapsedTimeMillis();
-            setLetterSize(gui->getSmoothedEnergy());
+            setLetterSize(eParams.smoothedEnergy);
             addALetter = true;
         }
         else {

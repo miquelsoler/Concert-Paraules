@@ -48,7 +48,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
         addSlider(STR_MAX_ROTATION, 0.0, 180.0, &maxRotation);
         addSlider(STR_THICKNESS, 0.0, 90.0, &thickness);
         addSlider(STR_BUBBLENESS, 0.0,1.0, &bubbleness);
-
+        addSlider("Energy Threshold for Update",0.0,0.25,&updateThreshold);
         addSpacer();
         addLabel(STR_BRUSH_COLORMODE);
 
@@ -69,6 +69,7 @@ void PMUICanvasCurvesRenderer::init(int posX, int posY, bool autosize, int width
     if (autosize) autoSizeToFitWidgets();
 
     gradientPos = 0.0f;
+    updateThreshold = 0.0f;
     
     loadPreset(selectedPreset);
 }

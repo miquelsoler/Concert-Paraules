@@ -64,12 +64,19 @@ void PMUICanvasAudioAnalyzer::init(int posX, int posY, bool autosize, int width,
 
         addLabel(STR_PITCH);
         addSlider(STR_PITCH_MIDINOTE, 0, 127, &pitchCurrentMidiNote);
+        addRangeSlider("Min/Max Pitch", 0,127, &minPitch,&maxPitch);
+        addSlider("Delta Pitch",0.0,1.0,&deltaPitch);
+        addSlider("Smoothed Pitch",0.0,1.0,&smoothedPitch)->setColorBack(ofColor(255,0,0));
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventPitchChanged, this, &PMUICanvasAudioAnalyzer::pitchChanged);
 
         addLabel(STR_ENERGY);
         addSlider(STR_ENERGY_GAIN, 0.0001, 10.0, &energyGainCurrent);
         addSlider(STR_ENERGY_CURRENT, 0.0, 1.0, &energyCurrent);
+        addRangeSlider("Min/Max Energy", 0,1, &minEnergy,&maxEnergy);
+        addSlider("Delta Energy",0.0,1.0,&deltaEnergy);
+        addSlider("Smoothed Energy",0.0,1.0,&smoothedEnergy)->setColorBack(ofColor(255,0,0));;
+        
         addSpacer();
         ofAddListener((*itAudioAnalyzer)->eventEnergyChanged, this, &PMUICanvasAudioAnalyzer::energyChanged);
 
@@ -111,6 +118,13 @@ void PMUICanvasAudioAnalyzer::clear()
     //superInit("AUDIO ANALYZER", OFX_UI_FONT_MEDIUM);
 }
 
+void PMUICanvasAudioAnalyzer::update()
+{
+    ofxUIScrollableCanvas::update();
+
+    updateAudioParams();
+}
+
 void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
 {
     string name = e.getName();
@@ -127,42 +141,43 @@ void PMUICanvasAudioAnalyzer::handleEvents(ofxUIEventArgs &e)
     }
     else
     {
-        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
-        if (name == STR_SILENCE_THRSHLD)
-        {
-            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
-                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-                (*itAudioAnalyzer)->setSilenceThreshold(e.getFloat());
-            }
-        }
-        else if (name == STR_SILENCE_LENGTH)
-        {
-            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
-                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-                (*itAudioAnalyzer)->setSilenceQueueLength(e.getFloat());
-            }
-        }
-        else if (name == STR_PAUSE_LENGTH)
-        {
-            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
-                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-                (*itAudioAnalyzer)->setPauseTimeTreshold(e.getFloat());
-            }
-        }
-        else if (name == STR_ONSET_THRSHLD)
-        {
-            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
-                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-                (*itAudioAnalyzer)->setOnsetsThreshold(onsetThreshold);
-            }
-        }
-        else if (name == STR_ENERGY_GAIN)
-        {
-            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
-                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
-                (*itAudioAnalyzer)->setDigitalGain(energyGainCurrent);
-            }
-        }
+//        vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+//        if (name == STR_SILENCE_THRSHLD)
+//        {
+//            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
+//                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+//                (*itAudioAnalyzer)->setSilenceThreshold(e.getFloat());
+//            }
+//        }
+//        else if (name == STR_SILENCE_LENGTH)
+//        {
+//            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
+//                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+//                (*itAudioAnalyzer)->setSilenceQueueLength(e.getFloat());
+//            }
+//        }
+//        else if (name == STR_PAUSE_LENGTH)
+//        {
+//            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
+//                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+//                (*itAudioAnalyzer)->setPauseTimeTreshold(e.getFloat());
+//            }
+//        }
+//        else if (name == STR_ONSET_THRSHLD)
+//        {
+//            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
+//                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+//                (*itAudioAnalyzer)->setOnsetsThreshold(onsetThreshold);
+//            }
+//        }
+//        else if (name == STR_ENERGY_GAIN)
+//        {
+//            for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer) {
+//                if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+//                (*itAudioAnalyzer)->setDigitalGain(energyGainCurrent);
+//            }
+//        }
+        
     }
 }
 
@@ -170,12 +185,15 @@ void PMUICanvasAudioAnalyzer::pitchChanged(pitchParams &pitchParams)
 {
     if (pitchParams.audioInputIndex != audioInputIndex) return;
     pitchCurrentMidiNote = pitchParams.midiNote;
+    smoothedPitch = pitchParams.smoothedPitch;
 }
 
 void PMUICanvasAudioAnalyzer::energyChanged(energyParams &energyParams)
 {
     if (energyParams.audioInputIndex != audioInputIndex) return;
     energyCurrent = energyGainCurrent * energyParams.energy;
+    smoothedEnergy = energyParams.smoothedEnergy;
+    
 }
 
 void PMUICanvasAudioAnalyzer::silenceStateChanged(silenceParams &silenceParams)
@@ -268,4 +286,31 @@ void PMUICanvasAudioAnalyzer::resetGUIPosition()
 {
     // Force GUI position when loading
     setPosition(5, 5);
+}
+
+void PMUICanvasAudioAnalyzer::updateAudioParams()
+{
+    vector<PMDeviceAudioAnalyzer *>::iterator itAudioAnalyzer;
+    for (itAudioAnalyzer = audioAnalyzers->begin(); itAudioAnalyzer != audioAnalyzers->end(); ++itAudioAnalyzer)
+    {
+        if ((*itAudioAnalyzer)->getInputIndex() != audioInputIndex) continue;
+        
+        // Update analyzer settings according to preset
+        (*itAudioAnalyzer)->setDigitalGain(energyGainCurrent);
+        (*itAudioAnalyzer)->setSilenceThreshold(silenceThreshold);
+        (*itAudioAnalyzer)->setSilenceQueueLength(silenceQueueLength);
+        (*itAudioAnalyzer)->setPauseTimeTreshold(pauseQueueLength);
+        (*itAudioAnalyzer)->setOnsetsThreshold(onsetThreshold);
+
+        (*itAudioAnalyzer)->setMinEnergy(minEnergy);
+        (*itAudioAnalyzer)->setMaxEnergy(maxEnergy);
+        (*itAudioAnalyzer)->setDeltaEnergy(deltaEnergy);
+        (*itAudioAnalyzer)->setMinPitch(minPitch);
+        (*itAudioAnalyzer)->setMaxPitch(maxPitch);
+        (*itAudioAnalyzer)->setDeltaPitch(deltaPitch);
+        
+//        smoothedEnergy = (*itAudioAnalyzer)->getSmoothedEnergy();
+//        smoothedPitch = (*itAudioAnalyzer)->getSmoothedPitch();
+        
+    }
 }

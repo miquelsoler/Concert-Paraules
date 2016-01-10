@@ -42,13 +42,24 @@ public:
     int                     getSampleRate()     { return sampleRate; };
     int                     getNumChannels()    { return inChannels; };
     vector<unsigned int>    getChannelNumbers() { return channelNumbers; };
-
+    float                   getSmoothedEnergy() { return eParams.smoothedEnergy; };
+    float                   getSmoothedPitch()  { return pParams.smoothedPitch; };
+    
+    
     void                    setSilenceThreshold(float value)   { silenceThreshold = value; };
     void                    setSilenceQueueLength(float value) { silenceTimeTreshold = value; };
     void                    setPauseTimeTreshold(float value)  { pauseTimeTreshold = value; };
     void                    setDigitalGain(float value) {digitalGain = value; };
     void                    setOnsetsThreshold(float value);
-
+    void                    setMinPitch(float value)    {pParams.min=value;};
+    void                    setMaxPitch(float value)    {pParams.max=value;};
+    void                    setMinEnergy(float value)   {eParams.min=value;};
+    void                    setMaxEnergy(float value)   {eParams.max=value;};
+    void                    setDeltaEnergy(float value)  {eParams.deltaEnergy=value;};
+    void                    setDeltaPitch(float value)   {pParams.deltaPitch=value;};
+    void                    setSmoothedPitch(float value) {pParams.smoothedPitch=value;};
+    void                    setSmoothedEnergy(float value) {eParams.smoothedEnergy=value;};
+    
     // Events for listeners
     ofEvent<pitchParams> eventPitchChanged;
     ofEvent<silenceParams> eventSilenceStateChanged;
@@ -119,6 +130,12 @@ private:
     bool isShtFalseSent;
 
     void checkShtSound();
+    
+    pitchParams pParams;
+    energyParams eParams;
+    float      oldPitch;
+    float      oldEnergy;
+    
 };
 
 #endif /* PMDeviceAudioAnalyzer_h */

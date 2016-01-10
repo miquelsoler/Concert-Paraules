@@ -36,23 +36,9 @@ public:
     // GETTERS
     ofColor         getBackgroundColor()    { return ofColor(guiColorBgRed, guiColorBgGreen, guiColorBgBlue, 255); }
     float           getBackgroundFade()     { return guiFadeBackground; }
-    float           getDeltaPitch()         { return guiDeltaPitch; }
-    float           getDeltaEnergy()        { return guiDeltaEnergy; }
-    float           getEnergyMin()          { return guiEnergyMin; }
-    float           getEnergyMax()          { return guiEnergyMax; }
-    float           getPitchMin()           { return guiPitchMin; }
-    float           getPitchMax()           { return guiPitchMax; }
-    float           getSmoothedPitch()      { return guiSmoothPitch; }
-    float           getSmoothedEnergy()     { return guiSmoothEnergy; }
     virtual int     getMode()               { return guiMode; }
     
     // SETTERS
-    void            setSmoothPitch(float p)     { guiSmoothPitch = p; }
-    void            setSmoothEnergy(float e)    { guiSmoothEnergy = e; }
-    void            setPitchMin(float f)        { guiPitchMin = f; }
-    void            setPitchMax(float f)        { guiPitchMax = f; }
-    void            setEnergyMin(float f)       { guiEnergyMin = f; }
-    void            setEnergyMax(float f)       { guiEnergyMax = f; }
 
     void            keyPressed(int key);
     void            keyReleased(int key);

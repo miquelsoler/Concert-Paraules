@@ -9,11 +9,13 @@
 #include "PMUICanvasCurvesRenderer.h"
 #include "ofxVectorGraphics.h"
 
+class PMRendererCurves;
+
 class PMCurvesPainter
 {
 public:
 
-    PMCurvesPainter(PMUICanvasCurvesRenderer *gui);
+    PMCurvesPainter(PMUICanvasCurvesRenderer *gui, PMRendererCurves* r);
 
     void setup();
     void update();
@@ -39,7 +41,9 @@ private:
     
     void controlBounds(ofPoint p);
 
-    PMUICanvasCurvesRenderer *gui;
+
+    PMUICanvasCurvesRenderer*   gui;
+    PMRendererCurves*           renderer;
     
     bool useMouse;
 };

@@ -62,8 +62,6 @@ void PMRendererTextBox::drawIntoFBO()
 
     fbo.begin();
     {
-        float pitchSmooth = gui->getSmoothedPitch();
-        float energySmooth = gui->getSmoothedEnergy();
 
         ofSetColor(255);
 

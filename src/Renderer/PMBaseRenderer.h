@@ -56,16 +56,24 @@ public:
     void setNeedsToBeCleared(bool _needsToBeCleared) { needsToBeCleared = _needsToBeCleared; };
     
     // GETTERS
-    ofFbo*          getFbo() { return &fbo; };
-    PMRendererState getState() { return state; };
-    PMRendererType  getType() { return type; };
-    bool            getNeedsToBeCleared() { return needsToBeCleared; };
-    ofColor         getBackgroundColor();
+    ofFbo*                      getFbo() { return &fbo; };
+    PMRendererState             getState() { return state; };
+    PMRendererType              getType() { return type; };
+    bool                        getNeedsToBeCleared() { return needsToBeCleared; };
+    ofColor                     getBackgroundColor();
     
+    float getDeltaPitch()         { return pParams.deltaPitch; }
+    float getDeltaEnergy()        { return eParams.deltaEnergy; }
+    float getEnergyMin()          { return eParams.min; }
+    float getEnergyMax()          { return eParams.max; }
+    float getPitchMin()           { return pParams.min; }
+    float getPitchMax()           { return pParams.max; }
+    float getSmoothedPitch()      { return pParams.smoothedPitch; }
+    float getSmoothedEnergy()     { return eParams.smoothedEnergy; }
+
     void showGUI(bool show);
     void clearFBOBackground(float r,float g,float b,float a);
 
-    
 protected:
 
     virtual void clear();
@@ -79,11 +87,10 @@ protected:
     
     bool                    needsToBeCleared;
     
-    // audio smoothing
-    float                   oldPitch;
-    float                   oldEnergy;
-    
     bool                    isSilent;
+    
+    pitchParams             pParams;
+    energyParams            eParams;
 };
 
 

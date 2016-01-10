@@ -17,10 +17,18 @@ struct baseAudioInParams {
 
 struct pitchParams : public baseAudioInParams {
     float midiNote;
+    float min;
+    float max;
+    float deltaPitch;
+    float smoothedPitch;
 };
 
 struct energyParams : public baseAudioInParams {
     float energy;
+    float min;
+    float max;
+    float deltaEnergy;
+    float smoothedEnergy;
 };
 
 struct silenceParams : public baseAudioInParams {

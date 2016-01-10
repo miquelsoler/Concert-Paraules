@@ -19,6 +19,8 @@ public:
     virtual void init(int posX, int posY, bool autosize = true, int width = 0, int height = 0);
     virtual void clear();
 
+    virtual void update();
+    
     virtual void handleEvents(ofxUIEventArgs &e);
     virtual void windowResized(ofResizeEventArgs& data);
 protected:
@@ -40,10 +42,21 @@ private:
     // Pitch ------------------------------------
     float               pitchCurrentMidiNote;
     void pitchChanged(pitchParams &pitchParams);
+    float               minPitch;
+    float               maxPitch;
+    float               deltaPitch;
+    float               smoothedPitch;
+    float               oldPitch;
 
     // Energy -----------------------------------
     float               energyGainCurrent;
     float               energyCurrent;
+    float               minEnergy;
+    float               maxEnergy;
+    float               deltaEnergy;
+    float               smoothedEnergy;
+    float               oldEnergy;
+
     void energyChanged(energyParams &energyParams);
 
     // Silence ----------------------------------
@@ -71,6 +84,8 @@ private:
     void keyReleased(int key);
 
     void resetGUIPosition();
+    
+    void updateAudioParams();
 };
 
 

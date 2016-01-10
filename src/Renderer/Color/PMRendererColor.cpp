@@ -367,8 +367,8 @@ void PMRendererColor::drawIntoFBO()
     {
         clearFBOBackground(float(gui->getBackgroundColor().r) / 255.0f, float(gui->getBackgroundColor().g) / 255.0f, float(gui->getBackgroundColor().b) / 255.0f, gui->getBackgroundFade());
 
-        float pitchSmooth = gui->getSmoothedPitch();
-        float energySmooth = gui->getSmoothedEnergy();
+        float pitchSmooth = pParams.smoothedPitch;
+        float energySmooth = eParams.smoothedEnergy;
 
         switch (myGUI->getMode()) {
             case 1 : {

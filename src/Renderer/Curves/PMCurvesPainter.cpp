@@ -3,14 +3,16 @@
 //
 
 #include "PMCurvesPainter.h"
+#include "PMRendererCurves.h"
 
 static const int POS_MARGIN = 1;
 bool drawDebug = false;
 
-PMCurvesPainter::PMCurvesPainter(PMUICanvasCurvesRenderer *_gui)
+PMCurvesPainter::PMCurvesPainter(PMUICanvasCurvesRenderer *_gui, PMRendererCurves* _r)
 {
     gui = _gui;
-
+    renderer = _r;
+    
     // init values
     
     // vector Graphics config
@@ -35,7 +37,7 @@ void PMCurvesPainter::setup()
 void PMCurvesPainter::update()
 {
     
-    float delta = gui->getDelta();
+    float delta = renderer->getDeltaPitch();
     float mX,mY;
     
     if(useMouse)
@@ -45,8 +47,8 @@ void PMCurvesPainter::update()
     }
     else
     {
-        mX = ofGetWidth() * gui->getSmoothedPitch();
-        mY = ofGetHeight() * gui->getSmoothedPitch();
+        mX = ofGetWidth() * renderer->getSmoothedPitch();
+        mY = ofGetHeight() * renderer->getSmoothedPitch();
     }
     
     float ny = mY / float(ofGetHeight());
@@ -67,7 +69,7 @@ void PMCurvesPainter::update()
             turnDirection = lineDirection.normalize();
             turnDirection.rotate(gui->getMaxRotation() * ny * ofRandom(0.5,2.5),ofVec3f(0,0,1));
             
-            ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed()*gui->getSmoothedEnergy();
+            ofPoint p = points[points.size()-1] + turnDirection*gui->getSpeed()*renderer->getSmoothedEnergy();
             
             /// DELTA SMOOTHING
             p = (p*delta) + (points[points.size()-1]*(1.0-delta));
@@ -80,7 +82,7 @@ void PMCurvesPainter::update()
         if(points.size()>1)
         {
             //            posX = fmod(posX+10,ofGetWidth());
-            posX = posX + (gui->getSpeed()*gui->getSmoothedEnergy());
+            posX = posX + (gui->getSpeed()*renderer->getSmoothedEnergy());
             ofPoint p = ofPoint(posX,mY );
             
             /// DELTA SMOOTHING
@@ -95,7 +97,7 @@ void PMCurvesPainter::update()
         
         if(points.size()>1)
         {
-            posY = posY + (gui->getSpeed()*gui->getSmoothedEnergy());
+            posY = posY + (gui->getSpeed()*renderer->getSmoothedEnergy());
             ofPoint p = ofPoint(mX ,posY);
             
             
@@ -128,7 +130,7 @@ void PMCurvesPainter::draw()
         // DRAW CURVE !!
         /////////////////
         // draw the curve from the last 4 points ...
-        ofSetLineWidth(gui->getThickness()*gui->getSmoothedEnergy());
+        ofSetLineWidth(gui->getThickness()*renderer->getSmoothedEnergy());
         ofSetColor(gui->getCurveColor());
        
         //ofEnableSmoothing();
@@ -181,7 +183,7 @@ void PMCurvesPainter::draw()
         
         // draw the points
         ///////////////////
-        glPointSize(gui->getThickness()*gui->getSmoothedEnergy());
+        glPointSize(gui->getThickness()*renderer->getSmoothedEnergy());
         ofSetColor(gui->getCurveColor());
         glBegin(GL_POINTS);
         glVertex2f(points[0].x,points[0].y);
@@ -229,7 +231,7 @@ void PMCurvesPainter::draw()
     {
         ofDrawCircle(points[points.size()-3].x + ofRandomf()*3,
                      points[points.size()-3].y + ofRandomf()*3,
-                     gui->getThickness()*gui->getSmoothedEnergy()*gui->getBubbleness());
+                     gui->getThickness()*renderer->getSmoothedEnergy()*gui->getBubbleness());
     }
     ofNoFill();
     
