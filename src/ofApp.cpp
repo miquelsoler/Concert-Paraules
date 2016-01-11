@@ -86,7 +86,9 @@ void ofApp::draw()
 
     if(sceneManager.getCurrentSceneIndex() == -1)
     {
-        initImage.draw(0,0,ofGetWidth(),ofGetHeight());
+        ofSetRectMode(OF_RECTMODE_CENTER);
+        initImage.draw(ofGetWidth()/2,ofGetHeight()/2,ofGetHeight()*1.33333,ofGetHeight());
+        ofSetRectMode(OF_RECTMODE_CORNER);
     }
 
     

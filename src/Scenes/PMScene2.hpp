@@ -35,7 +35,8 @@
 typedef enum
 {
     RECORDING_NORMAL = 0,
-    RECORDING_ADDPOEM = 1
+    RECORDING_ADDPOEM = 1,
+    RECORDING_ADDTITLE = 2
 } PMRecordingState;
 
 
@@ -75,7 +76,8 @@ private:
     void takeSnapshot();
     
     PMBaseRenderer                      *renderer;
-    PMRendererStillImage                stillImage;
+    PMRendererStillImage                stillImagePoem;
+    PMRendererStillImage                stillImageTitle;
     
     PMRecorder                          *recorder;
     PMRecordingState                    recState;

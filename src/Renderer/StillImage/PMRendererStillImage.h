@@ -26,13 +26,14 @@ class PMRendererStillImage : public PMBaseRenderer
 public:
 
     PMRendererStillImage();
-    virtual void setup();
+    virtual void setup(string s);
     virtual void update();
     virtual void drawIntoFBO();
-    
+        
 private:
     
     ofImage                         stillImage;
+    string                          filename;
 };
 
 

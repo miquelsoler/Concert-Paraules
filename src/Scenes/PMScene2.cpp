@@ -31,6 +31,8 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     recState = RECORDING_NORMAL;
     durationRecordingText = 4000;
+    
+    
 }
 
 PMScene2::~PMScene2()
@@ -154,7 +156,9 @@ void PMScene2::setup()
     recorder->init(renderer->getFbo(), sampleRate, 2, filename, ofFilePath::getAbsolutePath("", true));
 
     // Still Image Setup
-    stillImage.setup();
+    stillImagePoem.setup(PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename());
+    stillImageTitle.setup("./images/titol.jpg");
+    
 }
 
 void PMScene2::update()
@@ -171,18 +175,38 @@ void PMScene2::update()
             }
             break;
         }
-        case RECORDING_ADDPOEM: {
+        case RECORDING_ADDPOEM:
+        {
+            stillImagePoem.update();
+
             // recording text image ... (we've changed the fbo in keyPress)
             if (recorder->isRecording()) {
                 recorder->addVideoFrame(ofColor(0));
             }
 
             if (ofGetElapsedTimeMillis() - startTimeRecordingText > durationRecordingText) {
-                cout << "SCENE 2 :: Timer for Still Image ended !! STOPPING RECORDING !! " << endl;
+                cout << "SCENE 2 :: Timer for POEM Image ended !! STOPPING RECORDING !! " << endl;
                 recorder->stopRecording();
                 recState = RECORDING_NORMAL;
             }
-            stillImage.update();
+            break;
+        }
+        case RECORDING_ADDTITLE:
+        {
+            stillImageTitle.update();
+            
+            // recording text image ... (we've changed the fbo in keyPress)
+            if (recorder->isRecording()) {
+                recorder->addVideoFrame(ofColor(0));
+            }
+            
+            if (ofGetElapsedTimeMillis() - startTimeRecordingText > durationRecordingText) {
+                cout << "SCENE 2 :: Timer for TITLE Image ended !! STOPPING RECORDING !! " << endl;
+                recState = RECORDING_NORMAL;
+                recorder->changeFbo(renderer->getFbo());
+
+                
+            }
             break;
         }
     }
@@ -220,8 +244,9 @@ void PMScene2::draw()
     // if we're in recState 0 (normal) ... draw the renderer.
     // else if we're in recState 1 (rendering text jpg) ... draw the still image
     switch(recState) {
+        case RECORDING_ADDTITLE: stillImageTitle.draw(); break;
         case RECORDING_NORMAL: renderer->draw(); break;
-        case RECORDING_ADDPOEM: stillImage.draw(); break;
+        case RECORDING_ADDPOEM: stillImagePoem.draw(); break;
     }
 
 #ifdef OF_DEBUG
@@ -285,13 +310,17 @@ void PMScene2::keyReleased(int key)
         case 'R': {
             if (!recorder->isRecording()) {
                 // if not reocording -> Start recording
+                recorder->changeFbo(stillImageTitle.getFbo());
                 recorder->startRecording();
+                startTimeRecordingText = ofGetElapsedTimeMillis();
+                recState = RECORDING_ADDTITLE;
+                
             } else {
                 // if we're already recording
                 // Start StillImage Recording
                 cout << "Scene 2 :: changing FBO to record still image..." << endl;
                 recState = RECORDING_ADDPOEM;
-                recorder->changeFbo(stillImage.getFbo());
+                recorder->changeFbo(stillImagePoem.getFbo());
                 cout << "Scene 2 :: changed FBO to still iamge one !! " << endl;
                 startTimeRecordingText = ofGetElapsedTimeMillis();
                 cout << "Scene 2 :: started timer for still image render..." << endl;

@@ -4,12 +4,12 @@ PMRendererStillImage::PMRendererStillImage() : PMBaseRenderer(RENDERERTYPE_STILL
 {
 }
 
-void PMRendererStillImage::setup()
+void PMRendererStillImage::setup(string s)
 {
     PMBaseRenderer::setup();
 
-    string poemPath = PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename();
-    stillImage.load(poemPath);
+    filename = s;
+    stillImage.load(filename);
 
     setState(RENDERERSTATE_ON);
 }
@@ -28,7 +28,11 @@ void PMRendererStillImage::drawIntoFBO()
     {
         ofSetColor(255);
         ofEnableAlphaBlending();
-        stillImage.draw(0, 0, ofGetWidth(), ofGetHeight());
+
+        ofSetRectMode(OF_RECTMODE_CENTER);
+        stillImage.draw(ofGetWidth()/2,ofGetHeight()/2,ofGetHeight()*1.33333,ofGetHeight());
+        ofSetRectMode(OF_RECTMODE_CORNER);
+
         ofDisableAlphaBlending();
     }
     fbo.end();
