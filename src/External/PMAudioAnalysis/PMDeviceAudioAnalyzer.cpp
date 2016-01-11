@@ -128,11 +128,11 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         currentMidiNote = pParams.min + (pParams.max-pParams.min) / 2.0;
     }
     //cout << "Pitch Confidence " << aubioPitch->pitchConfidence << endl;
-    
     // SILENCE
     ////////////
 
     float absMean = getAbsMean(input,bufferSize);
+
     
     bool nowIsSilent = (eParams.smoothedEnergy < silenceThreshold);
     

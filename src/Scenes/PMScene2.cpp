@@ -219,8 +219,11 @@ void PMScene2::updateEnter()
     if (isEnteringFirst()) {
         int i;
         vector<PMUICanvasAudioAnalyzer *>::iterator it;
-        for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++) {
+        for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, i++)
+        {
             (*it)->setVisible(showGUI);
+            (*it)->enableKeyEventCallbacks();
+            (*it)->enableAppUpdateCallback();
         }
     }
 
@@ -304,6 +307,7 @@ void PMScene2::keyReleased(int key)
         }
         case ' ': {
             renderer->switchStateOnOff();
+
             break;
         }
         case 'r':
