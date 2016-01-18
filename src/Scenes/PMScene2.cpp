@@ -31,8 +31,8 @@ PMScene2::PMScene2() : PMBaseScene("Scene 2")
 
     recState = RECORDING_NORMAL;
     durationRecordingText = 4000;
-    
-    
+
+    rendererAlreadyCreated = false;
 }
 
 PMScene2::~PMScene2()
@@ -46,28 +46,12 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
+    cout << "S2 setup" << endl;
     // Create Renderer
     {
         PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
-        switch (settingsRenderer.ID) {
-//            case RENDERERTYPE_PAINTBRUSH:
-//                renderer = new PMRendererPaintbrush2();
-//                break;
-            case RENDERERTYPE_TYPOGRAPHY:
-                renderer = new PMRendererTypography();
-                break;
-            case RENDERERTYPE_COLOR:
-                renderer = new PMRendererColor();
-                break;
-//            case RENDERERTYPE_RIBBON:
-//                renderer = new PMRendererRibbon();
-//                break;
-            case RENDERERTYPE_CURVES:
-                renderer = new PMRendererCurves();
-                break;
-            default:
-                break;
-        }
+        goToRenderer(settingsRenderer.ID);
+        rendererAlreadyCreated = true;
     }
 
     // Enabled audio devices
@@ -149,6 +133,19 @@ void PMScene2::setup()
     stillImagePoem.setup(PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename());
     stillImageTitle.setup("./images/titol.jpg");
     
+}
+
+void PMScene2::goToRenderer(int rendererID)
+{
+    if (rendererAlreadyCreated) delete renderer;
+
+    switch (rendererID)
+    {
+        case RENDERERTYPE_TYPOGRAPHY:   renderer = new PMRendererTypography(); break;
+        case RENDERERTYPE_COLOR:        renderer = new PMRendererColor(); break;
+        case RENDERERTYPE_CURVES:       renderer = new PMRendererCurves(); break;
+        default: break;
+    }
 }
 
 void PMScene2::recorderSetup()

@@ -48,6 +48,7 @@ public:
     ~PMScene2();
 
     void setup();
+    void goToRenderer(int rendererID);
     void update();
     void updateEnter();
     void updateExit();
@@ -81,6 +82,8 @@ private:
     PMBaseRenderer                      *renderer;
     PMRendererStillImage                stillImagePoem;
     PMRendererStillImage                stillImageTitle;
+
+    bool                                rendererAlreadyCreated;
     
     PMRecorder                          *recorder;
     PMRecordingState                    recState;
