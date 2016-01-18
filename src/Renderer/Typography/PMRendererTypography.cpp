@@ -147,7 +147,7 @@ void PMRendererTypography::update()
 
 void PMRendererTypography::drawIntoFBO()
 {
-    if ((state != RENDERERSTATE_ON)) return;
+    //if ((state != RENDERERSTATE_ON)) return;
 
     fbo.begin();
     {
