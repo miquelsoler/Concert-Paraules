@@ -6,7 +6,7 @@
 
 
 //--------------------------------------------------------------
-PMRendererTextBox::PMRendererTextBox() : PMBaseRenderer(RENDERERTYPE_TEXTBOX)
+PMRendererTextBox::PMRendererTextBox() : PMBaseRenderer(RENDERERTYPE_UNDEFINED)
 {
     // GUI
     {

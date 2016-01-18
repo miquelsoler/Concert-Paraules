@@ -14,12 +14,12 @@
 
 typedef enum
 {
+    RENDERERTYPE_UNDEFINED = -1,
     RENDERERTYPE_TYPOGRAPHY = 0,
     RENDERERTYPE_COLOR = 1,
     RENDERERTYPE_CURVES = 2,
     RENDERERTYPE_STILLIMAGE = 3,
-    RENDERERTYPE_TEXTBOX = 4,
-    RENDERERTYPE_UNDEFINED = 5
+    RENDERERTYPE_NUMRENDERERS = 3 // Still Image is not considerer a proper renderer
 } PMRendererType;
 
 typedef enum

@@ -84,6 +84,7 @@ private:
     PMRendererStillImage                stillImageTitle;
 
     bool                                rendererAlreadyCreated;
+    int                                 currentRenderer;
     
     PMRecorder                          *recorder;
     PMRecordingState                    recState;

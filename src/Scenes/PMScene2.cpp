@@ -9,7 +9,6 @@
 #include "PMScene2.hpp"
 
 #include "PMSettingsManagerGeneral.h"
-#include "PMSettingsManagerPoem.h"
 
 PMScene2::PMScene2() : PMBaseScene("Scene 2")
 {
@@ -46,7 +45,6 @@ PMScene2::~PMScene2()
 
 void PMScene2::setup()
 {
-    cout << "S2 setup" << endl;
     // Create Renderer
     {
         PMSettingsRenderer settingsRenderer = PMSettingsManagerRenderers::getInstance().getSelectedRenderer();
@@ -137,9 +135,15 @@ void PMScene2::setup()
 
 void PMScene2::goToRenderer(int rendererID)
 {
-    if (rendererAlreadyCreated) delete renderer;
+    if (rendererAlreadyCreated)
+    {
+        // TODO: Aquí s'hauria de fer un ofRemoveListener de tots els events d'audio que reb el renderer abans d'esborrar-lo.
+        delete renderer;
+    }
 
-    switch (rendererID)
+    currentRenderer = rendererID;
+
+    switch (currentRenderer)
     {
         case RENDERERTYPE_TYPOGRAPHY:   renderer = new PMRendererTypography(); break;
         case RENDERERTYPE_COLOR:        renderer = new PMRendererColor(); break;
@@ -296,13 +300,12 @@ void PMScene2::keyReleased(int key)
     switch (key)
     {
         case 'g':
-        case 'G': {
-
+        case 'G':
+        {
             if(!showGUI) ofShowCursor();
             else ofHideCursor();
 
             showGUI = !showGUI;
-
             
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for (it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
@@ -314,13 +317,22 @@ void PMScene2::keyReleased(int key)
 
             break;
         }
-        case ' ': {
+        case ' ':
+        {
             renderer->switchStateOnOff();
-
+            break;
+        }
+        case 'n':
+        case 'N':
+        {
+            currentRenderer = (currentRenderer + 1) % RENDERERTYPE_NUMRENDERERS;
+            cout << "Current renderer: " << currentRenderer << endl;
+            goToRenderer(currentRenderer);
             break;
         }
         case 'r':
-        case 'R': {
+        case 'R':
+        {
             if (!recorder->isRecording()) {
                 // if not reocording -> Start recording
                 recorder->changeFbo(stillImageTitle.getFbo());
@@ -341,21 +353,19 @@ void PMScene2::keyReleased(int key)
             break;
         }
         case 'c':
-        case 'C': {
+        case 'C':
+        {
             // Discard recording
             recorder->discardRecording();
             break;
         }
-        case 'x' :
+        case 'x':
+        {
             renderer->setNeedsToBeCleared(true);
             break;
-            
-            
-        case 'p':
-            takeSnapshot();
-            break;
-        default:
-            break;
+        }
+        case 'p': takeSnapshot(); break;
+        default: break;
     }
 }
 
