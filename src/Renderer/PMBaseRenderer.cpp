@@ -42,19 +42,23 @@ void PMBaseRenderer::clearFBOBackground(float r,float g,float b,float a)
 //    fbo.begin();
 //    {
 
+    if(state==RENDERERSTATE_ON)
+    {
     
-    if(a<1.0f)
-    {
-//        // background dimming
-        ofFloatColor fc = ofFloatColor(r,g,b,a);
-        ofSetColor(fc);
-        //ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofFill();
-        ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
-    }
-    else
-    {
-        ofClear(r,g,b);
+        if(a<1.0f)
+        {
+    //        // background dimming
+            ofFloatColor fc = ofFloatColor(r,g,b,a);
+            ofSetColor(fc);
+            //ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+            ofFill();
+            ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
+        }
+        else
+        {
+            ofClear(r,g,b);
+        }
+        
     }
 //    }
 //    fbo.end();
@@ -83,7 +87,7 @@ void PMBaseRenderer::draw()
     }
 
     // Skip FBO drawing if renderer is off
-    if (state == RENDERERSTATE_OFF) return;
+    //if (state == RENDERERSTATE_OFF) return;
 
     // draw the fbo with contents to screen
     fbo.draw(0, 0);
@@ -96,7 +100,7 @@ void PMBaseRenderer::setState(PMRendererState newState)
     switch(state) // Different behavior according to current state and new state
     {
         case RENDERERSTATE_ON: {
-            if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
+            //if (newState == RENDERERSTATE_OFF) setNeedsToBeCleared(true);
             state = newState;
             break;
         }

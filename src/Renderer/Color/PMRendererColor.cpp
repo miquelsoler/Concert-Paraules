@@ -441,7 +441,7 @@ void PMRendererColor::update()
 //--------------------------------------------------------------
 void PMRendererColor::drawIntoFBO()
 {
-    if (state != RENDERERSTATE_ON) return;
+    //if (state != RENDERERSTATE_ON) return;
 
 
     fbo.begin();
