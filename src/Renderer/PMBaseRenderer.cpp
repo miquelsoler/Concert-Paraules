@@ -11,6 +11,16 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type)
     type = _type;
     needsToBeCleared = false;
     isSilent = false;
+    
+    ofAddListener(ofEvents().windowResized, this, &PMBaseRenderer::windowResized);
+
+}
+
+
+void PMBaseRenderer::windowResized(ofResizeEventArgs& a)
+{
+    cout << "PMBaseRenderer:: " << type << " :: Resizing Window at : " << a.width << " , " << a.height << endl;
+    fbo.allocate(a.width, a.height, GL_RGBA32F_ARB, 4);
 }
 
 void PMBaseRenderer::setup()

@@ -143,21 +143,27 @@ void PMScene2::setup()
 
     renderer->setup();
 
-    // Recorder setup
+    recorderSetup();
+    
+    // Still Image Setup
+    stillImagePoem.setup(PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename());
+    stillImageTitle.setup("./images/titol.jpg");
+    
+}
 
+void PMScene2::recorderSetup()
+{
+    // Recorder setup
+    
     vector<PMDeviceAudioAnalyzer *> aavec = *PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate = aavec[0]->getSampleRate();
     int numChannels = aavec.at(0)->getNumChannels();
     // FIXME : FORCED 2 CHANNELS OF AUDIO !!
-
+    
     string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
     ofStringReplace(filename, " ", "_");
     ofStringReplace(filename, ".jpg", "");
     recorder->init(renderer->getFbo(), sampleRate, 2, filename, ofFilePath::getAbsolutePath("", true));
-
-    // Still Image Setup
-    stillImagePoem.setup(PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename());
-    stillImageTitle.setup("./images/titol.jpg");
     
 }
 
@@ -263,6 +269,12 @@ void PMScene2::draw()
     ofDrawBitmapString("Renderer state: " + stat, 15, ofGetHeight() - 60);
 #endif
 
+    
+    if(recorder->isRecording())
+    {
+        ofSetColor(255*sin(ofGetElapsedTimef()*10),0,0);
+        ofDrawCircle(ofGetWidth()-50,50,15);
+    }
 }
 
 void PMScene2::saveSettings()
@@ -441,4 +453,10 @@ void PMScene2::takeSnapshot()
 
     cout << "Taking Snapshot : filename : " << filename << endl;
 
+}
+
+void PMScene2::windowResized(int x, int y)
+{
+    recorderSetup();
+    cout << "PMScene2 :: Window has been resized to : " << x << " , " << y << " . So Recorder setup again ..." <<endl;
 }

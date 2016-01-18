@@ -54,8 +54,8 @@ public:
     void draw();
 
     void saveSettings();
-
     void keyReleased(int key);
+    void recorderSetup();
 
     // Audio events
     void pitchChanged(pitchParams &pitchParams);
@@ -71,6 +71,9 @@ public:
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 
+    // Window Resize
+    void windowResized(int x, int y);
+    
 private:
 
     void takeSnapshot();

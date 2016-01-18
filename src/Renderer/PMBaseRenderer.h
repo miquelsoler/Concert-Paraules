@@ -49,6 +49,8 @@ public:
     virtual void mouseDragged(int x, int y, int button) {};
     virtual void mousePressed(int x, int y, int button) {};
     virtual void mouseReleased(int x, int y, int button) {};
+    virtual void windowResized(ofResizeEventArgs& a);
+    
     
     // SETTERS
     void setState(PMRendererState newState);
