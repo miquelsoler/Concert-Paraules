@@ -60,7 +60,7 @@ void PMRendererCurves::update()
 
 void PMRendererCurves::drawIntoFBO()
 {
-    //if ((state != RENDERERSTATE_ON) ) return;
+    if ((state != RENDERERSTATE_ON) ) return;
 
     fbo.begin();
     {
