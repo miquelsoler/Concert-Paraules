@@ -359,11 +359,24 @@ void PMScene2::keyReleased(int key)
             renderer->switchStateOnOff();
             break;
         }
-        case 'n':
-        case 'N':
+        case 'a':
+        case 'A':
         {
-            currentRenderer = (currentRenderer + 1) % RENDERERTYPE_NUMRENDERERS;
-            cout << "Current renderer: " << currentRenderer << endl;
+            currentRenderer = RENDERERTYPE_TYPOGRAPHY;
+            goToRenderer(currentRenderer);
+            break;
+        }
+        case 's':
+        case 'S':
+        {
+            currentRenderer = RENDERERTYPE_COLOR;
+            goToRenderer(currentRenderer);
+            break;
+        }
+        case 'd':
+        case 'D':
+        {
+            currentRenderer = RENDERERTYPE_CURVES;
             goToRenderer(currentRenderer);
             break;
         }
