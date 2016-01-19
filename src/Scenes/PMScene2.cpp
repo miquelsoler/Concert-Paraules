@@ -135,10 +135,9 @@ void PMScene2::setup()
 
 void PMScene2::goToRenderer(int rendererID)
 {
+    // Un-listen audio events and remove renderer if a renderer was already created
     if (rendererAlreadyCreated)
     {
-        // TODO: Aquí s'hauria de fer un ofRemoveListener de tots els events d'audio que reb el renderer abans d'esborrar-lo.
-
         vector<PMDeviceAudioAnalyzer*> *deviceAudioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
         vector<PMDeviceAudioAnalyzer *>::iterator itDevAnalyzer;
 
@@ -154,12 +153,11 @@ void PMScene2::goToRenderer(int rendererID)
             ofRemoveListener((*itDevAnalyzer)->eventMelodyDirection, this, &PMScene2::melodyDirection);
         }
 
-        renderer->setState(RENDERERSTATE_OFF);
         delete renderer;
     }
 
+    // Create renderer
     currentRenderer = rendererID;
-
     switch (currentRenderer)
     {
         case RENDERERTYPE_TYPOGRAPHY:   renderer = new PMRendererTypography(); break;
@@ -168,8 +166,7 @@ void PMScene2::goToRenderer(int rendererID)
         default: break;
     }
 
-    renderer->setState(RENDERERSTATE_OFF);
-
+    // Re-listen to audio events and setup renderer if a renderer was already created
     if (rendererAlreadyCreated)
     {
         vector<PMDeviceAudioAnalyzer*> *deviceAudioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
@@ -186,6 +183,9 @@ void PMScene2::goToRenderer(int rendererID)
             ofAddListener((*itDevAnalyzer)->eventShtStateChanged, this, &PMScene2::shtDetected);
             ofAddListener((*itDevAnalyzer)->eventMelodyDirection, this, &PMScene2::melodyDirection);
         }
+
+        renderer->setup();
+        recorderSetup();
     }
 }
 
