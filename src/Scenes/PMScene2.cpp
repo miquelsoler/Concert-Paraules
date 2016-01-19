@@ -138,6 +138,23 @@ void PMScene2::goToRenderer(int rendererID)
     if (rendererAlreadyCreated)
     {
         // TODO: Aquí s'hauria de fer un ofRemoveListener de tots els events d'audio que reb el renderer abans d'esborrar-lo.
+
+        vector<PMDeviceAudioAnalyzer*> *deviceAudioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
+        vector<PMDeviceAudioAnalyzer *>::iterator itDevAnalyzer;
+
+        for (itDevAnalyzer = deviceAudioAnalyzers->begin(); itDevAnalyzer != deviceAudioAnalyzers->end(); ++itDevAnalyzer)
+        {
+            ofRemoveListener((*itDevAnalyzer)->eventPitchChanged, this, &PMScene2::pitchChanged);
+            ofRemoveListener((*itDevAnalyzer)->eventEnergyChanged, this, &PMScene2::energyChanged);
+
+            ofRemoveListener((*itDevAnalyzer)->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+            ofRemoveListener((*itDevAnalyzer)->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
+            ofRemoveListener((*itDevAnalyzer)->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
+            ofRemoveListener((*itDevAnalyzer)->eventShtStateChanged, this, &PMScene2::shtDetected);
+            ofRemoveListener((*itDevAnalyzer)->eventMelodyDirection, this, &PMScene2::melodyDirection);
+        }
+
+        renderer->setState(RENDERERSTATE_OFF);
         delete renderer;
     }
 
@@ -149,6 +166,26 @@ void PMScene2::goToRenderer(int rendererID)
         case RENDERERTYPE_COLOR:        renderer = new PMRendererColor(); break;
         case RENDERERTYPE_CURVES:       renderer = new PMRendererCurves(); break;
         default: break;
+    }
+
+    renderer->setState(RENDERERSTATE_OFF);
+
+    if (rendererAlreadyCreated)
+    {
+        vector<PMDeviceAudioAnalyzer*> *deviceAudioAnalyzers = PMAudioAnalyzer::getInstance().getAudioAnalyzers();
+        vector<PMDeviceAudioAnalyzer *>::iterator itDevAnalyzer;
+
+        for (itDevAnalyzer = deviceAudioAnalyzers->begin(); itDevAnalyzer != deviceAudioAnalyzers->end(); ++itDevAnalyzer)
+        {
+            ofAddListener((*itDevAnalyzer)->eventPitchChanged, this, &PMScene2::pitchChanged);
+            ofAddListener((*itDevAnalyzer)->eventEnergyChanged, this, &PMScene2::energyChanged);
+
+            ofAddListener((*itDevAnalyzer)->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
+            ofAddListener((*itDevAnalyzer)->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
+            ofAddListener((*itDevAnalyzer)->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
+            ofAddListener((*itDevAnalyzer)->eventShtStateChanged, this, &PMScene2::shtDetected);
+            ofAddListener((*itDevAnalyzer)->eventMelodyDirection, this, &PMScene2::melodyDirection);
+        }
     }
 }
 
