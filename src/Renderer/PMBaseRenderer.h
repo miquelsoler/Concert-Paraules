@@ -33,6 +33,7 @@ class PMBaseRenderer
 public:
 
     PMBaseRenderer(PMRendererType type);
+    ~PMBaseRenderer();
 
     virtual void setup();
     virtual void update();

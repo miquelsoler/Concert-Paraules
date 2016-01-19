@@ -16,6 +16,10 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type)
 
 }
 
+PMBaseRenderer::~PMBaseRenderer()
+{
+    delete gui;
+}
 
 void PMBaseRenderer::windowResized(ofResizeEventArgs& a)
 {

@@ -254,8 +254,6 @@ void PMScene2::update()
             break;
         }
     }
-    
-
 }
 
 void PMScene2::updateEnter()
