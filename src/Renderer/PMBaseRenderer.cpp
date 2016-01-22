@@ -18,7 +18,8 @@ PMBaseRenderer::PMBaseRenderer(PMRendererType _type)
 
 PMBaseRenderer::~PMBaseRenderer()
 {
-    delete gui;
+    if (type != RENDERERTYPE_STILLIMAGE)
+        delete gui;
 }
 
 void PMBaseRenderer::windowResized(ofResizeEventArgs& a)
