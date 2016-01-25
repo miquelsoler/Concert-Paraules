@@ -184,6 +184,12 @@ void PMScene2::goToRenderer(int rendererID)
         }
 
         renderer->setup();
+#ifdef OF_DEBUG
+        showGUI = PMSettingsManagerGeneral::getInstance().getDebugShowGUIScene2();
+#else
+        showGUI = PMSettingsManagerGeneral::getInstance().getReleaseShowGUIScene2();
+#endif
+        renderer->showGUI(showGUI);
         recorderSetup();
     }
 }
