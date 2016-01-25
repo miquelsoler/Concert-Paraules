@@ -145,7 +145,6 @@ void PMScene2::goToRenderer(int rendererID)
         {
             ofRemoveListener((*itDevAnalyzer)->eventPitchChanged, this, &PMScene2::pitchChanged);
             ofRemoveListener((*itDevAnalyzer)->eventEnergyChanged, this, &PMScene2::energyChanged);
-
             ofRemoveListener((*itDevAnalyzer)->eventSilenceStateChanged, this, &PMScene2::silenceStateChanged);
             ofRemoveListener((*itDevAnalyzer)->eventPauseStateChanged, this, &PMScene2::pauseStateChanged);
             ofRemoveListener((*itDevAnalyzer)->eventOnsetStateChanged, this, &PMScene2::onsetDetected);
