@@ -2450,8 +2450,11 @@
 					../../../addons/ofxBox2d/triangle,
 					../../../addons/ofxBox2d/src,
 				);
-				ICON = "$(ICON_NAME_DEBUG)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = icona.debug.icns;
+				ICON_FILE = ./bin/data/images/icona.debug.icns;
+				ICON_FILE_PATH = ./bin/data/images/;
+				ICON_NAME_DEBUG = icona.debug.icns;
+				ICON_NAME_RELEASE = icona.release.icns;
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -2537,8 +2540,11 @@
 					../../../addons/ofxBox2d/triangle,
 					../../../addons/ofxBox2d/src,
 				);
-				ICON = "$(ICON_NAME_RELEASE)";
-				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON = icona.release.icns;
+				ICON_FILE = ./bin/data/images/icona.release.icns;
+				ICON_FILE_PATH = ./bin/data/images/;
+				ICON_NAME_DEBUG = icona.debug.icns;
+				ICON_NAME_RELEASE = icona.release.icns;
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -2558,7 +2564,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
-				baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
