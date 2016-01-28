@@ -15,14 +15,15 @@ static const int NUM_MELBANDS = 40;
 
 PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int _outChannels, int _sampleRate, int _bufferSize)
 {
-    deviceID = _deviceID;
+    deviceID = 0;
     inChannels = _inChannels;
     outChannels = _outChannels;
     sampleRate = _sampleRate;
     bufferSize = _bufferSize;
     numBuffers = bufferSize / 64;
 
-    soundStream.setDeviceID(deviceID);
+    
+    soundStream.setDeviceID(0);
     soundStream.printDeviceList();
 
     isSetup = false;
@@ -41,7 +42,7 @@ void PMDeviceAudioAnalyzer::setup(unsigned int _audioInputIndex, vector<unsigned
 
     if (isSetup) return;
 
-    audioInputIndex = _audioInputIndex;
+    audioInputIndex = 0;
 
     // Channels
     channelNumbers = _channelNumbers;

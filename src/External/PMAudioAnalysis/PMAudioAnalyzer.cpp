@@ -21,8 +21,8 @@ void PMAudioAnalyzer::init(
 PMDeviceAudioAnalyzer *PMAudioAnalyzer::addDeviceAnalyzer(unsigned int audioInputIndex, int deviceID, int inChannels, int outChannels,
         int sampleRate, int bufferSize,vector<unsigned int> channelNumbers)
 {
-    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = new PMDeviceAudioAnalyzer(deviceID, inChannels, outChannels, sampleRate, bufferSize);
-    deviceAudioAnalyzer->setup(audioInputIndex,
+    PMDeviceAudioAnalyzer *deviceAudioAnalyzer = new PMDeviceAudioAnalyzer(0, inChannels, outChannels, sampleRate, bufferSize);
+    deviceAudioAnalyzer->setup(0,
             channelNumbers,
             silenceThreshold,
             silenceQueueLength,
@@ -64,9 +64,10 @@ vector<ofSoundDevice> PMAudioAnalyzer::getInputDevices()
     ofSoundStream soundStream;
     vector<ofSoundDevice> allDevices = soundStream.getDeviceList();
 
-#ifdef OF_DEBUG
+    
+//#ifdef OF_DEBUG
     soundStream.printDeviceList();
-#endif
+//#endif
 
     vector<ofSoundDevice> inputDevices;
     for (int i = 0; i < allDevices.size(); ++i)

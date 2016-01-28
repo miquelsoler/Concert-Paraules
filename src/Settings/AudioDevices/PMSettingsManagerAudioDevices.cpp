@@ -44,7 +44,8 @@ bool PMSettingsManagerAudioDevices::load(string filename)
         result = PMSettingsManager::load(filename);
         if (result)
         {
-            if (!JSONmatchesCurrentAudioDevices())
+            //if (!JSONmatchesCurrentAudioDevices())
+            if(true)
                 createJSONSettings();
 
             buildAllAudioDevicesVectorFromJSON();
@@ -99,7 +100,7 @@ bool PMSettingsManagerAudioDevices::JSONmatchesCurrentAudioDevices()
     vector<ofSoundDevice> devices = PMAudioAnalyzer::getInstance().getInputDevices();
 
     // Compare number of devices
-    if (devices.size() != json[STR_DEVICES].size()) return false;
+    //if (devices.size() != json[STR_DEVICES].size()) return false;
 
     // Compare device sorting
     bool sorted = true;
