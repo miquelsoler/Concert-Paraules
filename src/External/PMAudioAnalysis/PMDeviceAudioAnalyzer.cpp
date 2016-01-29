@@ -41,7 +41,7 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
 
     isSetup = false;
     oldPitch = 0.0f;
-    oldEnergy = 0.0f;
+    oldEnergy = 1.0f;
 }
 
 PMDeviceAudioAnalyzer::~PMDeviceAudioAnalyzer()
@@ -227,9 +227,14 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         eParams.energy = absMean;
 
         // Smoothed and Mapped Energy = energySmoothed
+	//isnan(oldEnergy);
+	if(oldEnergy!=oldEnergy)
+		oldEnergy=0.5;
         float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
+
+//cout << "-" << eParams.deltaEnergy << "-"<< eParams.energy << "-" << oldEnergy << endl;
         eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,false);
-	//cout << "absMean. " << absMean << "/ smoth. " << eParams.smoothedEnergy << " / min. " << eParams.min << " / max. "<< eParams.max << " / energyDelted " << energyDelted << endl;
+//	cout << "absMean. " << absMean << "/ smoth. " << eParams.smoothedEnergy << " / min. " << eParams.min << " / max. "<< eParams.max << " / energyDelted " << energyDelted << " digitalGain " << digitalGain << endl;
             
         oldEnergy = energyDelted;
 
