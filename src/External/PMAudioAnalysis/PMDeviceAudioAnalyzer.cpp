@@ -22,7 +22,7 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     bufferSize = _bufferSize;
     numBuffers = bufferSize / 64;
 
-    string deviceNameToMatch = "BEHRINGER: UMC204";
+    string deviceNameToMatch = "UMC204";
     vector <ofSoundDevice> listDev = soundStream.getDeviceList();
     for(int i=0;i<listDev.size();i++)
     {
@@ -205,7 +205,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
             pParams.midiNote = currentMidiNote;
             float pitchDelted = (pParams.deltaPitch)*pParams.midiNote + (1.0 - pParams.deltaPitch)*oldPitch;
             pParams.smoothedPitch = ofMap(pitchDelted,pParams.min,pParams.max,0,1,true);
-            oldPitch = pitchDelted;
+	    oldPitch = pitchDelted;
             ofNotifyEvent(eventPitchChanged, pParams, this);
 
             midiNoteHistory.push_front(currentMidiNote);
@@ -228,11 +228,13 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
 
         // Smoothed and Mapped Energy = energySmoothed
         float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
-        eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,true);
-
+        eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,false);
+	//cout << "absMean. " << absMean << "/ smoth. " << eParams.smoothedEnergy << " / min. " << eParams.min << " / max. "<< eParams.max << " / energyDelted " << energyDelted << endl;
+            
         oldEnergy = energyDelted;
 
-        ofNotifyEvent(eventEnergyChanged, eParams, this);
+	if ((absMean == absMean) /* && (eParams.smoothedEnergy == eParams.smoothedEnergy) */)
+		ofNotifyEvent(eventEnergyChanged, eParams, this);
     }
 
     // Shhhht
