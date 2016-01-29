@@ -22,7 +22,7 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     bufferSize = _bufferSize;
     numBuffers = bufferSize / 64;
 
-    string deviceNameToMatch = "Microphone";
+    string deviceNameToMatch = "BEHRINGER: UMC204";
     vector <ofSoundDevice> listDev = soundStream.getDeviceList();
     for(int i=0;i<listDev.size();i++)
     {
