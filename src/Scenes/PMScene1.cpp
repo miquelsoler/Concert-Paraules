@@ -33,6 +33,7 @@ PMScene1::PMScene1() : PMBaseScene("Scene 1")
         guiAudioDevices->init(5, 80);
 //        guiAudioDevices->setBackgroundColor(canvasBgColor);
         guiAudioDevices->setVisible(false);
+        
 
         // Renderer settings
         guiRendererSettings = new PMUICanvasRenderers("RENDER MODE", OFX_UI_FONT_MEDIUM);
@@ -68,7 +69,7 @@ void PMScene1::updateEnter()
         guiRendererSettings->loadSettings(STR_CANVAS_BASEPATH + "renderers1.xml");
 
         guiPoemSelector->setVisible(true);
-        guiAudioDevices->setVisible(true);
+        guiAudioDevices->setVisible(false);
         guiRendererSettings->setVisible(true);
     }
 
