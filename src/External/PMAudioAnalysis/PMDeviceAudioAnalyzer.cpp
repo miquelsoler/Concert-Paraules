@@ -22,8 +22,21 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     bufferSize = _bufferSize;
     numBuffers = bufferSize / 64;
 
+    string deviceNameToMatch = "Microphone";
+    vector <ofSoundDevice> listDev = soundStream.getDeviceList();
+    for(int i=0;i<listDev.size();i++)
+    {
+        if(listDev[i].name.find(deviceNameToMatch)!=-1)
+        {
+            //we found the device in the list !!
+            deviceID = i;
+            cout << "############################################################################" << endl;
+            cout << "Connecting with device " << listDev[i].name << " with deviceID = " << deviceID <<endl;
+            cout << "############################################################################" << endl;
+        }
+    }
     
-    soundStream.setDeviceID(0);
+    soundStream.setDeviceID(deviceID);
     soundStream.printDeviceList();
 
     isSetup = false;
