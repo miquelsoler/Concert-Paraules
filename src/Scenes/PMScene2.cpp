@@ -203,8 +203,6 @@ void PMScene2::recorderSetup()
     string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
     ofStringReplace(filename, " ", "_");
     ofStringReplace(filename, ".jpg", "");
-    ofStringReplace(filename, "(", "_");
-    ofStringReplace(filename, ")", "_");
 
     // FIXME : FORCED 2 CHANNELS OF AUDIO !!
     numChannels = 2;
@@ -436,19 +434,14 @@ void PMScene2::pitchChanged(pitchParams &pitchParams)
     // update LOW confidence on pitch
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
-    for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
-    {
-        if(pitchParams.confidence < pitchParams.minConfidence)
-        {
+    for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i) {
+        if (pitchParams.confidence < pitchParams.minConfidence) {
             (*it)->setLowConfidence(true);
         }
-        else
-        {
+        else {
             (*it)->setLowConfidence(false);
         }
     }
-
-
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
@@ -482,8 +475,7 @@ void PMScene2::shtDetected(shtParams &shtParams)
             colorRenderer->setNeedsToBeCleared(shtParams.isSht);
             break;
         }
-        default:
-            break;
+        default: break;
     }
 }
 
@@ -516,7 +508,6 @@ void PMScene2::takeSnapshot()
     i.save(filename);
 
     cout << "Taking Snapshot : filename : " << filename << endl;
-
 }
 
 void PMScene2::windowResized(int x, int y)
