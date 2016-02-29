@@ -108,7 +108,7 @@ void PMScene2::setup()
                     guiAudioAnalyzer->init(5, initialY + (audioInputIndex * widthY));
 //                    guiAudioAnalyzer->setBackgroundColor(canvasBgColor);
                     guiAudioAnalyzer->setVisible(false);
-                    
+
 
                     guiAudioAnalyzers.push_back(guiAudioAnalyzer);
 
@@ -116,8 +116,8 @@ void PMScene2::setup()
 //                    }
                 }
             }
-            
-            
+
+
             guiAudioAnalyzerCreated = true;
         }
     }
@@ -125,11 +125,11 @@ void PMScene2::setup()
     renderer->setup();
 
     recorderSetup();
-    
+
     // Still Image Setup
     stillImagePoem.setup(PMSettingsManagerPoem::getInstance().getFolderPath() + "/" + PMSettingsManagerPoem::getInstance().getPoemFilename());
     stillImageTitle.setup("./images/titol.jpg");
-    
+
 }
 
 void PMScene2::goToRenderer(int rendererID)
@@ -195,17 +195,19 @@ void PMScene2::goToRenderer(int rendererID)
 void PMScene2::recorderSetup()
 {
     // Recorder setup
-    
+
     vector<PMDeviceAudioAnalyzer *> aavec = *PMAudioAnalyzer::getInstance().getAudioAnalyzers();
     int sampleRate = aavec[0]->getSampleRate();
     int numChannels = aavec.at(0)->getNumChannels();
-    // FIXME : FORCED 2 CHANNELS OF AUDIO !!
-    
+
     string filename = PMSettingsManagerPoem::getInstance().getPoemFilename();
     ofStringReplace(filename, " ", "_");
     ofStringReplace(filename, ".jpg", "");
-    recorder->init(renderer->getFbo(), sampleRate, 2, filename, ofFilePath::getAbsolutePath("", true));
-    
+
+    // FIXME : FORCED 2 CHANNELS OF AUDIO !!
+    numChannels = 2;
+
+    recorder->init(renderer->getFbo(), sampleRate, numChannels, filename, ofFilePath::getAbsolutePath("", true));
 }
 
 void PMScene2::update()
@@ -241,18 +243,18 @@ void PMScene2::update()
         case RECORDING_ADDTITLE:
         {
             stillImageTitle.update();
-            
+
             // recording text image ... (we've changed the fbo in keyPress)
             if (recorder->isRecording()) {
                 recorder->addVideoFrame(ofColor(0));
             }
-            
+
             if (ofGetElapsedTimeMillis() - startTimeRecordingText > durationRecordingText) {
                 cout << "SCENE 2 :: Timer for TITLE Image ended !! STOPPING RECORDING !! " << endl;
                 recState = RECORDING_NORMAL;
                 recorder->changeFbo(renderer->getFbo());
 
-                
+
             }
             break;
         }
@@ -308,7 +310,7 @@ void PMScene2::draw()
     ofDrawBitmapString("Renderer state: " + stat, 15, ofGetHeight() - 60);
 #endif
 
-    
+
     if(recorder->isRecording())
     {
         ofSetColor(255*sin(ofGetElapsedTimef()*10),0,0);
@@ -344,7 +346,7 @@ void PMScene2::keyReleased(int key)
             else ofHideCursor();
 
             showGUI = !showGUI;
-            
+
             vector<PMUICanvasAudioAnalyzer *>::iterator it;
             for (it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++)
                 (*it)->setVisible(showGUI);
@@ -384,14 +386,16 @@ void PMScene2::keyReleased(int key)
         case 'r':
         case 'R':
         {
-            if (!recorder->isRecording()) {
+            if (!recorder->isRecording())
+            {
                 // if not reocording -> Start recording
                 recorder->changeFbo(stillImageTitle.getFbo());
                 recorder->startRecording();
                 startTimeRecordingText = ofGetElapsedTimeMillis();
                 recState = RECORDING_ADDTITLE;
-                
-            } else {
+            }
+            else
+            {
                 // if we're already recording
                 // Start StillImage Recording
                 cout << "Scene 2 :: changing FBO to record still image..." << endl;
@@ -426,23 +430,18 @@ void PMScene2::keyReleased(int key)
 void PMScene2::pitchChanged(pitchParams &pitchParams)
 {
     renderer->pitchChanged(pitchParams);
-    
+
     // update LOW confidence on pitch
     int i;
     vector<PMUICanvasAudioAnalyzer *>::iterator it;
-    for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i)
-    {
-        if(pitchParams.confidence < pitchParams.minConfidence)
-        {
+    for (i = 0, it = guiAudioAnalyzers.begin(); it != guiAudioAnalyzers.end(); it++, ++i) {
+        if (pitchParams.confidence < pitchParams.minConfidence) {
             (*it)->setLowConfidence(true);
         }
-        else
-        {
+        else {
             (*it)->setLowConfidence(false);
         }
     }
-
-    
 }
 
 void PMScene2::energyChanged(energyParams &energyParams)
@@ -476,8 +475,7 @@ void PMScene2::shtDetected(shtParams &shtParams)
             colorRenderer->setNeedsToBeCleared(shtParams.isSht);
             break;
         }
-        default:
-            break;
+        default: break;
     }
 }
 
@@ -504,13 +502,12 @@ void PMScene2::takeSnapshot()
 {
     string fileExt = ".png";
     string filename =  "./snapshots/" + ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M.%S") + fileExt;
-    
+
     ofImage i;
     i.grabScreen(0,0, ofGetWidth(), ofGetHeight());
     i.save(filename);
 
     cout << "Taking Snapshot : filename : " << filename << endl;
-
 }
 
 void PMScene2::windowResized(int x, int y)
