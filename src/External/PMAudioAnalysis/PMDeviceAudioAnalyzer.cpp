@@ -23,16 +23,21 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     numBuffers = bufferSize / 64;
 
     string deviceNameToMatch = "BEHRINGER: UMC204";
+    string deviceNameToMatchYamaha = "Burr-Brown";
+    string deviceNameToMatchFocusRite = "Focusrite";
+    
     vector <ofSoundDevice> listDev = soundStream.getDeviceList();
     for(int i=0;i<listDev.size();i++)
     {
-        if(listDev[i].name.find(deviceNameToMatch)!=-1)
+
+        if( (listDev[i].name.find(deviceNameToMatch)!=-1) || (listDev[i].name.find(deviceNameToMatchYamaha)!=-1) || (listDev[i].name.find(deviceNameToMatchFocusRite)!=-1) )
         {
-            //we found the device in the list !!
-            deviceID = i;
             cout << "############################################################################" << endl;
             cout << "Connecting with device " << listDev[i].name << " with deviceID = " << deviceID <<endl;
             cout << "############################################################################" << endl;
+
+            //we found the device in the list !!
+            deviceID = i;
         }
     }
     
@@ -41,7 +46,7 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
 
     isSetup = false;
     oldPitch = 0.0f;
-    oldEnergy = 0.0f;
+    oldEnergy = 1.0f;
 }
 
 PMDeviceAudioAnalyzer::~PMDeviceAudioAnalyzer()
@@ -229,6 +234,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
         // Smoothed and Mapped Energy = energySmoothed
         float energyDelted =(eParams.deltaEnergy)*eParams.energy + (1.0 - eParams.deltaEnergy)*oldEnergy;
         eParams.smoothedEnergy = ofMap(energyDelted*digitalGain,eParams.min,eParams.max,0,1,true);
+        //cout << "smoth. " << eParams.smoothedEnergy << " / min. " << eParams.min << " / max. "<<  eParams.max << " | energyDelted " << energyDelted  << endl;
 
         oldEnergy = energyDelted;
 
