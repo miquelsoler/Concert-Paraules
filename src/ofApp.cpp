@@ -10,7 +10,6 @@
 
 void ofApp::setup()
 {
-    
 #ifdef OF_DEBUG
     ofSetVerticalSync(false);
     limitFrameRate = false;

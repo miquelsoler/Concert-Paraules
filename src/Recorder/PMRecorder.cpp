@@ -7,6 +7,7 @@
 //
 
 #include "PMRecorder.hpp"
+#include <iostream>
 
 void PMRecorder::changeFbo(ofFbo *_fbo)
 {
@@ -24,6 +25,8 @@ void PMRecorder::init(ofFbo *_fbo, int _samplerate, int _channels, string _fileN
     filePath = _filePath;
     pixelBufferBack.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
     pixelBufferFront.allocate(int(fbo->getWidth() * fbo->getHeight() * 3), GL_DYNAMIC_READ);
+
+	cout << "<<<<< Recording " << filePath << "/" << fileName << endl;
 
     fboRecorderOut.allocate(int(fbo->getWidth()), int(fbo->getHeight()), GL_RGB);
 
@@ -76,7 +79,7 @@ void PMRecorder::addVideoFrame(ofColor backColor)
         // add Frame to videoRecorder
         bool success = vidRecorder.addFrame(pixels);
         if (!success) {
-            ofLogWarning("This frame was not added!");
+//            ofLogWarning("This frame was not added!");
         }
     }
 
@@ -114,9 +117,11 @@ void PMRecorder::startRecording()
     bRecording = !bRecording;
     if (bRecording && !vidRecorder.isInitialized())
     {
-//        lastFileNameGenerated = ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M") + "---" + fileName + fileExt;
-        lastFileNameGenerated = ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M.%S") + fileExt;
+        lastFileNameGenerated = "\"" + ofGetTimestampString("%Y.%m.%d") + "-" + ofGetTimestampString("%H.%M") + "---" + fileName + fileExt + "\"";
         vidRecorder.setup("./videos/" + lastFileNameGenerated, ofGetWidth(), ofGetHeight(), 30, sampleRate, channels);
+
+        cout << endl << endl << endl << endl << "##### Started recording at " << "./videos/" << lastFileNameGenerated << endl << endl << endl << endl << endl;
+
         // Start recording
         vidRecorder.start();
     }
@@ -130,8 +135,11 @@ void PMRecorder::stopRecording()
 
 void PMRecorder::discardRecording()
 {
+    cout << "void PMRecorder::discardRecording() ------------------------" << endl;
+
     bRecording = false;
     vidRecorder.close();
+
     // TODO: delete last clip.
     cout << "PMRecorder : Discard Recording !! Deleting Pipes !! " << endl;
     string cmd = "rm " + filePath + "ofxarpipe0 " + filePath + "ofxvrpipe0";

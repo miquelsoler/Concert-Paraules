@@ -22,22 +22,17 @@ PMDeviceAudioAnalyzer::PMDeviceAudioAnalyzer(int _deviceID, int _inChannels, int
     bufferSize = _bufferSize;
     numBuffers = bufferSize / 64;
 
-    string deviceNameToMatch = "BEHRINGER: UMC204";
-    string deviceNameToMatchYamaha = "Burr-Brown";
-    string deviceNameToMatchFocusRite = "Focusrite";
-    
+    string deviceNameToMatch = "UMC204";
     vector <ofSoundDevice> listDev = soundStream.getDeviceList();
     for(int i=0;i<listDev.size();i++)
     {
-
-        if( (listDev[i].name.find(deviceNameToMatch)!=-1) || (listDev[i].name.find(deviceNameToMatchYamaha)!=-1) || (listDev[i].name.find(deviceNameToMatchFocusRite)!=-1) )
+        if(listDev[i].name.find(deviceNameToMatch)!=-1)
         {
+            //we found the device in the list !!
+            deviceID = i;
             cout << "############################################################################" << endl;
             cout << "Connecting with device " << listDev[i].name << " with deviceID = " << deviceID <<endl;
             cout << "############################################################################" << endl;
-
-            //we found the device in the list !!
-            deviceID = i;
         }
     }
     
@@ -210,7 +205,7 @@ void PMDeviceAudioAnalyzer::audioIn(float *input, int bufferSize, int nChannels)
             pParams.midiNote = currentMidiNote;
             float pitchDelted = (pParams.deltaPitch)*pParams.midiNote + (1.0 - pParams.deltaPitch)*oldPitch;
             pParams.smoothedPitch = ofMap(pitchDelted,pParams.min,pParams.max,0,1,true);
-            oldPitch = pitchDelted;
+    	    oldPitch = pitchDelted;
             ofNotifyEvent(eventPitchChanged, pParams, this);
 
             midiNoteHistory.push_front(currentMidiNote);
